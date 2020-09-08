@@ -92,7 +92,4 @@
 <img height="40" src="./assets/nginx.png">
 
 <br>
-
-### 개발 
-
 <br><br><br>
