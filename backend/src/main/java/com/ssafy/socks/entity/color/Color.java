@@ -8,13 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@ToString @Builder @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@ToString @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Table(name = "COLOR")
 public class Color {
 	@Id
