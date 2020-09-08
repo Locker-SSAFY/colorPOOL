@@ -33,7 +33,7 @@
 
 - [git branch 전략](https://lab.ssafy.com/s03-bigdata-sub2/s03p22a303/blob/master/docs/git%20branch%20%EC%A0%84%EB%9E%B5.md)
 - [git commit message convention](https://lab.ssafy.com/s03-bigdata-sub2/s03p22a303/blob/master/docs/commit%20message%20convention.md)
-- [coding convention (backend)](https://lab.ssafy.com/s03-bigdata-sub2/s03p22a303/blob/master/docs/coding%20convention%20(backend).md)
+- [coding convention](https://lab.ssafy.com/s03-bigdata-sub2/s03p22a303/blob/master/docs/coding%20convention.md)
 - [코드리뷰](https://lab.ssafy.com/s03-bigdata-sub2/s03p22a303/blob/master/docs/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
