@@ -35,12 +35,12 @@
 - [git commit message convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/commit%20message%20convention.md)
 - [coding convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/coding%20convention.md)
 - [코드리뷰](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
-
 - [기획](https://github.com/Locker-SSAFY/colorPOOL-developing/tree/master/docs/%EA%B8%B0%ED%9A%8D)
   - [Ideation](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/1-Ideation.md)
   - [Research](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/2-Research.md)
   - [Development](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
   - [Feedback](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
+- [TDD](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/TDD.md)
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
@@ -92,7 +92,4 @@
 <img height="40" src="./assets/nginx.png">
 
 <br>
-
-### 개발 
-
 <br><br><br>
