@@ -27,5 +27,5 @@ public class Color {
 	@Column(name = "GREEN", nullable = false)
 	private Integer green;
 	@Column(name = "BLUE", nullable = false)
-	private Integer blue;g
+	private Integer blue;
 }
