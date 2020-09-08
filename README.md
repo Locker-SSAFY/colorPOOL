@@ -31,7 +31,7 @@
 
 ## Docs
 
-- [git branch 전략](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/git branch 전략.md)
+- [git branch 전략](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/git%20branch%20전략.md)
 - [git commit message convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/commit%20message%20convention.md)
 - [coding convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/coding%20convention.md)
 - [코드리뷰](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
