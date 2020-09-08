@@ -31,16 +31,16 @@
 
 ## Docs
 
-- [git branch 전략]([https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/git%20branch%20%EC%A0%84%EB%9E%B5.md](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/git branch 전략.md))
-- [git commit message convention]([https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/commit%20message%20convention.md](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/commit message convention.md))
-- [coding convention]([https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/coding%20convention.md](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/coding convention.md))
-- [코드리뷰]([https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/코드리뷰.md))
+- [git branch 전략](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/git branch 전략.md)
+- [git commit message convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/commit%20message%20convention.md)
+- [coding convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/coding%20convention.md)
+- [코드리뷰](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
 
-- [기획]([https://github.com/Locker-SSAFY/colorPOOL-developing/tree/master/docs/%EA%B8%B0%ED%9A%8D](https://github.com/Locker-SSAFY/colorPOOL-developing/tree/master/docs/기획))
-  - [Ideation]([https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/1-Ideation.md](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/기획/1-Ideation.md))
-  - [Research]([https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/2-Research.md](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/기획/2-Research.md))
-  - [Development]([https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/3-Development.md](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/기획/3-Development.md))
-  - [Feedback]([https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/기획/4-Feedback.md))
+- [기획](https://github.com/Locker-SSAFY/colorPOOL-developing/tree/master/docs/%EA%B8%B0%ED%9A%8D)
+  - [Ideation](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/1-Ideation.md)
+  - [Research](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/2-Research.md)
+  - [Development](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
+  - [Feedback](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
