@@ -2,6 +2,8 @@ package com.ssafy.socks.entity.magazine;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,17 +14,24 @@ import com.ssafy.socks.entity.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@Entity @Setter @Getter @ToString @NoArgsConstructor
-@Table(name = "LIKE")
-public class Like {
-
+@Entity @Setter @Getter @NoArgsConstructor
+@Table(name = "LIKES")
+public class Likes {
 	@Id
-	@Column(name = "MAGAZINE_ID")
-	private Long magazineId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "LIKE_ID", nullable = false)
+	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "MAGAZINE_ID", nullable = false)
+	private Magazine magazine;
+	public void addMagazine(Magazine magazine) {
+		this.magazine = magazine;
+		this.magazine.getLikes().add(this);
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
 }
