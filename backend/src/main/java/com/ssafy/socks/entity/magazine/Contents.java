@@ -2,6 +2,8 @@ package com.ssafy.socks.entity.magazine;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -16,6 +18,8 @@ import lombok.Setter;
 @Table(name = "CONTENTS")
 public class Contents {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "CONTENT_ID")
 	private Long id;
 
 	@ManyToOne
