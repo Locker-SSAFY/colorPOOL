@@ -33,4 +33,10 @@ public class Theme {
 	@ManyToOne
 	@JoinColumn(name = "SELECTED_COLOR_ID")
 	private SelectedColor selectedColor;
+
+	/* 연관관계 편의 메서드 */
+	public void addSelectedColor(SelectedColor selectedColor) {
+		this.selectedColor = selectedColor;
+		this.selectedColor.getThemes().add(this);	// 양방향의 순수 객체 상태를 유지하기위함
+	}
 }
