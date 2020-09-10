@@ -16,6 +16,14 @@
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
     <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
       <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+      <v-btn
+        class="next-button"
+        icon
+        text
+        @click="getTheme"
+      >
+        <v-icon size="100">mdi-arrow-right</v-icon>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -39,6 +47,9 @@ export default {
       this.$parent.isPick = true;
       this.$parent.isGet = false;
     },
+    getTheme(){
+      window.scrollTo(0, 1000);
+    }
   }
 }
 </script>
@@ -97,6 +108,12 @@ export default {
     
     display: block;
     margin: auto;
+  }
+
+  .next-button {
+    position: absolute;
+    right: 20%;
+    top: 85%;
   }
 
 </style>
