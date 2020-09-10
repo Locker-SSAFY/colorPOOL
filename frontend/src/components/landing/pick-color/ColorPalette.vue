@@ -29,14 +29,11 @@ export default {
     }
   },
   created() {
-    console.log(this.materialColors)
-    console.log(this.$parent.selectedVariation)
     if(this.$parent.selectedVariation.length == 0)
       this.selectedColorVariation = this.materialColors[0].variations;
   },
   methods: {
     changeColorCategory(color, variation) {
-      //this.$parent.selectedColor = color;
       this.selectedColorVariation = variation;
       this.$parent.selectedVariation = variation;
     },

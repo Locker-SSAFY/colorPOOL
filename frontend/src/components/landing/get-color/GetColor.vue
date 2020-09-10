@@ -25,20 +25,6 @@
       <ul v-for="colorList in this.picularImages" v-bind:key="colorList.index">
         <li v-for="color in colorList" v-bind:key="color.color">
           <v-card class="mx-auto elevation-5">
-            <!-- <v-img class="white--text align-end" :src="color.img" v-bind:style="[]" @mouseover="overlay = true" @mouseleave="overlay = false">
-              <v-overlay
-                :absolute="absolute"
-                :opacity="opacity"
-                :value="overlay"
-              >
-              <v-btn
-                color="orange lighten-2"
-                @click="overlay = false"
-              >
-                Hide Overlay
-              </v-btn>
-            </v-overlay>
-            </v-img> -->
             <v-img class="white--text align-end" :src="color.img">
               <v-overlay :absolute="true" :opacity="0" class="image-layer" v-bind:style="{'background-color': color.color}"></v-overlay>  
             </v-img>
@@ -74,14 +60,12 @@ export default {
     }, async getPicularImages() {
       await axios.get('https://server.picular.co/' + this.keyword)
       .then((res) => {
-        console.log(res);
         this.picularResult = res.data
         this.picularImages = [];
         this.picularImages.push(this.picularResult.colors.slice(0, 5));
         this.picularImages.push(this.picularResult.colors.slice(5, 10));
         this.picularImages.push(this.picularResult.colors.slice(10, 15));
         this.picularImages.push(this.picularResult.colors.slice(15, 20));
-        console.log(this.picularImages);
       })
       .catch((err) => {
         console.log(err);
