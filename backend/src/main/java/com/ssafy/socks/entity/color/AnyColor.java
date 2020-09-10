@@ -6,7 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.ssafy.socks.entity.user.User;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +27,9 @@ public class AnyColor {
 
 	@Embedded
 	private Color color;
+
+	@ManyToOne
+	@JoinColumn(name = "USER_ID")
+	private User user;
 
 }
