@@ -32,7 +32,8 @@
         <v-icon size="100">mdi-arrow-left</v-icon>
       </v-btn>
 
-    <div class="theme-color right" v-bind:style="{'background-color' : selectedColor}">
+    <div v-if="showColorInfo" class="theme-color right" v-bind:style="{'background-color' : selectedColor}">
+      <ColorInfo></ColorInfo>
       <v-btn
         class="next-button"
         icon
@@ -46,20 +47,24 @@
 </div>
 </template>
 <script> 
+import { mapState } from 'vuex'
 import SelectTone from './SelectTone'
 import ThemeScroll from './ThemeScroll'
+import ColorInfo from './ColorInfo'
 
 export default {
   name: 'RecommandTheme',
   computed: {
+    ...mapState(["showColorInfo"])
   },
   components: {
-    SelectTone, ThemeScroll
+    SelectTone, ThemeScroll, ColorInfo
   },
   data () {
     return {
       selectedColor: '#EF5350',
       selectedVariation: [],
+      showColorInfo: true
     }
   },
   methods : {
@@ -91,7 +96,7 @@ export default {
 
   .show-color.left{
     position: absolute;
-    left: 10%;
+    left: 7%;
     top: 135%;
     height: 30%;
     width: 13%;
@@ -120,7 +125,7 @@ export default {
   .show-theme {
     position: absolute;
     left: 27%;
-    top: 117%;
+    top: 125%;
     height: 70%;
     width: 40%;
   }
@@ -137,7 +142,7 @@ export default {
     top: 7%;
     background-color: #EF5350;
     width: 100%;
-    height: 0.5%;
+    height: 2px;
   }
 
   .theme-color.right {

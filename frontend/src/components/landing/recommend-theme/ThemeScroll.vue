@@ -1,7 +1,7 @@
 <template>
   <div class="theme-scroll wrap">
     <div class="show-themes mt-8" v-for="t in theme" :key="t">
-      <div class="color-group">
+      <div class="color-group" @click="selectTheme(t)">
         <!-- {{t}}  -->
         <div class="theme-colors" :style="{'background-color' : t.color1}">
         </div>
@@ -50,6 +50,14 @@ export default {
           color4: "#9d0208",
           color5: "#d00000",
         },
+        {
+          color1: "#e63946",
+          color2: "#f1faee",
+          color3: "#a8dadc",
+          color4: "#457b9d",
+          color5: "#1d3557",
+        },
+
       ]
     }
   },
@@ -61,9 +69,13 @@ export default {
 }
 </script>
 <style scoped>
+.theme-scroll.wrap{
+}
+
 .color-group{
   height: 85px;
-  width: 100%;
+  width: 90%;
+  margin-left: 5%;
 }
 .theme-colors{
   height: 20%; 
