@@ -3,6 +3,7 @@
     <head>
       <title>ColorPOOL</title>
     </head>
+    <Header></Header>
     <router-view/>
     <!-- <v-app-bar
       app
@@ -50,11 +51,14 @@
 <script>
 // import HelloWorld from './components/HelloWorld';
 
+import Header from './components/header/Header'
+
 export default {
   name: 'App',
 
   components: {
     // HelloWorld,
+    Header
   },
 
   data: () => ({
