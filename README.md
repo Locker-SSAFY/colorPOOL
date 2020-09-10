@@ -31,16 +31,17 @@
 
 ## Docs
 
-- [git branch 전략](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/git%20branch%20전략.md)
-- [git commit message convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/commit%20message%20convention.md)
-- [coding convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/coding%20convention.md)
-- [코드리뷰](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
-- [기획](https://github.com/Locker-SSAFY/colorPOOL-developing/tree/master/docs/%EA%B8%B0%ED%9A%8D)
-  - [Ideation](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/1-Ideation.md)
-  - [Research](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/2-Research.md)
-  - [Development](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
-  - [Feedback](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
-- [TDD](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/TDD.md)
+- [git branch 전략](./docs/git%20branch%20전략.md)
+- [git commit message convention](./docs/commit%20message%20convention.md)
+- [coding convention](./docs/coding%20convention.md)
+- [코드리뷰](./docs/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
+- [기획](./docs/%EA%B8%B0%ED%9A%8D)
+  - [Ideation](./docs/%EA%B8%B0%ED%9A%8D/1-Ideation.md)
+  - [Research](./docs/%EA%B8%B0%ED%9A%8D/2-Research.md)
+  - [Development](./docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
+  - [Feedback](./docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
+- [TDD](./docs/TDD.md)
+- [JPA 사용시 객체지향 설계에 대한 고찰](./docs/JPA%20사용시%20객체지향설계에%20대한%20고찰.md)
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
