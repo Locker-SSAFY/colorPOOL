@@ -2,6 +2,7 @@ package com.ssafy.socks.entity.magazine;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Contents {
 	@Column(name = "CONTENT_ID")
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MAGAZINE_ID", nullable = false)
 	private Magazine magazine;
 	public void addMagazine(Magazine magazine) {
