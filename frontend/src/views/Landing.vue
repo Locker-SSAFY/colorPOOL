@@ -6,7 +6,7 @@
       <GetColor></GetColor>
     </div>
     <div class="bottom-page" ref="messageDisplay">
-
+      <RecommendTheme></RecommendTheme>
     </div>
   </div>
 </template>
@@ -14,10 +14,11 @@
 <script>
 import GetColor from '../components/landing/get-color/GetColor'
 import PickColor from '../components/landing/pick-color/PickColor'
+import RecommendTheme from '../components/landing/recommend-theme/RecommendTheme'
 
 export default {
   components: {
-    GetColor, PickColor
+    GetColor, PickColor, RecommendTheme
   },
   data() {
     return {
@@ -26,7 +27,6 @@ export default {
     }
   },
   created() {
-    
   },
   methods : {
     goBack() {
