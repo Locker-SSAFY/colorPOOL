@@ -1,7 +1,6 @@
 package com.ssafy.socks.entity.color;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +13,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
-@Embeddable @Getter @Setter @NoArgsConstructor @ToString
+@ToString @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Table(name = "COLOR")
 public class Color {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "COLOR_ID", nullable = false)
+	private Long id;
+
 	@Column(name = "RED", nullable = false)
 	private Integer red;
 	@Column(name = "GREEN", nullable = false)

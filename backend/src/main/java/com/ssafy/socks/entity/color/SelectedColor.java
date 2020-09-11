@@ -1,15 +1,10 @@
 package com.ssafy.socks.entity.color;
 
-import java.util.List;
-
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -26,12 +21,12 @@ public class SelectedColor {
 	@Column(name = "SELECTED_COLOR_ID", nullable = false)
 	private Long id;
 
-	@Embedded
-	private Color color;
-
+	@Column(name = "RED", nullable = false)
+	private Integer red;
+	@Column(name = "GREEN", nullable = false)
+	private Integer green;
+	@Column(name = "BLUE", nullable = false)
+	private Integer blue;
 	@Column(name = "IMG", nullable = false)
 	private String img;
-
-	@OneToMany(mappedBy = "selectedColor")
-	private List<Theme> themes;
 }
