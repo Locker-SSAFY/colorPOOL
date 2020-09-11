@@ -42,16 +42,16 @@ public class User implements UserDetails {
 	private String provider;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@Column(name = "PASSWORD", nullable = false)
+	@Column(name = "PWD", nullable = false)
 	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
-	private List<String> ROLES = new ArrayList<>();
+	private List<String> roles = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.ROLES.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+		return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 	}
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
