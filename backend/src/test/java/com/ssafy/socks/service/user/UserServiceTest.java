@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collections;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,4 +64,29 @@ class UserServiceTest {
 		 });
 	 }
 
+	@Test
+	public void 동시_같은_아이디_가입() throws Exception {
+		// given
+		User user1 = User.builder()
+			.email("test@test.com")
+			.password(passwordEncoder.encode("1234!"))
+			.provider("root")
+			.roles(Collections.singletonList("GUEST"))
+			.build();
+
+		User user2 = User.builder()
+			.email("test@test.com")
+			.password(passwordEncoder.encode("1234!"))
+			.provider("root")
+			.roles(Collections.singletonList("GUEST"))
+			.build();
+
+		// when
+		userJpaRepository.save(user1);
+
+		// then
+		assertThrows(DataIntegrityViolationException.class, () -> {
+			userJpaRepository.save(user2);
+		});
+	}
 }
