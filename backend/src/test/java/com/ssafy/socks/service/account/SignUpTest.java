@@ -1,4 +1,4 @@
-package com.ssafy.socks.service.user;
+package com.ssafy.socks.service.account;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,9 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.socks.advice.exception.CUserDuplicatedException;
 import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.repository.user.UserJpaRepository;
+import com.ssafy.socks.service.user.UserService;
 
 @SpringBootTest @Transactional
-class UserServiceTest {
+class SignUpTest {
 	@Autowired private UserJpaRepository userJpaRepository;
 	@Autowired private UserService userService;
 	@Autowired private PasswordEncoder passwordEncoder;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.ssafy.socks.advice.exception.CEmailSigninFailedException;
 import com.ssafy.socks.advice.exception.CUserDuplicatedException;
 import com.ssafy.socks.advice.exception.CUserNotFoundException;
 import com.ssafy.socks.model.response.CommonResult;
@@ -33,6 +34,12 @@ public class ExceptionAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	protected CommonResult userNotFoundException(HttpServletRequest request, CUserNotFoundException e) {
 		return responseService.getFailResult(Integer.parseInt(getMessage("userNotFound.code")), getMessage("userNotFound.msg"));
+	}
+
+	@ExceptionHandler(CEmailSigninFailedException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	protected CommonResult emailFailedException(HttpServletRequest request, CEmailSigninFailedException e) {
+		return responseService.getFailResult(Integer.parseInt(getMessage("emailSigninFailed.code")), getMessage("emailSigninFailed.msg"));
 	}
 
 	@ExceptionHandler(CUserDuplicatedException.class)

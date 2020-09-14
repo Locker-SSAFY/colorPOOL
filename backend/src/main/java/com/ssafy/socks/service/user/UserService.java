@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.socks.advice.exception.CEmailSigninFailedException;
 import com.ssafy.socks.advice.exception.CUserDuplicatedException;
 import com.ssafy.socks.advice.exception.CUserNotFoundException;
 import com.ssafy.socks.entity.user.User;
@@ -57,5 +58,14 @@ public class UserService {
 	 */
 	public User findOne(Long id) {
 		return userJpaRepository.findById(id).orElseThrow(CUserNotFoundException::new);
+	}
+
+	/**
+	 * 이메일로 유저 검색
+	 * @param email
+	 * @return
+	 */
+	public User findByEmail(String email) {
+		return userJpaRepository.findByEmail(email).orElseThrow(CEmailSigninFailedException::new);
 	}
 }
