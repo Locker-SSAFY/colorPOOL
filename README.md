@@ -47,7 +47,7 @@
 
 ## Issues
 - [JPA 사용시 객체지향 설계에 대한 고찰](./docs/JPA%20사용시%20객체지향설계에%20대한%20고찰.md)
-- [Spring JPA unique constraint 예외처리](./docs/이슈/Spring%20JPA%20unique%20constraint%20예외처리)
+- [Spring JPA unique constraint 예외처리](./docs/이슈/Spring%20JPA%20unique%20constraint%20예외처리.md)
 
 <br><br><br><br><br><br><br>
 
