@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.socks.advice.exception.CUserDuplicatedException;
 import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.repository.user.UserJpaRepository;
+import com.ssafy.socks.service.user.UserService;
 
 @SpringBootTest @Transactional
 class SignUpTest {

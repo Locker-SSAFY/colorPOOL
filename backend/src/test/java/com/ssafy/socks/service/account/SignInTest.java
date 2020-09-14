@@ -1,6 +1,4 @@
-package com.ssafy.socks.service.account;
-
-import static org.junit.jupiter.api.Assertions.*;
+package com.ssafy.socks.service.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
