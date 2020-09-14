@@ -41,6 +41,12 @@ public class ExceptionAdvice {
 		return responseService.getFailResult(Integer.parseInt(getMessage("userDuplicated.code")), getMessage("userDuplicated.msg"));
 	}
 
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	@ResponseStatus(HttpStatus.CONFLICT) // 409
+	protected CommonResult userEmailConstraintException(HttpServletRequest request, DataIntegrityViolationException e) {
+		return responseService.getFailResult(Integer.parseInt(getMessage("userEmailConstraint.code")), getMessage("userEmailConstraint.msg"));
+	}
+
 	// code정보에 해당하는 메시지를 조회합니다.
 	private String getMessage(String code) {
 		return getMessage(code, null);
