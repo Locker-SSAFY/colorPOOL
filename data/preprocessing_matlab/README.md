@@ -30,3 +30,15 @@
 
     
 
+- 양자화
+
+  - 필요한 파일 : kulerCIEdata.mat (CIELab data)
+
+  - 방법 : Quantizer.m 파일과 QuantizeCIELab.m파일 참고
+
+  - 결과물 : kulerQuantCIEdata.csv
+
+    
+
+-> 2020.09.14 전처리 완료, 네트워크화 작업 시작
+
