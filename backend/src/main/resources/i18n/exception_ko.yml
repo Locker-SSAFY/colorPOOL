@@ -8,3 +8,6 @@ userNotFound:
 userDuplicated:
   code: "-1001"
   msg: "중복된 회원입니다."
+userEmailConstraint:
+  code: "-1002"
+  msg: "동시 같은 아이디로 회원 가입이 불가능합니다."

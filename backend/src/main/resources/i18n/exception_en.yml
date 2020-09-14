@@ -8,3 +8,6 @@ userNotFound:
 userDuplicated:
   code: "-1001"
   msg: "This user is duplicated."
+userEmailConstraint:
+  code: "-1002"
+  msg: "User registration with the same ID is not possible at the same time."
