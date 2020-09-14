@@ -13,6 +13,7 @@
 - [Create your own magazine](#create-your-own-magazine)
 - [Subscribe to the newsletter](#subscribe-to-the-newsletter)
 - [Docs](#docs)
+- [Issues](#issues)
 
 ## Get Recommendation
 사용자 중심 컬러 추천 받기
@@ -41,9 +42,14 @@
   - [Development](./docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
   - [Feedback](./docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
 - [TDD](./docs/TDD.md)
-- [JPA 사용시 객체지향 설계에 대한 고찰](./docs/JPA%20사용시%20객체지향설계에%20대한%20고찰.md)
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
+
+## Issues
+- [JPA 사용시 객체지향 설계에 대한 고찰](./docs/JPA%20사용시%20객체지향설계에%20대한%20고찰.md)
+- [Spring JPA unique constraint 예외처리](./docs/이슈/Spring%20JPA%20unique%20constraint%20예외처리)
+
+<br><br><br><br><br><br><br>
 
 ## See also
 

@@ -1,18 +1,12 @@
 package com.ssafy.socks;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@SpringBootApplication
-public class ColorPoolApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ColorPoolApplication.class, args);
-	}
-
+@SpringBootTest
+class ColorPoolApplicationTest {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();

@@ -35,7 +35,7 @@ public class User implements UserDetails {
 	@Column(name = "USER_ID", nullable = false)
 	private Long id;
 
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
 
 	@Column(name = "PROVIDER", nullable = false)
@@ -47,11 +47,11 @@ public class User implements UserDetails {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
-	private List<String> ROLES = new ArrayList<>();
+	private List<String> roles = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.ROLES.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+		return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 	}
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
