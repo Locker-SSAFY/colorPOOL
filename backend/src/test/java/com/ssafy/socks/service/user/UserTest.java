@@ -26,7 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.socks.config.security.JwtTokenProvider;
 import com.ssafy.socks.entity.user.User;
-import com.ssafy.socks.model.user.UserResult;
+import com.ssafy.socks.model.user.SignUpModel;
 
 @SpringBootTest @Transactional @AutoConfigureMockMvc
 public class UserTest {
@@ -56,6 +56,7 @@ public class UserTest {
 		User user = User.builder()
 			.email("test@test.com")
 			.password(passwordEncoder.encode("1234!"))
+			.nickname("testMan")
 			.provider("root")
 			.roles(Collections.singletonList("ROLE_USER"))
 			.build();
@@ -74,7 +75,7 @@ public class UserTest {
 	 @Test
 	 public void 잘못된_JWT_토큰_사용시_exception_entrypoint() throws Exception {
 		 // given
-		 String content = objectMapper.writeValueAsString(new UserResult("test@test.com", "1234"));
+		 String content = objectMapper.writeValueAsString(new SignUpModel( "test@test.com", "1234!","testMan"));
 
 		 // when
 		 mockMvc.perform(MockMvcRequestBuilders
