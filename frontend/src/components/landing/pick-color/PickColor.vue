@@ -14,6 +14,7 @@
       </v-img>
     </v-card>
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
+    {{selectedColor}}
     <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
       <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
       <v-btn
@@ -29,17 +30,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ColorPalette from './ColorPalette'
+const colorStore = 'colorStore'
 
 export default {
   name: 'PickColor',
   components: {
     ColorPalette
   },
+  created(){
+    this.selectedColor = this.storeSlectedColor;
+  },
+  computed: {
+    ...mapGetters(colorStore, {storeSlectedColor: 'GE_SELECTED_COLOR'})
+  },
   data () {
     return {
-      selectedColor: '#EF5350',
+      selectedColor: '',
       selectedVariation: [],
+    }
+  },
+  watch: {
+    storeSlectedColor(val){
+      this.selectedColor = val
     }
   },
   methods : {

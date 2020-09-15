@@ -18,7 +18,8 @@
 </template>
 <script>
 import materialColors from '../../../assets/color/colorList.js'
-
+import { mapActions } from 'vuex'
+const colorStore = 'colorStore'
 
 export default {
   data() {
@@ -33,12 +34,15 @@ export default {
       this.selectedColorVariation = this.materialColors[0].variations;
   },
   methods: {
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
     changeColorCategory(color, variation) {
       this.selectedColorVariation = variation;
       this.$parent.selectedVariation = variation;
     },
     changeColor(hex) {
-      this.$parent.selectedColor = hex;
+      // this.$parent.selectedColor = hex;
+      const payload = { selectedColor: hex };
+      this.AC_SELECTED_COLOR(payload);
     }
   }
 }
