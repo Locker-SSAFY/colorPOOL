@@ -68,4 +68,12 @@ public class UserService {
 	public User findByEmail(String email) {
 		return userJpaRepository.findByEmail(email).orElseThrow(CEmailSigninFailedException::new);
 	}
+
+	public void deleteById(Long id) {
+		try {
+			userJpaRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new CUserNotFoundException();
+		}
+	}
 }

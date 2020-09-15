@@ -29,17 +29,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ColorPalette from './ColorPalette'
+const colorStore = 'colorStore'
 
 export default {
   name: 'PickColor',
   components: {
     ColorPalette
   },
+  created(){
+    this.selectedColor = this.storeSlectedColor;
+  },
+  computed: {
+    ...mapGetters(colorStore, {storeSlectedColor: 'GE_SELECTED_COLOR'})
+  },
   data () {
     return {
-      selectedColor: '#EF5350',
+      selectedColor: '',
       selectedVariation: [],
+    }
+  },
+  watch: {
+    storeSlectedColor(val){
+      this.selectedColor = val
     }
   },
   methods : {

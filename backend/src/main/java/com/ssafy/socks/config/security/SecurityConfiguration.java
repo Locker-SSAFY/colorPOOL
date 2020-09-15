@@ -30,12 +30,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.csrf().disable() // rest api 이므로 csrf 보안이 필요없으므로 disable
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt token 으로 인증하므로 세션은 필요없으므로 생성안함.
 			.and()
-			.authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
-			.antMatchers("/*/signin", "/*/signup").permitAll() // 가입 및 인증 주소는 누구나 접근가능
-			.antMatchers( "api/**").hasRole("ADMIN") // api 시작하는 리소스는 관리자만 접근가능
-			.anyRequest().hasRole("USER") // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
+				.authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
+					.antMatchers("/*/signin", "/*/signup").permitAll() // 가입 및 인증 주소는 누구나 접근가능
+					.antMatchers(HttpMethod.GET, "/exception/**").permitAll() // exception 시작하는 GET요청 리소스는 누구나 접근가능
+					.antMatchers( "/*/users").hasRole("ADMIN") // api 시작하는 리소스는 관리자만 접근가능
+				.anyRequest().hasRole("USER") // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
 			.and()
-			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt token 필터를 id/password 인증 필터 전에 넣는다
+				.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())	// 유저의 권한이 없을 때
+			.and()
+				.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())	// jwt token 필터 전에 토큰 유효성 검사에 대해 예외 처리
+			.and()
+				.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt token 필터를 id/password 인증 필터 전에 넣는다
 
 	}
 
