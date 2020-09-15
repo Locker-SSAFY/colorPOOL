@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.ssafy.socks.advice.exception.CAccessDeniedException;
 import com.ssafy.socks.advice.exception.CAuthenticationEntryPointException;
 import com.ssafy.socks.advice.exception.CEmailSigninFailedException;
 import com.ssafy.socks.advice.exception.CUserDuplicatedException;
@@ -47,6 +48,12 @@ public class ExceptionAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	protected CommonResult entryPointException(HttpServletRequest request, CAuthenticationEntryPointException e) {
 		return responseService.getFailResult(Integer.parseInt(getMessage("entryPointException.code")), getMessage("entryPointException.msg"));
+	}
+
+	@ExceptionHandler(CAccessDeniedException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	protected CommonResult accessDeniedException(HttpServletRequest request, CAccessDeniedException e) {
+		return responseService.getFailResult(Integer.parseInt(getMessage("accessDenied.code")), getMessage("accessDenied.msg"));
 	}
 
 	@ExceptionHandler(CUserDuplicatedException.class)

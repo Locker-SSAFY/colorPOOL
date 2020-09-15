@@ -36,6 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.antMatchers( "/*/users").hasRole("ADMIN") // api 시작하는 리소스는 관리자만 접근가능
 				.anyRequest().hasRole("USER") // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
 			.and()
+				.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())	// 유저의 권한이 없을 때
+			.and()
 				.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())	// jwt token 필터 전에 토큰 유효성 검사에 대해 예외 처리
 			.and()
 				.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt token 필터를 id/password 인증 필터 전에 넣는다
