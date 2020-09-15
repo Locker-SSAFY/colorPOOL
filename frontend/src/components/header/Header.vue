@@ -11,47 +11,7 @@
           </v-btn>
         </td>
         <td class="header-signin">
-          <!-- <v-dialog v-model="dialog" persistent max-width="1000px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                icon
-                text
-                dark
-                v-bind="attrs"
-                v-on="on"
-              >
-              SIGNIN</v-btn>
-            </template> -->
             <Signin></Signin>
-            <!-- <v-card class="signin-modal wrap">
-              <v-row>
-                <v-col id="modal-title" cols="3">COLORPOOL</v-col>
-                <v-col cols="9"></v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="2">
-                  <v-row>SGININ</v-row>
-                  <v-row>SGINUP</v-row>
-                </v-col>
-                <v-col cols="10">
-                  <v-row style="height: 400px; background-color: #561E1D">
-                    <div id="horizon-line"></div>
-                    <v-col>
-                      
-                    </v-col>
-                    <v-col>
-
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn dark text @click="dialog = false">Close</v-btn>
-                <v-btn dark text @click="dialog = false">Save</v-btn>
-              </v-card-actions>
-            </v-card> -->
-          <!-- </v-dialog> -->
         </td>
         <td calss="header-signup">
           <v-btn icon text dark>

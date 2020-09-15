@@ -14,7 +14,6 @@
       </v-img>
     </v-card>
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
-    {{selectedColor}}
     <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
       <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
       <v-btn
