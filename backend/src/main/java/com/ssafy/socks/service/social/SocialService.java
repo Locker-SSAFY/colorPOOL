@@ -1,5 +1,6 @@
 package com.ssafy.socks.service.social;
 
+import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -17,7 +18,8 @@ import com.google.gson.Gson;
 import com.ssafy.socks.advice.exception.CCommunicationException;
 import com.ssafy.socks.config.security.JwtTokenProvider;
 import com.ssafy.socks.entity.user.User;
-import com.ssafy.socks.model.social.KakaoModel;
+import com.ssafy.socks.model.social.GoogleProfile;
+import com.ssafy.socks.model.social.SocialModel;
 import com.ssafy.socks.model.social.KakaoProfile;
 import com.ssafy.socks.model.social.SocialResultModel;
 import com.ssafy.socks.model.user.UserInfo;
@@ -26,8 +28,9 @@ import com.ssafy.socks.repository.user.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor @Service
-public class KakaoService {
-	private final static String PROVIDER = "kakao";
+public class SocialService {
+	private final static String KAKAO = "kakao";
+	private final static String GOOGLE = "google";
 
 	private final UserJpaRepository userJpaRepository;
 	private final JwtTokenProvider jwtTokenProvider;
@@ -61,18 +64,53 @@ public class KakaoService {
 	}
 
 	/**
-	 * 카카오 통합 회원이
-	 * 		있을 경우 -> 로그인
-	 *		없을 경우 -> 회원 가입 틀 반환
-	 * @param kakaoModel
+	 * 구글 프로필 가져 오기
+	 * @param accessToken
 	 * @return
 	 */
-	public SocialResultModel getKakaoResultModel(KakaoModel kakaoModel) {
+	public GoogleProfile getGoogleProfile(String accessToken) {
+		URI uri = URI.create("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + accessToken);
+		// Request profile
+		ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+		try {
+			if (response.getStatusCode() == HttpStatus.OK)
+				return gson.fromJson(response.getBody(), GoogleProfile.class);
+		} catch (Exception e) {
+			throw new CCommunicationException();
+		}
+		throw new CCommunicationException();
+	}
+
+	/**
+	 * 	통합 회원이
+	 * 		있을 경우 -> 로그인
+	 *		없을 경우 -> 회원 가입 틀 반환
+	 * @param socialModel
+	 * @return
+	 */
+	public SocialResultModel getSocialResultModel(SocialModel socialModel) {
 		SocialResultModel resultModel = null;
-		KakaoProfile kakaoProfile = this.getKakaoProfile(kakaoModel.getAccessToken());
+		String email = null;
+		String nickname = null;
+		String provider = null;
+
+		switch (socialModel.getAccessToken()) {
+			case KAKAO:
+				KakaoProfile kakaoProfile = this.getKakaoProfile(socialModel.getAccessToken());
+				email = kakaoProfile.getEmail();
+				nickname = kakaoProfile.getProperties().getNickname();
+				provider = KAKAO;
+				break;
+			case GOOGLE:
+				GoogleProfile googleProfile = this.getGoogleProfile(socialModel.getAccessToken());
+				email = googleProfile.getEmail();
+				nickname = googleProfile.getName();
+				provider = GOOGLE;
+				break;
+		}
 
 		Optional<User> optionalUser = userJpaRepository.findByEmailAndProvider(
-			kakaoModel.getUserInfo().getEmail(), kakaoModel.getUserInfo().getProvider());
+			socialModel.getUserInfo().getEmail(), socialModel.getUserInfo().getProvider());
 		if(optionalUser.isPresent()) {
 			User user = optionalUser.get();
 			resultModel = SocialResultModel.builder()
@@ -84,12 +122,11 @@ public class KakaoService {
 		} else {
 			resultModel = SocialResultModel.builder()
 				.id(null)
-				.nickname(kakaoProfile.getProperties().getNickname())
-				.userInfo(new UserInfo(kakaoProfile.getEmail(),null, PROVIDER))
+				.nickname(nickname)
+				.userInfo(new UserInfo(email,null, provider))
 				.token(null)
 				.build();
 		}
 		return resultModel;
 	}
-
 }
