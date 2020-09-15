@@ -14,3 +14,6 @@ userEmailConstraint:
 emailSigninFailed:
   code: "-1003"
   msg: "This ID does not exist."
+entryPointException:
+  code: "-1002"
+  msg: "You do not have permission to access this resource.
