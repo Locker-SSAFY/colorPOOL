@@ -61,7 +61,9 @@ export default {
       this.$parent.isGet = false;
     },
     getTheme(){
-      window.scrollTo(0, 1000);
+      document.body.className = "unlock";
+      console.log(document.body);
+      window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
     }
   }
 }
