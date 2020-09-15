@@ -15,7 +15,7 @@
     </v-card>
     <div v-if="this.$parent.isGet" class="search-wrap">
       <div class="search-panel">
-        <input v-model="keyword" placeholder="keyword">
+        <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
         <v-btn @click="getPicularImages()" class="ma-2" tile large color="yellow" icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>

@@ -1,7 +1,7 @@
 <template>
   <div class="landing wrap">
     <div class="top-page">
-      <img @click="goBack()" v-if="isPick || isGet" class="back-arrow" src="../assets/icon/arrow.png">
+      <img @click="goBack()" v-if="isPick || isGet" class="back-arrow" src="../assets/icons/arrow.png">
       <PickColor></PickColor>
       <GetColor></GetColor>
     </div>
