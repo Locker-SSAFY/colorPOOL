@@ -1,26 +1,52 @@
 package com.ssafy.socks.service.user;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Collections;
 
 import javax.transaction.Transactional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.socks.config.security.JwtTokenProvider;
 import com.ssafy.socks.entity.user.User;
+import com.ssafy.socks.model.user.UserResult;
 
-@SpringBootTest @Transactional
+@SpringBootTest @Transactional @AutoConfigureMockMvc
 public class UserTest {
+	private static final String token = "test-token";
+	private static final String entryPointUri = "/exception/entrypoint";
+
 	@Autowired private PasswordEncoder passwordEncoder;
 	@Autowired private UserService userService;
 	@Autowired private JwtTokenProvider jwtTokenProvider;
+	@Autowired private WebApplicationContext context;
+	@Autowired private ObjectMapper objectMapper;
+
+	private MockMvc mockMvc;
+
+	@BeforeEach
+	public void setUp() {
+		mockMvc = MockMvcBuilders
+			.webAppContextSetup(context)
+			.apply(springSecurity())
+			.build();
+	}
 
 	@Test
 	public void 회원_단건_조회_using_jwt() throws Exception {
@@ -41,5 +67,33 @@ public class UserTest {
 
 		// then
 		assertEquals(user,findUser);
+	 }
+
+	 @Test
+	 //@WithMockUser(username = "mockUser", roles = {"USER"}) // 가상의 Mock 유저 대입
+	 public void 잘못된_JWT_토큰_사용시_exception_entrypoint() throws Exception {
+		 // given
+		 String content = objectMapper.writeValueAsString(new UserResult("test@test.com", "1234"));
+
+		 // when
+		 mockMvc.perform(MockMvcRequestBuilders
+			 .post("/api/signup")
+			 .content(content)
+			 .contentType(MediaType.APPLICATION_JSON)
+			 .accept(MediaType.APPLICATION_JSON)
+			 .characterEncoding("UTF-8"))
+			 .andDo(print())
+			 .andExpect(status().isOk());
+
+		 // then
+		 mockMvc.perform(MockMvcRequestBuilders
+			 .get("/api/user")
+			 .header("X-AUTH-TOKEN", token)
+			 .param("lang", "ko")
+			 .contentType(MediaType.APPLICATION_JSON)
+			 .accept(MediaType.APPLICATION_JSON)
+			 .characterEncoding("UTF-8"))
+			 .andDo(print())
+			 .andExpect(redirectedUrl(entryPointUri));
 	 }
 }
