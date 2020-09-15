@@ -2,7 +2,7 @@ const colorStore = {
   namespaced: true,
   state: {
     selectedColor: '#EF5350',
-    selectedTheme: []
+    selectedTheme: null
   },
   getters:{
     GE_SELECTED_COLOR: state => state.selectedColor,
@@ -22,7 +22,7 @@ const colorStore = {
       commit('MU_SELECTED_COLOR', payload)
     },
     AC_SELECTED_THEME: ({commit}, payload) =>  {
-      console.log('AC_SELECTED_THEME');
+      console.log('AC_SELECTED_THEME', payload.selectedTheme);
       commit('MU_SELECTED_THEME', payload)
     }
   }
