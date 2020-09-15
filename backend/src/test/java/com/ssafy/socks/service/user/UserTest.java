@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -31,6 +32,7 @@ import com.ssafy.socks.model.user.UserResult;
 public class UserTest {
 	private static final String token = "test-token";
 	private static final String entryPointUri = "/exception/entrypoint";
+	private static final String accessDeniedUri = "/exception/accessdenied";
 
 	@Autowired private PasswordEncoder passwordEncoder;
 	@Autowired private UserService userService;
@@ -70,7 +72,6 @@ public class UserTest {
 	 }
 
 	 @Test
-	 //@WithMockUser(username = "mockUser", roles = {"USER"}) // 가상의 Mock 유저 대입
 	 public void 잘못된_JWT_토큰_사용시_exception_entrypoint() throws Exception {
 		 // given
 		 String content = objectMapper.writeValueAsString(new UserResult("test@test.com", "1234"));
@@ -96,4 +97,13 @@ public class UserTest {
 			 .andDo(print())
 			 .andExpect(redirectedUrl(entryPointUri));
 	 }
+
+	@Test
+	@WithMockUser(username = "mockUser", roles = {"USER"}) // 가상의 Mock 유저 대입
+	public void 유저_권한_부족_예외처리() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+			.get("/api/users"))
+			.andDo(print())
+			.andExpect(redirectedUrl(accessDeniedUri));
+	}
 }
