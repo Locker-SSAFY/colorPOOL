@@ -154,12 +154,8 @@ export default {
       window.scrollTo(0, 0);
     },
     selectTheme(c1, c2, c3, c4, c5){
-      // console.log(this.selectedTheme);
-      // this.selectedTheme = {c1, c2, c3, c4, c5};
       const payload = { selectedTheme: [c1, c2, c3, c4, c5]};
       this.AC_SELECTED_THEME(payload);
-      // console.log("선택한 Theme",this.selectedTheme);
-      // console.log("color1", this.selectedTheme.c1);
     },
     notSelect(){
       this.AC_SELECTED_THEME({selectedTheme: null});
@@ -181,7 +177,6 @@ export default {
     top: 100%;
     height: 100%;
     width: 65%;
-    /* background-color: bisque; */
     z-index: 49;
   }
 
