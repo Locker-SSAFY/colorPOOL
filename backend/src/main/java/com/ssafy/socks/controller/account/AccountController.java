@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "/api")
 public class AccountController {
 	private final static String provider = "ROOT";
-	private final static String role = "USER";
+	private final static String role = "ROLE_USER";
 
 	private final JwtTokenProvider jwtTokenProvider;
 	private final ResponseService responseService;
