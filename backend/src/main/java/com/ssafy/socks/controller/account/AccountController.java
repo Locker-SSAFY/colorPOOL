@@ -12,13 +12,12 @@ import com.ssafy.socks.config.security.JwtTokenProvider;
 import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.model.response.CommonResult;
 import com.ssafy.socks.model.response.SingleResult;
-import com.ssafy.socks.model.social.KakaoModel;
-import com.ssafy.socks.model.social.KakaoProfile;
+import com.ssafy.socks.model.social.SocialModel;
 import com.ssafy.socks.model.social.SocialResultModel;
 import com.ssafy.socks.model.user.SignInModel;
 import com.ssafy.socks.model.user.SignUpModel;
 import com.ssafy.socks.service.ResponseService;
-import com.ssafy.socks.service.social.KakaoService;
+import com.ssafy.socks.service.social.SocialService;
 import com.ssafy.socks.service.user.UserService;
 
 import io.swagger.annotations.Api;
@@ -29,11 +28,14 @@ import lombok.RequiredArgsConstructor;
 @Api(tags = {"1. Account"})
 @RequestMapping(value = "/api")
 public class AccountController {
+	private final static String KAKAO = "kakao";
+	private final static String GOOGLE = "google";
+
 	private final JwtTokenProvider jwtTokenProvider;
 	private final ResponseService responseService;
 	private final PasswordEncoder passwordEncoder;
 	private final UserService userService;
-	private final KakaoService kakaoService;
+	private final SocialService socialService;
 
 	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
 	@PostMapping(value = "/signup")
@@ -60,8 +62,8 @@ public class AccountController {
 	}
 
 	@ApiOperation(value = "소셜 로그인", notes = "소셜 회원 로그인을 한다.")
-	@GetMapping(value = "/signin/kakao")
-	public SingleResult<SocialResultModel> signInByProvider(@RequestBody KakaoModel kakaoModel) {
-		return responseService.getSingleResult(kakaoService.getKakaoResultModel(kakaoModel));
+	@PostMapping(value = "/signin/social")
+	public SingleResult<SocialResultModel> signInByProvider(@RequestBody SocialModel socialModel) {
+		return responseService.getSingleResult(socialService.getSocialResultModel(socialModel));
 	}
 }
