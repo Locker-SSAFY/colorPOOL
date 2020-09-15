@@ -5,8 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +13,6 @@ import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.model.response.CommonResult;
 import com.ssafy.socks.model.response.ListResult;
 import com.ssafy.socks.model.response.SingleResult;
-import com.ssafy.socks.model.user.UserResult;
 import com.ssafy.socks.service.ResponseService;
 import com.ssafy.socks.service.user.UserService;
 

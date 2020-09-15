@@ -13,7 +13,8 @@ import com.ssafy.socks.config.security.JwtTokenProvider;
 import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.model.response.CommonResult;
 import com.ssafy.socks.model.response.SingleResult;
-import com.ssafy.socks.model.user.UserResult;
+import com.ssafy.socks.model.user.SignInModel;
+import com.ssafy.socks.model.user.SignUpModel;
 import com.ssafy.socks.service.ResponseService;
 import com.ssafy.socks.service.user.UserService;
 
@@ -35,11 +36,12 @@ public class AccountController {
 
 	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
 	@PostMapping(value = "/signup")
-	public CommonResult signUp(@RequestBody UserResult userResult) {
+	public CommonResult signUp(@RequestBody SignUpModel signUpModel) {
 		userService.join(
 			User.builder()
-				.email(userResult.getEmail())
-				.password(passwordEncoder.encode(userResult.getPassword()))
+				.email(signUpModel.getEmail())
+				.nickname(signUpModel.getNickname())
+				.password(passwordEncoder.encode(signUpModel.getPassword()))
 				.provider(provider)
 				.roles(Collections.singletonList(role))
 				.build());
@@ -48,9 +50,9 @@ public class AccountController {
 
 	@ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
 	@PostMapping(value = "/signin")
-	public SingleResult<String> signIn(@RequestBody UserResult userResult) {
-		User user = userService.findByEmail(userResult.getEmail());
-		if (!passwordEncoder.matches(userResult.getPassword(), user.getPassword())) {
+	public SingleResult<String> signIn(@RequestBody SignInModel signInModel) {
+		User user = userService.findByEmail(signInModel.getEmail());
+		if (!passwordEncoder.matches(signInModel.getPassword(), user.getPassword())) {
 			throw new CEmailSigninFailedException();
 		}
 		return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles()));
