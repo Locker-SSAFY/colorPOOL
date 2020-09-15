@@ -40,7 +40,6 @@ export default {
       this.$parent.selectedVariation = variation;
     },
     changeColor(hex) {
-      // this.$parent.selectedColor = hex;
       const payload = { selectedColor: hex };
       this.AC_SELECTED_COLOR(payload);
     }
