@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class KakaoModel {
+public class SocialModel {
 	@Embedded UserInfo userInfo;
 	private String accessToken;
 }
