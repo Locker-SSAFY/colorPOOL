@@ -46,6 +46,10 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	/* jwt */
 
+	/* gson */
+	implementation 'com.google.code.gson:gson'
+	/* gson */
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
