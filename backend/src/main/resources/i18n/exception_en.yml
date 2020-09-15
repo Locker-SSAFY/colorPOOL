@@ -20,3 +20,6 @@ entryPointException:
 accessDenied:
   code: "-1005"
   msg: "A resource that can not be accessed with the privileges it has."
+communicationError:
+  code: "-1006"
+  msg: "An error occurred during communication."
