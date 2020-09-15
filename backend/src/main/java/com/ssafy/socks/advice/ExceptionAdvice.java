@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ssafy.socks.advice.exception.CAccessDeniedException;
 import com.ssafy.socks.advice.exception.CAuthenticationEntryPointException;
+import com.ssafy.socks.advice.exception.CCommunicationException;
 import com.ssafy.socks.advice.exception.CEmailSigninFailedException;
 import com.ssafy.socks.advice.exception.CUserDuplicatedException;
 import com.ssafy.socks.advice.exception.CUserNotFoundException;
@@ -54,6 +55,12 @@ public class ExceptionAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	protected CommonResult accessDeniedException(HttpServletRequest request, CAccessDeniedException e) {
 		return responseService.getFailResult(Integer.parseInt(getMessage("accessDenied.code")), getMessage("accessDenied.msg"));
+	}
+
+	@ExceptionHandler(CCommunicationException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	protected CommonResult accessDeniedException(HttpServletRequest request, CCommunicationException e) {
+		return responseService.getFailResult(Integer.parseInt(getMessage("communicationError.code")), getMessage("communicationError.msg"));
 	}
 
 	@ExceptionHandler(CUserDuplicatedException.class)
