@@ -5,13 +5,12 @@
       <v-btn
         icon
         text
-        dark
         v-bind="attrs"
         v-on="on"
       >
       SIGNIN</v-btn>
     </template>
-    <v-card class="signin-modal wrap">
+    <v-card class="signin-modal wrap" :style="{'background-color': backColor  }">
       <v-row>
         <v-col cols="11" id="modal-title">COLORPOOL</v-col>
         <v-col cols="1" id="modal-title">
@@ -106,6 +105,9 @@
 </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+const colorStore = 'colorStore'
+
 export default {
   data(){
     return{
@@ -113,7 +115,19 @@ export default {
       id: '',
       password: '',
       showSigninVal: true,
+      backColor: ''
     }
+  },
+  computed: {
+    ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR'})
+  },
+  created(){
+    this.backColor = this.storeSelectedColor;
+  },
+  watch: {
+    storeSelectedColor(val){
+      this.backColor = val
+    },
   },
   methods: {
     signin(){
@@ -130,9 +144,9 @@ export default {
 }
 </script>
 <style scoped>
-  .v-dialog .signin-modal.wrap {
+  /* .v-dialog .signin-modal.wrap {
     background-color: #EF5350;
-  }
+  } */
 
   .v-dialog .signin-modal.wrap .signin-back{
     height: 400px;

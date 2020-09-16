@@ -1,7 +1,7 @@
 const colorStore = {
   namespaced: true,
   state: {
-    selectedColor: '#EF5350',
+    selectedColor: '',
     selectedTheme: null
   },
   getters:{

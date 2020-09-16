@@ -1,5 +1,7 @@
 <template>
   <div class="pick-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
+    
+    <!-- Landing page의 pickColor 화면 -->
     <v-card @click="clickPick()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isPick == null"
@@ -13,9 +15,14 @@
         <v-card-title>Pick Your Color from Palette</v-card-title>
       </v-img>
     </v-card>
+
+    <!-- 컬러 팔레트 -->
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
+
+    <!-- 오른쪽 배경 -->
     <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
       <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+      <!-- 배색 추천 받으러 가기 버튼 -->
       <v-btn
         class="next-button"
         icon
@@ -25,18 +32,25 @@
         <v-icon size="100">mdi-arrow-right</v-icon>
       </v-btn>
     </div>
+    
+    <!-- 배색 추천 화면 -->
+    <div class="bottom-page" ref="messageDisplay">
+      <RecommendTheme></RecommendTheme>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import ColorPalette from './ColorPalette'
+import RecommendTheme from '../recommend-theme/RecommendTheme'
 const colorStore = 'colorStore'
 
 export default {
   name: 'PickColor',
   components: {
-    ColorPalette
+    ColorPalette,
+    RecommendTheme
   },
   created(){
     this.selectedColor = this.storeSlectedColor;
@@ -56,9 +70,12 @@ export default {
     }
   },
   methods : {
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
     clickPick() {
       this.$parent.isPick = true;
       this.$parent.isGet = false;
+      const payload = { selectedColor: '#EF5350'};
+      this.AC_SELECTED_COLOR(payload);
     },
     getTheme(){
       document.body.className = "unlock";
@@ -73,7 +90,7 @@ export default {
   .pick-color.wrap {
     width: 50%;
     height: 100%;
-    background-color: skyblue;
+    /* background-color: skyblue; */
     float: left;
     transition-duration: 300ms;
   }
