@@ -23,7 +23,7 @@ for i in range(0, row):
     themeColors = [0 for a in range(5)];
     for j in range(0, 5):
         L = int(matdata[j+3][i][0])
-        A = int(matdata[j+8][i][0])햣 ㄴㅅㅁ
+        A = int(matdata[j+8][i][0])
         B = int(matdata[j+13][i][0])
         themeColors[j] = (L, A, B)
         graph.add_node(themeColors[j]) # node 추가
