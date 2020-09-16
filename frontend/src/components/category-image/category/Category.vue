@@ -1,6 +1,6 @@
 <template>
   <div class="category wrap">
-    <ThemeBar></ThemeBar>
+    
     <div class="category-description">
       <strong>PRODUCT</strong><br>
       <strong>IN YOUR</strong><br>
@@ -66,12 +66,12 @@
 </template>
 
 <script>
-import ThemeBar from '../../header/ThemeBar'
+
 
 export default {
   name: 'Category',
   components: {
-    ThemeBar
+    
   },
   data() {
     return {
@@ -88,19 +88,19 @@ export default {
     pickLiving() {
       this.$parent.category = 'living';
       document.body.className = "unlock";
-      window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
+      window.scrollTo({left: 0,top: 4000, behavior: 'smooth'});
     },
     pickAccesory() {
       this.$parent.category = 'accesory';
-      window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
+      window.scrollTo({left: 0,top: 4000, behavior: 'smooth'});
     },
     pickFashion() {
       this.$parent.category = 'fashion';
-      window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
+      window.scrollTo({left: 0,top: 4000, behavior: 'smooth'});
     },
     pickMovie() {
       this.$parent.category = 'movie';
-      window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
+      window.scrollTo({left: 0,top: 4000, behavior: 'smooth'});
     }
   }
 }
