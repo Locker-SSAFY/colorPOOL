@@ -16,3 +16,5 @@ springdoc:
     path: /docs/swagger-ui.html
     displayRequestDuration: true
     groups-order: DESC
+    operations-sorter: method
+  version: 1.0.0
