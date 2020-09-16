@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
 			.antMatchers("/*/signin", "/*/signup")
 			.permitAll() // 가입 및 인증 주소는 누구나 접근가능
-			.antMatchers(HttpMethod.GET, "/exception/**", "/docs/**", "/v3/api-docs/**")
+			.antMatchers(HttpMethod.GET, "/exception/**", "/docs/**", "/api-docs/**")
 			.permitAll() // exception 시작하는 GET요청 리소스는 누구나 접근가능
 			.antMatchers("/*/users")
 			.hasRole("ADMIN") // api 시작하는 리소스는 관리자만 접근가능

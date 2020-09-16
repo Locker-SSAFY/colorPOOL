@@ -22,7 +22,6 @@ import com.ssafy.socks.service.user.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,9 +42,7 @@ public class AccountController {
 
 	@Operation(summary = "가입", description = "회원가입을 한다.")
 	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "회원가입 성공",
-			content = {@Content(mediaType = "application/json",
-				schema = @Schema(implementation = SignUpModel.class))}),
+		@ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content),
 		@ApiResponse(responseCode = "409", description = "중복 회원 (unique constraint)",
 			content = @Content),
 		@ApiResponse(responseCode = "500", description = "중복 회원",
@@ -58,9 +55,7 @@ public class AccountController {
 
 	@Operation(summary = "로그인", description = "이메일 회원 로그인을 한다.")
 	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "로그인 성공",
-			content = {@Content(mediaType = "application/json",
-				schema = @Schema(implementation = SignInModel.class))}),
+		@ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content),
 		@ApiResponse(responseCode = "409", description = "해당 사항 없음", content = @Content),
 		@ApiResponse(responseCode = "500", description = "존재 하지 않는 회원",
 			content = @Content)})
@@ -76,9 +71,7 @@ public class AccountController {
 
 	@Operation(summary = "소셜 계정 가입", description = "소셜 계정 회원가입을 한다.")
 	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "회원 가입 성공",
-			content = {@Content(mediaType = "application/json",
-				schema = @Schema(implementation = SignInModel.class))}),
+		@ApiResponse(responseCode = "200", description = "회원 가입 성공", content = @Content),
 		@ApiResponse(responseCode = "409", description = "중복 회원 (unique constraint)", content = @Content),
 		@ApiResponse(responseCode = "500", description = "중복 회원",
 			content = @Content)})
@@ -90,9 +83,7 @@ public class AccountController {
 
 	@Operation(summary = "소셜 로그인", description = "소셜 회원 로그인을 한다.")
 	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "로그인 성공",
-			content = {@Content(mediaType = "application/json",
-				schema = @Schema(implementation = SignInModel.class))}),
+		@ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content),
 		@ApiResponse(responseCode = "409", description = "해당 사항 없음", content = @Content),
 		@ApiResponse(responseCode = "500", description = "알 수 없는 오류",
 			content = @Content)})

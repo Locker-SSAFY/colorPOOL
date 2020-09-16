@@ -60,12 +60,9 @@ public class UserController {
 		@Parameter(name = "X-AUTH-TOKEN", description = "로그인 성공 후 access_token", required = true, in = ParameterIn.HEADER)
 	})
 	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "회원 조회 성공",
-			content = {@Content(mediaType = "application/json",
-				schema = @Schema(implementation = SignInModel.class))}),
+		@ApiResponse(responseCode = "200", description = "회원 조회 성공", content = @Content),
 		@ApiResponse(responseCode = "409", description = "해당 사항 없음", content = @Content),
-		@ApiResponse(responseCode = "500", description = "토큰 정보 부정확",
-			content = @Content)})
+		@ApiResponse(responseCode = "500", description = "토큰 정보 부정확", content = @Content)})
 	@Operation(summary = "회원 단건 조회", description = "회원번호(pk)로 회원을 조회한다")
 	@GetMapping(value = "/user")
 	public SingleResult<User> findUserById(@Parameter(name = "lang", example = "ko") @RequestParam String lang) {
@@ -81,9 +78,7 @@ public class UserController {
 	})
 	@Operation(summary = "회원 삭제", description = "userId로 회원정보를 삭제한다")
 	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "회원 삭제 성공",
-			content = {@Content(mediaType = "application/json",
-				schema = @Schema(implementation = SignInModel.class))}),
+		@ApiResponse(responseCode = "200", description = "회원 삭제 성공", content = @Content),
 		@ApiResponse(responseCode = "409", description = "해당 사항 없음", content = @Content),
 		@ApiResponse(responseCode = "500", description = "토큰 정보 부정확",
 			content = @Content)})
