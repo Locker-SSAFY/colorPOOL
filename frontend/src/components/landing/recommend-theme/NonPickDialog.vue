@@ -1,12 +1,5 @@
 <template>
   <v-row justify="center">
-    <!-- <v-btn
-      color="primary"
-      dark
-      @click.stop="checkColor"
-    >
-      Open Dialog
-    </v-btn> -->
 
     <!-- 배색 추천 받으러 가기 버튼 -->
     <v-btn

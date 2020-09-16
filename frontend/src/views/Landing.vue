@@ -60,7 +60,6 @@ export default {
     width: 100%;
     height: 100%;
     display: flex;
-    /* align-items: baseline; */
   }
 
   .landing.wrap .top-page .back-arrow {

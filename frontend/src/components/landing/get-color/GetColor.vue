@@ -1,7 +1,7 @@
 <template>
   <div class="get-color wrap" :class="[{active : this.$parent.isGet}, {deactive : this.$parent.isPick}]">
     
-    <!-- Landing page의 pickColor 화면 -->
+    <!-- Landing page의 getColor 화면 -->
     <v-card @click="clickGet()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isGet == null"
@@ -20,7 +20,7 @@
     <div v-if="this.$parent.isGet" class="get-color left">
       <ul v-for="colorList in this.picularImages" v-bind:key="colorList.index">
         <li v-for="color in colorList" v-bind:key="color.color">
-          <v-card class="mx-auto elevation-5">
+          <v-card class="mx-auto elevation-5" @click="getColor(color.color)">
             <v-img class="white--text align-end" :src="color.img">
               <v-overlay :absolute="true" :opacity="0" class="image-layer" v-bind:style="{'background-color': color.color}"></v-overlay>  
             </v-img>
@@ -29,27 +29,30 @@
       </ul>
     </div>
 
-    <!-- 검색창 -->
-    <div v-if="this.$parent.isGet" class="search-wrap">
-      <div class="search-panel">
-        <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
-        <v-btn @click="getPicularImages()" class="ma-2" tile large color="yellow" icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </div>
+    <!-- 오른쪽 배경 -->
+    <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
+      <!-- <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"> -->
+    </div>
 
-      <!-- 배색 추천 받으러 가기 버튼 -->
-      <!-- <v-btn
-        class="next-button"
-        icon
-        text
-        @click="getTheme"
-      >
-        <v-icon size="100">mdi-arrow-right</v-icon>
-      </v-btn> -->
-      <div class="next-button">
-        <NonPickDialog></NonPickDialog>
+    <!-- 검색창 -->
+    <v-card class="search" v-if="this.$parent.isGet">
+      <div class="search-wrap">
+        <div class="search-panel">
+          <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
+          <v-btn @click="getPicularImages()" class="ma-2" tile large :color="selectedColor" icon>
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn>
+        </div>
       </div>
+    </v-card>
+
+    <div v-if="keyword==='' && this.$parent.isGet" id="require-text">
+      키워드를 입력해주세요
+    </div>
+
+    <!-- 배색 추천 받으러 가기 버튼 + 선택 안한 경우 modal -->
+    <div class="next-button" v-if="this.$parent.isGet">
+      <NonPickDialog></NonPickDialog>
     </div>
 
     <!-- 배색 추천 화면 -->
@@ -63,7 +66,7 @@
 import RecommendTheme from '../recommend-theme/RecommendTheme';
 import NonPickDialog from '../recommend-theme/NonPickDialog';
 import axios from 'axios';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 const colorStore = 'colorStore'
 
 export default {
@@ -95,6 +98,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
     clickGet() {
       this.$parent.isPick = false;
       this.$parent.isGet = true;
@@ -116,16 +120,20 @@ export default {
       document.body.className = "unlock";
       console.log(document.body);
       window.scrollTo({left: 0, top: 1000, behavior: 'smooth'});
+    },
+    getColor(color){
+      const payload = {selectedColor: color};
+      this.AC_SELECTED_COLOR(payload);
     }
   }
 }
 </script>
 
 <style>
+
   .get-color.wrap {
     width: 50%;
     height: 100%;
-    background-color: yellow;
     float: right;
     transition-duration: 300ms;
   }
@@ -157,29 +165,54 @@ export default {
     height: 90%;
   }
 
-  .get-color.wrap .search-wrap {
+  .get-color.wrap .v-card.search {
     position: absolute;
     right: 5%;
-    width: 37%;
+    width: 40%;
+    height: 7%;
+    margin-top: 15%;
+  }
+  
+  #require-text{
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    width: 40%;
+    height: 7%;
+    margin-top: 15%;
+  }
+
+  .get-color.wrap .v-card .search-wrap {
+    position: absolute;
+    right: 5%;
+    width: 90%;
     height: 100%;
-    /* background-color: blue; */
-    /* margin-top: 10%; */
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .get-color.wrap .search-wrap .search-panel {
+  .get-color.wrap .v-card .search-wrap .search-panel {
     width: 100%;
-    padding-left: 8%;
+    /* padding-left: 8%; */
     background-color: white;
   }
 
-  .get-color.wrap .search-wrap .search-panel input {
+  .get-color.wrap .v-card .search-wrap .search-panel input {
     width: 50%;
     height: 100%;
     padding: 1% 1%;
     outline: none;
+  }
+
+  .pick-color.right {
+    width:30%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .get-color.wrap .get-color.left {
@@ -221,7 +254,7 @@ export default {
 
   .next-button {
     position: absolute;
-    right: 0%;
+    right: 5%;
     top: 85%;
   }
 

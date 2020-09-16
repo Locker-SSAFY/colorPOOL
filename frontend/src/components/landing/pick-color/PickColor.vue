@@ -18,6 +18,8 @@
 
     <!-- 컬러 팔레트 -->
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
+
+    <!-- 오른쪽 배경 -->
     <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
       <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
       <!-- 배색 추천 받으러 가기 버튼 -->
@@ -39,7 +41,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import ColorPalette from './ColorPalette'
 import RecommendTheme from '../recommend-theme/RecommendTheme'
 const colorStore = 'colorStore'
@@ -68,9 +70,12 @@ export default {
     }
   },
   methods : {
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
     clickPick() {
       this.$parent.isPick = true;
       this.$parent.isGet = false;
+      const payload = { selectedColor: '#EF5350'};
+      this.AC_SELECTED_COLOR(payload);
     },
     getTheme(){
       document.body.className = "unlock";
