@@ -26,8 +26,9 @@ public class SignInTest {
 		User user = User.builder()
 			.email("test@test.com")
 			.password(passwordEncoder.encode("1234!"))
+			.nickname("testMan")
 			.provider("ROOT")
-			.roles(Collections.singletonList("USER"))
+			.roles(Collections.singletonList("ROLE_USER"))
 			.build();
 		userService.join(user);
 

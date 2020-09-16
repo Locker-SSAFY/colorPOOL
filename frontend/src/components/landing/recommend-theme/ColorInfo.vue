@@ -11,8 +11,8 @@ export default {
 </script>
 <style scoped>
 .color-info.wrap{
-  padding: 10%;
-  padding-top: 30%;
+  padding: 5%;
+  padding-top: 25%;
   height: 100%;
   width: 100%;
 }

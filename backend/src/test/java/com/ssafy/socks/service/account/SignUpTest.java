@@ -28,6 +28,7 @@ class SignUpTest {
 		User user = User.builder()
 			.email("test@test.com")
 			.password(passwordEncoder.encode("1234!"))
+			.nickname("testMan")
 			.provider("root")
 			.roles(Collections.singletonList("GUEST"))
 			.build();
@@ -45,6 +46,7 @@ class SignUpTest {
 		 User user1 = User.builder()
 			 .email("test@test.com")
 			 .password(passwordEncoder.encode("1234!"))
+			 .nickname("testMan")
 			 .provider("root")
 			 .roles(Collections.singletonList("GUEST"))
 			 .build();
@@ -52,6 +54,7 @@ class SignUpTest {
 		 User user2 = User.builder()
 			 .email("test@test.com")
 			 .password(passwordEncoder.encode("1234!"))
+			 .nickname("testMan")
 			 .provider("root")
 			 .roles(Collections.singletonList("GUEST"))
 			 .build();
@@ -71,6 +74,7 @@ class SignUpTest {
 		User user1 = User.builder()
 			.email("test@test.com")
 			.password(passwordEncoder.encode("1234!"))
+			.nickname("testMan")
 			.provider("root")
 			.roles(Collections.singletonList("GUEST"))
 			.build();
@@ -78,6 +82,7 @@ class SignUpTest {
 		User user2 = User.builder()
 			.email("test@test.com")
 			.password(passwordEncoder.encode("1234!"))
+			.nickname("testMan")
 			.provider("root")
 			.roles(Collections.singletonList("GUEST"))
 			.build();

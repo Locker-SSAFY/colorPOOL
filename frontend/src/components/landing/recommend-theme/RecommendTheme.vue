@@ -1,7 +1,8 @@
 <template>
 <div>
   <div class="theme-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
-    <div class="show-color left"  v-bind:style="{'background-color' : selectedColor}">
+    <div class="theme-layer" @click="notSelect()"></div>
+    <div class="show-color left"  :style="{'background-color' : selectedColor}">
       <div class="color-code top">
         {{selectedColor}}
       </div>
@@ -18,27 +19,45 @@
       mdi-refresh</v-icon>
       <div class="button-text">POOL</div>
       
-      <div class="underline"></div>
+      <div class="underline" :style="{'background-color' : selectedColor}"></div>
       <SelectTone></SelectTone>
-      <ThemeScroll></ThemeScroll>
+      <!-- <ThemeScroll></ThemeScroll> -->
+      <div class="theme-scroll wrap">
+        <div class="show-themes mt-8" v-for="(t, index) in theme" :key="index">
+          <div class="color-group" @click="selectTheme(t.color1, t.color2, t.color3, t.color4, t.color5)">
+            <!-- {{t}}  -->
+            <div class="theme-colors" :style="{'background-color' : t.color1}">
+            </div>
+            <div class="theme-colors" :style="{'background-color' : t.color2}">
+            </div>
+            <div class="theme-colors" :style="{'background-color' : t.color3}">
+            </div>
+            <div class="theme-colors" :style="{'background-color' : t.color4}">
+            </div>
+            <div class="theme-colors" :style="{'background-color' : t.color5}">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
     <v-btn
-        class="goback-button"
-        icon
-        text
-        @click="goBack"
-      >
-        <v-icon size="100">mdi-arrow-left</v-icon>
-      </v-btn>
-
-    <div v-if="showColorInfo" class="theme-color right" v-bind:style="{'background-color' : selectedColor}">
+      class="goback-button"
+      icon
+      text
+      @click="goBack"
+    >
+      <v-icon size="100">mdi-arrow-left</v-icon>
+    </v-btn>
+    <div v-if="selectedTheme==null" class="theme-color right" :style="{'background-color' : selectedColor}">
       <ColorInfo></ColorInfo>
+    </div>
+    <div v-else class="theme-color right">
+      <ThemeInfo></ThemeInfo>
+      <div class="next-text">view more</div>
       <v-btn
         class="next-button"
         icon
         text
-        @click="getTheme"
       >
         <v-icon size="100">mdi-arrow-right</v-icon>
       </v-btn>
@@ -47,29 +66,99 @@
 </div>
 </template>
 <script> 
-import { mapState } from 'vuex'
+import { mapGetters,mapActions } from 'vuex'
 import SelectTone from './SelectTone'
-import ThemeScroll from './ThemeScroll'
+// import ThemeScroll from './ThemeScroll'
 import ColorInfo from './ColorInfo'
+import ThemeInfo from './ThemeInfo'
+const colorStore = 'colorStore'
 
 export default {
   name: 'RecommandTheme',
-  computed: {
-    ...mapState(["showColorInfo"])
-  },
   components: {
-    SelectTone, ThemeScroll, ColorInfo
+    SelectTone, 
+    // ThemeScroll, 
+    ColorInfo,
+    ThemeInfo
+  },
+  computed: {
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'})
+  },
+  created(){
+    this.selectedColor = this.storeSelectedColor;
+    this.selectedTheme = this.storeSelectedTheme;
   },
   data () {
     return {
-      selectedColor: '#EF5350',
-      selectedVariation: [],
-      showColorInfo: true
+      selectedColor: '',
+      selectedTheme: [],
+      // selectedVariation: [],
+      // showColorInfo: true,
+      theme: [
+        {
+          color1: "#e63946",
+          color2: "#f1faee",
+          color3: "#a8dadc",
+          color4: "#457b9d",
+          color5: "#1d3557",
+        },
+        {
+          color1: "#d90429",
+          color2: "#ef233c",
+          color3: "#edf2f4",
+          color4: "#edf2f4",
+          color5: "#8d99ae",
+        },
+        {
+          color1: "#003049",
+          color2: "#d62828",
+          color3: "#f77f00",
+          color4: "#fcbf49",
+          color5: "#eae2b7",
+        },
+        {
+          color1: "#03071e",
+          color2: "#370617",
+          color3: "#6a040f",
+          color4: "#9d0208",
+          color5: "#d00000",
+        },
+        {
+          color1: "#e63946",
+          color2: "#f1faee",
+          color3: "#a8dadc",
+          color4: "#457b9d",
+          color5: "#1d3557",
+        },
+        {
+          color1: "#d90429",
+          color2: "#ef233c",
+          color3: "#edf2f4",
+          color4: "#edf2f4",
+          color5: "#8d99ae",
+        },
+      ]
+    }
+  },
+  watch: {
+    storeSelectedColor(val){
+      this.selectedColor = val
+    },
+    storeSelectedTheme(val){
+      this.selectedTheme = val
     }
   },
   methods : {
+    ...mapActions(colorStore, ['AC_SELECTED_THEME']),
     goBack(){
       window.scrollTo(0, 0);
+    },
+    selectTheme(c1, c2, c3, c4, c5){
+      const payload = { selectedTheme: [c1, c2, c3, c4, c5]};
+      this.AC_SELECTED_THEME(payload);
+    },
+    notSelect(){
+      this.AC_SELECTED_THEME({selectedTheme: null});
     }
   }
 }
@@ -81,6 +170,14 @@ export default {
     height: 100%;
     float: left;
     transition-duration: 300ms;
+  }
+  .theme-layer{
+    position: absolute;
+    left: 0%;
+    top: 100%;
+    height: 100%;
+    width: 65%;
+    z-index: 49;
   }
 
   .theme-color.wrap.active {
@@ -94,6 +191,21 @@ export default {
     opacity: 0;
   }
 
+  .theme-scroll{
+    overflow: scroll;
+    height: 75%;
+  }
+
+  .color-group{
+    height: 85px;
+    width: 90%;
+    margin-left: 5%;
+  }
+  .theme-colors{
+    display: inline-block;
+    height: 100%; 
+    width: 20%;
+  }
   .show-color.left{
     position: absolute;
     left: 7%;
@@ -124,10 +236,11 @@ export default {
 
   .show-theme {
     position: absolute;
-    left: 27%;
+    left: 25%;
     top: 125%;
     height: 70%;
-    width: 40%;
+    width: 35%;
+    z-index: 50;
   }
 
   .button-text{
@@ -140,13 +253,13 @@ export default {
     position: absolute;
     left: 0%;
     top: 7%;
-    background-color: #EF5350;
+    /* background-color: #EF5350; */
     width: 100%;
     height: 2px;
   }
 
   .theme-color.right {
-    width:30%;
+    width:35%;
     height: 100%;
     position: absolute;
     right: 0;
@@ -154,16 +267,25 @@ export default {
     justify-content: center;
     align-items: center;
   }
+
+  .next-text{
+    position: absolute;
+    right: 20%;
+    top: 80%;
+  }
+
   .next-button {
     position: absolute;
     right: 20%;
     top: 85%;
+    z-index: 50;
   }
 
   .goback-button{
     position: absolute;
     top: 185%;
-    left: 5%
+    left: 5%;
+    z-index: 50;
   }
 
 </style>
