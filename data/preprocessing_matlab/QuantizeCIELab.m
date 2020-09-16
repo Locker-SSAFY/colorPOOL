@@ -1,11 +1,11 @@
 dataCIE = load('kulerCIEdata.mat');
-dataCIEtable = dataCIE.dataCIEtable;
+dataCIEtable = dataCIE.dataCIEtable2;
 
 n = length(dataCIEtable.Id);
 
 id = dataCIEtable.Id;
 name = dataCIEtable.Name;
-target = dataCIEtable.Target;
+target = dataCIEtable.Targets;
 
 
 L1 = dataCIEtable.L1;
@@ -67,4 +67,28 @@ end
 
 qdataCIEtable = table(id,name,target,qL1,qL2,qL3,qL4,qL5,qA1,qA2,qA3,qA4,qA5,qB1,qB2,qB3,qB4,qB5);
 qdataCIEtable.Properties.VariableNames = {'Id' 'Name' 'Target' 'L1' 'L2' 'L3' 'L4' 'L5' 'A1' 'A2' 'A3' 'A4' 'A5' 'B1' 'B2' 'B3' 'B4' 'B5'};
+qdataCIEtable2 = struct;
+qdataCIEtable2.Id = id;
+qdataCIEtable2.Name = name;
+qdataCIEtable2.Target = target;
+
+qdataCIEtable2.L1 = qL1;
+qdataCIEtable2.L2 = qL2;
+qdataCIEtable2.L3 = qL3;
+qdataCIEtable2.L4 = qL4;
+qdataCIEtable2.L5 = qL5;
+
+qdataCIEtable2.a1 = qA1;
+qdataCIEtable2.a2 = qA2;
+qdataCIEtable2.a3 = qA3;
+qdataCIEtable2.a4 = qA4;
+qdataCIEtable2.a5 = qA5;
+
+qdataCIEtable2.b1 = qB1;
+qdataCIEtable2.b2 = qB2;
+qdataCIEtable2.b3 = qB3;
+qdataCIEtable2.b4 = qB4;
+qdataCIEtable2.b5 = qB5;
+
+
 writetable(qdataCIEtable,'kulerQuantCIEdata.csv');
