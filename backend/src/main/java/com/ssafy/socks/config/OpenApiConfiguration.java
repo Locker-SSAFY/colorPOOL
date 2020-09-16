@@ -1,33 +1,29 @@
 package com.ssafy.socks.config;
 
-import org.springdoc.core.GroupedOpenApi;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Contact;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 
-@OpenAPIDefinition(
-	info = @Info(title = "color-POOL API 명세서",
-		description = "API 명세서",
-		version = "v1",
-		contact = @Contact(name = "Socks", email = "junhok82@gmail.com"),
-		license = @License(name = "Apache 2.0",
-			url = "http://www.apache.org/licenses/LICENSE-2.0.html")
-	)
-)
 @Configuration
 public class OpenApiConfiguration {
-	/**
-	 * customApi
-	 * @return GroupedOpenApi
-	 */
 	@Bean
-	public GroupedOpenApi customApi() {
-		String[] paths = {"/api/**"};
-		return GroupedOpenApi.builder().setGroup("color-POOL API").pathsToMatch(paths)
-			.build();
+	public OpenAPI openAPI(@Value("${springdoc.version}") String appVersion) {
+		Info info = new Info().title("color-POOL API").version(appVersion)
+			.description("Spring Boot를 이용한 color-POOL 웹 애플리케이션 API입니다.")
+			.termsOfService("https://j3a303.p.ssafy.io/")
+			.contact(
+				new Contact().name("Team. Socks").url("https://github.com/Locker-SSAFY").email("junhok82@gmail.com"))
+			.license(
+				new License().name("Apache License Version 2.0").url("http://www.apache.org/licenses/LICENSE-2.0"));
+
+		return new OpenAPI()
+			.components(new Components())
+			.info(info);
 	}
 }
