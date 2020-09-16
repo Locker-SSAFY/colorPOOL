@@ -1,16 +1,20 @@
 <template>
   <div class="category-image wrap">
+    <ThemeBar v-bind:colorList="colorList"></ThemeBar>
     <Category></Category>
     <ImageList
       v-bind:category="category"
       v-bind:images="images"
+      v-bind:colorList="colorList"
     ></ImageList>
   </div>
 </template>
 
 <script>
+import ThemeBar from '../components/header/ThemeBar'
 import Category from '../components/category-image/category/Category'
 import ImageList from '../components/category-image/image/Image'
+
 
 import { mapGetters, mapActions } from 'vuex'
 const imageStore = 'imageStore'
@@ -18,16 +22,16 @@ const imageStore = 'imageStore'
 export default {
   name: 'CategoryImage',
   components: {
-    Category, ImageList
+    Category, ImageList, ThemeBar
   },
   computed : {
     
     ...mapGetters(imageStore, 
       {
-        acImage: 'GE_ACCESORY_IMAGE', 
-        fsImage: 'GE_FASHION_IMAGE',
-        lvImage: 'GE_LIVING_IMAGE',
-        mvImage: 'GE_MOVIE_IMAGE'
+        storeAcImage: 'GE_ACCESORY_IMAGE', 
+        storeFsImage: 'GE_FASHION_IMAGE',
+        storeLvImage: 'GE_LIVING_IMAGE',
+        storeMvImage: 'GE_MOVIE_IMAGE'
       })
   },
   watch : {
@@ -45,14 +49,22 @@ export default {
     }
   },
   created() {
+    // 이미지들 가져오기
     this.AC_ACCESORY_IMAGE();
     this.AC_FASHION_IMAGE();
     this.AC_LIVING_IMAGE();
     this.AC_MOVIE_IAMGE();
-    this.accesoryImages = this.acImage;
-    this.fashionImages = this.fsImage;
-    this.livingImages = this.lvImage;
-    this.movieImages = this.mvImage;
+    // 가져온 이미지들 저장
+    this.accesoryImages = this.storeAcImage;
+    this.fashionImages = this.storeFsImage;
+    this.livingImages = this.storeLvImage;
+    this.movieImages = this.storeMvImage;
+    // 배색 5개를 리스트에 넣기
+    this.colorList.push(this.theme.color1);
+    this.colorList.push(this.theme.color2);
+    this.colorList.push(this.theme.color3);
+    this.colorList.push(this.theme.color4);
+    this.colorList.push(this.theme.color5);
   },
   data() {
     return {
@@ -62,6 +74,14 @@ export default {
       fashionImages: [],
       livingImages: [],
       movieImages: [],
+      theme: {
+        color1: "#e63946",
+        color2: "#f1faee",
+        color3: "#a8dadc",
+        color4: "#457b9d",
+        color5: "#1d3557",
+      },
+      colorList : []
     }
   },
   methods : {

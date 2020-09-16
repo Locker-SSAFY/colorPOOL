@@ -9,25 +9,15 @@
 <script>
 export default {
   name: 'ThemeBar',
+  props: {
+    colorList: void 0
+  },
   data () {
     return {
-      theme: {
-        color1: "#e63946",
-        color2: "#f1faee",
-        color3: "#a8dadc",
-        color4: "#457b9d",
-        color5: "#1d3557",
-      },
-      colorList : []
     }
   },
   created() {
-    this.colorList.push(this.theme.color1);
-    this.colorList.push(this.theme.color2);
-    this.colorList.push(this.theme.color3);
-    this.colorList.push(this.theme.color4);
-    this.colorList.push(this.theme.color5);
-    console.log(this.colorList);
+    
   },
   methods: {
     
@@ -38,16 +28,16 @@ export default {
 <style scoped>
   .theme-bar.wrap {
     position: fixed;
-    top: 0;
+    top: 80px;
     left: 0;
     width: 20px;
-    height: 100%;
+    height: calc(100% - 80px);
     transition-duration: 300ms;
+    z-index: 5;
   }
 
   .theme-bar.wrap:hover {
     width: 100px;
-    height: 100%;
   }
 
   .theme-color {
