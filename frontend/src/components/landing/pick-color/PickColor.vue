@@ -1,5 +1,7 @@
 <template>
   <div class="pick-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
+    
+    <!-- Landing page의 pickColor 화면 -->
     <v-card @click="clickPick()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isPick == null"
@@ -13,9 +15,12 @@
         <v-card-title>Pick Your Color from Palette</v-card-title>
       </v-img>
     </v-card>
+
+    <!-- 컬러 팔레트 -->
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
     <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
       <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+      <!-- 배색 추천 받으러 가기 버튼 -->
       <v-btn
         class="next-button"
         icon
@@ -73,7 +78,7 @@ export default {
   .pick-color.wrap {
     width: 50%;
     height: 100%;
-    background-color: skyblue;
+    /* background-color: skyblue; */
     float: left;
     transition-duration: 300ms;
   }

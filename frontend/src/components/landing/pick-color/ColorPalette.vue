@@ -52,8 +52,8 @@ export default {
     position: absolute;
     width: 40%;
     height: 80%;
-    margin-top: 5%;
-    left: 5%;
+    margin-top: 7%;
+    left: 14%;
     display: flex;
   }
 

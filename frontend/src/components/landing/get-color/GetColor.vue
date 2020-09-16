@@ -1,5 +1,7 @@
 <template>
   <div class="get-color wrap" :class="[{active : this.$parent.isGet}, {deactive : this.$parent.isPick}]">
+    
+    <!-- Landing page의 pickColor 화면 -->
     <v-card @click="clickGet()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isGet == null"
@@ -13,14 +15,8 @@
         <v-card-title>Get Your Color By Keyword</v-card-title>
       </v-img>
     </v-card>
-    <div v-if="this.$parent.isGet" class="search-wrap">
-      <div class="search-panel">
-        <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
-        <v-btn @click="getPicularImages()" class="ma-2" tile large color="yellow" icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </div>
-    </div>
+
+    <!-- 검색 결과 -->
     <div v-if="this.$parent.isGet" class="get-color left">
       <ul v-for="colorList in this.picularImages" v-bind:key="colorList.index">
         <li v-for="color in colorList" v-bind:key="color.color">
@@ -31,13 +27,34 @@
           </v-card>
         </li>
       </ul>
-     
+    </div>
+
+    <!-- 검색창 -->
+    <div v-if="this.$parent.isGet" class="search-wrap">
+      <div class="search-panel">
+        <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
+        <v-btn @click="getPicularImages()" class="ma-2" tile large color="yellow" icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </div>
+
+      <!-- 배색 추천 받으러 가기 버튼 -->
+      <v-btn
+        class="next-button"
+        icon
+        text
+        @click="getTheme"
+      >
+        <v-icon size="100">mdi-arrow-right</v-icon>
+      </v-btn>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { mapGetters } from 'vuex';
+const colorStore = 'colorStore'
 
 export default {
   name: 'GetColor',
@@ -47,11 +64,21 @@ export default {
       picularImages: [],
       keyword: '',
       absolute: true,
-    opacity: 1,
-    overlay: false,
+      opacity: 1,
+      overlay: false,
+      selectColor: '',
     }
   },
   computed: {
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'})
+  },
+  created(){
+    this.selectColor = this.storeSelectedColor;
+  },
+  watch: {
+    storeSelectedColor(val){
+      this.selectedColor = val
+    }
   },
   methods: {
     clickGet() {
@@ -70,6 +97,11 @@ export default {
       .catch((err) => {
         console.log(err);
       })
+    },
+    getTheme(){
+      document.body.className = "unlock";
+      console.log(document.body);
+      window.scrollTo({left: -100, top: 1000, behavior: 'smooth'});
     }
   }
 }
@@ -114,9 +146,10 @@ export default {
   .get-color.wrap .search-wrap {
     position: absolute;
     right: 5%;
-    width: 40%;
-    height: 50%;
-    margin-top: 15%;
+    width: 37%;
+    height: 100%;
+    /* background-color: blue; */
+    /* margin-top: 10%; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -124,8 +157,8 @@ export default {
 
   .get-color.wrap .search-wrap .search-panel {
     width: 100%;
+    padding-left: 8%;
     background-color: white;
-    text-align: center;
   }
 
   .get-color.wrap .search-wrap .search-panel input {
@@ -141,6 +174,7 @@ export default {
     width: 50%;
     height: 80%;
     padding-left: 1%;
+    left: 3%;
     display: flex;
     overflow: auto;
   }
@@ -171,4 +205,9 @@ export default {
     opacity: 0.1;
   }
 
+  .next-button {
+    position: absolute;
+    right: 0%;
+    top: 85%;
+  }
 </style>

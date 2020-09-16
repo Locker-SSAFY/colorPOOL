@@ -2,6 +2,8 @@
 <div>
   <div class="theme-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
     <div class="theme-layer" @click="notSelect()"></div>
+
+    <!-- 선택한 색상칩 -->
     <div class="show-color left"  :style="{'background-color' : selectedColor}">
       <div class="color-code top">
         {{selectedColor}}
@@ -11,6 +13,7 @@
       </div>
     </div>
 
+    <!-- 추천 배색 보여주는 곳 -->
     <div class="show-theme">
       <v-icon
         class="ma-2"
@@ -21,11 +24,9 @@
       
       <div class="underline" :style="{'background-color' : selectedColor}"></div>
       <SelectTone></SelectTone>
-      <!-- <ThemeScroll></ThemeScroll> -->
       <div class="theme-scroll wrap">
         <div class="show-themes mt-8" v-for="(t, index) in theme" :key="index">
           <div class="color-group" @click="selectTheme(t.color1, t.color2, t.color3, t.color4, t.color5)">
-            <!-- {{t}}  -->
             <div class="theme-colors" :style="{'background-color' : t.color1}">
             </div>
             <div class="theme-colors" :style="{'background-color' : t.color2}">
@@ -40,6 +41,8 @@
         </div>
       </div>
     </div>
+    
+    <!-- 이전으로 돌아가기 -->
     <v-btn
       class="goback-button"
       icon
@@ -48,9 +51,14 @@
     >
       <v-icon size="100">mdi-arrow-left</v-icon>
     </v-btn>
+
+    
+    <!-- 배색 선택 안했을 경우 -->
     <div v-if="selectedTheme==null" class="theme-color right" :style="{'background-color' : selectedColor}">
       <ColorInfo></ColorInfo>
     </div>
+
+    <!-- 배색 선택한 경우 -->
     <div v-else class="theme-color right">
       <ThemeInfo></ThemeInfo>
       <div class="next-text">view more</div>
@@ -68,7 +76,6 @@
 <script> 
 import { mapGetters,mapActions } from 'vuex'
 import SelectTone from './SelectTone'
-// import ThemeScroll from './ThemeScroll'
 import ColorInfo from './ColorInfo'
 import ThemeInfo from './ThemeInfo'
 const colorStore = 'colorStore'
@@ -77,7 +84,6 @@ export default {
   name: 'RecommandTheme',
   components: {
     SelectTone, 
-    // ThemeScroll, 
     ColorInfo,
     ThemeInfo
   },
