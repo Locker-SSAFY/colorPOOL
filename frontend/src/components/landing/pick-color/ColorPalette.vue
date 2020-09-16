@@ -30,7 +30,7 @@ export default {
     }
   },
   created() {
-    if(this.$parent.selectedVariation.length == 0)
+    // if(this.$parent.selectedVariation.length == 0)
       this.selectedColorVariation = this.materialColors[0].variations;
   },
   methods: {
