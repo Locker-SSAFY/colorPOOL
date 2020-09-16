@@ -6,15 +6,15 @@
           ColorPOOL
         </td>
         <td class="header-library">
-          <v-btn icon text dark>
+          <v-btn icon text>
             LIBRARY
           </v-btn>
         </td>
         <td class="header-signin">
             <Signin></Signin>
         </td>
-        <td calss="header-signup">
-          <v-btn icon text dark>
+        <td class="header-signup">
+          <v-btn icon text>
             SIGNUP
           </v-btn>
         </td>
@@ -62,9 +62,9 @@ export default {
     left: 0;
     width: 100%;
     height: 80px;
-    background-color: rgba(0,0,0,0.8);
     transition-duration: 300ms;
     z-index: 90;
+    background-color: rgb(255, 255, 255, 0.8);
   }
 
   .header.wrap table {
@@ -74,9 +74,10 @@ export default {
   }
 
   .header.wrap .header-logo {
-    color: white;
+    /* color: white; */
     font-size: 25px;
     width: 60%;
+    font-weight: bolder;
   }
 
   .header.wrap .header-library {
@@ -84,13 +85,23 @@ export default {
     text-align: right;
   }
 
+  .header.wrap .header-library .v-btn{
+    font-size: 1.2rem;
+  }
+
   .header.wrap .header-signin {
-    /* color: white; */
     text-align: center;
+  }
+  
+  .header.wrap .header-signin .v-btn{
+    font-size: 1.2rem;
   }
 
   .header.wrap .header-signup {
-    /* color: white; */
     text-align: left;
+  }
+
+  .header.wrap .header-signup .v-btn{
+    font-size: 1.2rem;
   }
 </style>
