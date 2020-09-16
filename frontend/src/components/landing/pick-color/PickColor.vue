@@ -30,18 +30,25 @@
         <v-icon size="100">mdi-arrow-right</v-icon>
       </v-btn>
     </div>
+    
+    <!-- 배색 추천 화면 -->
+    <div class="bottom-page" ref="messageDisplay">
+      <RecommendTheme></RecommendTheme>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import ColorPalette from './ColorPalette'
+import RecommendTheme from '../recommend-theme/RecommendTheme'
 const colorStore = 'colorStore'
 
 export default {
   name: 'PickColor',
   components: {
-    ColorPalette
+    ColorPalette,
+    RecommendTheme
   },
   created(){
     this.selectedColor = this.storeSlectedColor;

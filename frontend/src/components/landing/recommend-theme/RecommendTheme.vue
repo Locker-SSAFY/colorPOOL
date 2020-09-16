@@ -51,7 +51,6 @@
     >
       <v-icon size="100">mdi-arrow-left</v-icon>
     </v-btn>
-
     
     <!-- 배색 선택 안했을 경우 -->
     <div v-if="selectedTheme==null" class="theme-color right" :style="{'background-color' : selectedColor}">
@@ -85,7 +84,7 @@ export default {
   components: {
     SelectTone, 
     ColorInfo,
-    ThemeInfo
+    ThemeInfo,
   },
   computed: {
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'})
@@ -98,8 +97,6 @@ export default {
     return {
       selectedColor: '',
       selectedTheme: [],
-      // selectedVariation: [],
-      // showColorInfo: true,
       theme: [
         {
           color1: "#e63946",
@@ -158,6 +155,8 @@ export default {
     ...mapActions(colorStore, ['AC_SELECTED_THEME']),
     goBack(){
       window.scrollTo(0, 0);
+      const payload = {selectedTheme: null};
+      this.AC_SELECTED_THEME(payload);
     },
     selectTheme(c1, c2, c3, c4, c5){
       const payload = { selectedTheme: [c1, c2, c3, c4, c5]};
@@ -268,6 +267,7 @@ export default {
     width:35%;
     height: 100%;
     position: absolute;
+    top: 100%;
     right: 0;
     display: flex;
     justify-content: center;

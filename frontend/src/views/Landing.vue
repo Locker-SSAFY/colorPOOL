@@ -16,33 +16,35 @@
       <PickColor></PickColor>
       <GetColor></GetColor>
     </div>
-    <div class="bottom-page" ref="messageDisplay">
-      <RecommendTheme></RecommendTheme>
-    </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import GetColor from '../components/landing/get-color/GetColor'
 import PickColor from '../components/landing/pick-color/PickColor'
-import RecommendTheme from '../components/landing/recommend-theme/RecommendTheme'
+const colorStore = 'colorStore';
 
 export default {
   components: {
-    GetColor, PickColor, RecommendTheme
+    GetColor, PickColor,
   },
   data() {
     return {
       isPick: null,
       isGet: null,
+      selectedColor: ''
     }
   },
   created() {
   },
   methods : {
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
     goBack() {
       this.isPick = null;
       this.isGet = null;
+      const payload = {selectedColor: ''};
+      this.AC_SELECTED_COLOR(payload);
     }
   }
 }

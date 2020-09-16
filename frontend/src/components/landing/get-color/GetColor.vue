@@ -39,25 +39,39 @@
       </div>
 
       <!-- 배색 추천 받으러 가기 버튼 -->
-      <v-btn
+      <!-- <v-btn
         class="next-button"
         icon
         text
         @click="getTheme"
       >
         <v-icon size="100">mdi-arrow-right</v-icon>
-      </v-btn>
+      </v-btn> -->
+      <div class="next-button">
+        <NonPickDialog></NonPickDialog>
+      </div>
+    </div>
+
+    <!-- 배색 추천 화면 -->
+    <div class="bottom-page" ref="messageDisplay">
+      <RecommendTheme></RecommendTheme>
     </div>
   </div>
 </template>
 
 <script>
+import RecommendTheme from '../recommend-theme/RecommendTheme';
+import NonPickDialog from '../recommend-theme/NonPickDialog';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 const colorStore = 'colorStore'
 
 export default {
   name: 'GetColor',
+  components: {
+    RecommendTheme,
+    NonPickDialog
+  },
   data () {
     return {
       picularResult: {},
@@ -66,14 +80,14 @@ export default {
       absolute: true,
       opacity: 1,
       overlay: false,
-      selectColor: '',
+      selectedColor: '',
     }
   },
   computed: {
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'})
   },
   created(){
-    this.selectColor = this.storeSelectedColor;
+    this.selectedColor = this.storeSelectedColor;
   },
   watch: {
     storeSelectedColor(val){
@@ -101,7 +115,7 @@ export default {
     getTheme(){
       document.body.className = "unlock";
       console.log(document.body);
-      window.scrollTo({left: -100, top: 1000, behavior: 'smooth'});
+      window.scrollTo({left: 0, top: 1000, behavior: 'smooth'});
     }
   }
 }
@@ -209,5 +223,10 @@ export default {
     position: absolute;
     right: 0%;
     top: 85%;
+  }
+
+  .bottom-page {
+    width: 100%;
+    height: 100%;
   }
 </style>
