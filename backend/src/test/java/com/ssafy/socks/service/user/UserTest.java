@@ -1,6 +1,5 @@
 package com.ssafy.socks.service.user;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -72,12 +70,17 @@ public class UserTest {
 
 		// when
 		String token = jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles());
-		Authentication authentication = jwtTokenProvider.getAuthentication(token);
-		String email = authentication.getName();
-		User findUser = userService.findByEmail(email);
 
 		// then
-		assertEquals(user, findUser);
+		mockMvc.perform(MockMvcRequestBuilders
+			.get("/api/user")
+			.header("X-AUTH-TOKEN", token)
+			.param("lang", "ko")
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON)
+			.characterEncoding("UTF-8"))
+			.andDo(print())
+			.andExpect(status().isOk());
 	}
 
 	@Test

@@ -8,9 +8,9 @@ import com.ssafy.socks.advice.exception.CAccessDeniedException;
 import com.ssafy.socks.advice.exception.CAuthenticationEntryPointException;
 import com.ssafy.socks.model.response.CommonResult;
 
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.v3.oas.annotations.Hidden;
 
-@ApiIgnore
+@Hidden
 @RestController
 @RequestMapping(value = "/exception")
 public class ExceptionController {

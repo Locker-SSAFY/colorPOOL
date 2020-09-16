@@ -7,4 +7,12 @@ spring:
     encoding: UTF-8
   jwt:
     secret: govlepel@$&
-    
+
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+  swagger-ui:
+    path: /docs/swagger-ui.html
+    displayRequestDuration: true
+    groups-order: DESC

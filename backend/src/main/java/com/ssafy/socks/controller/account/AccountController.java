@@ -20,14 +20,18 @@ import com.ssafy.socks.service.ResponseService;
 import com.ssafy.socks.service.social.SocialService;
 import com.ssafy.socks.service.user.UserService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin
-@Api(tags = {"1. Account"})
+@Tag(name = "1. Account")
 @RequestMapping(value = "/api")
 public class AccountController {
 
@@ -37,14 +41,29 @@ public class AccountController {
 	private final UserService userService;
 	private final SocialService socialService;
 
-	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
+	@Operation(summary = "가입", description = "회원가입을 한다.")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "회원가입 성공",
+			content = {@Content(mediaType = "application/json",
+				schema = @Schema(implementation = SignUpModel.class))}),
+		@ApiResponse(responseCode = "409", description = "중복 회원 (unique constraint)",
+			content = @Content),
+		@ApiResponse(responseCode = "500", description = "중복 회원",
+			content = @Content)})
 	@PostMapping(value = "/signup")
 	public CommonResult signUp(@RequestBody SignUpModel signUpModel) {
 		userService.join(signUpModel);
 		return responseService.getSuccessResult();
 	}
 
-	@ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
+	@Operation(summary = "로그인", description = "이메일 회원 로그인을 한다.")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "로그인 성공",
+			content = {@Content(mediaType = "application/json",
+				schema = @Schema(implementation = SignInModel.class))}),
+		@ApiResponse(responseCode = "409", description = "해당 사항 없음", content = @Content),
+		@ApiResponse(responseCode = "500", description = "존재 하지 않는 회원",
+			content = @Content)})
 	@PostMapping(value = "/signin")
 	public SingleResult<String> signIn(@RequestBody SignInModel signInModel) {
 		User user = userService.findByEmail(signInModel.getUserInfo().getEmail());
@@ -55,14 +74,28 @@ public class AccountController {
 			jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles()));
 	}
 
-	@ApiOperation(value = "소셜 계정 가입", notes = "소셜 계정 회원가입을 한다.")
+	@Operation(summary = "소셜 계정 가입", description = "소셜 계정 회원가입을 한다.")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "회원 가입 성공",
+			content = {@Content(mediaType = "application/json",
+				schema = @Schema(implementation = SignInModel.class))}),
+		@ApiResponse(responseCode = "409", description = "중복 회원 (unique constraint)", content = @Content),
+		@ApiResponse(responseCode = "500", description = "중복 회원",
+			content = @Content)})
 	@PostMapping(value = "/signup/{provider}")
 	public CommonResult signUpProvider(@RequestBody SignUpModel signUpModel) {
 		userService.join(signUpModel);
 		return responseService.getSuccessResult();
 	}
 
-	@ApiOperation(value = "소셜 로그인", notes = "소셜 회원 로그인을 한다.")
+	@Operation(summary = "소셜 로그인", description = "소셜 회원 로그인을 한다.")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "로그인 성공",
+			content = {@Content(mediaType = "application/json",
+				schema = @Schema(implementation = SignInModel.class))}),
+		@ApiResponse(responseCode = "409", description = "해당 사항 없음", content = @Content),
+		@ApiResponse(responseCode = "500", description = "알 수 없는 오류",
+			content = @Content)})
 	@PostMapping(value = "/signin/social")
 	public SingleResult<SocialResultModel> signInByProvider(@RequestBody SocialModel socialModel) {
 		return responseService.getSingleResult(socialService.getSocialResultModel(socialModel));
