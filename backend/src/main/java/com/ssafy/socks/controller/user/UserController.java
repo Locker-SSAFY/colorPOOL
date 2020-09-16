@@ -2,6 +2,7 @@ package com.ssafy.socks.controller.user;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,9 @@ import lombok.RequiredArgsConstructor;
 
 @Api(tags = {"2. User"})
 @RequestMapping(value = "/api")
-@RequiredArgsConstructor @RestController
+@RequiredArgsConstructor
+@RestController
+@CrossOrigin
 public class UserController {
 
 	private final UserService userService;

@@ -10,7 +10,8 @@ import com.ssafy.socks.model.response.CommonResult;
 
 import springfox.documentation.annotations.ApiIgnore;
 
-@ApiIgnore @RestController
+@ApiIgnore
+@RestController
 @RequestMapping(value = "/exception")
 public class ExceptionController {
 
