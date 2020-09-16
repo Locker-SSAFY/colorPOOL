@@ -1,7 +1,7 @@
 package com.ssafy.socks.controller.account;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +24,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor @RestController
+@RequiredArgsConstructor
+@RestController
+@CrossOrigin
 @Api(tags = {"1. Account"})
 @RequestMapping(value = "/api")
 public class AccountController {
-	private final static String KAKAO = "kakao";
-	private final static String GOOGLE = "google";
 
 	private final JwtTokenProvider jwtTokenProvider;
 	private final ResponseService responseService;
@@ -51,7 +51,8 @@ public class AccountController {
 		if (!passwordEncoder.matches(signInModel.getUserInfo().getPassword(), user.getPassword())) {
 			throw new CEmailSigninFailedException();
 		}
-		return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles()));
+		return responseService.getSingleResult(
+			jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles()));
 	}
 
 	@ApiOperation(value = "소셜 계정 가입", notes = "소셜 계정 회원가입을 한다.")

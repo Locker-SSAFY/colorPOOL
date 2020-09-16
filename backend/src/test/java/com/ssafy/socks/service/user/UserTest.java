@@ -29,17 +29,24 @@ import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.model.user.SignUpModel;
 import com.ssafy.socks.model.user.UserInfo;
 
-@SpringBootTest @Transactional @AutoConfigureMockMvc
+@SpringBootTest
+@Transactional
+@AutoConfigureMockMvc
 public class UserTest {
 	private static final String token = "test-token";
 	private static final String entryPointUri = "/exception/entrypoint";
 	private static final String accessDeniedUri = "/exception/accessdenied";
 
-	@Autowired private PasswordEncoder passwordEncoder;
-	@Autowired private UserService userService;
-	@Autowired private JwtTokenProvider jwtTokenProvider;
-	@Autowired private WebApplicationContext context;
-	@Autowired private ObjectMapper objectMapper;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+	@Autowired
+	private WebApplicationContext context;
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	private MockMvc mockMvc;
 
@@ -53,7 +60,7 @@ public class UserTest {
 
 	@Test
 	public void 회원_단건_조회_using_jwt() throws Exception {
-	    // given
+		// given
 		User user = User.builder()
 			.email("test@test.com")
 			.password(passwordEncoder.encode("1234!"))
@@ -63,43 +70,43 @@ public class UserTest {
 			.build();
 		userService.join(user);
 
-	    // when
+		// when
 		String token = jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles());
 		Authentication authentication = jwtTokenProvider.getAuthentication(token);
 		String email = authentication.getName();
 		User findUser = userService.findByEmail(email);
 
 		// then
-		assertEquals(user,findUser);
-	 }
+		assertEquals(user, findUser);
+	}
 
-	 @Test
-	 public void 잘못된_JWT_토큰_사용시_exception_entrypoint() throws Exception {
-		 // given
-		 String content = objectMapper.writeValueAsString(
-			 new SignUpModel(new UserInfo("test@test.com", "1234!", "test"),"testMan"));
+	@Test
+	public void 잘못된_JWT_토큰_사용시_exception_entrypoint() throws Exception {
+		// given
+		String content = objectMapper.writeValueAsString(
+			new SignUpModel(new UserInfo("test@test.com", "1234!", "test"), "testMan"));
 
-		 // when
-		 mockMvc.perform(MockMvcRequestBuilders
-			 .post("/api/signup")
-			 .content(content)
-			 .contentType(MediaType.APPLICATION_JSON)
-			 .accept(MediaType.APPLICATION_JSON)
-			 .characterEncoding("UTF-8"))
-			 .andDo(print())
-			 .andExpect(status().isOk());
+		// when
+		mockMvc.perform(MockMvcRequestBuilders
+			.post("/api/signup")
+			.content(content)
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON)
+			.characterEncoding("UTF-8"))
+			.andDo(print())
+			.andExpect(status().isOk());
 
-		 // then
-		 mockMvc.perform(MockMvcRequestBuilders
-			 .get("/api/user")
-			 .header("X-AUTH-TOKEN", token)
-			 .param("lang", "ko")
-			 .contentType(MediaType.APPLICATION_JSON)
-			 .accept(MediaType.APPLICATION_JSON)
-			 .characterEncoding("UTF-8"))
-			 .andDo(print())
-			 .andExpect(redirectedUrl(entryPointUri));
-	 }
+		// then
+		mockMvc.perform(MockMvcRequestBuilders
+			.get("/api/user")
+			.header("X-AUTH-TOKEN", token)
+			.param("lang", "ko")
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON)
+			.characterEncoding("UTF-8"))
+			.andDo(print())
+			.andExpect(redirectedUrl(entryPointUri));
+	}
 
 	@Test
 	@WithMockUser(username = "mockUser", roles = {"USER"}) // 가상의 Mock 유저 대입
