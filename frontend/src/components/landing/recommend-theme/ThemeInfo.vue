@@ -1,45 +1,54 @@
 <template>
 <div class="theme-info wrap">
-  <h1>YOUR COLOR SCHEME</h1>
+  <h1 class="ml-8">YOUR COLOR SCHEME</h1>
   <div class="underline"></div>
-
-  <!-- <div class="color-group">
-    <div class="theme-colors" :style="{'background-color' : theme.color1}">
+  <div class="color-group mx-2">
+    <div class="theme-colors" v-for="(color, index) in selectedTheme" :key="index" :style="{'background-color' : color}">
     </div>
-    <div class="theme-colors" :style="{'background-color' : theme.color2}">
-    </div>
-    <div class="theme-colors" :style="{'background-color' : theme.color3}">
-    </div>
-    <div class="theme-colors" :style="{'background-color' : theme.color4}">
-    </div>
-    <div class="theme-colors" :style="{'background-color' : theme.color5}">
-    </div>
-  </div> -->
+  </div>
 </div>
 </template>
 <script>
+import { mapGetters} from 'vuex'
+const colorStore = 'colorStore'
+
 export default {
+  computed: {
+    ...mapGetters(colorStore, { storeSelectedTheme: 'GE_SELECTED_THEME'})
+  },
+  created(){
+    this.selectedTheme = this.storeSelectedTheme;
+  },
   data() {
     return {
-      theme : {
-        color1: "#e63946",
-        color2: "#f1faee",
-        color3: "#a8dadc",
-        color4: "#457b9d",
-        color5: "#1d3557",
-      },
+      selectedTheme: null,
     }
-  }
+  },
+  watch: {
+    storeSelectedTheme(val){
+      this.selectedTheme = val
+    }
+  },
 }
 </script>
 <style scoped>
   .theme-info.wrap{
-  padding: 10%;
-  padding-top: 40%;
+  /* padding: 10%; */
+  padding-top: 35%;
   height: 100%;
   width: 100%;
 }
-
+.color-group{
+  position: absolute;
+  top: 40%;
+  height: 85px;
+  width: 80%;
+}
+.theme-colors{
+  display: inline-block;
+  height: 100%; 
+  width: 20%;
+}
 .underline{
   background-color: black;
   position: absolute;

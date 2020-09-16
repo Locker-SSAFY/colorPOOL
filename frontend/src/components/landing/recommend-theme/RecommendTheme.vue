@@ -1,7 +1,8 @@
 <template>
 <div>
   <div class="theme-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
-    <div class="show-color left"  v-bind:style="{'background-color' : selectedColor}">
+    <div class="theme-layer" @click="notSelect()"></div>
+    <div class="show-color left"  :style="{'background-color' : selectedColor}">
       <div class="color-code top">
         {{selectedColor}}
       </div>
@@ -18,7 +19,7 @@
       mdi-refresh</v-icon>
       <div class="button-text">POOL</div>
       
-      <div class="underline"></div>
+      <div class="underline" :style="{'background-color' : selectedColor}"></div>
       <SelectTone></SelectTone>
       <!-- <ThemeScroll></ThemeScroll> -->
       <div class="theme-scroll wrap">
@@ -39,7 +40,6 @@
         </div>
       </div>
     </div>
-
     <v-btn
       class="goback-button"
       icon
@@ -48,10 +48,7 @@
     >
       <v-icon size="100">mdi-arrow-left</v-icon>
     </v-btn>
-    <!-- <v-btn style="position: absolute;" @click="notSelect">
-      testtest!
-    </v-btn> -->
-    <div v-if="selectedTheme==null" class="theme-color right" v-bind:style="{'background-color' : selectedColor}">
+    <div v-if="selectedTheme==null" class="theme-color right" :style="{'background-color' : selectedColor}">
       <ColorInfo></ColorInfo>
     </div>
     <div v-else class="theme-color right">
@@ -69,29 +66,34 @@
 </div>
 </template>
 <script> 
-// import { mapState } from 'vuex'
+import { mapGetters,mapActions } from 'vuex'
 import SelectTone from './SelectTone'
 // import ThemeScroll from './ThemeScroll'
 import ColorInfo from './ColorInfo'
 import ThemeInfo from './ThemeInfo'
+const colorStore = 'colorStore'
 
 export default {
   name: 'RecommandTheme',
-  computed: {
-    // ...mapState(["showColorInfo"])
-  },
   components: {
     SelectTone, 
     // ThemeScroll, 
     ColorInfo,
     ThemeInfo
   },
+  computed: {
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'})
+  },
+  created(){
+    this.selectedColor = this.storeSelectedColor;
+    this.selectedTheme = this.storeSelectedTheme;
+  },
   data () {
     return {
-      selectedColor: '#EF5350',
-      selectedVariation: [],
+      selectedColor: '',
+      selectedTheme: [],
+      // selectedVariation: [],
       // showColorInfo: true,
-      selectedTheme: null,
       theme: [
         {
           color1: "#e63946",
@@ -138,19 +140,25 @@ export default {
       ]
     }
   },
+  watch: {
+    storeSelectedColor(val){
+      this.selectedColor = val
+    },
+    storeSelectedTheme(val){
+      this.selectedTheme = val
+    }
+  },
   methods : {
+    ...mapActions(colorStore, ['AC_SELECTED_THEME']),
     goBack(){
       window.scrollTo(0, 0);
     },
     selectTheme(c1, c2, c3, c4, c5){
-      // console.log(this.selectedTheme);
-      this.selectedTheme = {c1, c2, c3, c4, c5};
-      console.log("선택한 Theme",this.selectedTheme);
-      // console.log("color1", this.selectedTheme.c1);
-      this.showColorInfo = false;
+      const payload = { selectedTheme: [c1, c2, c3, c4, c5]};
+      this.AC_SELECTED_THEME(payload);
     },
     notSelect(){
-      this.selectedTheme = null;
+      this.AC_SELECTED_THEME({selectedTheme: null});
     }
   }
 }
@@ -162,6 +170,14 @@ export default {
     height: 100%;
     float: left;
     transition-duration: 300ms;
+  }
+  .theme-layer{
+    position: absolute;
+    left: 0%;
+    top: 100%;
+    height: 100%;
+    width: 65%;
+    z-index: 49;
   }
 
   .theme-color.wrap.active {
@@ -220,10 +236,11 @@ export default {
 
   .show-theme {
     position: absolute;
-    left: 27%;
+    left: 25%;
     top: 125%;
     height: 70%;
     width: 35%;
+    z-index: 50;
   }
 
   .button-text{
@@ -236,13 +253,13 @@ export default {
     position: absolute;
     left: 0%;
     top: 7%;
-    background-color: #EF5350;
+    /* background-color: #EF5350; */
     width: 100%;
     height: 2px;
   }
 
   .theme-color.right {
-    width:30%;
+    width:35%;
     height: 100%;
     position: absolute;
     right: 0;
@@ -250,6 +267,7 @@ export default {
     justify-content: center;
     align-items: center;
   }
+
   .next-text{
     position: absolute;
     right: 20%;
@@ -260,12 +278,14 @@ export default {
     position: absolute;
     right: 20%;
     top: 85%;
+    z-index: 50;
   }
 
   .goback-button{
     position: absolute;
     top: 185%;
-    left: 5%
+    left: 5%;
+    z-index: 50;
   }
 
 </style>

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
 
 import Landing from '../views/Landing.vue'
+import CategoryImage from '../views/CategoryImage.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Landing',
     component: Landing
+  },
+  {
+    path: '/category',
+    name : 'CategoryImage',
+    component: CategoryImage
   }
 ]
 
