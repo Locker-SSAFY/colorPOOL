@@ -37,10 +37,10 @@
             <v-col v-if="showSigninVal">
               <v-row id="singin-title">SIGNIN</v-row>
               <v-row>
-                <v-text-field label="id" required></v-text-field>
+                <v-text-field v-model="userEmail" label="email" required></v-text-field>
               </v-row>
               <v-row>
-                <v-text-field label="password" type="password" required></v-text-field>
+                <v-text-field v-model="userPassword" label="password" type="password" required></v-text-field>
               </v-row>
               <v-row>
                 <v-btn
@@ -74,16 +74,16 @@
             <v-col v-else>
               <v-row id="singin-title">SIGNUP</v-row>
               <v-row>
-                <v-text-field label="nickname" type="password" required></v-text-field>
+                <v-text-field v-model="nickName" :couter="30" :rules="nickNameRules" label="nickname" required></v-text-field>
               </v-row>
               <v-row>
-                <v-text-field label="email" required></v-text-field>
+                <v-text-field v-model="email" :rules="emailRules" label="email" required></v-text-field>
               </v-row>
               <v-row>
-                <v-text-field label="password" type="password" required></v-text-field>
+                <v-text-field v-model="password" :counter="50" :rules="passwordRules" label="password" type="password" required></v-text-field>
               </v-row>
               <v-row>
-                <v-text-field label="check password" type="password" required></v-text-field>
+                <v-text-field v-model="passwordConfirm" :counter="50" :rules="passwordConfirmRules" label="check password" type="password" required></v-text-field>
               </v-row>
               <v-row>
                 <v-btn
@@ -91,7 +91,7 @@
                   color="black"
                   dark
                   class="mb-2"
-                  @click="signin"
+                  @click="signup"
                 >
                 SIGINUP
                 </v-btn>
@@ -105,24 +105,67 @@
 </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+// import axios from '../../api/axiosCommon'
+// import SERVER from '../../api/restApi'
+import { mapGetters, mapActions } from 'vuex'
 const colorStore = 'colorStore'
+const userStore = 'userStore'
 
 export default {
-  data(){
-    return{
-      dialog: false,
-      id: '',
-      password: '',
-      showSigninVal: true,
-      backColor: ''
-    }
-  },
   computed: {
-    ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR'})
+    ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR', storeIsLogin: 'GE_IS_LOGIN', storeUserInfo: 'GE_USER_INFO'}),
+    //비밀 번호 확인 체크
+    passwordConfirmRules() {
+      if (this.passwordConfirm != this.passwordConfirm) {
+        return "비밀번호가 일치하지 않습니다";
+      }
+      return [
+        () =>
+          this.password === this.passwordConfirm ||
+          "비밀번호가 일치하지 않습니다",
+        v => !!v || "비밀번호 확인을 입력해주세요",
+        v =>
+          (v && v.length >= 4 && v.length <= 50) ||
+          "비밀번호 확인은 최소 4자 최대 50자 입니다"
+      ];
+    }
   },
   created(){
     this.backColor = this.storeSelectedColor;
+    this.isLogin = this.storeIsLogin;
+    this.userInfo = this.storeUserInfo;
+  },
+  data(){
+    return{
+      dialog: false,
+      isLogin: false,
+      userEmail: '',
+      userPassword: '',
+      showSigninVal: true,
+      backColor: '',
+      email: "",
+      emailRules: [
+        v => !!v || "이메일을 입력해주세요",
+        v =>
+          /^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+\.[A-Za-z0-9]+/.test(v) ||
+          "이메일 형식에 맞게 입력해주세요"
+      ],
+      nickName: "",
+      nickNameRules: [
+        v => !!v || "닉네임을 입력해주세요",
+        v =>
+          (v && v.length >= 1 && v.length <= 30) ||
+          "닉네임은 최소 1자 최대 30자 입니다"
+      ],
+      password: "",
+      passwordRules: [
+        v => !!v || "비밀번호를 입력해주세요",
+        v =>
+          (v && v.length >= 4 && v.length <= 50) ||
+          "비밀번호는 최소 4자 최대 50자 입니다"
+      ],
+      passwordConfirm: ""
+    }
   },
   watch: {
     storeSelectedColor(val){
@@ -130,24 +173,39 @@ export default {
     },
   },
   methods: {
-    signin(){
-      this.dialog = false
-    },
+    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP']),
     showSignin(){
       this.showSigninVal = true;
     },
     showSignup(){
       this.showSigninVal = false;
       console.log(this.showSigninVal);
+    },
+    signin(){
+      const payload = {
+        userInfo: {
+          email: this.userEmail, 
+          password: this.userPassword,
+          provider: 'root'
+        }
+      }
+      this.AC_SIGNIN(payload);
+    },
+    signup(){
+      const payload = {
+        nickname: this.nickName,
+        userInfo: {
+          email: this.email, 
+          password: this.password,
+          provider: 'root'
+        }
+      }
+      this.AC_SIGNUP(payload);
     }
   }
 }
 </script>
 <style scoped>
-  /* .v-dialog .signin-modal.wrap {
-    background-color: #EF5350;
-  } */
-
   .v-dialog .signin-modal.wrap .signin-back{
     height: 400px;
     margin-bottom: 30px;
