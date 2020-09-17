@@ -62,6 +62,7 @@
                   color="rgba(219, 68, 55)"
                   dark
                   class="mb-2"
+                  @click="handleClickSignIn"
                 >
                 <v-icon class="mr-2">mdi-google</v-icon>
                 GOOGLE
@@ -239,7 +240,25 @@ export default {
       this.userEmail = '';
       this.userPassword = '';
       this.AC_DISPLAY(false);
-    }
+    },
+
+    //구글 로그인
+    async handleClickSignIn() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        let token = googleUser.getAuthResponse().access_token;
+        console.log(
+          "google - access_token : ",
+          googleUser.getAuthResponse().access_token
+        );
+        this.isSignIn = this.$gAuth.isAuthorized;
+        token;
+        // this.signinWithSocial({ access_token: token, provider: this.google });
+      } catch (error) {
+        console.error(error);
+        // alert("구글 로그인 도중 문제가 발생했습니다!", error);
+      }
+    },
   }
 }
 </script>
