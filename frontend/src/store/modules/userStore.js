@@ -52,6 +52,7 @@ const userStore = {
         commit('MU_DISPLAY', false);
         //임시로 userInfo 저장
         commit('MU_USER_INFO', payload);
+        commit('MU_IS_LOGIN', true);
       })
       .catch(function (error) {
         console.log(error);
@@ -59,7 +60,40 @@ const userStore = {
       });
     },
     //카카오톡 로그인
-    
+    AC_KAKAO_SIGNIN: ({commit}) => {
+      console.log('AC_KAKAO_SIGNIN')
+      window.Kakao.Auth.login({
+        success: function(authObj) {
+          console.log(authObj)
+          commit;
+          const token = authObj.access_token; 
+          console.log("token", token);
+          localStorage.setItem("access_token",token);
+          // const KakaoInfo = {
+          //   userInfo : {
+          //     email: '',
+          //     password: '',
+          //     provider: 'kakao'
+          //   },
+          //   accessToken: authObj.access_token
+          // }
+          // axios
+          //   .post(SERVER.ROUTES.socialSignin, KakaoInfo)
+          //   .then((response) => {
+          //     console.log(response.data);
+          //     const token = response.data.data;
+          //     localStorage.setItem('access_token', token);
+          //   })
+          //   .catch((error) => {
+          //     console.log(error);
+          //   })
+        },
+        fail: function(err) {
+          alert("fail", JSON.stringify(err));
+          console.log("err : ", err);
+        },
+      });
+    },
     //회원가입
     AC_SIGNUP: ({commit}, payload) => {
       console.log('AC_SIGNUP', payload);
@@ -93,6 +127,11 @@ const userStore = {
       .catch( error => {
         console.log(error);
       })
+    },
+    //로그아웃 처리
+    AC_LOGOUT: ({commit}) => {
+      console.log('AC_LOGOUT');
+      commit('MU_IS_LOGIN', false);
     }
   }
 }

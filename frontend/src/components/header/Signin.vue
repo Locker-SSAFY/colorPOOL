@@ -9,7 +9,7 @@
         v-on="on"
         @click="AC_DISPLAY(true)"
       >
-      SIGNIN</v-btn>
+      SIGNIN/SIGNUP</v-btn>
     </template>
     <v-card class="signin-modal wrap" :style="{'background-color': backColor  }">
       <v-row>
@@ -70,6 +70,7 @@
                   color="rgb(255, 204, 0)"
                   dark
                   class="mb-2"
+                  @click="AC_KAKAO_SIGNIN"
                 >
                 <v-icon class="mr-2">mdi-chat</v-icon>
                 KAKAOTALK
@@ -138,6 +139,9 @@ export default {
       ];
     }
   },
+  props: {
+    name: void 0
+  },
   created(){
     this.backColor = this.storeSelectedColor;
     this.dialog = this.storeDisplay;
@@ -194,7 +198,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY']),
+    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN']),
     showSignin(){
       this.showSigninVal = true;
     },
