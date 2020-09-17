@@ -37,6 +37,7 @@
             <!-- signin -->
             <v-col v-if="showSigninVal">
               <v-row id="singin-title">SIGNIN</v-row>
+              <v-row id="show-error">{{errorMsg}}</v-row>
               <v-row>
                 <v-text-field v-model="userEmail" label="email" required></v-text-field>
               </v-row>
@@ -121,7 +122,8 @@ export default {
     ...mapGetters(userStore, { storeIsLogin: 'GE_IS_LOGIN',
                               storeUserInfo: 'GE_USER_INFO',
                               storeIsLoginError: 'GE_IS_LOGIN_ERROR',
-                              storeDisplay: 'GE_DISPLAY'}),
+                              storeDisplay: 'GE_DISPLAY',
+                              storeErrorMsg: 'GE_ERROR'}),
     ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR' }),
     //비밀 번호 확인 체크
     passwordConfirmRules() {
@@ -148,12 +150,14 @@ export default {
     this.isLogin = this.storeIsLogin;
     this.isLoginError = this.storeIsLoginError;
     this.userInfo = this.storeUserInfo;
+    this.errorMsg = this.storeErrorMsg;
   },
   data(){
     return{
       dialog: false,
       isLogin: false,
       isLoginError: false,
+      errorMsg: null,
       userInfo: null,
       userEmail: '',
       userPassword: '',
@@ -195,10 +199,13 @@ export default {
     },
     storeDisplay(val){
       this.dialog = val
+    },
+    storeErrorMsg(val){
+      this.errorMsg = val;
     }
   },
   methods: {
-    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN']),
+    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN','AC_ERROR']),
     showSignin(){
       this.showSigninVal = true;
     },
@@ -228,6 +235,9 @@ export default {
       this.AC_SIGNUP(payload);
     },
     close(){
+      this.AC_ERROR(null);
+      this.userEmail = '';
+      this.userPassword = '';
       this.AC_DISPLAY(false);
     }
   }
@@ -250,6 +260,13 @@ export default {
 
   #singin-title{
     font-size: 2rem;
+  }
+
+  #show-error{
+    color: red;
+    font-weight: border;
+    font-size: 1rem;
+    height: 5%;
   }
 
   #horizon-line{

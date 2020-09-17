@@ -60,7 +60,7 @@ export default {
     },
     storeIsLogin(val){
       this.isLogin = val;
-    }
+    },
   },
   methods: {
     ...mapActions(userStore, ['AC_LOGOUT']),
@@ -76,7 +76,9 @@ export default {
       var result = confirm("정말 로그아웃 하시겠어요?");
       if(result){
           this.userInfo = null;
-          this.AC_LOGOUT();
+          this.AC_LOGOUT(null);
+          localStorage.removeItem('access_token');
+          this.$router.push({name: 'Landing'});
       }
     }
   },
