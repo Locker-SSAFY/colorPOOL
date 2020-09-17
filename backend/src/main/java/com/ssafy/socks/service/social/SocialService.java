@@ -19,7 +19,6 @@ import com.ssafy.socks.advice.exception.CCommunicationException;
 import com.ssafy.socks.config.security.JwtTokenProvider;
 import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.model.social.GoogleProfile;
-import com.ssafy.socks.model.social.SocialModel;
 import com.ssafy.socks.model.social.KakaoProfile;
 import com.ssafy.socks.model.social.SocialResultModel;
 import com.ssafy.socks.model.user.UserInfo;
@@ -27,7 +26,8 @@ import com.ssafy.socks.repository.user.UserJpaRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor @Service
+@RequiredArgsConstructor
+@Service
 public class SocialService {
 	private final static String KAKAO = "kakao";
 	private final static String GOOGLE = "google";
@@ -85,45 +85,44 @@ public class SocialService {
 	 * 	통합 회원이
 	 * 		있을 경우 -> 로그인
 	 *		없을 경우 -> 회원 가입 틀 반환
-	 * @param socialModel
+	 * @param accessToken
 	 * @return
 	 */
-	public SocialResultModel getSocialResultModel(SocialModel socialModel) {
+	public SocialResultModel getSocialResultModel(String accessToken) {
 		SocialResultModel resultModel = null;
 		String email = null;
 		String nickname = null;
 		String provider = null;
 
-		switch (socialModel.getAccessToken()) {
+		switch (accessToken) {
 			case KAKAO:
-				KakaoProfile kakaoProfile = this.getKakaoProfile(socialModel.getAccessToken());
+				KakaoProfile kakaoProfile = this.getKakaoProfile(accessToken);
 				email = kakaoProfile.getEmail();
 				nickname = kakaoProfile.getProperties().getNickname();
 				provider = KAKAO;
 				break;
 			case GOOGLE:
-				GoogleProfile googleProfile = this.getGoogleProfile(socialModel.getAccessToken());
+				GoogleProfile googleProfile = this.getGoogleProfile(accessToken);
 				email = googleProfile.getEmail();
 				nickname = googleProfile.getName();
 				provider = GOOGLE;
 				break;
 		}
 
-		Optional<User> optionalUser = userJpaRepository.findByEmailAndProvider(
-			socialModel.getUserInfo().getEmail(), socialModel.getUserInfo().getProvider());
-		if(optionalUser.isPresent()) {
+		Optional<User> optionalUser = userJpaRepository.findByEmailAndProvider(email, provider);
+		if (optionalUser.isPresent()) {
 			User user = optionalUser.get();
 			resultModel = SocialResultModel.builder()
 				.id(user.getId())
 				.nickname(user.getNickname())
-				.userInfo(new UserInfo(user.getEmail(),user.getPassword(),user.getProvider()))
+				.userInfo(new UserInfo(user.getEmail(), user.getPassword(), user.getProvider()))
 				.token(jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles()))
 				.build();
 		} else {
 			resultModel = SocialResultModel.builder()
 				.id(null)
 				.nickname(nickname)
-				.userInfo(new UserInfo(email,null, provider))
+				.userInfo(new UserInfo(email, null, provider))
 				.token(null)
 				.build();
 		}
