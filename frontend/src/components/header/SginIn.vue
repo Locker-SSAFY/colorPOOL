@@ -62,7 +62,7 @@
                   dark
                   class="mb-2"
                 >
-                <v-icon>mdi-google</v-icon>
+                <v-icon class="mr-2">mdi-google</v-icon>
                 GOOGLE
                 </v-btn>
                 <v-btn
@@ -71,7 +71,7 @@
                   dark
                   class="mb-2"
                 >
-                <v-icon>mdi-chat</v-icon>
+                <v-icon class="mr-2">mdi-chat</v-icon>
                 KAKAOTALK
                 </v-btn>
               </v-row>

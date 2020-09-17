@@ -58,6 +58,8 @@ const userStore = {
         commit('MU_IS_LOGIN_ERROR', true);
       });
     },
+    //카카오톡 로그인
+    
     //회원가입
     AC_SIGNUP: ({commit}, payload) => {
       console.log('AC_SIGNUP', payload);
