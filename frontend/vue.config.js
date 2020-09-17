@@ -10,7 +10,9 @@ module.exports = {
   //       // 프록시 요청을 보낼 api의 시작 부분
   //       '/api': {
   //           // 프록시 요청을 보낼 서버의 주소
-  //           target: 'http://localhost:8080'
+  //           // target: 'http://localhost:8080',
+  //           target:'https://j3a303.p.ssafy.io',
+  //           changeOrigin: true
   //       }
   //   }
   // }

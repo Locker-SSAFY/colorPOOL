@@ -11,11 +11,14 @@ const userStore = {
     isLogin: false,
     //로그인을 실패한 경우 true
     isLoginError: false,
+    //로그인 창 display
+    modalDisplay: false,
   },
   getters:{
     GE_USER_INFO: state => state.userInfo,
     GE_IS_LOGIN: state => state.isLogin,
-    GE_IS_LOGIN_ERROR: state => state.isLoginError
+    GE_IS_LOGIN_ERROR: state => state.isLoginError,
+    GE_DISPLAY: state => state.modalDisplay
   },
   mutations: {
     MU_USER_INFO: (state, payload) => {
@@ -25,20 +28,28 @@ const userStore = {
       state.isLogin = payload
     },
     MU_IS_LOGIN_ERROR: (state, payload) => {
+      console.log('MU_IS_LOGIN_ERROR', payload)
       state.isLoginErrors = payload
     },
+    MU_DISPLAY: (state, payload) => {
+      console.log('MU_DISPLAY', payload)
+      state.modalDisplay = payload
+    }
   },
   actions:{
     //회원 로그인
-    AC_SINGIN: ({dispatch}, payload) => {
+    AC_SIGNIN: ({commit, dispatch}, payload) => {
       console.log('AC_SINGIN', payload);
       axios.post(SERVER.ROUTES.signin, payload)
       .then(function (response) {
         console.log(response);
-        dispatch.AC_GET_USERINFO({token : response.data});
+        commit('MU_IS_LOGIN_ERROR', false);
+        // dispatch.AC_GET_USERINFO({token : response.data});
+        dispatch('AC_GET_USERINFO', {token: response.data.data});
       })
       .catch(function (error) {
         console.log(error);
+        commit('MU_IS_LOGIN_ERROR', true);
       });
     },
     //회원가입
@@ -46,6 +57,7 @@ const userStore = {
       console.log('AC_SIGNUP', payload);
       commit
       axios.post(SERVER.ROUTES.signup, payload)
+      // axios.post('http://localhost:8080/api/signup', payload)
       .then(function (response) {
         console.log(response);
       })
@@ -55,20 +67,23 @@ const userStore = {
     },
     //회원 정보 조회
     AC_GET_USERINFO: ({commit}, payload) => {
+      console.log('AC_GET_USERINFO', payload.token)
       const token = payload.token
       const header = {
-        Accept: '*/*',
-        'X-AUTH-TOKEN': token
+        'accept': '*/*',
+        'X-AUTH-TOKEN': token,
+        'Access-Control-Allow-Origin': '*'
       }
-      axios.get(SERVER.ROUTES.getUserInfo, header)
+
+      axios.get(SERVER.ROUTES.getUserInfo, { headers: header })
       .then( response =>{
         console.log(response);
         localStorage.setItem("access_token", token);
-        commit.MU_USER_INFO(response.data);
+        commit('MU_USER_INFO', response.data);
+        commit('MU_DISPLAY', false);
       })
       .catch( error => {
         console.log(error);
-        
       })
     }
   }
