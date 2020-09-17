@@ -12,7 +12,6 @@
         {{selectedColor}}
       </div>
     </div>
-
     <!-- 추천 배색 보여주는 곳 -->
     <div class="show-theme">
       <v-icon
@@ -21,7 +20,6 @@
       >
       mdi-refresh</v-icon>
       <div class="button-text">POOL</div>
-      
       <div class="underline" :style="{'background-color' : selectedColor}"></div>
       <SelectTone></SelectTone>
       <div class="theme-scroll wrap">
@@ -65,6 +63,7 @@
         class="next-button"
         icon
         text
+        @click="goCategory"
       >
         <v-icon size="100">mdi-arrow-right</v-icon>
       </v-btn>
@@ -73,11 +72,12 @@
 </div>
 </template>
 <script> 
-import { mapGetters,mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import SelectTone from './SelectTone'
 import ColorInfo from './ColorInfo'
 import ThemeInfo from './ThemeInfo'
 const colorStore = 'colorStore'
+const userStore = 'userStore'
 
 export default {
   name: 'RecommandTheme',
@@ -87,14 +87,17 @@ export default {
     ThemeInfo,
   },
   computed: {
+    ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO'}),
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'})
   },
   created(){
+    this.userInfo = this.storeUserInfo;
     this.selectedColor = this.storeSelectedColor;
     this.selectedTheme = this.storeSelectedTheme;
   },
   data () {
     return {
+      userInfo: null,
       selectedColor: '',
       selectedTheme: [],
       theme: [
@@ -149,6 +152,9 @@ export default {
     },
     storeSelectedTheme(val){
       this.selectedTheme = val
+    },
+    storeUserInfo(val){
+      this.userInfo = val;
     }
   },
   methods : {
@@ -164,6 +170,13 @@ export default {
     },
     notSelect(){
       this.AC_SELECTED_THEME({selectedTheme: null});
+    },
+    goCategory() {
+      if(this.userInfo == null){
+        alert("더 많은 서비스를 이용하고 싶다면, 로그인을 먼저 해주세요!");
+      } else {
+        this.$router.push({ name: 'CategoryImage' });
+      }
     }
   }
 }

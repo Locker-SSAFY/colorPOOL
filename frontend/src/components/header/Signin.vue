@@ -9,7 +9,7 @@
         v-on="on"
         @click="AC_DISPLAY(true)"
       >
-      SIGNIN</v-btn>
+      SIGNIN/SIGNUP</v-btn>
     </template>
     <v-card class="signin-modal wrap" :style="{'background-color': backColor  }">
       <v-row>
@@ -37,6 +37,7 @@
             <!-- signin -->
             <v-col v-if="showSigninVal">
               <v-row id="singin-title">SIGNIN</v-row>
+              <v-row id="show-error">{{errorMsg}}</v-row>
               <v-row>
                 <v-text-field v-model="userEmail" label="email" required></v-text-field>
               </v-row>
@@ -61,6 +62,7 @@
                   color="rgba(219, 68, 55)"
                   dark
                   class="mb-2"
+                  @click="handleClickSignIn"
                 >
                 <v-icon class="mr-2">mdi-google</v-icon>
                 GOOGLE
@@ -70,6 +72,7 @@
                   color="rgb(255, 204, 0)"
                   dark
                   class="mb-2"
+                  @click="AC_KAKAO_SIGNIN"
                 >
                 <v-icon class="mr-2">mdi-chat</v-icon>
                 KAKAOTALK
@@ -120,7 +123,8 @@ export default {
     ...mapGetters(userStore, { storeIsLogin: 'GE_IS_LOGIN',
                               storeUserInfo: 'GE_USER_INFO',
                               storeIsLoginError: 'GE_IS_LOGIN_ERROR',
-                              storeDisplay: 'GE_DISPLAY'}),
+                              storeDisplay: 'GE_DISPLAY',
+                              storeErrorMsg: 'GE_ERROR'}),
     ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR' }),
     //비밀 번호 확인 체크
     passwordConfirmRules() {
@@ -138,18 +142,23 @@ export default {
       ];
     }
   },
+  props: {
+    name: void 0
+  },
   created(){
     this.backColor = this.storeSelectedColor;
     this.dialog = this.storeDisplay;
     this.isLogin = this.storeIsLogin;
     this.isLoginError = this.storeIsLoginError;
     this.userInfo = this.storeUserInfo;
+    this.errorMsg = this.storeErrorMsg;
   },
   data(){
     return{
       dialog: false,
       isLogin: false,
       isLoginError: false,
+      errorMsg: null,
       userInfo: null,
       userEmail: '',
       userPassword: '',
@@ -191,10 +200,13 @@ export default {
     },
     storeDisplay(val){
       this.dialog = val
+    },
+    storeErrorMsg(val){
+      this.errorMsg = val;
     }
   },
   methods: {
-    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY']),
+    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN','AC_ERROR']),
     showSignin(){
       this.showSigninVal = true;
     },
@@ -224,8 +236,29 @@ export default {
       this.AC_SIGNUP(payload);
     },
     close(){
+      this.AC_ERROR(null);
+      this.userEmail = '';
+      this.userPassword = '';
       this.AC_DISPLAY(false);
-    }
+    },
+
+    //구글 로그인
+    async handleClickSignIn() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        let token = googleUser.getAuthResponse().access_token;
+        console.log(
+          "google - access_token : ",
+          googleUser.getAuthResponse().access_token
+        );
+        this.isSignIn = this.$gAuth.isAuthorized;
+        token;
+        // this.signinWithSocial({ access_token: token, provider: this.google });
+      } catch (error) {
+        console.error(error);
+        // alert("구글 로그인 도중 문제가 발생했습니다!", error);
+      }
+    },
   }
 }
 </script>
@@ -246,6 +279,13 @@ export default {
 
   #singin-title{
     font-size: 2rem;
+  }
+
+  #show-error{
+    color: red;
+    font-weight: border;
+    font-size: 1rem;
+    height: 5%;
   }
 
   #horizon-line{
