@@ -32,20 +32,26 @@ const userStore = {
       state.isLoginErrors = payload
     },
     MU_DISPLAY: (state, payload) => {
-      console.log('MU_DISPLAY', payload)
       state.modalDisplay = payload
     }
   },
   actions:{
+    //로그인,회원가입 모달창
+    AC_DISPLAY: ({commit}, payload) => {
+      commit('MU_DISPLAY', payload);
+    },
     //회원 로그인
-    AC_SIGNIN: ({commit, dispatch}, payload) => {
+    AC_SIGNIN: ({commit}, payload) => {
       console.log('AC_SINGIN', payload);
       axios.post(SERVER.ROUTES.signin, payload)
       .then(function (response) {
         console.log(response);
         commit('MU_IS_LOGIN_ERROR', false);
         // dispatch.AC_GET_USERINFO({token : response.data});
-        dispatch('AC_GET_USERINFO', {token: response.data.data});
+        // dispatch('AC_GET_USERINFO', {token: response.data.data});
+        commit('MU_DISPLAY', false);
+        //임시로 userInfo 저장
+        commit('MU_USER_INFO', payload);
       })
       .catch(function (error) {
         console.log(error);
@@ -69,12 +75,12 @@ const userStore = {
     AC_GET_USERINFO: ({commit}, payload) => {
       console.log('AC_GET_USERINFO', payload.token)
       const token = payload.token
+      console.log("token", token)
       const header = {
         'accept': '*/*',
         'X-AUTH-TOKEN': token,
         'Access-Control-Allow-Origin': '*'
       }
-
       axios.get(SERVER.ROUTES.getUserInfo, { headers: header })
       .then( response =>{
         console.log(response);

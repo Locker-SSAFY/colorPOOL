@@ -7,14 +7,15 @@
         text
         v-bind="attrs"
         v-on="on"
+        @click="AC_DISPLAY(true)"
       >
       SIGNIN</v-btn>
     </template>
     <v-card class="signin-modal wrap" :style="{'background-color': backColor  }">
       <v-row>
-        <v-col cols="11" id="modal-title">COLORPOOL/{{isLoginError}}</v-col>
+        <v-col cols="11" id="modal-title">COLORPOOL</v-col>
         <v-col cols="1" id="modal-title">
-          <v-btn icon text large @click="dialog=false">
+          <v-btn icon text large @click="close">
             <v-icon>mdi-window-close</v-icon>
           </v-btn>
         </v-col>
@@ -52,20 +53,25 @@
                 >
                 SIGININ
                 </v-btn>
+                <div>
+                  <h3>SOCIAL LOGIN</h3>
+                </div>
                 <v-btn
                   block
-                  color="red"
+                  color="rgba(219, 68, 55)"
                   dark
                   class="mb-2"
                 >
+                <v-icon>mdi-google</v-icon>
                 GOOGLE
                 </v-btn>
                 <v-btn
                   block
-                  color="yellow"
+                  color="rgb(255, 204, 0)"
                   dark
                   class="mb-2"
                 >
+                <v-icon>mdi-chat</v-icon>
                 KAKAOTALK
                 </v-btn>
               </v-row>
@@ -105,8 +111,6 @@
 </div>
 </template>
 <script>
-// import axios from '../../api/axiosCommon'
-// import SERVER from '../../api/restApi'
 import { mapGetters, mapActions } from 'vuex'
 const colorStore = 'colorStore'
 const userStore = 'userStore'
@@ -116,7 +120,7 @@ export default {
     ...mapGetters(userStore, { storeIsLogin: 'GE_IS_LOGIN',
                               storeUserInfo: 'GE_USER_INFO',
                               storeIsLoginError: 'GE_IS_LOGIN_ERROR',
-                              storeDisplay: 'GE_DIPLAY'}),
+                              storeDisplay: 'GE_DISPLAY'}),
     ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR' }),
     //비밀 번호 확인 체크
     passwordConfirmRules() {
@@ -136,16 +140,17 @@ export default {
   },
   created(){
     this.backColor = this.storeSelectedColor;
+    this.dialog = this.storeDisplay;
     this.isLogin = this.storeIsLogin;
     this.isLoginError = this.storeIsLoginError;
     this.userInfo = this.storeUserInfo;
-    this.dialog = this.storeDisplay;
   },
   data(){
     return{
       dialog: false,
       isLogin: false,
       isLoginError: false,
+      userInfo: null,
       userEmail: '',
       userPassword: '',
       showSigninVal: true,
@@ -181,12 +186,15 @@ export default {
     storeIsLoginError(val){
       this.isLoginError = val
     },
+    storeUserInfo(val){
+      this.userInfo = val
+    },
     storeDisplay(val){
       this.dialog = val
     }
   },
   methods: {
-    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP']),
+    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY']),
     showSignin(){
       this.showSigninVal = true;
     },
@@ -214,6 +222,9 @@ export default {
         }
       }
       this.AC_SIGNUP(payload);
+    },
+    close(){
+      this.AC_DISPLAY(false);
     }
   }
 }
