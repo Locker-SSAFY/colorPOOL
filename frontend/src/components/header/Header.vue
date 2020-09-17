@@ -1,39 +1,57 @@
 <template>
   <div class="header wrap">
-    <table>
-      <tr>
-        <td class="header-logo" @click="goHome()">
-          ColorPOOL
-        </td>
-        <td class="header-library">
-          <v-btn icon text>
-            LIBRARY
-          </v-btn>
-        </td>
-        <td class="header-signin">
-            <Signin></Signin>
-        </td>
-        <td class="header-signup">
-          <v-btn icon text>
-            SIGNUP
-          </v-btn>
-        </td>
-      </tr>
-    </table>
+    <v-row class="mx-16">
+      <v-col class="header-logo" cols="10">
+        ColorPOOL
+      </v-col>
+      <v-col cols="1" class="header-signin" v-if="userInfo == null">
+        <Signin></Signin>
+      </v-col>
+      <v-col cols="1" class="header-signup" v-if="userInfo == null">
+        <v-btn icon text>
+          SIGNUP
+        </v-btn>
+      </v-col>
+      <v-col cols="1" class="header-library" v-if="userInfo != null">
+        <v-btn icon text>
+          LIBRARY
+        </v-btn>
+      </v-col>
+      <v-col cols="1" class="header-signin" v-if="userInfo != null">
+        <v-btn icon text @click="logout">
+          LOGOUT
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Signin from './SginIn'
+const userStore = 'userStore'
 
 export default {
   components: {
     Signin
   },
+  computed: {
+    ...mapGetters(userStore, { storeIsLogin: 'GE_IS_LOGIN',
+                              storeUserInfo: 'GE_USER_INFO'}),
+  },
+  created(){
+    this.userInfo = this.storeUserInfo;
+  },
   data() {
     return {
       scrolled: false,
       dialog: false,
+      userInfo: null
+    }
+  },
+  watch: {
+    storeUserInfo(val){
+      this.userInfo = val;
     }
   },
   methods: {
@@ -44,6 +62,12 @@ export default {
     goHome() {
       console.log(this);
       this.$router.push({ name: 'Landing' })
+    },
+    logout(){
+      var result = confirm("정말 로그아웃 하시겠어요?");
+      if(result){
+          this.userInfo = null;
+      }
     }
   },
   mounted() {
