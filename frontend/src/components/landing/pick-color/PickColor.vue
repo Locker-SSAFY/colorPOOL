@@ -65,7 +65,7 @@ export default {
     }
   },
   watch: {
-    storeSlectedColor(val){
+    storeSelectedColor(val){
       this.selectedColor = val
     }
   },
