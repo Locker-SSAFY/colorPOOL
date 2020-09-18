@@ -241,13 +241,13 @@ export default {
       .then(function (response) {
         console.log(response);
         alert('회원가입 성공!');
-        // this.nickName = '',
-        // this.email = '',
-        // this.password = '',
-        // this.passwordConfirm = ''
       })
       
       this.showSigninVal = true;
+      this.nickName = '',
+      this.email = '',
+      this.password = '',
+      this.passwordConfirm = ''
     },
     close(){
       this.AC_ERROR(null);
