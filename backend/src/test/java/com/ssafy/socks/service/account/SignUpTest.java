@@ -16,15 +16,19 @@ import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.repository.user.UserJpaRepository;
 import com.ssafy.socks.service.user.UserService;
 
-@SpringBootTest @Transactional
+@SpringBootTest
+@Transactional
 class SignUpTest {
-	@Autowired private UserJpaRepository userJpaRepository;
-	@Autowired private UserService userService;
-	@Autowired private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UserJpaRepository userJpaRepository;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Test
 	public void 회원가입() throws Exception {
-	    // given
+		// given
 		User user = User.builder()
 			.email("test@test.com")
 			.password(passwordEncoder.encode("1234!"))
@@ -32,41 +36,41 @@ class SignUpTest {
 			.provider("root")
 			.roles(Collections.singletonList("GUEST"))
 			.build();
-	    
-	    // when
+
+		// when
 		Long savedId = userService.join(user);
 
 		// then
-		assertEquals(user,userService.findOne(savedId));
-	 }
-	 
-	 @Test
-	 public void 중복_회원_예외() throws Exception {
-		 // given
-		 User user1 = User.builder()
-			 .email("test@test.com")
-			 .password(passwordEncoder.encode("1234!"))
-			 .nickname("testMan")
-			 .provider("root")
-			 .roles(Collections.singletonList("GUEST"))
-			 .build();
+		assertEquals(user, userService.findOne(savedId));
+	}
 
-		 User user2 = User.builder()
-			 .email("test@test.com")
-			 .password(passwordEncoder.encode("1234!"))
-			 .nickname("testMan")
-			 .provider("root")
-			 .roles(Collections.singletonList("GUEST"))
-			 .build();
+	@Test
+	public void 중복_회원_예외() throws Exception {
+		// given
+		User user1 = User.builder()
+			.email("test@test.com")
+			.password(passwordEncoder.encode("1234!"))
+			.nickname("testMan")
+			.provider("root")
+			.roles(Collections.singletonList("GUEST"))
+			.build();
 
-		 // when
-		 userService.join(user1);
+		User user2 = User.builder()
+			.email("test@test.com")
+			.password(passwordEncoder.encode("1234!"))
+			.nickname("testMan")
+			.provider("root")
+			.roles(Collections.singletonList("GUEST"))
+			.build();
 
-		 // then
-		 assertThrows(CUserDuplicatedException.class, () -> {
-			 userService.join(user2);
-		 });
-	 }
+		// when
+		userService.join(user1);
+
+		// then
+		assertThrows(CUserDuplicatedException.class, () -> {
+			userService.join(user2);
+		});
+	}
 
 	@Test
 	public void 동시_같은_아이디_가입() throws Exception {
@@ -91,8 +95,6 @@ class SignUpTest {
 		userJpaRepository.save(user1);
 
 		// then
-		assertThrows(DataIntegrityViolationException.class, () -> {
-			userJpaRepository.save(user2);
-		});
+		assertThrows(DataIntegrityViolationException.class, () -> userJpaRepository.save(user2));
 	}
 }

@@ -79,6 +79,3 @@ Junit5를 통해 테스트 코드를 작성한다.
 - [Guide to JUnit 5 Parameterized Tests](https://www.baeldung.com/parameterized-tests-junit-5)
 - [A Guide to JUnit 5](https://www.baeldung.com/junit-5)
 
-### 테스트 코드 컨벤션
-
-프로젝트를 진행하면서 자주 반복되는 것들 부터 여러 상황에 대해서 경험하고 여기에 기록하자.
