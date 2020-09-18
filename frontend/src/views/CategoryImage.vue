@@ -73,6 +73,7 @@ export default {
     console.log(this.storeColor);
     console.log(this.storeTheme);
     this.colorList = this.storeTheme;
+    this.selectedColor = this.storeColor;
   },
   data() {
     return {
@@ -89,7 +90,8 @@ export default {
         color4: "#457b9d",
         color5: "#1d3557",
       },
-      colorList : []
+      colorList : [],
+      selectedColor: '',
     }
   },
   methods : {
@@ -102,6 +104,5 @@ export default {
   .category-image.wrap {
     width: 100%;
     height: 100%;
-    background-color: lightgoldenrodyellow;
   }
 </style>

@@ -11,7 +11,7 @@
         <tr>
           <td>
             <span class="category-name">리빙</span>
-            <img class="category-layer" src="../../../assets/images/layer.png">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
             <v-btn
               class="category-button"
               icon
@@ -23,7 +23,7 @@
           </td>
           <td>
             <span class="category-name">악세사리</span>
-            <img class="category-layer" src="../../../assets/images/layer.png">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
             <v-btn
               class="category-button"
               icon
@@ -37,7 +37,7 @@
         <tr>
           <td>
             <span class="category-name">패션</span>
-            <img class="category-layer" src="../../../assets/images/layer.png">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
             <v-btn
               class="category-button"
               icon
@@ -49,7 +49,7 @@
           </td>
           <td>
             <span class="category-name">영화</span>
-            <img class="category-layer" src="../../../assets/images/layer.png">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
             <v-btn
               class="category-button"
               icon
@@ -119,7 +119,7 @@ export default {
     float: left;
     height: 100%;
     width: 30%;
-    background-color: yellow;
+    /* background-color: yellow; */
     padding: 10px 100px;
     font-size: 45px;
   }
@@ -132,14 +132,14 @@ export default {
     right: 0;
     height: 100%;
     width: 50%;
-    background-color: skyblue;
+    /* background-color: skyblue; */
   }
 
   .category.wrap .category-list table {
     margin-top: 10%;
     height: 60%;
     width: 80%;
-    background-color: lightcyan;
+    /* background-color: lightcyan; */
   }
 
   .category.wrap .category-list table tr td {
@@ -157,7 +157,7 @@ export default {
 
   .category.wrap .category-list table .category-layer {
     height: 45%;
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
   }
 
   .category.wrap .category-list table .category-button {
