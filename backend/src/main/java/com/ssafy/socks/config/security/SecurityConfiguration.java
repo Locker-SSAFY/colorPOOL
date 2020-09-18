@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -37,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
 			.antMatchers("/*/signin", "/*/signup")
 			.permitAll() // 가입 및 인증 주소는 누구나 접근가능
-			.antMatchers(HttpMethod.GET, "/exception/**", "/home/**")
+			.antMatchers(HttpMethod.GET, "/exception/**", "/docs/**", "/api-docs/**")
 			.permitAll() // exception 시작하는 GET요청 리소스는 누구나 접근가능
 			.antMatchers("/*/users")
 			.hasRole("ADMIN") // api 시작하는 리소스는 관리자만 접근가능
@@ -55,9 +54,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	}
 
-	@Override // ignore check swagger resource
-	public void configure(WebSecurity web) {
-		web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
-			"/swagger-ui.html", "/webjars/**", "/swagger/**");
-	}
 }

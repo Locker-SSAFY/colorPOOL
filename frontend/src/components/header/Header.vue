@@ -1,42 +1,69 @@
 <template>
   <div class="header wrap">
-    <table>
-      <tr>
-        <td class="header-logo" @click="goHome()">
-          ColorPOOL
-        </td>
-        <td class="header-library">
-          <v-btn icon text>
-            LIBRARY
-          </v-btn>
-        </td>
-        <td class="header-signin">
-            <Signin></Signin>
-        </td>
-        <td class="header-signup">
-          <v-btn icon text>
-            SIGNUP
-          </v-btn>
-        </td>
-      </tr>
-    </table>
+    <v-row class="mx-16">
+      <v-col class="header-logo" cols="7">
+        ColorPOOL
+      </v-col>
+      <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
+        <Signin></Signin>
+      </v-col>
+      <v-col cols="2" style="text-align: center;" class="mt-2" v-if="userInfo != null && isLogin">
+        <!-- {{userInfo.nickname}}님, 반갑습니다! -->
+      </v-col>
+      <v-col cols="1" class="header-library" v-if="userInfo != null && isLogin">
+        <v-btn icon text>
+          LIBRARY
+        </v-btn>
+      </v-col>
+      <v-col cols="1" class="header-mypage" v-if="userInfo != null && isLogin">
+        <v-btn icon text>
+          MYPAGE
+        </v-btn>
+      </v-col>
+      <v-col cols="1" class="header-library" v-if="userInfo != null && isLogin">
+        <v-btn icon text @click="logout">
+          LOGOUT
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
-import Signin from './SginIn'
+import { mapGetters, mapActions } from 'vuex'
+import Signin from './Signin'
+const userStore = 'userStore'
 
 export default {
   components: {
     Signin
   },
+  computed: {
+    ...mapGetters(userStore, { storeIsLogin: 'GE_IS_LOGIN',
+                              storeUserInfo: 'GE_USER_INFO'})
+  },
+  created(){
+    this.userInfo = this.storeUserInfo;
+    this.isLogin = this.storeIsLogin;
+  },
   data() {
     return {
       scrolled: false,
       dialog: false,
+      userInfo: null,
+      isLogin: false,
     }
   },
+  watch: {
+    storeUserInfo(val){
+      this.userInfo = val;
+    },
+    storeIsLogin(val){
+      this.isLogin = val;
+    },
+  },
   methods: {
+    ...mapActions(userStore, ['AC_LOGOUT']),
     detectWindowScrollY() {
       // 감지 이벤트 메서드
       this.scrolled = window.scrollY > 0
@@ -44,6 +71,15 @@ export default {
     goHome() {
       console.log(this);
       this.$router.push({ name: 'Landing' })
+    },
+    logout(){
+      var result = confirm("정말 로그아웃 하시겠어요?");
+      if(result){
+          this.userInfo = null;
+          this.AC_LOGOUT(null);
+          localStorage.removeItem('access_token');
+          this.$router.push({name: 'Landing'});
+      }
     }
   },
   mounted() {
@@ -82,7 +118,7 @@ export default {
 
   .header.wrap .header-library {
     /* color : white; */
-    text-align: right;
+    text-align: center;
   }
 
   .header.wrap .header-library .v-btn{
@@ -90,7 +126,7 @@ export default {
   }
 
   .header.wrap .header-signin {
-    text-align: center;
+    text-align: right;
   }
   
   .header.wrap .header-signin .v-btn{
@@ -98,10 +134,19 @@ export default {
   }
 
   .header.wrap .header-signup {
-    text-align: left;
+    text-align: center;
   }
 
   .header.wrap .header-signup .v-btn{
     font-size: 1.2rem;
   }
+
+  .header.wrap .header-mypage {
+    text-align: center;
+  }
+
+  .header.wrap .header-mypage .v-btn{
+    font-size: 1.2rem;
+  }
+
 </style>
