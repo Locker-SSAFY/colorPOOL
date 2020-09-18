@@ -1,14 +1,14 @@
 <template>
 <div>
   <v-dialog v-model="dialog" persistent max-width="1000px">
-    <template v-slot:activator="{ on, attrs }">
+    <template v-slot:activator="{ attrs }">
       <v-btn
         icon
         text
         v-bind="attrs"
-        v-on="on"
         @click="AC_DISPLAY(true)"
       >
+        <!-- v-on="on" -->
       SIGNIN/SIGNUP</v-btn>
     </template>
     <v-card class="signin-modal wrap" :style="{'background-color': backColor  }">
