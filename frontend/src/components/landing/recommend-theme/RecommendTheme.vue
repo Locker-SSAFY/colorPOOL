@@ -87,16 +87,20 @@ export default {
     ThemeInfo,
   },
   computed: {
-    ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO'}),
-    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'})
+    ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO',
+                              storeDisplay: 'GE_DISPLAY',}),
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR',
+                               storeSelectedTheme: 'GE_SELECTED_THEME'})
   },
   created(){
     this.userInfo = this.storeUserInfo;
     this.selectedColor = this.storeSelectedColor;
     this.selectedTheme = this.storeSelectedTheme;
+    this.dialog = this.storeDisplay;
   },
   data () {
     return {
+      dialog: false,
       userInfo: null,
       selectedColor: '',
       selectedTheme: [],
@@ -155,10 +159,14 @@ export default {
     },
     storeUserInfo(val){
       this.userInfo = val;
+    },
+    storeDisplay(val){
+      this.dialog = val;
     }
   },
   methods : {
     ...mapActions(colorStore, ['AC_SELECTED_THEME']),
+    ...mapActions(userStore, ['AC_DISPLAY']),
     goBack(){
       window.scrollTo(0, 0);
       const payload = {selectedTheme: null};
@@ -174,6 +182,7 @@ export default {
     goCategory() {
       if(this.userInfo == null){
         alert("더 많은 서비스를 이용하고 싶다면, 로그인을 먼저 해주세요!");
+        this.AC_DISPLAY(true);
       } else {
         this.$router.push({ name: 'CategoryImage' });
       }

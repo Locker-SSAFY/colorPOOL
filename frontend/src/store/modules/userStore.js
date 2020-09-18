@@ -97,6 +97,7 @@ const userStore = {
         },
       });
     },
+
     //회원가입
     AC_SIGNUP: ({commit}, payload) => {
       console.log('AC_SIGNUP', payload);
@@ -105,6 +106,8 @@ const userStore = {
       // axios.post('http://localhost:8080/api/signup', payload)
       .then(function (response) {
         console.log(response);
+        commit('MU_DISPLAY', false);
+        alert('회원가입 성공!');
       })
       .catch(function (error) {
         console.log(error);

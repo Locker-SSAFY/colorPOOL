@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       scrolled: false,
-      dialog: false,
+      // dialog: false,
       userInfo: null,
       isLogin: false,
     }
