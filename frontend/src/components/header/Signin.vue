@@ -115,6 +115,8 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import SERVER from '../../api/restApi'
+import axios from '../../api/axiosCommon'
 const colorStore = 'colorStore'
 const userStore = 'userStore'
 
@@ -233,7 +235,19 @@ export default {
           provider: 'root'
         }
       }
-      this.AC_SIGNUP(payload);
+      // this.AC_SIGNUP(payload);
+      
+      axios.post(SERVER.ROUTES.signup, payload)
+      .then(function (response) {
+        console.log(response);
+        alert('회원가입 성공!');
+        // this.nickName = '',
+        // this.email = '',
+        // this.password = '',
+        // this.passwordConfirm = ''
+      })
+      
+      this.showSigninVal = true;
     },
     close(){
       this.AC_ERROR(null);
