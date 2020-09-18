@@ -3,7 +3,7 @@
     <div class="material-color-left">
       <ul class="color-category">
         <li v-for="color in this.materialColors" v-bind:key="color.color">
-          <div class="color-preview" v-bind:style="{'background-color' : color.variations[4].hex}" @click="changeColorCategory(color.variations[4].hex, color.variations)"></div>
+          <div class="color-preview" :class="{pick : color.variations[4].hex == selectedColorCategory}" v-bind:style="{'background-color' : color.variations[4].hex}" @click="changeColorCategory(color.variations[4].hex, color.variations)"></div>
         </li>
       </ul>
     </div>
@@ -38,6 +38,7 @@ export default {
     changeColorCategory(color, variation) {
       this.selectedColorVariation = variation;
       this.$parent.selectedVariation = variation;
+      this.selectedColorCategory = color;
     },
     changeColor(hex) {
       const payload = { selectedColor: hex };
@@ -47,7 +48,7 @@ export default {
 }
 </script>
 
-<style>    
+<style scoped>    
   .color-palette {
     position: absolute;
     width: 40%;
@@ -58,9 +59,10 @@ export default {
   }
 
   .color-palette .material-color-left {
-    width: 20%;
+    width: 15%;
     height: 100%;
     float: left;
+    margin-right: 10px;
   }
 
   .color-palette .material-color-left .color-category {
@@ -75,14 +77,25 @@ export default {
   }
 
   .color-palette .material-color-left .color-preview {
-    width: 100%;
-    height: 90%;
+    width: 80%;
+    height: 80%;
+    margin-left: 20%;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+    transition-duration: 300ms;
+    box-shadow: 2px 5px 5px 0px rgba(0,0,0,0.5);
+  }
+
+  .color-palette .material-color-left .color-preview.pick {
+    /* box-shadow: 2px 5px 5px 0px black; */
+    box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.75);
+    margin-left: 0%;
+    height: 90%;
+    width: 100%;
   }
 
   .color-palette .material-color-right {
-    width: 80%;
+    width: 70%;
     height: 100%;
     float: right;
   }
@@ -95,13 +108,16 @@ export default {
   }
 
   .color-palette .material-color-right .color-variation li {
-    height: 10%;
+    height: 8%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .color-palette .material-color-right .color-variation-preview {
     width: 100%;
     height: 90%;
-    border-radius: 15px;
+    border-radius: 5px;
   }
   
 </style>

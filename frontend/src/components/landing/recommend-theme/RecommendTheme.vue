@@ -65,6 +65,7 @@
         class="next-button"
         icon
         text
+        @click="goCategory"
       >
         <v-icon size="100">mdi-arrow-right</v-icon>
       </v-btn>
@@ -164,6 +165,9 @@ export default {
     },
     notSelect(){
       this.AC_SELECTED_THEME({selectedTheme: null});
+    },
+    goCategory() {
+      this.$router.push({ name: 'CategoryImage' });
     }
   }
 }
