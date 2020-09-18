@@ -53,10 +53,10 @@ export default {
     RecommendTheme
   },
   created(){
-    this.selectedColor = this.storeSlectedColor;
+    this.selectedColor = this.storeSelectedColor;
   },
   computed: {
-    ...mapGetters(colorStore, {storeSlectedColor: 'GE_SELECTED_COLOR'})
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'})
   },
   data () {
     return {

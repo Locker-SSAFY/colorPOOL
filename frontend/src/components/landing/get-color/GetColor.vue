@@ -129,7 +129,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
   .get-color.wrap {
     width: 50%;

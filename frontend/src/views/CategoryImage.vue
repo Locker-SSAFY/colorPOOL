@@ -15,9 +15,9 @@ import ThemeBar from '../components/header/ThemeBar'
 import Category from '../components/category-image/category/Category'
 import ImageList from '../components/category-image/image/Image'
 
-
 import { mapGetters, mapActions } from 'vuex'
 const imageStore = 'imageStore'
+const colorStore = 'colorStore'
 
 export default {
   name: 'CategoryImage',
@@ -25,7 +25,10 @@ export default {
     Category, ImageList, ThemeBar
   },
   computed : {
-    
+    ...mapGetters(colorStore, {
+      storeColor: 'GE_SELECTED_COLOR',
+      storeTheme: 'GE_SELECTED_THEME'
+    }),
     ...mapGetters(imageStore, 
       {
         storeAcImage: 'GE_ACCESORY_IMAGE', 
@@ -50,6 +53,7 @@ export default {
   },
   created() {
     // 이미지들 가져오기
+    window.scrollTo(0, 0);
     this.AC_ACCESORY_IMAGE();
     this.AC_FASHION_IMAGE();
     this.AC_LIVING_IMAGE();
@@ -60,11 +64,15 @@ export default {
     this.livingImages = this.storeLvImage;
     this.movieImages = this.storeMvImage;
     // 배색 5개를 리스트에 넣기
-    this.colorList.push(this.theme.color1);
-    this.colorList.push(this.theme.color2);
-    this.colorList.push(this.theme.color3);
-    this.colorList.push(this.theme.color4);
-    this.colorList.push(this.theme.color5);
+    // this.colorList.push(this.theme.color1);
+    // this.colorList.push(this.theme.color2);
+    // this.colorList.push(this.theme.color3);
+    // this.colorList.push(this.theme.color4);
+    // this.colorList.push(this.theme.color5);
+    // 배색 5개를 리스트에 넣기
+    console.log(this.storeColor);
+    console.log(this.storeTheme);
+    this.colorList = this.storeTheme;
   },
   data() {
     return {
@@ -86,7 +94,7 @@ export default {
   },
   methods : {
     ...mapActions(imageStore, ['AC_ACCESORY_IMAGE', 'AC_FASHION_IMAGE', 'AC_LIVING_IMAGE', 'AC_MOVIE_IAMGE']),
-  }
+  },
 }
 </script>
 
