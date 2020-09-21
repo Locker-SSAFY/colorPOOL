@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 HELP.md
 .gradle
 build/
@@ -47,14 +45,11 @@ yarn-error.log
 
 ### Auth ###
 application-local.yml
+application-dev.yml
 application-auth.yml
-
->>>>>>> b74ab1c99b76eee42bd653330794e647f7dae59d
 
 ### macOS ###
 # General
 .DS_Store
 .AppleDouble
 .LSOverride
-
-
