@@ -45,6 +45,10 @@
 
 <br><br><br><br><br><br><br>
 
+## Version관리
+# Frontend
+- [Frontend 버젼1 작업 - 강세응](./docs/버젼별%20관리/ColorPool_ver1_강세응.md)
+
 ## Issues
 - [JPA 사용시 객체지향 설계에 대한 고찰](./docs/JPA%20사용시%20객체지향설계에%20대한%20고찰.md)
 - [Spring JPA unique constraint 예외처리](./docs/이슈/Spring%20JPA%20unique%20constraint%20예외처리.md)
