@@ -13,6 +13,7 @@ import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.model.response.CommonResult;
 import com.ssafy.socks.model.response.SingleResult;
 import com.ssafy.socks.model.social.SocialResultModel;
+import com.ssafy.socks.model.social.SocialSignInModel;
 import com.ssafy.socks.model.user.SignInModel;
 import com.ssafy.socks.model.user.SignUpModel;
 import com.ssafy.socks.service.ResponseService;
@@ -87,7 +88,7 @@ public class AccountController {
 		@ApiResponse(responseCode = "500", description = "알 수 없는 오류",
 			content = @Content)})
 	@PostMapping(value = "/signin/social")
-	public SingleResult<SocialResultModel> signInByProvider(@RequestBody String accessToken) {
-		return responseService.getSingleResult(socialService.getSocialResultModel(accessToken));
+	public SingleResult<SocialResultModel> signInByProvider(@RequestBody SocialSignInModel socialSignInModel) {
+		return responseService.getSingleResult(socialService.getSocialResultModel(socialSignInModel));
 	}
 }

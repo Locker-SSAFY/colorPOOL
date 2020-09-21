@@ -21,6 +21,7 @@ import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.model.social.GoogleProfile;
 import com.ssafy.socks.model.social.KakaoProfile;
 import com.ssafy.socks.model.social.SocialResultModel;
+import com.ssafy.socks.model.social.SocialSignInModel;
 import com.ssafy.socks.model.user.UserInfo;
 import com.ssafy.socks.repository.user.UserJpaRepository;
 
@@ -88,21 +89,21 @@ public class SocialService {
 	 * @param accessToken
 	 * @return
 	 */
-	public SocialResultModel getSocialResultModel(String accessToken) {
+	public SocialResultModel getSocialResultModel(SocialSignInModel socialSignInModel) {
 		SocialResultModel resultModel = null;
 		String email = null;
 		String nickname = null;
 		String provider = null;
 
-		switch (accessToken) {
+		switch (socialSignInModel.getProvider()) {
 			case KAKAO:
-				KakaoProfile kakaoProfile = this.getKakaoProfile(accessToken);
+				KakaoProfile kakaoProfile = this.getKakaoProfile(socialSignInModel.getAccessToken());
 				email = kakaoProfile.getEmail();
 				nickname = kakaoProfile.getProperties().getNickname();
 				provider = KAKAO;
 				break;
 			case GOOGLE:
-				GoogleProfile googleProfile = this.getGoogleProfile(accessToken);
+				GoogleProfile googleProfile = this.getGoogleProfile(socialSignInModel.getAccessToken());
 				email = googleProfile.getEmail();
 				nickname = googleProfile.getName();
 				provider = GOOGLE;
