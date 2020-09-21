@@ -1,6 +1,6 @@
 <p align="center">
   <h2 align="center">color POOL 🐳</h2>
-  <p align="center">Get recommendations color combination and related contents on <a href="#"> color POOL!</a></p>
+  <p align="center">Get recommendations color combination and related contents on <a href="https://j3a303.p.ssafy.io/"> color POOL!</a></p>
 </p>
 
 <p align="center">
