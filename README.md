@@ -14,6 +14,7 @@
 - [Subscribe to the newsletter](#subscribe-to-the-newsletter)
 - [Docs](#docs)
 - [Issues](#issues)
+- [Version](#version)
 - [See also](#see-also)
 
 ## Get Recommendation
@@ -42,18 +43,29 @@
   - [Development](./docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
   - [Feedback](./docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
 
-<br><br><br><br><br><br><br>
+<br><br><br><br><br>
+
 
 ## Issues
+
 ### Backend
 - [TDD를 어떻게 시작해볼까 👀](./docs/이슈/TDD를%20어떻게%20시작해볼까%20👀.md)
 - [Jpa 사용시 객체지향 설계에 대한 고찰 🤔](./docs/이슈/Jpa%20사용시%20객체지향설계에%20대한%20고찰%20🤔.md)
 - [중복 회원 검증에 대한 이슈 🙄](./docs/이슈/Unique%20constraint%20예외처리%20고도화%20in%20Spring%20boot%20🙄.md)
-- [리소스 권한 이슈 - Jwt & SpringSecurity 사용기]()
+- [리소스 권한 이슈 - Jwt & SpringSecurity 사용기 🔐](./docs/이슈/리소스%20권한%20이슈%20-%20Jwt%20&%20SpringSecurity%20사용기%20🔐)
 ### Infra
 - [Nginx - 정적 콘텐츠와 API의 공존]()
 
-<br><br><br><br><br><br><br>
+### Data
+- [코사인 유사도 측정 시 부동소수점 예외처리 이슈](./docs/이슈/코사인_유사도_측정_시_부동소수점_예외처리_이슈.md)
+- [코사인 유사도 개수 예측 오류 이슈](./docs/이슈/코사인_유사도_개수_예측_오류_이슈.md)
+
+<br><br><br><br><br>
+
+## Version
+- [Release 1.0.1]()
+
+<br><br><br><br><br>
 
 ## See Also
 
