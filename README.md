@@ -42,13 +42,19 @@
   - [Research](./docs/%EA%B8%B0%ED%9A%8D/2-Research.md)
   - [Development](./docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
   - [Feedback](./docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
+- [와이어프레임](./docs/와이어프레임/wireFrame&flow_ver.1.jpeg)
 
 <br><br><br><br><br>
 
 
 ## Issues
 
+### Frontend
+
+- [Vuex 모듈화](./docs/이슈/Vuex_모듈화_.md)
+
 ### Backend
+
 - [TDD를 어떻게 시작해볼까 👀](./docs/이슈/TDD를%20어떻게%20시작해볼까%20👀.md)
 - [Jpa 사용시 객체지향 설계에 대한 고찰 🤔](./docs/이슈/Jpa%20사용시%20객체지향설계에%20대한%20고찰%20🤔.md)
 - [중복 회원 검증에 대한 이슈 🙄](./docs/이슈/Unique%20constraint%20예외처리%20고도화%20in%20Spring%20boot%20🙄.md)
@@ -57,11 +63,11 @@
 - [Nginx - 정적 콘텐츠와 API의 공존]()
 
 ### Data
+
+- [데이터 전처리 중 양자화 간격 이슈 🔮](./docs/이슈/데이터 전처리 중 양자화 간격 이슈 🔮.md)
+
 - [코사인 유사도 측정 시 부동소수점 예외처리 이슈](./docs/이슈/코사인_유사도_측정_시_부동소수점_예외처리_이슈.md)
 - [코사인 유사도 개수 예측 오류 이슈](./docs/이슈/코사인_유사도_개수_예측_오류_이슈.md)
-
-### Frontend
-- [Vuex 모듈화](./docs/이슈/Vuex_모듈화_.md)
 
 <br><br><br><br><br>
 
