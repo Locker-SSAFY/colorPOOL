@@ -1,0 +1,25 @@
+# exception_ko.yml
+unKnown:
+  code: "-9999"
+  msg: "알수 없는 오류가 발생하였습니다."
+userNotFound:
+  code: "-1000"
+  msg: "존재하지 않는 회원입니다."
+userDuplicated:
+  code: "-1001"
+  msg: "중복된 회원입니다."
+userEmailConstraint:
+  code: "-1002"
+  msg: "동시 같은 아이디로 회원 가입이 불가능합니다."
+emailSigninFailed:
+  code: "-1003"
+  msg: "존재 하지 않는 아이디 입니다."
+entryPointException:
+  code: "-1004"
+  msg: "해당 리소스에 접근하기 위한 권한이 없습니다. (토큰 정보 부정확)"
+accessDenied:
+  code: "-1005"
+  msg: "보유한 권한으로 접근할수 없는 리소스 입니다. (유저 권한 부족)"
+communicationError:
+  code: "-1006"
+  msg: "통신 중 오류가 발생하였습니다."

@@ -27,7 +27,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity @Builder @Setter @Getter @NoArgsConstructor @AllArgsConstructor @ToString
+@Entity
+@Builder
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Table(name = "USER")
 public class User implements UserDetails {
 	@Id
@@ -35,8 +41,11 @@ public class User implements UserDetails {
 	@Column(name = "USER_ID", nullable = false)
 	private Long id;
 
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
+
+	@Column(name = "NICKNAME", nullable = false)
+	private String nickname;
 
 	@Column(name = "PROVIDER", nullable = false)
 	private String provider;
@@ -49,6 +58,7 @@ public class User implements UserDetails {
 	@Builder.Default
 	private List<String> roles = new ArrayList<>();
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
