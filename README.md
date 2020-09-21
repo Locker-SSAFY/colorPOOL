@@ -33,19 +33,6 @@
 <br><br><br><br><br><br><br><br><br><br><br><br>
 
 ## Docs
-
-<<<<<<< HEAD
-- [git branch 전략](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/git%20branch%20전략.md)
-- [git commit message convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/commit%20message%20convention.md)
-- [coding convention](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/coding%20convention.md)
-- [코드리뷰](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
-- [기획](https://github.com/Locker-SSAFY/colorPOOL-developing/tree/master/docs/%EA%B8%B0%ED%9A%8D)
-  - [Ideation](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/1-Ideation.md)
-  - [Research](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/2-Research.md)
-  - [Development](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
-  - [Feedback](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
-- [TDD](https://github.com/Locker-SSAFY/colorPOOL-developing/blob/master/docs/TDD.md)
-=======
 - [git branch 전략](./docs/convention/git%20branch%20전략.md)
 - [git commit message convention](./docs/convention/commit%20message%20convention.md)
 - [coding convention](./docs/convention/coding%20convention.md)
@@ -55,7 +42,6 @@
   - [Development](./docs/%EA%B8%B0%ED%9A%8D/3-Development.md)
   - [Feedback](./docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
 - [와이어프레임](./docs/와이어프레임/wireFrame&flow_ver.1.jpeg)
->>>>>>> b74ab1c99b76eee42bd653330794e647f7dae59d
 
 <br><br><br><br><br>
 
@@ -76,7 +62,6 @@
 ### Data
 
 - [데이터 전처리 중 양자화 간격 이슈 🔮](./docs/이슈/데이터%20전처리%20중%20양자화%20간격%20이슈%20🔮.md)
-
 - [코사인 유사도 측정 시 부동소수점 예외처리 이슈](./docs/이슈/코사인_유사도_측정_시_부동소수점_예외처리_이슈.md)
 - [코사인 유사도 개수 예측 오류 이슈](./docs/이슈/코사인_유사도_개수_예측_오류_이슈.md)
 
