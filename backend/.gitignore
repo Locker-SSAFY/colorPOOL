@@ -46,7 +46,6 @@ yarn-error.log
 ### Auth ###
 application-local.yml
 application-auth.yml
-application-dev.yml
 
 
 ### macOS ###
