@@ -20,10 +20,11 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import GetColor from '../components/landing/get-color/GetColor'
 import PickColor from '../components/landing/pick-color/PickColor'
 const colorStore = 'colorStore';
+const landingStore = 'landingStore';
 
 export default {
   components: {
@@ -37,14 +38,30 @@ export default {
     }
   },
   created() {
+    this.isPick = this.storeIsPick;
+    this.isGet = this.storeIsGet;
+  },
+  computed: {
+    ...mapGetters(landingStore, {storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'})
   },
   methods : {
     ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
+    ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK']),
     goBack() {
-      this.isPick = null;
-      this.isGet = null;
+      this.isPick= false;
+      this.isGet = false;
       const payload = {selectedColor: ''};
       this.AC_SELECTED_COLOR(payload);
+    }
+  },
+  watch: {
+    isPick(val) {
+      this.isPick = val;
+      this.AC_IS_PICK({isPick: val})
+    },
+    isGet(val) {
+      this.isGet = val
+      this.AC_IS_GET({isGet: val})
     }
   }
 }
