@@ -4,7 +4,7 @@
     <!-- Landing page의 pickColor 화면 -->
     <v-card @click="clickPick()"
       class="mx-auto elevation-10"
-      v-if="this.$parent.isPick == null"
+      v-if="this.$parent.isPick == false && this.$parent.isGet == false"
     >
       <v-card-title>Pick COLOR</v-card-title>
       

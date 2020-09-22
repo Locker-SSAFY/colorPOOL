@@ -78,6 +78,7 @@ import ColorInfo from './ColorInfo'
 import ThemeInfo from './ThemeInfo'
 const colorStore = 'colorStore'
 const userStore = 'userStore'
+const landingStore = 'landingStore'
 
 export default {
   name: 'RecommandTheme',
@@ -167,6 +168,7 @@ export default {
   methods : {
     ...mapActions(colorStore, ['AC_SELECTED_THEME']),
     ...mapActions(userStore, ['AC_DISPLAY']),
+    ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK']),
     goBack(){
       window.scrollTo(0, 0);
       const payload = {selectedTheme: null};
@@ -184,6 +186,8 @@ export default {
         alert("더 많은 서비스를 이용하고 싶다면, 로그인을 먼저 해주세요!");
         this.AC_DISPLAY(true);
       } else {
+        this.AC_IS_GET({isGet: false});
+        this.AC_IS_PICK({isPick: false});
         this.$router.push({ name: 'CategoryImage' });
       }
     }
