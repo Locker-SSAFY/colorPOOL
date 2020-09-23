@@ -88,11 +88,13 @@ export default {
   },
   computed: {
     ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO',
-                              storeDisplay: 'GE_DISPLAY',}),
+                              storeDisplay: 'GE_DISPLAY',
+                              storeIsLogin: 'GE_IS_LOGIN'}),
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR',
                                storeSelectedTheme: 'GE_SELECTED_THEME'})
   },
   created(){
+    this.isLogin = this.storeIsLogin;
     this.userInfo = this.storeUserInfo;
     this.selectedColor = this.storeSelectedColor;
     this.selectedTheme = this.storeSelectedTheme;
@@ -100,6 +102,7 @@ export default {
   },
   data () {
     return {
+      isLogin: false,
       dialog: false,
       userInfo: null,
       selectedColor: '',
@@ -162,6 +165,9 @@ export default {
     },
     storeDisplay(val){
       this.dialog = val;
+    },
+    storeIsLogin(val){
+      this.isLogin = val;
     }
   },
   methods : {
@@ -180,7 +186,7 @@ export default {
       this.AC_SELECTED_THEME({selectedTheme: null});
     },
     goCategory() {
-      if(this.userInfo == null){
+      if(this.isLogin == false){
         alert("더 많은 서비스를 이용하고 싶다면, 로그인을 먼저 해주세요!");
         this.AC_DISPLAY(true);
       } else {
