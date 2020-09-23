@@ -52,14 +52,11 @@ public class CrawlingService {
 				List<Element> elements = document.body().getElementsByClass("image_hover");
 				List<String> imgList = new ArrayList<>();
 
-				System.out.println("=======");
 				for (int j = 0; j < 5; j++) {
 					String origin = elements.get(j).id().split("/")[1];
 					String src = origin.substring(0, origin.length() - 1) + "c.jpg";
 					imgList.add(src);
-					System.out.println(src);
 				}
-				System.out.println("=======");
 				images.add(new Images(imgList));
 			}
 		}
