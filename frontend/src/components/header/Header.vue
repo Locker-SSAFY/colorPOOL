@@ -7,20 +7,20 @@
       <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
         <Signin></Signin>
       </v-col>
-      <v-col cols="2" style="text-align: center;" class="mt-2" v-if="userInfo != null && isLogin">
+      <v-col cols="2" style="text-align: center;" class="mt-2" v-if="isLogin">
         <!-- {{userInfo.nickname}}님, 반갑습니다! -->
       </v-col>
-      <v-col cols="1" class="header-library" v-if="userInfo != null && isLogin">
+      <v-col cols="1" class="header-library" v-if="isLogin">
         <v-btn icon text>
           LIBRARY
         </v-btn>
       </v-col>
-      <v-col cols="1" class="header-mypage" v-if="userInfo != null && isLogin">
+      <v-col cols="1" class="header-mypage" v-if="isLogin">
         <v-btn icon text>
           MYPAGE
         </v-btn>
       </v-col>
-      <v-col cols="1" class="header-library" v-if="userInfo != null && isLogin">
+      <v-col cols="1" class="header-library" v-if="isLogin">
         <v-btn icon text @click="logout">
           LOGOUT
         </v-btn>
@@ -78,9 +78,10 @@ export default {
           this.userInfo = null;
           this.AC_LOGOUT(null);
           localStorage.removeItem('access_token');
+          localStorage.removeItem('kakao_token');
           this.$router.push({name: 'Landing'});
       }
-    }
+    },
   },
   mounted() {
     window.addEventListener('scroll', this.detectWindowScrollY)
