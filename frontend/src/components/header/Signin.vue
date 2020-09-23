@@ -52,10 +52,12 @@
               <!-- <v-row id="singin-title">SIGNIN</v-row> -->
               <v-row id="show-error">{{errorMsg}}</v-row>
               <v-row>
-                <img src="../../assets/images/tape.svg" style="position: absolute; top:30%; left: 22%; height: 45px; width: 70%;">
-                <v-text-field dense style="position: absolute; top:31%; left: 26%; width: 63%" id="email-text" v-model="userEmail" placeholder="email" required></v-text-field>
-                <img src="../../assets/images/tape.svg" style="position: absolute; top:44%; left: 22%; height: 45px; width: 70%;">
-                <v-text-field dense style="position: absolute; top:45%; left: 26%; width: 63%" v-model="userPassword" placeholder="password" type="password" required></v-text-field>
+                <div class="textfield-tape">
+                  <v-text-field dense v-model="userEmail" placeholder="email" required></v-text-field>
+                </div>
+                <div class="textfield-tape">
+                  <v-text-field dense v-model="userPassword" placeholder="password" type="password" required></v-text-field>
+                </div>
                 <v-btn
                   color="black"
                   dark
@@ -91,24 +93,18 @@
             <v-col v-else>
               <!-- <v-row id="singin-title">SIGNUP</v-row> -->
               <v-row>
-                <!-- <v-text-field v-model="nickName" :couter="30" :rules="nickNameRules" label="nickname" required></v-text-field>
-              </v-row>
-              <v-row>
-                <v-text-field v-model="email" :rules="emailRules" label="email" required></v-text-field>
-              </v-row>
-              <v-row>
-                <v-text-field v-model="password" :counter="50" :rules="passwordRules" label="password" type="password" required></v-text-field>
-              </v-row>
-              <v-row>
-                <v-text-field v-model="passwordConfirm" :counter="50" :rules="passwordConfirmRules" label="check password" type="password" required></v-text-field> -->
-                <img src="../../assets/images/tape.svg" style="position: absolute; top:25%; left: 22%; height: 45px; width: 70%;">
-                <v-text-field dense style="position: absolute; top:26%; left: 26%; width: 63%" id="email-text" v-model="nickname" placeholder="nickname" required></v-text-field>
-                <img src="../../assets/images/tape.svg" style="position: absolute; top:39%; left: 22%; height: 45px; width: 70%;">
-                <v-text-field dense style="position: absolute; top:40%; left: 26%; width: 63%" v-model="email" :rules="emailRules" placeholder="email" required></v-text-field>
-                <img src="../../assets/images/tape.svg" style="position: absolute; top:53%; left: 22%; height: 45px; width: 70%;">
-                <v-text-field dense style="position: absolute; top:54%; left: 26%; width: 63%" id="email-text" v-model="password" :rules="passwordRules" placeholder="password" type="password" required></v-text-field>
-                <img src="../../assets/images/tape.svg" style="position: absolute; top:67%; left: 22%; height: 45px; width: 70%;">
-                <v-text-field dense style="position: absolute; top:68%; left: 26%; width: 63%" v-model="passwordConfirm" :rules="passwordConfirmRules" placeholder="check password" type="password" required></v-text-field>
+                <div class="textfield-tape">
+                  <v-text-field dense v-model="nickname" placeholder="nickname" required></v-text-field>
+                </div>
+                <div class="textfield-tape">
+                  <v-text-field dense v-model="email" :rules="emailRules" placeholder="email" required></v-text-field>
+                </div>
+                <div class="textfield-tape">
+                  <v-text-field dense v-model="password" :rules="passwordRules" placeholder="password" type="password" required></v-text-field>
+                </div>
+                <div class="textfield-tape">
+                  <v-text-field dense v-model="passwordConfirm" :rules="passwordConfirmRules" placeholder="check password" type="password" required></v-text-field>
+                </div>
                 <v-btn
                   color="black"
                   dark
@@ -296,6 +292,21 @@ export default {
     height: 250px;
     margin-bottom: 30px;
     /* background-color: white */
+  }
+
+  .textfield-tape {
+    margin-bottom: 11px;
+    background-color: white;
+    padding: 1% 5% 0% 7%;
+    width: 100%;
+    height: 45px;
+    mask-image: url(https://cdn2.bustle.com/nylon/2020/tape_b-80d71c228a.svg);
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    background-image: url(https://imgix.bustle.com/uploads/image/2020/3/10/428e5a38-91a6-4f27-8187-e0c507694930-tape_poster.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: difference;
   }
 
   .v-dialog .signin-modal.wrap .underline{
