@@ -12,12 +12,19 @@
         <ColorChip class="color-chip-element" v-bind:color="colorList[3]" v-bind:index="3"></ColorChip>
         <ColorChip class="color-chip-element" v-bind:color="colorList[4]" v-bind:index="4"></ColorChip>
       </div>
-      <carousel-3d class="carousel wrap" style="width: 100%; height: 70%;" :class="{'isSelected' : isSelected}">
-        <slide v-for="(url, index) in imageList" :key="index" :index='index' style="width: 300px; height: 300px; border: none; border-radius: 5px;  visibility: visible;" class="color-chip-back" :style="{'background-image' : 'url(' + url + ')'}">
-          <img :src="url" style="z-index: 4; width: 100%; height: 100%; object-fit: contain;" v-on:dblclick="addUrl(url)">
+      <carousel-3d class="carousel wrap" style="width: 100%; height: 50%;" :class="{'isSelected' : isSelected}">
+        <slide v-for="(img, index) in imageList" :key="index" :index='index' style="width: 300px; height: 300px; border: none; border-radius: 5px;  visibility: visible;" class="color-chip-back" :style="{'background-image' : 'url(' + img.url + ')'}">
+          <img :src="img.url" style="z-index: 4; width: 100%; height: 100%; object-fit: contain;" v-on:dblclick="addUrl(img.color, img.url)">
         </slide>
       </carousel-3d>
-      
+      <v-btn
+        class="category-list-button"
+        icon
+        text
+        @click="goCategory"
+      >
+        <v-icon size="100">mdi-arrow-left</v-icon>
+      </v-btn>
     </div>
     <div class="image-select-view">
       <div class="image-select-text">
@@ -27,12 +34,22 @@
         <strong v-else>이미지는 최대 10개까지만 가능해요 : {{selectImageList.length}}개</strong>
       </div>
       <div ref="sic" class="selected-image-container" @wheel="zoom">
-        <div class="selected-image-wrap" v-for="(url, index) in selectImageList" v-bind:key="index" >
-        <img :src="url">
+        <div class="selected-image-wrap" v-for="(img, index) in selectImageList" v-bind:key="index" >
+        <img :src="img.url">
         <v-btn @click="deleteImage(index)" class="minus-icon-btn" icon text color="red">
           <v-icon large>mdi-minus-circle</v-icon>
         </v-btn>
         </div>
+      </div>
+      <div class="edit-magazine-button">
+        <v-btn
+        class="category-list-button"
+        icon
+        text
+        @click="goNext"
+        >
+          <v-icon size="100">mdi-arrow-right</v-icon>
+        </v-btn>
       </div>
     </div>
   </div>
@@ -40,6 +57,8 @@
 <script>
 import {Carousel3d, Slide} from 'vue-carousel-3d';
 import ColorChip from '../../common/ColorChip'
+import {mapActions} from 'vuex'
+const magazineStore = 'magazineStore'
 
 export default {
   name: 'ImageList',
@@ -72,10 +91,7 @@ export default {
     this.imageList = [];
   },
   watch: {
-    category(val) {
-      console.log(val);
-      console.log(val, this.images);
-      console.log(this.images[0].url);
+    category() {
       this.fillImageList();
     },
     isColorOne() {
@@ -95,42 +111,60 @@ export default {
     }
   },
   methods : {
+    ...mapActions(magazineStore, ['AC_MAGAZINE_IMAGES']),
     fillImageList () {
       this.imageList = [];
       if(this.isColorOne) {
-        this.imageList = this.imageList.concat(this.images[0].url)
+        const color = this.images[0].color
+        this.images[0].url.forEach((ele) => {
+          this.imageList = this.imageList.concat({color: color, url: ele})
+        });
       }
       if(this.isColorTwo) {
-        this.imageList = this.imageList.concat(this.images[1].url)
+        const color = this.images[1].color
+        this.images[1].url.forEach((ele) => {
+          this.imageList = this.imageList.concat({color: color, url: ele})
+        });
       }
       if(this.isColorThree) {
-        this.imageList = this.imageList.concat(this.images[2].url)
+        const color = this.images[2].color
+        this.images[2].url.forEach((ele) => {
+          this.imageList = this.imageList.concat({color: color, url: ele})
+        });
       }
       if(this.isColorFour) {
-        this.imageList = this.imageList.concat(this.images[3].url)
+        const color = this.images[3].color
+        this.images[3].url.forEach((ele) => {
+          this.imageList = this.imageList.concat({color: color, url: ele})
+        });
       }
       if(this.isColorFive) {
-        this.imageList = this.imageList.concat(this.images[4].url)
+        const color = this.images[4].color
+        this.images[4].url.forEach((ele) => {
+          this.imageList = this.imageList.concat({color: color, url: ele})
+        });
       }
-      console.log(this.imageList)
       this.isSelected = true;
     }, 
-    addUrl(url) {
+    addUrl(color, url) {
       var flag = false;
       this.selectImageList.forEach((ele) => {
-        if(ele == url) {
+        if(ele.url == url) {
           flag = true;
           return;
         }
       })
       if(!flag) {
-        this.selectImageList.unshift(url)
+        let payload = {
+          category: this.$parent.category,
+          color: color,
+          url: url
+        }
+        this.selectImageList.unshift(payload)
         this.$refs['sic'].scrollLeft = 0;
       }
-      console.log(this.selectImageList)
     },
     deleteImage(index) {
-      console.log(index)
       this.selectImageList.splice(index, 1);
     },
     zoom(event) {
@@ -146,7 +180,23 @@ export default {
       setTimeout(() => {
         this.isScroll = true;
       }, 200)
-      // this.$refs['sic'].scrollLeft += (amount * 2);
+    },
+    goCategory() {
+      window.scrollTo({left: 0, top: 0, behavior: 'smooth'})
+    },
+    goNext() {
+      if(this.selectImageList.length == 0) {
+        return;
+      } else if (this.selectImageList.length > 10) {
+        alert('10개를 넘으면 안됩니다')
+      } else {
+        const payload = {
+          magazineImages: this.selectImageList
+        }
+        this.AC_MAGAZINE_IMAGES(payload);
+        this.goCategory();
+        this.$router.push({ name: 'Magazine' });
+      }
     }
   }
 }
@@ -174,7 +224,7 @@ export default {
   }
 
   .carousel-3d-container .carousel .wrap .isSelected{
-    height: 81%;
+    height: 51%;
   }
 
   .image-list-view .image-category-text {
