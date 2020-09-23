@@ -59,16 +59,16 @@ export default {
   created() {
     this.images = this.storeMagazineImages;
     console.log(this.images);
-    this.images=[{
-      'category': "living",
-      'color': "#457b9d",
-      'url':"https://images.unsplash.com/photo-1551516595-09cb9fcf8db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
-    },
-    {
-      'category': "living",
-      'color': "#1d3557",
-      'url': "https://images.unsplash.com/photo-1533779283484-8ad4940aa3a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
-    }]
+    // this.images=[{
+    //   'category': "living",
+    //   'color': "#457b9d",
+    //   'url':"https://images.unsplash.com/photo-1551516595-09cb9fcf8db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
+    // },
+    // {
+    //   'category': "living",
+    //   'color': "#1d3557",
+    //   'url': "https://images.unsplash.com/photo-1533779283484-8ad4940aa3a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
+    // }]
     
   },
   methods: {
