@@ -70,8 +70,6 @@ export default {
     // this.colorList.push(this.theme.color4);
     // this.colorList.push(this.theme.color5);
     // 배색 5개를 리스트에 넣기
-    console.log(this.storeColor);
-    console.log(this.storeTheme);
     this.colorList = this.storeTheme;
     this.selectedColor = this.storeColor;
   },
