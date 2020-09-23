@@ -25,9 +25,11 @@ const userStore = {
   },
   mutations: {
     MU_USER_INFO: (state, payload) => {
+      console.log('MU_USER_INFO', payload)
       state.userInfo = payload.userInfo
     },
     MU_IS_LOGIN: (state, payload) => {
+      // console.log('MU_IS_LOGIN', payload)
       state.isLogin = payload
     },
     MU_IS_LOGIN_ERROR: (state, payload) => {
@@ -54,9 +56,9 @@ const userStore = {
         // console.log(response);
         response
         commit('MU_IS_LOGIN_ERROR', false);
-        // dispatch.AC_GET_USERINFO({token : response.data});
         // dispatch('AC_GET_USERINFO', {token: response.data.data});
         commit('MU_DISPLAY', false);
+        localStorage.setItem("access_token",response.data.data);
         //임시로 userInfo 저장
         commit('MU_USER_INFO', payload);
         commit('MU_IS_LOGIN', true);
@@ -79,17 +81,24 @@ const userStore = {
           commit;
           const token = authObj.access_token; 
           console.log("token", token);
-          localStorage.setItem("access_token",token);
-          axios
-            .post(SERVER.ROUTES.socialSignin, token)
-            .then((response) => {
-              console.log(response.data);
-              const token = response.data.data;
-              localStorage.setItem('access_token', token);
-            })
-            .catch((error) => {
-              console.log("kakao login-error: ", error);
-            })
+          localStorage.setItem("kakao_token",token);
+          // axios
+          //   .post(SERVER.ROUTES.socialSignin, token)
+          //   .then((response) => {
+          //     console.log(response.data);
+          //     const token = response.data.data;
+          //     localStorage.setItem('access_token', token);
+          //   })
+          //   .catch((error) => {
+          //     console.log("kakao login-error: ", error);
+          //   })
+          
+        commit('MU_IS_LOGIN_ERROR', false);
+        // dispatch('AC_GET_USERINFO', {token: response.data.data});
+        commit('MU_DISPLAY', false);
+        //임시로 userInfo 저장
+        commit('MU_USER_INFO', {provder: 'kakao'});
+        commit('MU_IS_LOGIN', true);
         },
         fail: function(err) {
           alert("fail", JSON.stringify(err));

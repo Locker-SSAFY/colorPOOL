@@ -4,7 +4,7 @@
     <!-- Landing page의 getColor 화면 -->
     <v-card @click="clickGet()"
       class="mx-auto elevation-10"
-      v-if="this.$parent.isGet == null"
+      v-if="this.$parent.isPick == false && this.$parent.isGet == false"
     >
       <v-card-title>Get COLOR</v-card-title>
       
