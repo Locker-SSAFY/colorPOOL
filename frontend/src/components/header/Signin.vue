@@ -1,12 +1,13 @@
 <template>
 <div>
-  <v-dialog v-model="dialog" persistent max-width="1000px">
+  <v-dialog v-model="dialog" persistent max-width="650px">
     <template v-slot:activator="{ attrs }">
       <v-btn
         icon
         text
         v-bind="attrs"
         @click="AC_DISPLAY(true)"
+        class="mr-16"
       >
         <!-- v-on="on" -->
       SIGNIN/SIGNUP</v-btn>
@@ -20,70 +21,77 @@
           </v-btn>
         </v-col>
       </v-row>
+      <v-row class="underline"></v-row>
       <v-row>
         <v-col cols="2">
-          <v-row>
-            <v-btn icon text @click="showSignin">
+          <v-row v-if="showSigninVal">
+            <v-btn dark @click="showSignin" style="width: 14%;">
               SIGNIN
             </v-btn>
           </v-row>
-          <v-row>
-            <v-btn icon text @click="showSignup">
+          <v-row v-else >
+            <v-btn text @click="showSignin" style="width: 14%;">
+              SIGNIN
+            </v-btn>
+          </v-row>
+          <v-row v-if="showSigninVal">
+            <v-btn text @click="showSignup" style="width: 14%;" >
               SIGNUP
-            </v-btn></v-row>
+            </v-btn>
+          </v-row>
+          <v-row v-else>
+            <v-btn dark @click="showSignup" style="width: 14%;">
+              SIGNUP
+            </v-btn>
+          </v-row>
         </v-col>
         <v-col cols="10">
           <v-row class="signin-back">
             <!-- signin -->
             <v-col v-if="showSigninVal">
-              <v-row id="singin-title">SIGNIN</v-row>
+              <!-- <v-row id="singin-title">SIGNIN</v-row> -->
               <v-row id="show-error">{{errorMsg}}</v-row>
               <v-row>
-                <v-text-field v-model="userEmail" label="email" required></v-text-field>
-              </v-row>
-              <v-row>
-                <v-text-field v-model="userPassword" label="password" type="password" required></v-text-field>
-              </v-row>
-              <v-row>
+                <img src="../../assets/images/tape.svg" style="position: absolute; top:30%; left: 22%; height: 45px; width: 70%;">
+                <v-text-field dense style="position: absolute; top:31%; left: 26%; width: 63%" id="email-text" v-model="userEmail" placeholder="email" required></v-text-field>
+                <img src="../../assets/images/tape.svg" style="position: absolute; top:44%; left: 22%; height: 45px; width: 70%;">
+                <v-text-field dense style="position: absolute; top:45%; left: 26%; width: 63%" v-model="userPassword" placeholder="password" type="password" required></v-text-field>
                 <v-btn
-                  block
                   color="black"
                   dark
                   class="mb-2"
                   @click="signin"
+                  text
+                  style="position: absolute; top: 58%; right: 8%; font-size: 1.3rem;"
                 >
-                SIGININ
+                > SIGININ
                 </v-btn>
-                <div>
-                  <h3>SOCIAL LOGIN</h3>
-                </div>
+              </v-row>
+              <v-row style="position: absolute; top: 60%;">
                 <v-btn
-                  block
-                  color="rgba(219, 68, 55)"
-                  dark
+                  color="black"
+                  icon
                   class="mb-2"
                   @click="handleClickSignIn"
                 >
                 <v-icon class="mr-2">mdi-google</v-icon>
-                GOOGLE
                 </v-btn>
                 <v-btn
-                  block
-                  color="rgb(255, 204, 0)"
-                  dark
+                  color="black"
+                  icon
                   class="mb-2"
                   @click="AC_KAKAO_SIGNIN"
                 >
                 <v-icon class="mr-2">mdi-chat</v-icon>
-                KAKAOTALK
                 </v-btn>
               </v-row>
             </v-col>
+
             <!-- sign up-->
             <v-col v-else>
-              <v-row id="singin-title">SIGNUP</v-row>
+              <!-- <v-row id="singin-title">SIGNUP</v-row> -->
               <v-row>
-                <v-text-field v-model="nickName" :couter="30" :rules="nickNameRules" label="nickname" required></v-text-field>
+                <!-- <v-text-field v-model="nickName" :couter="30" :rules="nickNameRules" label="nickname" required></v-text-field>
               </v-row>
               <v-row>
                 <v-text-field v-model="email" :rules="emailRules" label="email" required></v-text-field>
@@ -92,17 +100,24 @@
                 <v-text-field v-model="password" :counter="50" :rules="passwordRules" label="password" type="password" required></v-text-field>
               </v-row>
               <v-row>
-                <v-text-field v-model="passwordConfirm" :counter="50" :rules="passwordConfirmRules" label="check password" type="password" required></v-text-field>
-              </v-row>
-              <v-row>
+                <v-text-field v-model="passwordConfirm" :counter="50" :rules="passwordConfirmRules" label="check password" type="password" required></v-text-field> -->
+                <img src="../../assets/images/tape.svg" style="position: absolute; top:25%; left: 22%; height: 45px; width: 70%;">
+                <v-text-field dense style="position: absolute; top:26%; left: 26%; width: 63%" id="email-text" v-model="nickname" placeholder="nickname" required></v-text-field>
+                <img src="../../assets/images/tape.svg" style="position: absolute; top:39%; left: 22%; height: 45px; width: 70%;">
+                <v-text-field dense style="position: absolute; top:40%; left: 26%; width: 63%" v-model="email" :rules="emailRules" placeholder="email" required></v-text-field>
+                <img src="../../assets/images/tape.svg" style="position: absolute; top:53%; left: 22%; height: 45px; width: 70%;">
+                <v-text-field dense style="position: absolute; top:54%; left: 26%; width: 63%" id="email-text" v-model="password" :rules="passwordRules" placeholder="password" type="password" required></v-text-field>
+                <img src="../../assets/images/tape.svg" style="position: absolute; top:67%; left: 22%; height: 45px; width: 70%;">
+                <v-text-field dense style="position: absolute; top:68%; left: 26%; width: 63%" v-model="passwordConfirm" :rules="passwordConfirmRules" placeholder="check password" type="password" required></v-text-field>
                 <v-btn
-                  block
                   color="black"
                   dark
                   class="mb-2"
                   @click="signup"
+                  text
+                  style="position: absolute; top: 82%; right: 8%; font-size: 1.3rem;"
                 >
-                SIGINUP
+                > SIGINUP
                 </v-btn>
               </v-row>
             </v-col>
@@ -278,9 +293,16 @@ export default {
 </script>
 <style scoped>
   .v-dialog .signin-modal.wrap .signin-back{
-    height: 400px;
+    height: 250px;
     margin-bottom: 30px;
-    background-color: white
+    /* background-color: white */
+  }
+
+  .v-dialog .signin-modal.wrap .underline{
+    background-color: black;
+    height: 0.8px;
+    width: 95%; 
+    margin-bottom: 2%;
   }
 
   #modal-title{
