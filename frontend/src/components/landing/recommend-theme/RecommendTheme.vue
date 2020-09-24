@@ -174,7 +174,8 @@ export default {
   methods : {
     ...mapActions(colorStore, ['AC_SELECTED_THEME']),
     ...mapActions(userStore, ['AC_DISPLAY']),
-    ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK']),
+    ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_IS_LANDING']),
+
     goBack(){
       window.scrollTo(0, 0);
       const payload = {selectedTheme: null};
@@ -194,6 +195,7 @@ export default {
       } else {
         this.AC_IS_GET({isGet: false});
         this.AC_IS_PICK({isPick: false});
+        this.AC_IS_LANDING({isLanding: false});
         this.$router.push({ name: 'CategoryImage' });
       }
     }

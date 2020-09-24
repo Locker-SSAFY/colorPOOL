@@ -80,8 +80,9 @@ const userStore = {
           console.log(authObj)
           commit;
           const token = authObj.access_token; 
-          console.log("token", token);
+          console.log("kakao_token", token);
           localStorage.setItem("kakao_token",token);
+          localStorage.setItem("access_token",token);
           // axios
           //   .post(SERVER.ROUTES.socialSignin, token)
           //   .then((response) => {
@@ -122,6 +123,7 @@ const userStore = {
         console.log(error);
       });
     },
+
     //회원 정보 조회
     AC_GET_USERINFO: ({commit}, payload) => {
       console.log('AC_GET_USERINFO', payload.token)
@@ -143,6 +145,7 @@ const userStore = {
         console.log(error);
       })
     },
+
     //로그아웃 처리
     AC_LOGOUT: ({commit},payload) => {
       console.log('AC_LOGOUT');
@@ -152,6 +155,10 @@ const userStore = {
     //에러 메시지 수정
     AC_ERROR: ({commit}, payload) => {
       commit('MU_ERROR', payload);
+    },
+
+    AC_IS_LOGIN: ({commit}, payload) => {
+      commit('MU_IS_LOGIN', payload);
     }
   }
 }
