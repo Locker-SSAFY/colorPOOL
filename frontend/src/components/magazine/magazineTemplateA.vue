@@ -66,7 +66,7 @@ export default {
     background-color: white;
     color: black;
   }
-  span {
+  .template-a-right span {
     background: inherit;
     background-clip: text;
     color: transparent;
