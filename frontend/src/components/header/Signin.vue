@@ -161,11 +161,11 @@ export default {
   created(){
     this.backColor = this.storeSelectedColor;
     this.dialog = this.storeDisplay;
-    // this.isLogin = this.storeIsLogin;
     this.isLoginError = this.storeIsLoginError;
     this.userInfo = this.storeUserInfo;
     this.errorMsg = this.storeErrorMsg;
 
+    //로그인 처리
     if(localStorage.getItem('access_token') != null){
       this.AC_IS_LOGIN(true);
     } else {
@@ -278,13 +278,12 @@ export default {
       try {
         const googleUser = await this.$gAuth.signIn();
         let token = googleUser.getAuthResponse().access_token;
-        console.log(
-          "google - access_token : ",
-          googleUser.getAuthResponse().access_token
-        );
+        console.log("google_token : ", token);
+        localStorage.setItem("google_token",token);
+        localStorage.setItem("access_token",token);
+        this.AC_DISPLAY(false);
+        this.AC_IS_LOGIN(true);
         this.isSignIn = this.$gAuth.isAuthorized;
-        token;
-        // this.signinWithSocial({ access_token: token, provider: this.google });
       } catch (error) {
         console.error(error);
         // alert("구글 로그인 도중 문제가 발생했습니다!", error);

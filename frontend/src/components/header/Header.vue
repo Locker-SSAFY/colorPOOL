@@ -33,6 +33,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import Signin from './Signin'
 const userStore = 'userStore'
+const landingStore = 'landingStore'
 
 export default {
   components: {
@@ -40,11 +41,13 @@ export default {
   },
   computed: {
     ...mapGetters(userStore, { storeIsLogin: 'GE_IS_LOGIN',
-                              storeUserInfo: 'GE_USER_INFO'})
+                              storeUserInfo: 'GE_USER_INFO'}),
+    ...mapGetters(landingStore, { storeIsLanding: 'GE_IS_LANDING'})
   },
   created(){
     this.userInfo = this.storeUserInfo;
     this.isLogin = this.storeIsLogin;
+    this.isLanding = this.storeIsLanding;
   },
   data() {
     return {
@@ -52,6 +55,7 @@ export default {
       // dialog: false,
       userInfo: null,
       isLogin: false,
+      isLanding: false,
     }
   },
   watch: {
@@ -61,8 +65,12 @@ export default {
     storeIsLogin(val){
       this.isLogin = val;
     },
+    storeIsLanding(val){
+      this.isLanding = val;
+    }
   },
   methods: {
+    ...mapActions(landingStore, ['AC_IS_GET','AC_IS_PICK', 'AC_IS_LANDING']),
     ...mapActions(userStore, ['AC_LOGOUT']),
     detectWindowScrollY() {
       // 감지 이벤트 메서드
@@ -79,7 +87,12 @@ export default {
           this.AC_LOGOUT(null);
           localStorage.removeItem('access_token');
           localStorage.removeItem('kakao_token');
-          this.$router.push({name: 'Landing'});
+          localStorage.removeItem('google_token');
+          if(!this.isLanding){
+            this.AC_IS_GET({isGet: false});
+            this.AC_IS_PICK({isPick: false});
+            this.$router.push({name: 'Landing'});
+          }
       }
     },
   },

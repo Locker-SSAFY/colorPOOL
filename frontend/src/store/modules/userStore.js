@@ -80,8 +80,9 @@ const userStore = {
           console.log(authObj)
           commit;
           const token = authObj.access_token; 
-          console.log("token", token);
+          console.log("kakao_token", token);
           localStorage.setItem("kakao_token",token);
+          localStorage.setItem("access_token",token);
           // axios
           //   .post(SERVER.ROUTES.socialSignin, token)
           //   .then((response) => {
