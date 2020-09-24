@@ -161,10 +161,16 @@ export default {
   created(){
     this.backColor = this.storeSelectedColor;
     this.dialog = this.storeDisplay;
-    this.isLogin = this.storeIsLogin;
+    // this.isLogin = this.storeIsLogin;
     this.isLoginError = this.storeIsLoginError;
     this.userInfo = this.storeUserInfo;
     this.errorMsg = this.storeErrorMsg;
+
+    if(localStorage.getItem('access_token') != null){
+      this.AC_IS_LOGIN(true);
+    } else {
+      this.AC_IS_LOGIN(false);
+    }
   },
   data(){
     return{
@@ -219,7 +225,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN','AC_ERROR']),
+    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN','AC_ERROR', 'AC_IS_LOGIN']),
     showSignin(){
       this.showSigninVal = true;
     },
