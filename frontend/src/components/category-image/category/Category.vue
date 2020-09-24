@@ -119,7 +119,6 @@ export default {
     float: left;
     height: 100%;
     width: 30%;
-    /* background-color: yellow; */
     padding: 10px 100px;
     font-size: 45px;
   }
@@ -132,14 +131,12 @@ export default {
     right: 0;
     height: 100%;
     width: 50%;
-    /* background-color: skyblue; */
   }
 
   .category.wrap .category-list table {
     margin-top: 10%;
     height: 60%;
     width: 80%;
-    /* background-color: lightcyan; */
   }
 
   .category.wrap .category-list table tr td {
@@ -157,7 +154,6 @@ export default {
 
   .category.wrap .category-list table .category-layer {
     height: 45%;
-    /* background-color: lightcoral; */
   }
 
   .category.wrap .category-list table .category-button {
