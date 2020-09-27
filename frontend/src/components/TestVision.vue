@@ -13,7 +13,8 @@ export default {
     testApi(){
       axios.request('https://dapi.kakao.com/v2/vision/product/detect',
                       { params: {'image_url': 'https://t1.daumcdn.net/alvolo/_vision/openapi/r2/images/06.jpg'},
-                        headers: {'Authorization': 'KakaoAK f820c9d3518ab3543b0918e9d6676dff'}})
+                        headers: {'Authorization': 'KakaoAK f820c9d3518ab3543b0918e9d6676dff',
+                                  'Access-Control-Allow-Origin': '*'}})
       .then((res) => {
         // console.log(res.data.result.objects)
         // console.log(res.data.result.objects.filter(x => x.class))
