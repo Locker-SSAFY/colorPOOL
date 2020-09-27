@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createdPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex)
 
@@ -17,6 +18,11 @@ export default new Vuex.Store({
     landingStore,
     magazineStore
   },
+  plugins: [
+    createdPersistedState({
+      paths: ['imgaeStore', 'colorStore', 'landingStore', 'magazineStore'],
+    })
+  ],
   state: {
   },
   mutations: {
