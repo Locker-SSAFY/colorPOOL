@@ -8,6 +8,7 @@ import TestHome from '../views/TestHome.vue'
 import Magazine from '../views/Magazine.vue'
 import Result from '../views/Result.vue'
 import TestVision from '../components/TestVision.vue'
+import Library from '../views/Library.vue'
 
 Vue.use(VueRouter)
 
@@ -54,6 +55,11 @@ Vue.use(VueRouter)
     path: '/testVision',
     name: 'testVision',
     component: TestVision
+  },
+  {
+    path: '/library',
+    name: 'Library',
+    component: Library
   }
 ]
 

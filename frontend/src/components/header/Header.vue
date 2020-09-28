@@ -11,7 +11,7 @@
         <!-- {{userInfo.nickname}}님, 반갑습니다! -->
       </v-col>
       <v-col cols="1" class="header-library" v-if="isLogin">
-        <v-btn icon text>
+        <v-btn icon text @click="goLibrary">
           LIBRARY
         </v-btn>
       </v-col>
@@ -95,6 +95,9 @@ export default {
           }
       }
     },
+    goLibrary() {
+      this.$router.push({name: 'Library'})
+    }
   },
   mounted() {
     window.addEventListener('scroll', this.detectWindowScrollY)
