@@ -4,7 +4,7 @@
       <div class="book-cover" :style="{'background-color': color}">
         <img class="image" :src="coverImage" />
         <span class="time">{{this.issueTime}}</span>
-        <span class="logo">ColorPOOL</span>
+        <span contenteditable class="logo">ColorPOOL</span>
         <span class="user">BeaverBae</span>
         <span class="email">beaverBae@naver.com</span>
       </div>
