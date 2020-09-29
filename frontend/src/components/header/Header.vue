@@ -15,7 +15,7 @@
           LIBRARY
         </v-btn>
       </v-col>
-      <v-col cols="1" class="header-mypage" v-if="isLogin">
+      <v-col cols="1" class="header-mypage" v-if="isLogin" @click="goMyPage">
         <v-btn icon text>
           MYPAGE
         </v-btn>
@@ -94,6 +94,9 @@ export default {
             this.$router.push({name: 'Landing'});
           }
       }
+    },
+    goMyPage(){
+      this.$router.push({name: 'MyPage'});
     },
     goLibrary() {
       this.$router.push({name: 'Library'})
