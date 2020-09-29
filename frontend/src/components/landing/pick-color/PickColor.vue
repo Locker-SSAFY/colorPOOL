@@ -7,15 +7,13 @@
       v-if="this.$parent.isPick == false && this.$parent.isGet == false"
     >
       <v-card-title>Pick COLOR</v-card-title>
-      
-      <v-img
-        class="white--text align-end"
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-      >
-        <v-card-title>Pick Your Color from Palette</v-card-title>
-      </v-img>
+        <div style="overflow-x: hidden; height: 90%;">
+          <img id="pick_img" src="../../../assets/images/colorimg.png">
+        </div>
+        <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 600; font-size: 18px;">
+          Pick Your Color From Palette
+        </v-card-text>
     </v-card>
-
     <!-- 컬러 팔레트 -->
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
 
@@ -123,7 +121,7 @@ export default {
   }
 
   .pick-color.right {
-    width:30%;
+    width: 30%;
     height: 100%;
     position: absolute;
     right: 0;
@@ -132,14 +130,15 @@ export default {
     align-items: center;
   }
 
-  .pick-color.right img {
-    max-width: 100%;
-    max-height: 80%;
-    position: absolute; 
-    right: 20%;
-    
-    display: block;
-    margin: auto;
+
+  #pick_img {
+    height: 90%;
+    transform-origin: left;
+    transition-duration: 10s;
+  }
+
+  #pick_img:hover {
+    transform: translateX(calc(-100% + 550px));
   }
 
   .next-button {
