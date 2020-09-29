@@ -8,12 +8,13 @@
     >
       <v-card-title>Get COLOR</v-card-title>
       
-      <v-img
-        class="white--text align-end"
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-      >
-        <v-card-title>Get Your Color By Keyword</v-card-title>
-      </v-img>
+      <div id="keyword-img-wrap">
+        <img id="keyword-img" src="../../../assets/images/keywordimg.png">
+      </div>
+      <v-icon size="40" color="rgb(107, 203, 243)" id="keyword-img-icon">mdi-magnify</v-icon>
+      <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 600; font-size: 18px;">
+        Get Your Color By Keyword
+      </v-card-text>
     </v-card>
 
     <!-- 검색 결과 -->
@@ -261,5 +262,31 @@ export default {
   .bottom-page {
     width: 100%;
     height: 100%;
+  }
+
+  .get-color.wrap .v-card:hover #keyword-img {
+    transform: translateY(calc(-100% + 70px));
+  }   
+
+  #keyword-img-wrap {
+    position : absolute;
+    top: calc(50% - 60px);
+    left: 10%;
+    width: 80%; 
+    height: 60px; 
+    background-color: white;
+    overflow-y: hidden;
+    border: 5px solid rgb(107, 203, 243);
+    box-shadow: 5px 5px 23px 0px rgba(0,0,0,0.75);
+  }
+
+  #keyword-img {
+    transition-duration: 6s;
+  }
+
+  #keyword-img-icon {
+    position: absolute;
+    top: calc(40% - 10px);
+    right: 15%;
   }
 </style>

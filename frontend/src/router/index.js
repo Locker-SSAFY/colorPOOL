@@ -9,6 +9,8 @@ import Magazine from '../views/Magazine.vue'
 import Result from '../views/Result.vue'
 import TestVision from '../components/TestVision.vue'
 import MyPage from '../views/MyPage.vue'
+import Library from '../views/Library.vue'
+import Temp from '../views/Temporary.vue'
 
 Vue.use(VueRouter)
 
@@ -60,6 +62,16 @@ Vue.use(VueRouter)
     path: '/myPage',
     name: 'MyPage',
     component: MyPage
+  },
+  {
+    path: '/library',
+    name: 'Library',
+    component: Library
+  },
+  {
+    path: '/temp',
+    name: 'Temporary',
+    component: Temp
   }
 ]
 
