@@ -117,7 +117,7 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: 60px;
     transition-duration: 300ms;
     z-index: 90;
     background-color: rgb(255, 255, 255, 0.8);
