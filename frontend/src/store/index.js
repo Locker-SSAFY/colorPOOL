@@ -10,6 +10,7 @@ import userStore from '@/store/modules/userStore.js'
 import landingStore from '@/store/modules/landingStore.js'
 import magazineStore from '@/store/modules/magazineStore.js'
 import rankStore from '@/store/modules/rankStore.js'
+import myPageStore from '@/store/modules/myPageStore.js'
 
 export default new Vuex.Store({
   modules: {
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     userStore,
     landingStore,
     magazineStore,
-    rankStore
+    rankStore,
+    myPageStore
   },
   plugins: [
     createdPersistedState({
