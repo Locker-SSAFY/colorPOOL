@@ -1,11 +1,24 @@
 <template>
 <v-row>
+  <div class="layer" v-if="showCover"></div>
+  <div class="content-cover" :style="{'width': coverWidth+'%'}">
+    <div class="info" v-if="showCover">
+      <v-btn id="close-btn" @click="closeCover" flat dark text icon>
+        <v-icon>
+          mdi-close-box-outline
+        </v-icon>
+      </v-btn>
+      <div class="cover-image">
+        <MagazineDetailCover v-bind:magazine="selected"></MagazineDetailCover>
+      </div>
+    </div>
+  </div>
   <div class="my-magazine" @click="show('my')" @mouseover="hover('my')" @mouseout="out('my')" :style="{'width' : myWidth+'%'}">
     <div class="my-index">
       <div class="content-area" v-if="isMyMagazine">
           <ul v-for="(list, idx) in myMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
-              <MagazineListCover v-bind:magazineData="magazine"></MagazineListCover>
+              <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
             </li>
           </ul>
       </div>
@@ -16,7 +29,7 @@
         <div class="content-area" v-if="isScrap">
           <ul v-for="(list, idx) in scrapMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
-              <MagazineListCover v-bind:magazineData="magazine"></MagazineListCover>
+              <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
             </li>
           </ul>
         </div>
@@ -27,7 +40,7 @@
       <div class="content-area" v-if="isRecent">
           <ul v-for="(list, idx) in recentMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
-              <MagazineListCover v-bind:magazineData="magazine"></MagazineListCover>
+              <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
             </li>
           </ul>
         </div>
@@ -39,20 +52,21 @@
 import { mapGetters, mapActions } from 'vuex'
 // import MagazineRankCover from '../components/magazine/magazineRankCover'
 import MagazineListCover from '../components/magazine/magazineListCover'
-// import MagazineDetailCover from '../components/magazine/magazineDetailCover'
+import MagazineDetailCover from '../components/magazine/magazineDetailCover'
 const myPageStore = 'myPageStore'
 
 export default {
   name: 'myPage',
   components:{
     MagazineListCover,
-    // MagazineDetailCover
+    MagazineDetailCover
   },
   data(){
     return{
       myWidth: 89.5,
       scrapWidth: 5,
       recentWidth: 5,
+      coverWidth: 0,
       isMyMagazine: true,
       isScrap: false,
       isRecent: false,
@@ -61,7 +75,9 @@ export default {
       recentList: [],
       myMagazine: [],
       scrapMagazine: [],
-      recentMagazine: []
+      recentMagazine: [],
+      selected: null,
+      showCover: false
     }
   },
   computed: {
@@ -160,6 +176,18 @@ export default {
         this.scrapWidth = 5;
         this.recentWidth = 89.5;
       }
+    },
+    showMagazine(magazine){
+      // alert(magazine.name);
+      this.selected = magazine;
+      this.coverWidth = 60;
+      this.showCover = true;
+      console.log(this.selected);
+    },
+    closeCover(){
+      this.coverWidth = 0;
+      this.selected = null;
+      this.showCover = false;
     }
   }
 }
@@ -168,6 +196,32 @@ export default {
   .my-magazine{
     height: 100%;
     transition: 0.5s;
+  }
+  .content-cover{
+    position: absolute;
+    top: 60px;
+    height: 100%;
+    background-color: black;
+    z-index: 90;
+    transition: 0.5s;
+    border-radius: 15px;
+  }
+  #close-btn{
+    float: right;
+  }
+  .layer{
+    position: absolute;
+    top: 60px;
+    height: 100%;
+    width: 120%;
+    background-color: black;
+    opacity: 70%;
+    z-index: 89;
+  }
+  .cover-image{
+    position: absolute;
+    top: 80px;
+    left: 30%;
   }
   .content-area{
     height: 100%;
