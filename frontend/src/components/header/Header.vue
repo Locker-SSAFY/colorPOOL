@@ -2,13 +2,20 @@
   <div class="header wrap">
     <v-row class="mx-16">
       <v-col class="header-logo" cols="7">
-        ColorPOOL
+          <v-btn
+            icon
+            text
+            class="ml-16"
+            color="black"
+            @click="goHome"
+          >
+            <h1>ColorPOOL</h1>
+          </v-btn>
       </v-col>
       <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
         <Signin></Signin>
       </v-col>
       <v-col cols="2" style="text-align: center;" class="mt-2" v-if="isLogin">
-        <!-- {{userInfo.nickname}}님, 반갑습니다! -->
       </v-col>
       <v-col cols="1" class="header-library" v-if="isLogin">
         <v-btn icon text @click="goLibrary">
@@ -78,7 +85,10 @@ export default {
     },
     goHome() {
       console.log(this);
-      this.$router.push({ name: 'Landing' })
+      this.AC_IS_GET({isGet: false});
+      this.AC_IS_PICK({isPick: false});
+      location.reload();
+      // this.$router.push({ name: 'Landing' })
     },
     logout(){
       var result = confirm("정말 로그아웃 하시겠어요?");
