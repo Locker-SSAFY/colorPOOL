@@ -5,6 +5,6 @@ export default {
     socialSignup: '/signup',
     signin: '/signin',
     socialSignin: '/signin/social',
-    getUserInfo: '/user?lang=ko'
+    getUserInfo: '/api/user?lang=ko'
   }
 }

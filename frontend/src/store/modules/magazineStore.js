@@ -25,7 +25,9 @@ const magazineStore = {
     },
     AC_PRODUCT_DETECT: ({commit}, payload) => {
       console.log('AC_PRODUCT_DETECT', payload);
-      axios.request('https://dapi.kakao.com/v2/vision/product/detect',
+      // axios.request('/v2/vision/product/detect',
+      // axios.request('https://dapi.kakao.com/v2/vision/product/detect',
+      axios.request('https://cors-anywhere.herokuapp.com/https://dapi.kakao.com/v2/vision/product/detect',
                       { params: {'image_url': payload.url },
                         headers: {'Authorization': 'KakaoAK f820c9d3518ab3543b0918e9d6676dff'}})
       .then((res) => {
