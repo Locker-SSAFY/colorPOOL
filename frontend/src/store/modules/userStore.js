@@ -1,6 +1,7 @@
 
 import SERVER from '../../api/restApi'
 import axios from '../../api/axiosCommon'
+// import axios2 from 'axios'
 
 const userStore = {
   namespaced: true,
@@ -48,20 +49,20 @@ const userStore = {
     AC_DISPLAY: ({commit}, payload) => {
       commit('MU_DISPLAY', payload);
     },
+
     //회원 로그인
-    AC_SIGNIN: ({commit}, payload) => {
+    AC_SIGNIN: ({commit, dispatch}, payload) => {
       console.log('AC_SINGIN', payload);
+      // axios2.post('/api/signin', payload)
+      // axios2.post('http://localhost:8080/api/signin', payload)
       axios.post(SERVER.ROUTES.signin, payload)
       .then(function (response) {
-        // console.log(response);
-        response
+        console.log(response);
         commit('MU_IS_LOGIN_ERROR', false);
-        // dispatch('AC_GET_USERINFO', {token: response.data.data});
-        commit('MU_DISPLAY', false);
-        localStorage.setItem("access_token",response.data.data);
+        dispatch('AC_GET_USERINFO', {token: response.data.data});
+
         //임시로 userInfo 저장
-        commit('MU_USER_INFO', payload);
-        commit('MU_IS_LOGIN', true);
+        // commit('MU_IS_LOGIN', true);
       })
       .catch(function (error) {
         console.log(error.response);
@@ -72,6 +73,7 @@ const userStore = {
         commit('MU_IS_LOGIN_ERROR', true);
       });
     },
+
     //카카오톡 로그인
     AC_KAKAO_SIGNIN: ({commit}) => {
       console.log('AC_KAKAO_SIGNIN')
@@ -79,27 +81,28 @@ const userStore = {
         success: function(authObj) {
           console.log(authObj)
           commit;
-          const token = authObj.access_token; 
-          console.log("kakao_token", token);
-          localStorage.setItem("kakao_token",token);
-          localStorage.setItem("access_token",token);
-          // axios
-          //   .post(SERVER.ROUTES.socialSignin, token)
-          //   .then((response) => {
-          //     console.log(response.data);
-          //     const token = response.data.data;
-          //     localStorage.setItem('access_token', token);
-          //   })
-          //   .catch((error) => {
-          //     console.log("kakao login-error: ", error);
-          //   })
-          
-        commit('MU_IS_LOGIN_ERROR', false);
-        // dispatch('AC_GET_USERINFO', {token: response.data.data});
-        commit('MU_DISPLAY', false);
-        //임시로 userInfo 저장
-        commit('MU_USER_INFO', {provder: 'kakao'});
-        commit('MU_IS_LOGIN', true);
+          const payload = {
+            accessToken: authObj.access_token,
+            provider: 'kakao'
+          }
+          console.log("kakao_token", payload);
+            axios.post(SERVER.ROUTES.socialSignin, payload)
+          // axios.post('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/signin/social', payload)
+            .then((response) => {
+              console.log("response", response.data);
+              const token = response.data.data;
+              localStorage.setItem('access_token', token);
+              commit('MU_IS_LOGIN_ERROR', false);
+              commit('MU_DISPLAY', false);
+              commit('MU_IS_LOGIN', true);
+            })
+            .catch((error) => {
+              console.log("kakao login-error: ", error);
+            })
+
+          // dispatch('AC_GET_USERINFO', {token: response.data.data});
+          //임시로 userInfo 저장
+          // commit('MU_USER_INFO', {provder: 'kakao'});
         },
         fail: function(err) {
           alert("fail", JSON.stringify(err));
@@ -113,7 +116,6 @@ const userStore = {
       console.log('AC_SIGNUP', payload);
       commit
       axios.post(SERVER.ROUTES.signup, payload)
-      // axios.post('http://localhost:8080/api/signup', payload)
       .then(function (response) {
         console.log(response);
         commit('MU_DISPLAY', false);
@@ -132,14 +134,18 @@ const userStore = {
       const header = {
         'accept': '*/*',
         'X-AUTH-TOKEN': token,
-        'Access-Control-Allow-Origin': '*'
+        // 'Access-Control-Allow-Origin': '*'/
       }
-      axios.get(SERVER.ROUTES.getUserInfo, { headers: header })
+      // axios2.get(SERVER.ROUTES.getUserInfo, { headers: header })
+      // axios.get('https://j3a303.p.ssafy.io/api/user?lang=ko', { headers: header })
+      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/user?lang=ko', { headers: header })
+      // axios.get(SERVER.ROUTES.getUserInfo, { headers: header })
       .then( response =>{
-        console.log(response);
+        console.log("resssss",response);
         localStorage.setItem("access_token", token);
         commit('MU_USER_INFO', response.data);
         commit('MU_DISPLAY', false);
+        commit('MU_IS_LOGIN', true);
       })
       .catch( error => {
         console.log(error);
