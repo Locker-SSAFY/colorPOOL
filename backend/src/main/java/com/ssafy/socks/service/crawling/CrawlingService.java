@@ -26,15 +26,11 @@ public class CrawlingService {
 		List<Images> images = new ArrayList<>();
 
 		// 1. WebDriver 경로 설정
-		Path path = Paths.get(System.getProperty("user.dir"), "src/main/resources/chromedriver.exe");
+		Path path = Paths.get(System.getProperty("user.dir"), "src/main/resources/chromedriver");
 		System.setProperty("webdriver.chrome.driver", path.toString());
 
 		// 2. WebDriver 옵션 설정
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--start-maximized");          // 최대크기로
-		options.addArguments("--headless");                 // Browser를 띄우지 않음
-		options.addArguments("--disable-gpu");              // GPU를 사용하지 않음, Linux에서 headless를 사용하는 경우 필요함.
-		options.addArguments("--no-sandbox");               // Sandbox 프로세스를 사용하지 않음, Linux에서 headless를 사용하는 경우 필요함.
 
 		// 3. WebDriver 객체 생성
 		ChromeDriver driver = new ChromeDriver(options);
@@ -49,6 +45,7 @@ public class CrawlingService {
 			if (wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("filler")))) {
 
 				Document document = Jsoup.parse(driver.getPageSource());
+				System.out.println(document.body().toString());
 				List<Element> elements = document.body().getElementsByClass("image_hover");
 				List<String> imgList = new ArrayList<>();
 
