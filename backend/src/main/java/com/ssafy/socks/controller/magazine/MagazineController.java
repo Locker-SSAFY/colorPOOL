@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@Tag(name = "3. Magazine")
+@Tag(name = "4. Magazine")
 @RequestMapping(value = "/api")
 public class MagazineController {
 
@@ -41,29 +41,21 @@ public class MagazineController {
 	private final ResponseService responseService;
 	private final MagazineService magazineService;
 
-	@Parameters({
-		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
-	})
-	@Operation(summary = "테마 & 카테고리 별 이미지 불러오기", description = "테마 & 카테고리 별 이미지를 조회한다.")
-	@GetMapping(value = "/images/{themeId}")
-	public ListResult<String> findImages(@PathVariable Long themeId) {
-		return responseService.getListResult(crawlingService.getCategoryImages(themeId));
-	}
 
-	@Parameters({
+/*	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
 	@Operation(summary = "테마 & 카테고리 별 이미지 크롤링 저장하기", description = "테마 & 카테고리 별 이미지를 크롤링해서 저장한다.")
 	@PostMapping(value = "/images")
 	public ListResult<Images> saveImages(@RequestBody ThemesAndCategory themesAndCategory) {
 		return responseService.getListResult(crawlingService.saveCategoryImages(themesAndCategory));
-	}
+	}*/
 
 	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
-	@Operation(summary = "유저 잡지 정보", description = "유저에 대한 잡지 정보를 조회한다.")
-	@PutMapping(value = "/magazine")
+	@Operation(summary = "유저 잡지 저장하기", description = "유저 잡지를 저장한다.")
+	@PostMapping(value = "/magazine")
 	public CommonResult saveMagazine(@RequestBody MagazineModel magazineModel) {
 		magazineService.saveMagazine(magazineModel);
 		return responseService.getSuccessResult();
@@ -72,12 +64,21 @@ public class MagazineController {
 	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
-	@Operation(summary = "유저 잡지 정보", description = "유저에 대한 잡지 정보를 조회한다.")
+	@Operation(summary = "유저 모든 잡지 조회", description = "유저에 대한 모든 잡지 정보를 조회한다.")
 	@GetMapping(value = "/magazine")
-	public SingleResult<Magazine> getMagazineByUser() {
+	public ListResult<Magazine> getMagazineByUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
-		return responseService.getSingleResult(magazineService.getMagazine(userEmail));
+		return responseService.getListResult(magazineService.getMagazinesByUser(userEmail));
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "잡지 단건 조회", description = "하나의 잡지 정보를 조회한다.")
+	@GetMapping(value = "/magazine/{magazineId}")
+	public SingleResult<Magazine> getMagazine(@PathVariable Long magazineId) {
+		return responseService.getSingleResult(magazineService.getMagazine(magazineId));
 	}
 
 	@Parameters({
@@ -92,18 +93,25 @@ public class MagazineController {
 	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
-	@Operation(summary = "좋아요", description = "좋아요를 클릭 한다.")
-	@PostMapping(value = "/magazine/like")
-	public CommonResult setLike() {
-		return responseService.getListResult(magazineService.getMagazines());
+	@Operation(summary = "잡지 북마크 정보", description = "즐겨 찾기 한 잡지를 조회한다.")
+	@GetMapping(value = "/magazines/bookmark")
+	public ListResult<Magazine> getMagazinesByBookmark() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+		return responseService.getListResult(magazineService.getBookmarkMagazines(userEmail));
 	}
 
 	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
-	@Operation(summary = "잡지 북마크 정보", description = "즐겨 찾기 한 잡지를 조회한다.")
-	@GetMapping(value = "/magazines/bookmark")
-	public ListResult<Magazine> s() {
-		return responseService.getListResult(magazineService.getMagazines());
+	@Operation(summary = "좋아요", description = "좋아요를 클릭 한다.")
+	@PostMapping(value = "/magazine/like/{magazineId}")
+	public CommonResult setLike(@PathVariable Long magazineId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+		magazineService.setLikes(magazineId,userEmail);
+		return responseService.getSuccessResult();
 	}
+
+
 }

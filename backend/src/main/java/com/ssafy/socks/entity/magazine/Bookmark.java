@@ -18,21 +18,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor @Builder
-@Table(name = "LIKES")
-public class Likes {
+@Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "BOOKMARK")
+public class Bookmark {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "LIKE_ID", nullable = false)
+	@Column(name = "BOOKMARK_ID", nullable = false)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MAGAZINE_ID", nullable = false)
-	private Magazine magazine;
-	public void addMagazine(Magazine magazine) {
-		this.magazine = magazine;
-		this.magazine.getLikes().add(this);
-	}
+	private Magazine magazineBookmark;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID", nullable = false)

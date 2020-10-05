@@ -33,11 +33,21 @@ public class Contents {
 		this.magazine.getContents().add(this);
 	}
 
-	@Lob
-	@Column(name = "CONTENT", nullable = false)
-	private String content;
+	@Column(name = "URL", nullable = false)
+	private String url;
 
-	@Column(name = "PAGE", nullable = false)
-	private Integer page;
+	@Column(name = "MAIN_TEXT", nullable = false)
+	private String mainText;
 
+	@Column(name = "SUB_TEXT", nullable = false)
+	private String subText;
+
+	@Column(name = "QUESTION", nullable = false)
+	private String question;
+
+	@Column(name = "ANSWER", nullable = false)
+	private String answer;
+
+	@Column(name = "TEMPLATE", nullable = false)
+	private String template;
 }

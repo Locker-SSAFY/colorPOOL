@@ -40,6 +40,9 @@ public class Magazine {
 	@OneToMany(mappedBy = "magazine")
 	private List<Likes> likes;
 
+	@OneToMany(mappedBy = "magazineBookmark")
+	private List<Bookmark> bookmarks;
+
 	@Column(name = "CREATED_DATE", nullable = false)
 	private LocalDateTime createdDate;
 }
