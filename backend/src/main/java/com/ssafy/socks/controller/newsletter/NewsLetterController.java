@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@Tag(name = "4. NewsLetter")
+@Tag(name = "5. NewsLetter")
 @RequestMapping(value = "/api")
 public class NewsLetterController {
 

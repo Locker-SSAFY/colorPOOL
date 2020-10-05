@@ -29,9 +29,6 @@ public class SelectedColor {
 	@Embedded
 	private Color color;
 
-	@Column(name = "IMG", nullable = false)
-	private String img;
-
 	@OneToMany(mappedBy = "selectedColor")
 	private List<Theme> themes;
 }

@@ -9,5 +9,5 @@ import com.ssafy.socks.entity.magazine.Magazine;
 import com.ssafy.socks.entity.user.User;
 
 public interface MagazineJpaRepository extends JpaRepository<Magazine,Long> {
-	Optional<Magazine> findByUser(User user);
+	List<Magazine> findByUser(User user);
 }
