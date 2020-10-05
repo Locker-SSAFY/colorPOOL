@@ -1,16 +1,27 @@
 package com.ssafy.socks.controller.magazine;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.socks.entity.images.ThemeImages;
+import com.ssafy.socks.entity.magazine.Magazine;
 import com.ssafy.socks.model.magazine.Images;
+import com.ssafy.socks.model.magazine.MagazineModel;
 import com.ssafy.socks.model.magazine.ThemesAndCategory;
+import com.ssafy.socks.model.response.CommonResult;
 import com.ssafy.socks.model.response.ListResult;
+import com.ssafy.socks.model.response.SingleResult;
 import com.ssafy.socks.service.ResponseService;
 import com.ssafy.socks.service.crawling.CrawlingService;
+import com.ssafy.socks.service.magazine.MagazineService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -28,13 +39,71 @@ public class MagazineController {
 
 	private final CrawlingService crawlingService;
 	private final ResponseService responseService;
+	private final MagazineService magazineService;
 
 	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
-	@Operation(summary = "테마 & 카테고리 별 이미지 크롤링", description = "테마 & 카테고리 별 이미지를 크롤링한다.")
+	@Operation(summary = "테마 & 카테고리 별 이미지 불러오기", description = "테마 & 카테고리 별 이미지를 조회한다.")
+	@GetMapping(value = "/images/{themeId}")
+	public ListResult<String> findImages(@PathVariable Long themeId) {
+		return responseService.getListResult(crawlingService.getCategoryImages(themeId));
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "테마 & 카테고리 별 이미지 크롤링 저장하기", description = "테마 & 카테고리 별 이미지를 크롤링해서 저장한다.")
 	@PostMapping(value = "/images")
-	public ListResult<Images> findImages(@RequestBody ThemesAndCategory themesAndCategory) {
-		return responseService.getListResult(crawlingService.getCategoryImages(themesAndCategory));
+	public ListResult<Images> saveImages(@RequestBody ThemesAndCategory themesAndCategory) {
+		return responseService.getListResult(crawlingService.saveCategoryImages(themesAndCategory));
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "유저 잡지 정보", description = "유저에 대한 잡지 정보를 조회한다.")
+	@PutMapping(value = "/magazine")
+	public CommonResult saveMagazine(@RequestBody MagazineModel magazineModel) {
+		magazineService.saveMagazine(magazineModel);
+		return responseService.getSuccessResult();
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "유저 잡지 정보", description = "유저에 대한 잡지 정보를 조회한다.")
+	@GetMapping(value = "/magazine")
+	public SingleResult<Magazine> getMagazineByUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+		return responseService.getSingleResult(magazineService.getMagazine(userEmail));
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "모든 잡지 정보", description = "모든 잡지 정보를 인기도 순으로 조회한다.")
+	@GetMapping(value = "/magazines")
+	public ListResult<Magazine> getAllMagazinesByLikes() {
+		return responseService.getListResult(magazineService.getMagazines());
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "좋아요", description = "좋아요를 클릭 한다.")
+	@PostMapping(value = "/magazine/like")
+	public CommonResult setLike() {
+		return responseService.getListResult(magazineService.getMagazines());
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "잡지 북마크 정보", description = "즐겨 찾기 한 잡지를 조회한다.")
+	@GetMapping(value = "/magazines/bookmark")
+	public ListResult<Magazine> s() {
+		return responseService.getListResult(magazineService.getMagazines());
 	}
 }

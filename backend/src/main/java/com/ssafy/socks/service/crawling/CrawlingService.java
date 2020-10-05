@@ -31,7 +31,16 @@ public class CrawlingService {
 	private final ThemeImagesJpaRepository themeImagesJpaRepository;
 	private final ThemeJpaRepository themeJpaRepository;
 
-	public List<Images> getCategoryImages(ThemesAndCategory themesAndCategory) {
+	public List<String> getCategoryImages(Long themeId) {
+		List<ThemeImages> themeImages = themeImagesJpaRepository.findAllByTheme(themeJpaRepository.findById(themeId).orElseThrow(CCommunicationException::new));
+		List<String> themeImagesModels = new ArrayList<>();
+		for (ThemeImages themeImage : themeImages) {
+			themeImagesModels.add(themeImage.getImageUrl());
+		}
+		return themeImagesModels;
+	}
+
+	public List<Images> saveCategoryImages(ThemesAndCategory themesAndCategory) {
 		StringBuilder URL = new StringBuilder();
 		String TAG = themesAndCategory.getCategory();
 		List<Images> images = new ArrayList<>();

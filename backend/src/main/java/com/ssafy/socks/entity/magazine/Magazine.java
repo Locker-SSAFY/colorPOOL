@@ -1,5 +1,6 @@
 package com.ssafy.socks.entity.magazine;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,11 +16,13 @@ import javax.persistence.Table;
 
 import com.ssafy.socks.entity.user.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @Setter @Getter @NoArgsConstructor
+@Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 @Table(name = "MAGAZINE")
 public class Magazine {
 	@Id
@@ -36,4 +39,7 @@ public class Magazine {
 
 	@OneToMany(mappedBy = "magazine")
 	private List<Likes> likes;
+
+	@Column(name = "CREATED_DATE", nullable = false)
+	private LocalDateTime createdDate;
 }
