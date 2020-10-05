@@ -1,12 +1,10 @@
 <template>
-  <div class="magazine-template-a wrap">
-    <div class="template-a-left" :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">
-      <img :src="image.url" @click="getProductName(image.url)">
+  <div class="magazine-template-c wrap" :style="{'background': 'linear-gradient(to bottom, rgb(' + image.r + ',' + image.g + ',' + image. b + '), 50%, white 50% 100%)'}">
+    <div class="template-c-left">
+      <img :src="image.url">
     </div>
-    <div class=template-a-right>
+    <div class="template-c-right">
       <span :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">{{this.ment}}</span>
-      <br><br>
-      <h3>{{productNames}}</h3>
     </div>
   </div>
 </template>
@@ -17,7 +15,7 @@ import { mapGetters, mapActions } from 'vuex'
 const magazineStore = 'magazineStore';
 
 export default {
-  name: 'templateA',
+  name: 'templateC',
   props: {
     image: {
       default: void 0
@@ -42,7 +40,7 @@ export default {
         this.ment = ele.content[Math.floor(Math.random() * ele.content.length)];
       }
     })
-    this.image.template = 0;
+    this.image.template = 2;
   },
   watch: {
     storeProductNames(val){
@@ -60,39 +58,41 @@ export default {
 </script>
 
 <style scoped>
-  .magazine-template-a.wrap {
+  .magazine-template-c.wrap {
     width: 100%;
     height: 100%;
     display: flex;
   }
-  .template-a-left {
+
+  .template-c-left {
     width: 50%;
     height: 100%;
     float: left;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
-  .template-a-left img {
-    max-width: 100%;
-    max-height: 100%;
+  .template-c-left img {
+    max-width: 90%;
+    max-height: 90%;
     object-fit: contain;
   }
 
-  .template-a-right {
+  .template-c-right {
     width: 50%;
     height: 100%;
     float: right;
-    background-color: white;
-    color: black;
   }
-  .template-a-right span {
+
+  .template-c-right span {
     background: inherit;
     background-clip: text;
-    color: transparent; 
+    color: transparent;
     font-size: 45px;
     font-weight: 600;
     filter: invert(1);
-    margin-left: -100px;
+    position: absolute;
+    top: calc(50% - 60px);
   }
 </style>
