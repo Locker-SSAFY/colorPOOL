@@ -1,12 +1,10 @@
 <template>
-  <div class="magazine-template-a wrap">
-    <div class="template-a-left" :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">
-      <img :src="image.url" @click="getProductName(image.url)">
-    </div>
-    <div class=template-a-right>
+  <div class="magazine-template-b wrap">
+    <div class="template-b-left">
       <span :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">{{this.ment}}</span>
-      <br><br>
-      <h3>{{productNames}}</h3>
+    </div>
+    <div class="template-b-right"  :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">
+      <img :src="image.url" @click="getProductName(image.url)">
     </div>
   </div>
 </template>
@@ -17,20 +15,20 @@ import { mapGetters, mapActions } from 'vuex'
 const magazineStore = 'magazineStore';
 
 export default {
-  name: 'templateA',
+  name: 'templateB',
   props: {
     image: {
       default: void 0
     }
   },
   computed: {
-    ...mapGetters(magazineStore, {storeProductNames: 'GE_PRODUCT_NAMES'}),
+    ...mapGetters(magazineStore, {storeProductNames: 'GE_PRODUCT_NAMES'})
   },
   data() {
     return {
       ments: ments,
       ment: '',
-      productNames: null, 
+      productNames: null
     }
   },
   created() {
@@ -42,7 +40,7 @@ export default {
         this.ment = ele.content[Math.floor(Math.random() * ele.content.length)];
       }
     })
-    this.image.template = 0;
+    this.image.template = 1;
   },
   watch: {
     storeProductNames(val){
@@ -60,39 +58,42 @@ export default {
 </script>
 
 <style scoped>
-  .magazine-template-a.wrap {
+  .magazine-template-b.wrap {
     width: 100%;
     height: 100%;
     display: flex;
   }
-  .template-a-left {
+  .template-b-left {
     width: 50%;
     height: 100%;
     float: left;
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .template-b-left span {
+    background: inherit;
+    background-clip: text;
+    color: transparent;
+    font-size: 45px;
+    font-weight: 600;
+    filter: invert(1);
+  }
+
+  .template-b-right {
+    width: 50%;
+    height: 100%;
+    float: right;
     display: flex;
     justify-content: center;
   }
 
-  .template-a-left img {
+  .template-b-right img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-  }
-
-  .template-a-right {
-    width: 50%;
-    height: 100%;
-    float: right;
-    background-color: white;
-    color: black;
-  }
-  .template-a-right span {
-    background: inherit;
-    background-clip: text;
-    color: transparent; 
-    font-size: 45px;
-    font-weight: 600;
-    filter: invert(1);
-    margin-left: -100px;
   }
 </style>

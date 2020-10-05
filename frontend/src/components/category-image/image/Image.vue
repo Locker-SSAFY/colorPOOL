@@ -155,10 +155,37 @@ export default {
         }
       })
       if(!flag) {
+        var rgbs = [
+          'rgb(230,57,70)', 'rgb(241,250,238)', 'rgb(168,218,220)', 'rgb(69,123,157)', 'rgb(29,53,87)'
+        ];
+        var r = 0;
+        var g = 0;
+        var b = 0;
+        rgbs.forEach((rgb) => {
+          var temp = rgb.replace( /[^%,.\d]/g, "" ); 
+          temp = temp.split( "," );
+          console.log(temp);
+          r += temp[0] - 0;
+          g += temp[1] - 0;
+          b += temp[2] - 0;
+        })
+        console.log("r: " + r, ", g: " + g, ", b: " + b);
+        r = Math.floor(r / 5);
+        g = Math.floor(g / 5);
+        b = Math.floor(b / 5);
         let payload = {
           category: this.$parent.category,
           color: color,
-          url: url
+          url: url,
+          // 잡지 템플릿 : 초기는 0
+          template: 0,
+          // 배색 조합
+          colorList: this.colorList,
+          // rgb 배색 조합
+          rgbs : rgbs,
+          r: r,
+          g: g,
+          b: b
         }
         this.selectImageList.unshift(payload)
         this.$refs['sic'].scrollLeft = 0;

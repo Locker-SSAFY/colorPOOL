@@ -136,8 +136,8 @@ export default {
     transform-origin: left;
     transition-duration: 10s;
   }
-
-  #pick_img:hover {
+  
+  .pick-color.wrap .v-card:hover #pick_img {
     transform: translateX(calc(-100% + 550px));
   }
 

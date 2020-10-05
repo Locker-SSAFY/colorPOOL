@@ -17,7 +17,15 @@
         :key="index"
         class="magazine-slide"
       >
-        <TemplateA v-bind:image="img"></TemplateA>
+        <v-radio-group label="MAGAZINE" style="background-color: rgba(0,0,0,0.5); position: absolute; top: 0px;" v-model="img.template">
+          <v-radio :key="0" :value="0" label="Template A"></v-radio>
+          <v-radio :key="1" :value="1" label="Template B"></v-radio>
+          <v-radio :key="2" :value="2" label="Template C"></v-radio>
+          <!-- <v-radio>12</v-radio> -->
+        </v-radio-group>
+        <TemplateA v-if="img.template == 0" v-bind:image="img"></TemplateA>
+        <TemplateB v-if="img.template == 1" v-bind:image="img"></TemplateB>
+        <TemplateC v-if="img.template == 2" v-bind:image="img"></TemplateC>
       </v-carousel-item>
     </v-carousel>
     <div class="magazine-button-wrap">
@@ -36,7 +44,9 @@
 <script>
 import {mapGetters} from 'vuex'
 // import { Carousel, Slide } from "vue-carousel"
-import TemplateA from '../components/magazine/magazineTemplateA'
+import TemplateA from '../components/magazine/MagazineTemplateA'
+import TemplateB from '../components/magazine/MagazineTemplateB'
+import TemplateC from '../components/magazine/MagazineTemplateC'
 
 const magazineStore = 'magazineStore'
 
@@ -44,7 +54,7 @@ export default {
   name: 'Magazine',
   components: {
     // Carousel, Slide, 
-    TemplateA
+    TemplateA, TemplateB, TemplateC
   },
   computed: {
     ...mapGetters(magazineStore, {
@@ -53,26 +63,16 @@ export default {
   },
   data() {
     return {
-      images: []
+      images: [],
     }
   },
   created() {
     this.images = this.storeMagazineImages;
-    console.log(this.images);
-    // this.images=[{
-    //   'category': "living",
-    //   'color': "#457b9d",
-    //   'url':"https://images.unsplash.com/photo-1551516595-09cb9fcf8db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
-    // },
-    // {
-    //   'category': "living",
-    //   'color': "#1d3557",
-    //   'url': "https://images.unsplash.com/photo-1533779283484-8ad4940aa3a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
-    // }]
-    
+    console.log(this.images);    
   },
   methods: {
     goNext() {
+      console.log(this.images);
       this.$router.push({ name: 'Result' });
     }
   }
