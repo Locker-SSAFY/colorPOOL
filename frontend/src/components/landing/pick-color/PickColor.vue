@@ -18,8 +18,8 @@
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
 
     <!-- 오른쪽 배경 -->
-    <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
-      <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+    <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor.hex}">
+      <!-- <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"> -->
       <!-- 배색 추천 받으러 가기 버튼 -->
       <v-btn
         class="next-button"
@@ -42,6 +42,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import ColorPalette from './ColorPalette'
 import RecommendTheme from '../recommend-theme/RecommendTheme'
+import materialColors from '../../../assets/color/colorList.js'
 const colorStore = 'colorStore'
 
 export default {
@@ -51,13 +52,14 @@ export default {
     RecommendTheme
   },
   created(){
-    this.selectedColor = this.storeSelectedColor;
+    this.selectedColor = this.storeSelectedColor.hex;
   },
   computed: {
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'})
   },
   data () {
     return {
+      materialColors : materialColors,
       selectedColor: '',
       selectedVariation: [],
     }
@@ -68,14 +70,17 @@ export default {
     }
   },
   methods : {
-    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR', 'AC_THEMES']),
     clickPick() {
       this.$parent.isPick = true;
       this.$parent.isGet = false;
-      const payload = { selectedColor: '#EF5350'};
+      const payload = { selectedColor: this.materialColors[0].variations[4]};
       this.AC_SELECTED_COLOR(payload);
     },
     getTheme(){
+      const payload = this.selectedColor;
+      console.log('pick color payload', payload);
+      this.AC_THEMES(payload)
       document.body.className = "unlock";
       console.log(document.body);
       window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});

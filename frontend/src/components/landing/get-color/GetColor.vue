@@ -18,7 +18,7 @@
     </v-card>
 
     <!-- 검색 결과 -->
-    <div v-if="this.$parent.isGet" class="get-color left">
+    <div v-if="this.$parent.isGet && !loading" class="get-color left">
       <ul v-for="colorList in this.picularImages" v-bind:key="colorList.index">
         <li v-for="color in colorList" v-bind:key="color.color">
           <v-card class="mx-auto elevation-5" @click="getColor(color.color)">
@@ -29,6 +29,9 @@
         </li>
       </ul>
     </div>
+
+    <Loading  v-if="this.$parent.isGet && loading" class="get-color left"></Loading>
+
 
     <!-- 오른쪽 배경 -->
     <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
@@ -66,6 +69,7 @@
 <script>
 import RecommendTheme from '../recommend-theme/RecommendTheme';
 import NonPickDialog from '../recommend-theme/NonPickDialog';
+import Loading from '../../loading/GetColorLoading';
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 const colorStore = 'colorStore'
@@ -74,7 +78,8 @@ export default {
   name: 'GetColor',
   components: {
     RecommendTheme,
-    NonPickDialog
+    NonPickDialog,
+    Loading
   },
   data () {
     return {
@@ -85,6 +90,7 @@ export default {
       opacity: 1,
       overlay: false,
       selectedColor: '',
+      loading: false
     }
   },
   computed: {
@@ -104,8 +110,10 @@ export default {
       this.$parent.isPick = false;
       this.$parent.isGet = true;
     }, async getPicularImages() {
+      this.loading = true;
       await axios.get('https://server.picular.co/' + this.keyword)
       .then((res) => {
+        this.loading = false;
         this.picularResult = res.data
         this.picularImages = [];
         this.picularImages.push(this.picularResult.colors.slice(0, 5));
@@ -114,6 +122,7 @@ export default {
         this.picularImages.push(this.picularResult.colors.slice(15, 20));
       })
       .catch((err) => {
+        this.loading = false;
         console.log(err);
       })
     },

@@ -11,7 +11,7 @@
         <tr>
           <td>
             <span class="category-name">리빙</span>
-            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor.hex}">
             <v-btn
               class="category-button"
               icon
@@ -23,7 +23,7 @@
           </td>
           <td>
             <span class="category-name">악세사리</span>
-            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor.hex}">
             <v-btn
               class="category-button"
               icon
@@ -37,7 +37,7 @@
         <tr>
           <td>
             <span class="category-name">패션</span>
-            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor.hex}">
             <v-btn
               class="category-button"
               icon
@@ -49,7 +49,7 @@
           </td>
           <td>
             <span class="category-name">영화</span>
-            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor.hex}">
             <v-btn
               class="category-button"
               icon
@@ -75,14 +75,11 @@ export default {
   },
   data() {
     return {
-      theme: {
-        color1: "#e63946",
-        color2: "#f1faee",
-        color3: "#a8dadc",
-        color4: "#457b9d",
-        color5: "#1d3557",
-      }
+      theme: this.$parent.theme  
     }
+  },
+  created(){
+    
   },
   methods : {
     pickLiving() {
