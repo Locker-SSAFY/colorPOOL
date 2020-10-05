@@ -54,6 +54,7 @@ import { mapGetters } from 'vuex'
 // import Book from '../components/magazine/book'
 import Cover from '../components/magazine/magazineCover'
 const colorStore = 'colorStore'
+const userStore = 'userStore'
 
 export default {
   name: 'Result',
@@ -63,23 +64,32 @@ export default {
   data() {
     return {
       color: '',
-      theme: []
+      theme: [],
+      userInfo: null,
     }
   },
   created() {
-    this.color = this.storeSelectedColor;
+    this.color = this.storeSelectedColor.hex;
     this.theme = this.storeSelectedTheme;
+    // userInfo 가져오는거 왜 안되지? 재원이한테 물어볼 것
+    this.userInfo = this.storeUserInfo;
+    console.log(this.userInfo);
+    // userInfo 가져오는거 해결해주세염
     if(this.storeSelectedColor == '') 
       this.color = "#7986CB";
     if(this.storeSelectedTheme == null)
       this.theme = ["#e63946", "#f1faee", "#a8dadc", "#457b9d", "#1d3557"];
+    
+    
   },
   computed: {
-    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'})
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'}),
+    ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO'})
   },
   methods: {
     addMagazine() {
       alert('구현 예정입니다!')
+
     },
     saveAsPDF(){
       alert('구현 예정입니다!')

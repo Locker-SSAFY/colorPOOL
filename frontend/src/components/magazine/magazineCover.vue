@@ -87,7 +87,7 @@ export default {
     },
     getColorAndTheme() {
       // 색깔과 테마 받아오기
-      this.color = this.storeSelectedColor;
+      this.color = this.storeSelectedColor.hex;
       this.theme = this.storeSelectedTheme;
       console.log(this.storeSelectedColor)
       if(this.storeSelectedColor == '') 

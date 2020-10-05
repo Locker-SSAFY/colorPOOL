@@ -14,6 +14,9 @@ const magazineStore = {
     MU_MAGAZINE_IMAGES: (state, payload) => {
       state.magazineImages = payload.magazineImages
     },
+    MU_MAGAZINE_IMAGES_ONE: (state, payload) => {
+      state.magazineImages[payload.index] = payload.image;
+    },
     MU_PRODUCT_NAMES: (state, payload) => {
       console.log('MU_PRODUCT_NAMES', payload);
       state.productNames = payload.productNames 
@@ -22,6 +25,9 @@ const magazineStore = {
   actions: {
     AC_MAGAZINE_IMAGES: ({commit}, payload) => {
       commit('MU_MAGAZINE_IMAGES', payload)
+    },
+    AC_MAGAZINE_IMAGES_ONE: ({commit}, payload) => {
+      commit('MU_MAGAZINE_IMAGES_ONE', payload)
     },
     AC_PRODUCT_DETECT: ({commit}, payload) => {
       console.log('AC_PRODUCT_DETECT', payload);

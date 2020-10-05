@@ -23,9 +23,9 @@
           <v-radio :key="2" :value="2" label="Template C"></v-radio>
           <!-- <v-radio>12</v-radio> -->
         </v-radio-group>
-        <TemplateA v-if="img.template == 0" v-bind:image="img"></TemplateA>
-        <TemplateB v-if="img.template == 1" v-bind:image="img"></TemplateB>
-        <TemplateC v-if="img.template == 2" v-bind:image="img"></TemplateC>
+        <TemplateA v-if="img.template == 0" v-bind:image="img" v-bind:index="index"></TemplateA>
+        <TemplateB v-if="img.template == 1" v-bind:image="img" v-bind:index="index"></TemplateB>
+        <TemplateC v-if="img.template == 2" v-bind:image="img" v-bind:index="index"></TemplateC>
       </v-carousel-item>
     </v-carousel>
     <div class="magazine-button-wrap">
@@ -68,7 +68,7 @@ export default {
   },
   created() {
     this.images = this.storeMagazineImages;
-    console.log(this.images);    
+    console.log('잡지 이미지', this.images);    
   },
   methods: {
     goNext() {
