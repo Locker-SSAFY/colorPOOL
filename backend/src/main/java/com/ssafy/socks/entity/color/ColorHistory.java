@@ -19,18 +19,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity @Setter @Getter @NoArgsConstructor @ToString
-@Table(name = "ANY_COLOR")
-public class AnyColor {
+@Table(name = "COLOR_HISTORY")
+public class ColorHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ANY_COLOR_ID", nullable = false)
+	@Column(name = "COLOR_HISTORY_ID", nullable = false)
 	private Long id;
 
-	@Embedded
-	private Color color;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "THEME_ID")
+	private Theme theme;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
 	private User user;
-
 }
