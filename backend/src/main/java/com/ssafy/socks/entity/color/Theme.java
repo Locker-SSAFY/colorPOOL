@@ -17,12 +17,13 @@ import javax.persistence.Table;
 import com.ssafy.socks.entity.images.ThemeImages;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity @Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor
+@Entity @Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor @Builder
 @Table(name = "THEME")
 public class Theme {
 	@Id

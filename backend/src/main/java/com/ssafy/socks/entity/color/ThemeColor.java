@@ -3,12 +3,13 @@ package com.ssafy.socks.entity.color;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Embeddable @Setter @Getter @NoArgsConstructor @ToString
+@Embeddable @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 public class ThemeColor {
 	@Column(name = "COLOR_ID_1", nullable = false)
 	private Long colorId1;

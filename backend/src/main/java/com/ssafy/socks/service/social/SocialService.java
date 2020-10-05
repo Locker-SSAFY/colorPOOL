@@ -45,17 +45,11 @@ public class SocialService {
 	 * @return
 	 */
 	public KakaoProfile getKakaoProfile(String accessToken) {
-		// Set header : Content-type: application/x-www-form-urlencoded
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		headers.set("Authorization", "Bearer " + accessToken);
-
-		// Set http entity
-		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
+		URI uri = URI.create("https://kapi.kakao.com/v2/user/me?access_token=" + accessToken);
+		// Request profile
+		ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+		System.out.println(response.toString());
 		try {
-			// Request profile
-			ResponseEntity<String> response = restTemplate.postForEntity(
-				Objects.requireNonNull(env.getProperty("spring.social.kakao.url.profile")), request, String.class);
 			if (response.getStatusCode() == HttpStatus.OK)
 				return gson.fromJson(response.getBody(), KakaoProfile.class);
 		} catch (Exception e) {
@@ -73,6 +67,7 @@ public class SocialService {
 		URI uri = URI.create("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + accessToken);
 		// Request profile
 		ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+		System.out.println(response.toString());
 		try {
 			if (response.getStatusCode() == HttpStatus.OK)
 				return gson.fromJson(response.getBody(), GoogleProfile.class);

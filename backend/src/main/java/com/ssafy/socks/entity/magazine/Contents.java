@@ -11,11 +11,13 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @Setter @Getter @NoArgsConstructor
+@Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 @Table(name = "CONTENTS")
 public class Contents {
 	@Id
