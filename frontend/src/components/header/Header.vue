@@ -59,7 +59,6 @@ export default {
   data() {
     return {
       scrolled: false,
-      // dialog: false,
       userInfo: null,
       isLogin: false,
       isLanding: false,
@@ -85,10 +84,13 @@ export default {
     },
     goHome() {
       console.log(this);
-      this.AC_IS_GET({isGet: false});
-      this.AC_IS_PICK({isPick: false});
-      location.reload();
-      // this.$router.push({ name: 'Landing' })
+      if(!this.isLanding){
+        this.AC_IS_GET({isGet: false});
+        this.AC_IS_PICK({isPick: false});
+        this.$router.push({name: 'Landing'});
+      } else {
+        location.reload();
+      }
     },
     logout(){
       var result = confirm("정말 로그아웃 하시겠어요?");
