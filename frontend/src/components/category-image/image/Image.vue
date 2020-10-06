@@ -58,6 +58,8 @@
 import {Carousel3d, Slide} from 'vue-carousel-3d';
 import ColorChip from '../../common/ColorChip'
 import {mapActions} from 'vuex'
+import ments from '../../../assets/ment/mentList.js'
+import questions from '../../../assets/ment/questionList.js'
 const magazineStore = 'magazineStore'
 
 export default {
@@ -84,7 +86,9 @@ export default {
       imageList : [],
       isSelected : false,
       selectImageList : [],
-      isScroll : true
+      isScroll : true,
+      ments: ments,
+      questions: questions,
     }
   },
   created() {
@@ -148,6 +152,7 @@ export default {
     }, 
     addUrl(color, url) {
       var flag = false;
+      console.log(this.$parent.colorList);
       this.selectImageList.forEach((ele) => {
         if(ele.url == url) {
           flag = true;
@@ -155,30 +160,46 @@ export default {
         }
       })
       if(!flag) {
-        var rgbs = [
-          'rgb(230,57,70)', 'rgb(241,250,238)', 'rgb(168,218,220)', 'rgb(69,123,157)', 'rgb(29,53,87)'
-        ];
+        // rgb 평균값을 이용해서 배경색 만들기
+        var rgbs = this.$parent.colorList;
         var r = 0;
         var g = 0;
         var b = 0;
         rgbs.forEach((rgb) => {
           var temp = rgb.replace( /[^%,.\d]/g, "" ); 
           temp = temp.split( "," );
-          console.log(temp);
           r += temp[0] - 0;
           g += temp[1] - 0;
           b += temp[2] - 0;
         })
-        console.log("r: " + r, ", g: " + g, ", b: " + b);
         r = Math.floor(r / 5);
         g = Math.floor(g / 5);
         b = Math.floor(b / 5);
+        
+        // 더미 멘트를 미리 저장해두기
+        const category = this.$parent.category;
+        var ment = '';
+        this.ments.forEach(ele => {
+          if(ele.category == category) {
+            ment = ele.content[Math.floor(Math.random() * ele.content.length)]; 
+          }
+        })
+        
+        // 더미 질문을 미리 저장해두기
+        var question = questions[Math.floor(Math.random() * questions.length)];
+        var answer = '인터뷰에 답변을 적어주세요'
         let payload = {
           category: this.$parent.category,
           color: color,
           url: url,
           // 잡지 템플릿 : 초기는 0
           template: 0,
+          // 더미 멘트
+          ment: ment,
+          // 더미 질문
+          question: question,
+          // 더미 대답
+          answer: answer,
           // 배색 조합
           colorList: this.colorList,
           // rgb 배색 조합

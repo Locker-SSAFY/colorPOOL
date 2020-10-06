@@ -4,15 +4,22 @@
       <img :src="image.url" @click="getProductName(image.url)">
     </div>
     <div class=template-a-right>
-      <span :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">{{this.ment}}</span>
+      <span contenteditable  @blur="changeMent" :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">{{ment}}</span>
       <br><br>
       <h3>{{productNames}}</h3>
+      <div class="interview wrap">
+        <div>
+          <span class="question">{{question}}</span>
+        </div>
+        <div>
+          <span contenteditable @blur="changeAnswer" class="answer">{{answer}}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ments from '../../assets/ment/mentList.js'
 import { mapGetters, mapActions } from 'vuex'
 const magazineStore = 'magazineStore';
 
@@ -21,6 +28,9 @@ export default {
   props: {
     image: {
       default: void 0
+    },
+    index: {
+      default: void 0
     }
   },
   computed: {
@@ -28,21 +38,17 @@ export default {
   },
   data() {
     return {
-      ments: ments,
-      ment: '',
       productNames: null, 
+      ment: this.image.ment,
+      question: this.image.question,
+      answer: this.image.answer,
     }
   },
   created() {
     this.productNames = this.storeProductNames;
     console.log(this.image);
-    console.log(this.ments);
-    this.ments.forEach((ele) => {
-      if(ele.category == this.image.category) {
-        this.ment = ele.content[Math.floor(Math.random() * ele.content.length)];
-      }
-    })
     this.image.template = 0;
+    this.storeMagazineImageOne();
   },
   watch: {
     storeProductNames(val){
@@ -50,10 +56,34 @@ export default {
     }
   },
   methods: {
-    ...mapActions(magazineStore, ['AC_PRODUCT_DETECT']),
+    ...mapActions(magazineStore, ['AC_PRODUCT_DETECT', 'AC_MAGAZINE_IMAGES_ONE']),
     getProductName(url){
       const payload = { url }
       this.AC_PRODUCT_DETECT(payload);
+    },
+    changeMent(event) {
+      if(event.target.innerText.length == 0) {
+        event.target.innerText = this.image.ment;
+      }
+      else {
+        this.image.ment = event.target.innerText;
+        this.storeMagazineImageOne();
+      }
+    },
+    changeAnswer(event) {
+      if(event.target.innerText.length == 0) {
+        event.target.innerText = this.image.answer;
+      } else {
+        this.image.answer = event.target.innerText;
+        this.storeMagazineImageOne();
+      }
+    },
+    storeMagazineImageOne() {
+      const payload = {
+        'index': this.index,
+        'image': this.image
+      }
+      this.AC_MAGAZINE_IMAGES_ONE(payload);
     }
   }
 }
@@ -94,5 +124,42 @@ export default {
     font-weight: 600;
     filter: invert(1);
     margin-left: -100px;
+  }
+
+  .interview.wrap {
+    margin-top: calc(50% - 200px);
+    height: 200px;
+    width: 80%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center;  */
+  }
+
+  .interview.wrap span{
+    color: black;
+    font-size: 20px;
+    filter: none;
+    margin-left: 0;
+  }
+
+  .interview.wrap div:nth-child(1) {
+    text-align: center;
+    width: 100%;
+    float: top;
+  }
+  .interview.wrap div:nth-child(2) {
+    text-align: center;
+    width: 100%;
+    float: bottom;
+  }
+
+  .interview.wrap .question {
+    font-size: 25px;
+  }
+
+  .interview.wrap .answer {
+    color: slategray;
   }
 </style>

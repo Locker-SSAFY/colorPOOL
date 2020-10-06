@@ -4,12 +4,12 @@
     <div class="theme-layer" @click="notSelect()"></div>
 
     <!-- 선택한 색상칩 -->
-    <div class="show-color left"  :style="{'background-color' : selectedColor}">
+    <div class="show-color left"  :style="{'background-color' : selectedColor.hex}">
       <div class="color-code top">
-        {{selectedColor}}
+        {{selectedColor.name}}
       </div>
       <div class="color-code bottom">
-        {{selectedColor}}
+        {{selectedColor.hex}}
       </div>
     </div>
     <!-- 추천 배색 보여주는 곳 -->
@@ -20,7 +20,7 @@
       >
       mdi-refresh</v-icon>
       <div class="button-text">POOL</div>
-      <div class="underline" :style="{'background-color' : selectedColor}"></div>
+      <div class="underline" :style="{'background-color' : selectedColor.hex}"></div>
       <SelectTone></SelectTone>
       <div class="theme-scroll wrap">
         <div class="show-themes mt-8" v-for="(t, index) in theme" :key="index">
@@ -51,8 +51,8 @@
     </v-btn>
     
     <!-- 배색 선택 안했을 경우 -->
-    <div v-if="selectedTheme==null" class="theme-color right" :style="{'background-color' : selectedColor}">
-      <ColorInfo></ColorInfo>
+    <div v-if="selectedTheme==null" class="theme-color right" :style="{'background-color' : selectedColor.hex}">
+      <ColorInfo v-bind:color="selectedColor"></ColorInfo>
     </div>
 
     <!-- 배색 선택한 경우 -->
@@ -92,7 +92,9 @@ export default {
                               storeDisplay: 'GE_DISPLAY',
                               storeIsLogin: 'GE_IS_LOGIN'}),
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR',
-                               storeSelectedTheme: 'GE_SELECTED_THEME'})
+                               storeSelectedTheme: 'GE_SELECTED_THEME',
+                               storeThemes: 'GE_THEMES'})
+                               
   },
   created(){
     this.isLogin = this.storeIsLogin;
@@ -108,50 +110,7 @@ export default {
       userInfo: null,
       selectedColor: '',
       selectedTheme: [],
-      theme: [
-        {
-          color1: "#e63946",
-          color2: "#f1faee",
-          color3: "#a8dadc",
-          color4: "#457b9d",
-          color5: "#1d3557",
-        },
-        {
-          color1: "#d90429",
-          color2: "#ef233c",
-          color3: "#edf2f4",
-          color4: "#edf2f4",
-          color5: "#8d99ae",
-        },
-        {
-          color1: "#003049",
-          color2: "#d62828",
-          color3: "#f77f00",
-          color4: "#fcbf49",
-          color5: "#eae2b7",
-        },
-        {
-          color1: "#03071e",
-          color2: "#370617",
-          color3: "#6a040f",
-          color4: "#9d0208",
-          color5: "#d00000",
-        },
-        {
-          color1: "#e63946",
-          color2: "#f1faee",
-          color3: "#a8dadc",
-          color4: "#457b9d",
-          color5: "#1d3557",
-        },
-        {
-          color1: "#d90429",
-          color2: "#ef233c",
-          color3: "#edf2f4",
-          color4: "#edf2f4",
-          color5: "#8d99ae",
-        },
-      ]
+      theme: [],
     }
   },
   watch: {
@@ -169,6 +128,28 @@ export default {
     },
     storeIsLogin(val){
       this.isLogin = val;
+    },
+    storeThemes() {
+      // this.theme = val;
+      // this.themes = [];
+      this.theme = [];
+      this.storeThemes.forEach((th) => {
+        var id = th.id;
+        var color1 = 'rgb(' + th.red1 + ',' + th.green1 + ',' + th.blue1 + ')';
+        var color2 = 'rgb(' + th.red2 + ',' + th.green2 + ',' + th.blue2 + ')';
+        var color3 = 'rgb(' + th.red3 + ',' + th.green3 + ',' + th.blue3 + ')';
+        var color4 = 'rgb(' + th.red4 + ',' + th.green4 + ',' + th.blue4 + ')';
+        var color5 = 'rgb(' + th.red5 + ',' + th.green5 + ',' + th.blue5 + ')';
+        const element = {
+          'id': id,
+          'color1' : color1,
+          'color2' : color2,
+          'color3' : color3,
+          'color4' : color4,
+          'color5' : color5,
+        };
+        this.theme.push(element);
+      })
     }
   },
   methods : {
