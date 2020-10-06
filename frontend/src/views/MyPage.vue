@@ -1,11 +1,11 @@
 <template>
 <v-row>
-  <div class="layer" v-if="showCover"></div>
+  <div class="layer" v-if="showCover"  @click="closeCover"></div>
   <div class="content-cover" :style="{'width': coverWidth+'%'}">
     <div class="info" v-if="showCover">
       <v-btn id="close-btn" @click="closeCover" flat dark text icon>
-        <v-icon>
-          mdi-close-box-outline
+        <v-icon size="45">
+          mdi-chevron-double-left
         </v-icon>
       </v-btn>
       <div class="cover-image">
@@ -18,7 +18,8 @@
       <div class="content-area" v-if="isMyMagazine">
           <ul v-for="(list, idx) in myMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
-              <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
+              <MagazineListCover v-if="magazine != null" v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
+              <div v-if="magazine == null" style="width: 200px;"></div>
             </li>
           </ul>
       </div>
@@ -30,6 +31,7 @@
           <ul v-for="(list, idx) in scrapMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
               <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
+              <div v-if="magazine == null" style="width: 200px;"></div>
             </li>
           </ul>
         </div>
@@ -41,6 +43,7 @@
           <ul v-for="(list, idx) in recentMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
               <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
+              <div v-if="magazine == null" style="width: 200px;"></div>
             </li>
           </ul>
         </div>
@@ -70,9 +73,12 @@ export default {
       isMyMagazine: true,
       isScrap: false,
       isRecent: false,
+
       myList: [],
       scrapList: [],
       recentList: [],
+      tempList: [],
+      
       myMagazine: [],
       scrapMagazine: [],
       recentMagazine: [],
@@ -97,40 +103,44 @@ export default {
   },
   watch: {
     myList() {
-      const fromSize = this.myMagazine.length;
-      const toSize = this.myList.length;
-      for(var i = fromSize; i < toSize; i+=3) {
-        var example = new Array(this.myList[i], this.myList[i + 1], this.myList[i + 2]);
-        example  = example.filter(function(item) {
-          return item !== null && item !== undefined && item !== '';
-        });
+      this.myMagazine = [];
+      const len = this.myList.length;
+      const div = len/4;
+      for(var i = 0; i < div; i++){
+        const example = [];
+        for(let j = 0; j < 4; j++){
+          if( i == div-1 && this.myList[4*i+j] == null){
+            example.push(null);
+          } else {
+            example.push(this.myList[4*i+j]);
+          }
+        }
         this.myMagazine.push(example);
       }
-      console.log("myMagazine", this.myMagazine);
     },
     scrapList() {
-      const fromSize = this.scrapMagazine.length;
-      const toSize = this.scrapList.length;
-      for(var i = fromSize; i < toSize; i+=3) {
-        var example = new Array(this.scrapList[i], this.scrapList[i + 1], this.scrapList[i + 2]);
-        example  = example.filter(function(item) {
-          return item !== null && item !== undefined && item !== '';
-        });
+      this.scrapMagazine = [];
+      const len = this.scrapList.length;
+      const div = len/4;
+      for(var i = 0; i < div; i++){
+        const example = [];
+        for(let j = 0; j < 4; j++){
+          example.push(this.scrapList[4*i+j]);
+        }
         this.scrapMagazine.push(example);
       }
-      console.log("scrapMagazine", this.scrapMagazine);
     },
     recentList() {
-      const fromSize = this.recentMagazine.length;
-      const toSize = this.recentList.length;
-      for(var i = fromSize; i < toSize; i+=3) {
-        var example = new Array(this.recentList[i], this.recentList[i + 1], this.recentList[i + 2]);
-        example  = example.filter(function(item) {
-          return item !== null && item !== undefined && item !== '';
-        });
+      this.recentMagazine = [];
+      const len = this.recentList.length;
+      const div = len/4;
+      for(var i = 0; i < div; i++){
+        const example = [];
+        for(let j = 0; j < 4; j++){
+          example.push(this.recentList[4*i+j]);
+        }
         this.recentMagazine.push(example);
       }
-      console.log("recentMagazine", this.recentMagazine);
     }
   },
   methods: {
@@ -188,7 +198,7 @@ export default {
       this.coverWidth = 0;
       this.selected = null;
       this.showCover = false;
-    }
+    },
   }
 }
 </script>
@@ -201,13 +211,21 @@ export default {
     position: absolute;
     top: 60px;
     height: 100%;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 90;
     transition: 0.5s;
     border-radius: 15px;
   }
+  /* .content-cover .info {
+    text-align: center;
+  } */
+
+
+
   #close-btn{
     float: right;
+    margin-right: 8px;
+    margin-top: 8px;
   }
   .layer{
     position: absolute;

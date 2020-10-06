@@ -89,6 +89,8 @@ export default {
         this.AC_IS_PICK({isPick: false});
         this.$router.push({name: 'Landing'});
       } else {
+        this.AC_IS_GET({isGet: false});
+        this.AC_IS_PICK({isPick: false});
         location.reload();
       }
     },

@@ -73,17 +73,21 @@ export default {
     })
   },
   watch: {
-    restRank() {
-      const fromSize = this.magazineList.length;
-      const toSize = this.restRank.length;
-      for(var i = fromSize; i < toSize; i+=3) {
-        var example = new Array(this.restRank[i], this.restRank[i + 1], this.restRank[i + 2]);
-        example  = example.filter(function(item) {
-          return item !== null && item !== undefined && item !== '';
-        });
+    restRank() {      
+      this.magazineList = [];
+      const len = this.restRank.length;
+      const div = len/3;
+      for(var i = 0; i < div; i++){
+        const example = [];
+        for(let j = 0; j < 3; j++){
+          if( i == div-1 && this.restRank[3*i+j] == null){
+            example.push(null);
+          } else {
+            example.push(this.restRank[3*i+j]);
+          }
+        }
         this.magazineList.push(example);
       }
-      console.log(this.magazineList);
     }
   },
   data() {

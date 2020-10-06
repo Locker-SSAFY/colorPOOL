@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="magazineData != null">
     <div class="magazine-list wrap" :style="{'background-color': magazine.color}" @click="showMag">
       <span class="cover-name">{{magazine.name}}</span>
       <span class="cover-date">{{magazine.date}}</span>
