@@ -49,6 +49,58 @@ const magazineStore = {
       .catch((err) => {
         console.log(err.response)
       })
+    },
+    AC_MAGAZINE_POST: ({commit, state}, payload) => {
+      console.log('AC_MAGAZINE_POST', payload);
+      const token = localStorage.getItem('access_token');
+      const url = 'https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine';
+      const header = {
+        'accept': '*',
+        'X-AUTH-TOKEN': token,
+        // 'Access-Control-Allow-Origin': '*',
+        // 'X-Requested-With' : 'XMLHttpRequest'
+      };
+      const userInfo = {
+        'id': 32,
+        'email': 'kang@kang.com',
+        'userNickname': 'kang', 
+      }
+      var contents = [];
+      state.magazineImages.forEach((image) => {
+        contents.push({
+          // 'id': null,
+          'url': image.url,
+          'mainText': image.mainText,
+          'subText': image.subText,
+          'question': image.question,
+          'answer': image.answer,
+          'template': image.template + ""
+        })
+      })
+      console.log(contents);
+      const data = {
+        // 'id': userInfo.id + "",
+        'id': null,
+        'email': userInfo.email,
+        'userNickname': userInfo.userNickname,
+        // 'createdDate': payload.date,
+        'createdDate': "2020-10-06T08:55:02.396Z",
+        'magazineName': payload.magazineName,
+        'colorId': payload.selectedColor,
+        // 'contents' : state.magazineImages
+        'content': contents
+      }
+      console.log(commit);
+      console.log(url);
+      console.log(header);
+      console.log('data', data);
+      axios.post(url, data, {headers: header})
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
   }
 }

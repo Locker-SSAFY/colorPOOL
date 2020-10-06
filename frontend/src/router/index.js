@@ -11,6 +11,7 @@ import TestVision from '../components/TestVision.vue'
 import MyPage from '../views/MyPage.vue'
 import Library from '../views/Library.vue'
 import Temp from '../views/Temporary.vue'
+import Detail from '../views/Detail.vue'
 
 Vue.use(VueRouter)
 
@@ -72,6 +73,11 @@ Vue.use(VueRouter)
     path: '/temp',
     name: 'Temporary',
     component: Temp
+  },
+  {
+    path: '/detail',
+    name: 'Detail',
+    component: Detail
   }
 ]
 

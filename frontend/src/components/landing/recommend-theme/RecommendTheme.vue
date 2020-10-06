@@ -24,7 +24,7 @@
       <SelectTone></SelectTone>
       <div class="theme-scroll wrap">
         <div class="show-themes mt-8" v-for="(t, index) in theme" :key="index">
-          <div class="color-group" @click="selectTheme(t.color1, t.color2, t.color3, t.color4, t.color5)">
+          <div class="color-group" @click="selectTheme(t.color1, t.color2, t.color3, t.color4, t.color5, t.id)">
             <div class="theme-colors" :style="{'background-color' : t.color1}">
             </div>
             <div class="theme-colors" :style="{'background-color' : t.color2}">
@@ -153,7 +153,7 @@ export default {
     }
   },
   methods : {
-    ...mapActions(colorStore, ['AC_SELECTED_THEME']),
+    ...mapActions(colorStore, ['AC_SELECTED_THEME', 'AC_SELECTED_THEME_ID']),
     ...mapActions(userStore, ['AC_DISPLAY']),
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_IS_LANDING']),
 
@@ -162,12 +162,15 @@ export default {
       const payload = {selectedTheme: null};
       this.AC_SELECTED_THEME(payload);
     },
-    selectTheme(c1, c2, c3, c4, c5){
+    selectTheme(c1, c2, c3, c4, c5, id){
       const payload = { selectedTheme: [c1, c2, c3, c4, c5]};
       this.AC_SELECTED_THEME(payload);
+      const payload2 = { selectedThemeId: id};
+      this.AC_SELECTED_THEME_ID(payload2);
     },
     notSelect(){
       this.AC_SELECTED_THEME({selectedTheme: null});
+      this.AC_SELECTED_THEME_ID({selectedThemeId: null});
     },
     goCategory() {
       if(this.isLogin == false){

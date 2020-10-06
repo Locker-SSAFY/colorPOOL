@@ -1,5 +1,5 @@
 <template>
-  <div class="magazine-rank wrap" :style="{'background-color': color}">
+  <div class="magazine-rank wrap" :style="{'background-color': color}" @click="showMag">
     <span class="cover-name">{{name}}</span>
     <span class="cover-date">{{date}}</span>
     <span class="cover-username">{{userName}}</span>
@@ -15,6 +15,9 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+const detailStore = 'detailStore'
+
 export default {
   name: 'MagazineRankCover',
   props: {
@@ -34,7 +37,21 @@ export default {
       userEmail: '',
       coverImg: '',
       date: '',
-      likes: []
+      likes: [],
+      mag_data: {}
+    }
+  },
+  methods: {
+    ...mapActions(detailStore, ['AC_DETAIL']),
+    showMag() {
+      var res = confirm("잡지를 보시겠습니까?")
+      if(res) {
+        // console.log(res)
+        const payload = this.mag_data;
+        this.AC_DETAIL(payload);
+        let route = this.$router.resolve({path: '/detail'});
+        window.open(route.href, 'window','location=no, directories=no,resizable=no,status=no,toolbar=no,menubar=no, width=1200,height=600,left=0, top=0, scrollbars=yes');
+      } 
     }
   },
   created() {
@@ -46,6 +63,103 @@ export default {
     this.coverImg = this.aboutRanker.coverImg;
     this.date = this.aboutRanker.date;
     this.likes = this.aboutRanker.likes;
+    
+    this.mag_data = 
+      [
+        {
+          "id": 0,
+          "user": {
+            "id": 0,
+            "email": "kang@kang.com",
+            "nickname": "kang",
+            "provider": "root",
+            "roles": [
+              "ROLE_USER"
+            ]
+          },
+          "selectedColor": {
+            "id": 0,
+            "color": {
+              "red": 0,
+              "green": 0,
+              "blue": 0
+            },
+            "themes": [
+            {
+              "id": 1204,
+              "red1": 152,
+              "green1": 232,
+              "blue1": 66,
+              "red2": 199,
+              "green2": 250,
+              "blue2": 140,
+              "red3": 255,
+              "green3": 241,
+              "blue3": 118,
+              "red4": 150,
+              "green4": 244,
+              "blue4": 255,
+              "red5": 77,
+              "green5": 208,
+              "blue5": 225,
+              "selectedColor": null,
+              "crawledImages": []
+            }
+            ]
+          },
+          "contents": [
+            {
+              "id": 1,
+              "url": "https://images.unsplash.com/photo-1548549557-dbe9946621da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
+              "mainText": "패션은 나이, 성별, 인종을 초월한다",
+              "subText": "shoes",
+              "question": "당신에게 코딩이란?",
+              "answer": "인터뷰에 답변을 적어주세요",
+              "template": "0"
+            },
+            {
+              "id": 2,
+              "url": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=662&q=80",
+              "mainText": "Fashion is about Passion",
+              "subText": "shoes",
+              "question": "당신에게 코딩이란?",
+              "answer": "인터뷰에 답변을 적어주세요",
+              "template": "2"
+            }
+          ],
+          "likes": [
+            {
+              "id": 0,
+              "user": {
+                "id": 0,
+                "email": "string",
+                "nickname": "string",
+                "provider": "string",
+                "roles": [
+                  "string"
+                ]
+              }
+            }
+          ],
+          "bookmarks": [
+            {
+              "id": 0,
+              "user": {
+                "id": 0,
+                "email": "string",
+                "nickname": "string",
+                "provider": "string",
+                "roles": [
+                  "string"
+                ]
+              }
+            }
+          ],
+          "createdDate": "2020-10-06T15:08:56.655Z"
+        }
+      ]
+    
+  
   }
 }
 </script>

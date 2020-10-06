@@ -55,7 +55,7 @@
     </div>
 
     <!-- 배색 추천 받으러 가기 버튼 + 선택 안한 경우 modal -->
-    <div class="next-button" v-if="this.$parent.isGet">
+    <div class="next-button" v-if="this.$parent.isGet" @click="getTheme">
       <NonPickDialog></NonPickDialog>
     </div>
 
@@ -107,7 +107,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR', 'AC_THEMES']),
     clickGet() {
       this.$parent.isPick = false;
       this.$parent.isGet = true;
@@ -129,6 +129,8 @@ export default {
       })
     },
     getTheme(){
+      const payload = this.selectedColor;
+      this.AC_THEMES(payload)
       document.body.className = "unlock";
       window.scrollTo({left: 0, top: 1000, behavior: 'smooth'});
     },
