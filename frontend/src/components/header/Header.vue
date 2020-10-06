@@ -49,12 +49,14 @@ export default {
   computed: {
     ...mapGetters(userStore, { storeIsLogin: 'GE_IS_LOGIN',
                               storeUserInfo: 'GE_USER_INFO'}),
-    ...mapGetters(landingStore, { storeIsLanding: 'GE_IS_LANDING'})
+    ...mapGetters(landingStore, { storeIsLanding: 'GE_IS_LANDING', storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
   },
   created(){
     this.userInfo = this.storeUserInfo;
     this.isLogin = this.storeIsLogin;
     this.isLanding = this.storeIsLanding;
+    this.isGet = this.storeIsGet;
+    this.isPick = this.storeIsPick;
   },
   data() {
     return {
@@ -65,6 +67,12 @@ export default {
     }
   },
   watch: {
+    isGet(val){
+      this.isGet = val;
+    }, 
+    isPick(val){
+      this.isPick = val;
+    },
     storeUserInfo(val){
       this.userInfo = val;
     },
@@ -90,7 +98,10 @@ export default {
       } else {
         this.AC_IS_GET({isGet: false});
         this.AC_IS_PICK({isPick: false});
-        location.reload();
+        console.log("isGet : ", this.isGet);
+        console.log("isPick : ", this.isPick);
+        window.location.reload();
+        window.scrollTo({left: 0, top: 0, transition: 0});
       }
     },
     logout(){
@@ -105,6 +116,7 @@ export default {
             this.AC_IS_GET({isGet: false});
             this.AC_IS_PICK({isPick: false});
             this.$router.push({name: 'Landing'});
+            window.scrollTo(0, 0);
           }
       }
     },

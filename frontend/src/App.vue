@@ -3,7 +3,7 @@
     <head>
       <title>ColorPOOL</title>
     </head>
-    <Header></Header>
+    <Header style="z-index: 88;"></Header>
     <router-view/>
   </v-app>
 </template>

@@ -1,8 +1,12 @@
 <template>
 <div>
+  <div class="dim-layer" v-if="theme.length == 0">
+    <div class="theme-loading">
+      <img src="../../../assets/images/loading.gif">
+    </div>
+  </div>
   <div class="theme-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
     <div class="theme-layer" @click="notSelect()"></div>
-
     <!-- 선택한 색상칩 -->
     <div class="show-color left"  :style="{'background-color' : selectedColor.hex}">
       <div class="color-code top">
@@ -21,7 +25,6 @@
       mdi-refresh</v-icon>
       <div class="button-text">POOL</div>
       <div class="underline" :style="{'background-color' : selectedColor.hex}"></div>
-      <SelectTone></SelectTone>
       <div class="theme-scroll wrap">
         <div class="show-themes mt-8" v-for="(t, index) in theme" :key="index">
           <div class="color-group" @click="selectTheme(t.color1, t.color2, t.color3, t.color4, t.color5)">
@@ -51,7 +54,7 @@
     </v-btn>
     
     <!-- 배색 선택 안했을 경우 -->
-    <div v-if="selectedTheme==null" class="theme-color right" :style="{'background-color' : selectedColor.hex}">
+    <div v-if="selectedTheme==null" class="show-color right" :style="{'background-color' : selectedColor.hex}">
       <ColorInfo v-bind:color="selectedColor"></ColorInfo>
     </div>
 
@@ -73,7 +76,6 @@
 </template>
 <script> 
 import { mapGetters, mapActions } from 'vuex'
-import SelectTone from './SelectTone'
 import ColorInfo from './ColorInfo'
 import ThemeInfo from './ThemeInfo'
 const colorStore = 'colorStore'
@@ -83,7 +85,6 @@ const landingStore = 'landingStore'
 export default {
   name: 'RecommandTheme',
   components: {
-    SelectTone, 
     ColorInfo,
     ThemeInfo,
   },
@@ -130,8 +131,6 @@ export default {
       this.isLogin = val;
     },
     storeThemes() {
-      // this.theme = val;
-      // this.themes = [];
       this.theme = [];
       this.storeThemes.forEach((th) => {
         var id = th.id;
@@ -158,9 +157,10 @@ export default {
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_IS_LANDING']),
 
     goBack(){
-      window.scrollTo(0, 0);
       const payload = {selectedTheme: null};
       this.AC_SELECTED_THEME(payload);
+      this.theme = [];
+      window.scrollTo(0, 0);
     },
     selectTheme(c1, c2, c3, c4, c5){
       const payload = { selectedTheme: [c1, c2, c3, c4, c5]};
@@ -211,7 +211,24 @@ export default {
     opacity: 0;
   }
 
+  .dim-layer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top:100%;
+    width: 100%;
+    height: 100%;
+    z-index: 89;
+    background-color: rgb(0, 0, 0, 0.6); 
+  }
+  .theme-loading img{
+    z-index: 90;
+    width: 250px;
+  }
+
   .theme-scroll{
+    position: relative;
     overflow: scroll;
     height: 75%;
   }
@@ -276,6 +293,17 @@ export default {
     /* background-color: #EF5350; */
     width: 100%;
     height: 2px;
+  }
+
+  .show-color.right {
+    width:30%;
+    height: 100%;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .theme-color.right {
