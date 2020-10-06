@@ -111,9 +111,11 @@ export default {
     },
     goMyPage(){
       this.$router.push({name: 'MyPage'});
+      this.AC_IS_LANDING({isLanding: false});
     },
     goLibrary() {
-      this.$router.push({name: 'Library'})
+      this.$router.push({name: 'Library'});
+      this.AC_IS_LANDING({isLanding: false});
     }
   },
   mounted() {
