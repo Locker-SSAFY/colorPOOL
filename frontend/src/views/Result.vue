@@ -1,7 +1,7 @@
 <template>
   <div class="result wrap">
     <div class="left">
-      <Cover></Cover>
+      <Cover v-bind:nowDate="date" v-bind:magazineName="magazineName"></Cover>
     </div>
     <div class="right">
       <table>
@@ -49,12 +49,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 // import Cover from '../components/magazine/magazineCover'
 // import Book from '../components/magazine/book'
 import Cover from '../components/magazine/magazineCover'
 const colorStore = 'colorStore'
 const userStore = 'userStore'
+const magazineStore = 'magazineStore'
 
 export default {
   name: 'Result',
@@ -66,6 +67,8 @@ export default {
       color: '',
       theme: [],
       userInfo: null,
+      date: null,
+      magazineName: 'ColorPOOL'
     }
   },
   created() {
@@ -79,26 +82,37 @@ export default {
       this.color = "#7986CB";
     if(this.storeSelectedTheme == null)
       this.theme = ["#e63946", "#f1faee", "#a8dadc", "#457b9d", "#1d3557"];
-    
-    
+    this.date = new Date();
   },
   computed: {
-    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'}),
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME', storeSelectedThemeId: 'GE_SELECTED_THEME_ID'}),
     ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO'})
   },
   methods: {
+    ...mapActions(magazineStore, ['AC_MAGAZINE_POST']),
     addMagazine() {
       alert('구현 예정입니다!')
-
+      const payload = {
+        'date': this.date,
+        'magazineName': this.magazineName,
+        'selectedColor': this.storeSelectedThemeId
+      }
+      console.log(payload);
+      this.AC_MAGAZINE_POST(payload);
     },
     saveAsPDF(){
-      alert('구현 예정입니다!')
+      alert('구현 예정입니다!') 
     },
     goMain() {
       var res = confirm('추가 또는 저장되지 않은 잡지는 사라집니다. 메인으로 돌아가시겠습니까?')
       if(res) {
         this.$router.push({ name: 'Landing' });
       } 
+    }
+  },
+  watch: {
+    magazineName(val) {
+      console.log(val);
     }
   }
 }

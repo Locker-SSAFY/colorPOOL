@@ -4,7 +4,7 @@
       <div class="book-cover" :style="{'background-color': color}">
         <img class="image" :src="coverImage" />
         <span class="time">{{this.issueTime}}</span>
-        <span contenteditable class="logo">ColorPOOL</span>
+        <span contenteditable @blur="changeName" class="logo">{{magazineName}}</span>
         <span class="user">BeaverBae</span>
         <span class="email">beaverBae@naver.com</span>
       </div>
@@ -23,6 +23,14 @@ const magazineStore = 'magazineStore'
 
 export default {
   name: 'Cover',
+  props: {
+    nowDate: {
+      default: void 0
+    },
+    magazineName: {
+      default: void 0
+    }
+  },
   data() {
     return {
       month : '',
@@ -34,7 +42,7 @@ export default {
       issueTime: '',
       color: '',
       theme: ["#e63946", "#f1faee", "#a8dadc", "#457b9d", "#1d3557"],
-      coverImage: ''
+      coverImage: '',
     }
   },
   created() {
@@ -52,7 +60,7 @@ export default {
   methods: {
     getDateOfToday() {
       // 오늘의 날짜 확인
-      const time = new Date();
+      const time = new Date(this.nowDate);
       this.month = time.getMonth()
       this.date = time.getDate()
       this.year = time.getFullYear()
@@ -101,6 +109,14 @@ export default {
         this.coverImage = "https://images.unsplash.com/photo-1551516595-09cb9fcf8db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80";
       else
         this.coverImage = this.storeMagazineImages[this.storeMagazineImages.length - 1].url;
+    },
+    changeName(event) {
+      if(event.target.innerText.length == 0) {
+        event.target.innerText = this.magazineName;
+      }
+      else {
+        this.$parent.magazineName = event.target.innerText;
+      }
     }
   }
 }
