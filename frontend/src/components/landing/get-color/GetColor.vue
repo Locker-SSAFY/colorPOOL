@@ -30,11 +30,11 @@
       </ul>
     </div>
 
-    <Loading  v-if="this.$parent.isGet && loading" class="get-color left"></Loading>
+    <Loading v-if="this.$parent.isGet && loading" class="get-color left"></Loading>
 
 
     <!-- 오른쪽 배경 -->
-    <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : selectedColor}">
+    <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : selectedColor.hex}">
       <!-- <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"> -->
     </div>
 
@@ -43,7 +43,7 @@
       <div class="search-wrap">
         <div class="search-panel">
           <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
-          <v-btn @click="getPicularImages()" class="ma-2" tile large :color="selectedColor" icon>
+          <v-btn @click="getPicularImages()" class="ma-2" tile large :color="selectedColor.hex" icon>
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
         </div>
@@ -72,6 +72,7 @@ import NonPickDialog from '../recommend-theme/NonPickDialog';
 import Loading from '../../loading/GetColorLoading';
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
+import materialColors from '../../../assets/color/colorList.js'
 const colorStore = 'colorStore'
 
 export default {
@@ -90,7 +91,8 @@ export default {
       opacity: 1,
       overlay: false,
       selectedColor: '',
-      loading: false
+      loading: false,
+      materialColors: materialColors
     }
   },
   computed: {
@@ -128,12 +130,38 @@ export default {
     },
     getTheme(){
       document.body.className = "unlock";
-      console.log(document.body);
       window.scrollTo({left: 0, top: 1000, behavior: 'smooth'});
     },
     getColor(color){
-      const payload = {selectedColor: color};
+      var rgb = this.getRGB(color);
+      var select = null;
+      var min = 1000000;
+      this.materialColors.forEach((ele) => {
+        ele.variations.forEach((hex) => {
+          var rgb2 = this.getRGB(hex.hex);
+          var distance = (rgb2.r - rgb.r) * (rgb2.r - rgb.r) + (rgb2.g - rgb.g) * (rgb2.g - rgb.g) + (rgb2.b - rgb.b) * (rgb2.b - rgb.b);
+          if(distance < min) {
+            min = distance;
+            select = hex;
+          }
+        })
+      })
+      const payload = {selectedColor: select};
       this.AC_SELECTED_COLOR(payload);
+    },
+    getRGB(color) {
+      var hex = color.substring(1, 7);
+      var value = hex.match( /[a-f\d]/gi ); 
+      if ( value.length == 3 ) hex = value[0] + value[0] + value[1] + value[1] + value[2] + value[2]; 
+      value = hex.match( /[a-f\d]{2}/gi ); 
+      var r = parseInt( value[0], 16 ); 
+      var g = parseInt( value[1], 16 ); 
+      var b = parseInt( value[2], 16 ); 
+      return {
+        r: r,
+        g: g,
+        b: b
+      };
     }
   }
 }
