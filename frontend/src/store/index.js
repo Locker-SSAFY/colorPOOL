@@ -11,6 +11,8 @@ import landingStore from '@/store/modules/landingStore.js'
 import magazineStore from '@/store/modules/magazineStore.js'
 import rankStore from '@/store/modules/rankStore.js'
 import myPageStore from '@/store/modules/myPageStore.js'
+import detailStore from '@/store/modules/detailStore.js'
+import headerStore from '@/store/modules/headerStore.js'
 
 export default new Vuex.Store({
   modules: {
@@ -20,11 +22,13 @@ export default new Vuex.Store({
     landingStore,
     magazineStore,
     rankStore,
-    myPageStore
+    myPageStore,
+    detailStore,
+    headerStore
   },
   plugins: [
     createdPersistedState({
-      paths: ['imgaeStore', 'colorStore', 'landingStore', 'magazineStore'],
+      paths: ['imageStore', 'colorStore', 'landingStore', 'magazineStore', 'detailStore'],
     })
   ],
   state: {
