@@ -19,7 +19,6 @@ const colorStore = {
     },
     MU_SELECTED_THEME: (state, payload) => {
       state.selectedTheme = payload.selectedTheme
-      console.log('selected theme', state.selectedTheme);
     },
     MU_THEMES : (state, payload) => {
       state.themes = payload

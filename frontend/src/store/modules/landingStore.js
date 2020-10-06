@@ -12,15 +12,12 @@ const landingStore = {
   },
   mutations: {
     MU_IS_GET: (state, payload) => {
-      console.log('MU_IS_GET', payload)
       state.isGet = payload.isGet
     },
     MU_IS_PICK: (state, payload) => {
-      console.log('MU_IS_Pick', payload)
       state.isPick = payload.isPick
     },
     MU_IS_LANDING: (state, payload) => {
-      console.log('MU_IS_LANDING', payload)
       state.isLanding = payload.isLanding
     }
   },

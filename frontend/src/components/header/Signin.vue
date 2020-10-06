@@ -25,22 +25,22 @@
       <v-row>
         <v-col cols="2">
           <v-row v-if="showSigninVal">
-            <v-btn dark @click="showSignin" style="width: 14%;">
+            <v-btn dark @click="showSignin" style="width: 14%;" block>
               SIGNIN
             </v-btn>
           </v-row>
           <v-row v-else >
-            <v-btn text @click="showSignin" style="width: 14%;">
+            <v-btn text @click="showSignin" style="width: 14%;" block>
               SIGNIN
             </v-btn>
           </v-row>
           <v-row v-if="showSigninVal">
-            <v-btn text @click="showSignup" style="width: 14%;" >
+            <v-btn text @click="showSignup" style="width: 14%;" block>
               SIGNUP
             </v-btn>
           </v-row>
           <v-row v-else>
-            <v-btn dark @click="showSignup" style="width: 14%;">
+            <v-btn dark @click="showSignup" style="width: 14%;" block>
               SIGNUP
             </v-btn>
           </v-row>
@@ -49,7 +49,6 @@
           <v-row class="signin-back">
             <!-- signin -->
             <v-col v-if="showSigninVal">
-              <!-- <v-row id="singin-title">SIGNIN</v-row> -->
               <v-row id="show-error">{{errorMsg}}</v-row>
               <v-row>
                 <div class="textfield-tape">
@@ -64,12 +63,12 @@
                   class="mb-2"
                   @click="signin"
                   text
-                  style="position: absolute; top: 58%; right: 8%; font-size: 1.3rem;"
+                  style="position: absolute; top: 62%; right: 8%; font-size: 1.3rem;"
                 >
                 > SIGININ
                 </v-btn>
               </v-row>
-              <v-row style="position: absolute; top: 60%;">
+              <v-row>
                 <v-btn
                   color="black"
                   icon
@@ -91,10 +90,9 @@
 
             <!-- sign up-->
             <v-col v-else>
-              <!-- <v-row id="singin-title">SIGNUP</v-row> -->
               <v-row>
                 <div class="textfield-tape">
-                  <v-text-field dense v-model="nickname" placeholder="nickname" required></v-text-field>
+                  <v-text-field dense v-model="nickName" placeholder="nickname" required></v-text-field>
                 </div>
                 <div class="textfield-tape">
                   <v-text-field dense v-model="email" :rules="emailRules" placeholder="email" required></v-text-field>
@@ -159,7 +157,7 @@ export default {
     name: void 0
   },
   created(){
-    this.backColor = this.storeSelectedColor;
+    this.backColor = this.storeSelectedColor.hex;
     this.dialog = this.storeDisplay;
     this.isLoginError = this.storeIsLoginError;
     this.userInfo = this.storeUserInfo;
@@ -209,7 +207,7 @@ export default {
   },
   watch: {
     storeSelectedColor(val){
-      this.backColor = val
+      this.backColor = val.hex;
     },
     storeIsLoginError(val){
       this.isLoginError = val
@@ -228,10 +226,15 @@ export default {
     ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN','AC_ERROR', 'AC_IS_LOGIN']),
     showSignin(){
       this.showSigninVal = true;
+      this.email = '';
+      this.nickName = '';
+      this.password = '';
+      this.passwordConfirm = '';
     },
     showSignup(){
       this.showSigninVal = false;
-      console.log(this.showSigninVal);
+      this.userEmail = '';
+      this.userPassword = '';
     },
     signin(){
       const payload = {
@@ -252,24 +255,19 @@ export default {
           provider: 'root'
         }
       }
-      // this.AC_SIGNUP(payload);
       
+      var v = this;
+
       axios.post(SERVER.ROUTES.signup, payload)
       .then(function (response) {
         console.log(response);
         alert('회원가입 성공!');
+        v.showSignin;
       })
-      
-      this.showSigninVal = true;
-      this.nickName = '',
-      this.email = '',
-      this.password = '',
-      this.passwordConfirm = ''
     },
     close(){
       this.AC_ERROR(null);
-      this.userEmail = '';
-      this.userPassword = '';
+      this.showSignin;
       this.AC_DISPLAY(false);
     },
 
@@ -338,6 +336,7 @@ export default {
     font-weight: border;
     font-size: 1rem;
     height: 5%;
+    margin-bottom: 15px; 
   }
 
   #horizon-line{

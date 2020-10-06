@@ -143,7 +143,7 @@ const userStore = {
       .then( response =>{
         console.log("resssss",response);
         localStorage.setItem("access_token", token);
-        commit('MU_USER_INFO', response.data);
+        commit('MU_USER_INFO', response.data.data);
         commit('MU_DISPLAY', false);
         commit('MU_IS_LOGIN', true);
       })
