@@ -44,17 +44,19 @@ export default {
     this.isLanding = this.storeIsLanding
     this.AC_IS_LANDING({isLanding: true});
     window.scrollTo({left: 0,top: 0});
+    this.AC_SELECTED_COLOR({selectedColor: null});
+    this.AC_SELECTED_THEME({selectedTheme: null});
   },
   computed: {
     ...mapGetters(landingStore, {storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK', storeIsLanding: 'GE_IS_LANDING'})
   },
   methods : {
-    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR','AC_SELECTED_THEME']),
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_IS_LANDING']),
     goBack() {
       this.isPick= false;
       this.isGet = false;
-      const payload = {selectedColor: ''};
+      const payload = {selectedColor: null};
       this.AC_SELECTED_COLOR(payload);
     }
   },

@@ -34,7 +34,7 @@
 
 
     <!-- 오른쪽 배경 -->
-    <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : selectedColor.hex}">
+    <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : backColor}">
       <!-- <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"> -->
     </div>
 
@@ -43,7 +43,7 @@
       <div class="search-wrap">
         <div class="search-panel">
           <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
-          <v-btn @click="getPicularImages()" class="ma-2" tile large :color="selectedColor.hex" icon>
+          <v-btn @click="getPicularImages()" class="ma-2" tile large :color="backColor" icon>
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
         </div>
@@ -90,7 +90,8 @@ export default {
       absolute: true,
       opacity: 1,
       overlay: false,
-      selectedColor: '',
+      selectedColor: null,
+      backColor: '',
       loading: false,
       materialColors: materialColors
     }
@@ -100,10 +101,12 @@ export default {
   },
   created(){
     this.selectedColor = this.storeSelectedColor;
+    this.backColor = this.storeSelectedColor.hex;
   },
   watch: {
     storeSelectedColor(val){
-      this.selectedColor = val
+      this.selectedColor = val;
+      this.backColor = val.hex;
     }
   },
   methods: {

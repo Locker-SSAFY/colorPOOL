@@ -6,7 +6,7 @@
     <div class=template-a-right>
       <span contenteditable  @blur="changeMent" :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">{{ment}}</span>
       <br><br>
-      <h3>{{productNames}}</h3>
+      <h3 v-if="productNames.length != 0">{{productNames}}</h3>
       <div class="interview wrap">
         <div>
           <span class="question">{{question}}</span>
