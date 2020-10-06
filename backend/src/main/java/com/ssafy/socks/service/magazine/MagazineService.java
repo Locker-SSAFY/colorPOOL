@@ -12,6 +12,7 @@ import com.ssafy.socks.entity.magazine.Likes;
 import com.ssafy.socks.entity.magazine.Magazine;
 import com.ssafy.socks.entity.user.User;
 import com.ssafy.socks.model.magazine.MagazineModel;
+import com.ssafy.socks.repository.color.SelectedColorJpaRepository;
 import com.ssafy.socks.repository.magazine.BookmarkRepository;
 import com.ssafy.socks.repository.magazine.LikesJpaRepository;
 import com.ssafy.socks.repository.magazine.MagazineJpaRepository;
@@ -28,6 +29,7 @@ public class MagazineService {
 	private final MagazineRepository magazineRepository;
 	private final LikesJpaRepository likesJpaRepository;
 	private final BookmarkRepository bookmarkRepository;
+	private final SelectedColorJpaRepository selectedColorJpaRepository;
 
 	public void saveMagazine(MagazineModel magazineModel) {
 		List<Contents> contentsList = new ArrayList<>();
@@ -49,6 +51,7 @@ public class MagazineService {
 		magazine = Magazine.builder()
 			.user(userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new))
 			.contents(contentsList)
+			.selectedColor(selectedColorJpaRepository.findById(magazineModel.getColorId()).orElseThrow(CCommunicationException::new))
 			.createdDate(magazineModel.getCreatedDate())
 			.build();
 
