@@ -1,11 +1,11 @@
 <template>
 <v-row>
-  <div class="layer" v-if="showCover"></div>
+  <div class="layer" v-if="showCover"  @click="closeCover"></div>
   <div class="content-cover" :style="{'width': coverWidth+'%'}">
     <div class="info" v-if="showCover">
       <v-btn id="close-btn" @click="closeCover" flat dark text icon>
-        <v-icon>
-          mdi-close-box-outline
+        <v-icon size="45">
+          mdi-chevron-double-left
         </v-icon>
       </v-btn>
       <div class="cover-image">
@@ -70,9 +70,12 @@ export default {
       isMyMagazine: true,
       isScrap: false,
       isRecent: false,
+
       myList: [],
       scrapList: [],
       recentList: [],
+      tempList: [],
+      
       myMagazine: [],
       scrapMagazine: [],
       recentMagazine: [],
@@ -201,13 +204,21 @@ export default {
     position: absolute;
     top: 60px;
     height: 100%;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 90;
     transition: 0.5s;
     border-radius: 15px;
   }
+  /* .content-cover .info {
+    text-align: center;
+  } */
+
+
+
   #close-btn{
     float: right;
+    margin-right: 8px;
+    margin-top: 8px;
   }
   .layer{
     position: absolute;
