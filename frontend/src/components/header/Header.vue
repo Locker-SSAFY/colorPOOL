@@ -83,7 +83,6 @@ export default {
       this.scrolled = window.scrollY > 0
     },
     goHome() {
-      console.log(this);
       if(!this.isLanding){
         this.AC_IS_GET({isGet: false});
         this.AC_IS_PICK({isPick: false});
@@ -146,7 +145,6 @@ export default {
   }
 
   .header.wrap .header-logo {
-    /* color: white; */
     font-size: 25px;
     width: 60%;
     font-weight: bolder;
