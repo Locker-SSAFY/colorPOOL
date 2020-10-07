@@ -45,8 +45,8 @@ public class MagazineService {
 		Logger logger = LoggerFactory.getLogger(this.getClass());
 
 		logger.info("----------------- getModel -----------------");
-		System.out.println("selected id : " + magazineModel.getSelectedColorId());
-		System.out.println("theme id : " + magazineModel.getThemeId());
+		logger.info("selected id : " + magazineModel.getSelectedColorId());
+		logger.info("theme id : " + magazineModel.getThemeId());
 		logger.info("----------------- getModel -----------------");
 
 		List<Contents> contentsList = new ArrayList<>();
