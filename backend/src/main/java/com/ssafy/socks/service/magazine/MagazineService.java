@@ -80,7 +80,7 @@ public class MagazineService {
 		logger.info("current Date : " + magazine.getCreatedDate());
 		logger.info("----------------- magazine -----------------");
 
-		List<Likes> likesList = likesJpaRepository.findAllByMagazine(magazine);
+		List<Likes> likesList = likesJpaRepository.findByMagazine(magazine);
 		List<Bookmark> bookmarkList = bookmarkRepository.findBookmarkByMagazine(magazine);
 		magazine.setLikes(likesList);
 		magazine.setBookmarks(bookmarkList);
