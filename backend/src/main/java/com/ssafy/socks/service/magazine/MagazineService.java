@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,15 +177,10 @@ public class MagazineService {
 	public LikesModel setLikes(Long magazineId, String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
 		Magazine magazine = magazineJpaRepository.findById(magazineId).orElseThrow(CCommunicationException::new);
-		boolean isSetLike = likesJpaRepository.existsByUserIdAndMagazineId(user.getId(),magazine.getId());
-
+		Optional<Likes> likesOptional = likesJpaRepository.findByUserIdAAndMagazineId(user.getId(),magazine.getId());
+		
 		LikesModel likesModel = new LikesModel();
-		if(isSetLike) {
-			likesJpaRepository.deleteByUserIdAndMagazineId(user.getId(),magazine.getId());
-			likesModel.setMagazineId(magazineId);
-			likesModel.setUserId(user.getId());
-			likesModel.setClicked(true);
-		} else {
+		if(likesOptional.isPresent()) {
 			likesJpaRepository.save(
 				Likes.builder()
 					.magazineId(magazine.getId())
@@ -194,6 +190,11 @@ public class MagazineService {
 			likesModel.setMagazineId(magazineId);
 			likesModel.setUserId(user.getId());
 			likesModel.setClicked(false);
+		} else {
+			likesJpaRepository.deleteByUserIdAndMagazineId(user.getId(), magazine.getId());
+			likesModel.setMagazineId(magazineId);
+			likesModel.setUserId(user.getId());
+			likesModel.setClicked(true);
 		}
 		return likesModel;
 	}

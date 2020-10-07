@@ -12,7 +12,6 @@ import com.ssafy.socks.entity.user.User;
 
 @Repository
 public interface LikesJpaRepository extends JpaRepository<Likes,Long> {
-	Boolean existsByUserIdAndMagazineId(Long userId, Long magazineId);
-	List<Likes> findByMagazineId(Long magazineId);
+	Optional<Likes> findByUserIdAAndMagazineId(Long userId, Long magazineId);
 	void deleteByUserIdAndMagazineId(Long userId, Long magazineId);
 }
