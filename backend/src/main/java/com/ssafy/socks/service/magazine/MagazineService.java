@@ -26,6 +26,7 @@ import com.ssafy.socks.repository.color.ColorHistoryJpaRepository;
 import com.ssafy.socks.repository.color.SelectedColorJpaRepository;
 import com.ssafy.socks.repository.magazine.BookmarkRepository;
 import com.ssafy.socks.repository.magazine.ContentsJpaRepository;
+import com.ssafy.socks.repository.magazine.LikeRepository;
 import com.ssafy.socks.repository.magazine.LikesJpaRepository;
 import com.ssafy.socks.repository.magazine.MagazineJpaRepository;
 import com.ssafy.socks.repository.magazine.MagazineRepository;
@@ -48,6 +49,7 @@ public class MagazineService {
 	private final ColorHistoryJpaRepository colorHistoryJpaRepository;
 	private final SelectedColorJpaRepository selectedColorJpaRepository;
 	private final ContentsJpaRepository contentsJpaRepository;
+	private final LikeRepository likeRepository;
 
 	public void saveMagazine(MagazineModel magazineModel) {
 		LocalDateTime currDate = LocalDateTime.now();
@@ -180,7 +182,7 @@ public class MagazineService {
 
 		LikesModel likesModel = new LikesModel();
 		if(likesOptional.isPresent()) {
-			likesJpaRepository.removeLikesByUserIdAndMagazineId(user.getId(),magazineId);
+			likeRepository.deleteByMidAndUid(magazineId,user.getId());
 			likesModel.setMagazineId(magazineId);
 			likesModel.setUserId(user.getId());
 			likesModel.setClicked(false);
