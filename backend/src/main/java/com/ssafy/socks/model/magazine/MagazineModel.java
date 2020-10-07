@@ -16,4 +16,5 @@ public class MagazineModel {
 	private List<ContentsModel> contents;
 	private String magazineName;
 	private String userNickname;
+	private LocalDateTime createdDate;
 }

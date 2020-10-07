@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.socks.advice.exception.CCommunicationException;
 import com.ssafy.socks.advice.exception.CUserNotFoundException;
+import com.ssafy.socks.entity.color.Color;
 import com.ssafy.socks.entity.color.ColorHistory;
 import com.ssafy.socks.entity.color.RecommendColor;
 import com.ssafy.socks.entity.color.RecommendTheme;
@@ -37,16 +38,16 @@ public class ColorService {
 		RecommendTheme recommendTheme = recommendRepository.findById(colorId).orElseThrow(CCommunicationException::new);
 
 		List<Theme> themes = new ArrayList<>();
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId1()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId2()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId3()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId4()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId5()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId6()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId7()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId8()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId9()).orElseThrow(CCommunicationException::new));
-		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId10()).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId1() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId2() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId3() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId4() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId5() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId6() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId7() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId8() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId9() + 1).orElseThrow(CCommunicationException::new));
+		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId10() +1).orElseThrow(CCommunicationException::new));
 
 		return themes;
 	}
@@ -77,5 +78,9 @@ public class ColorService {
 		}
 
 		return null;
+	}
+
+	public Theme getColors(Long themeId) {
+		return themeJpaRepository.findById(themeId).orElseThrow(CCommunicationException::new);
 	}
 }

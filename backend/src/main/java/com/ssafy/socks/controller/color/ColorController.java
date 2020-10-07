@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.socks.entity.color.Color;
 import com.ssafy.socks.entity.color.Theme;
 import com.ssafy.socks.model.response.ListResult;
 import com.ssafy.socks.model.response.SingleResult;
@@ -48,6 +49,15 @@ public class ColorController {
 	@GetMapping(value = "/images/{themeId}")
 	public ListResult<String> findImages(@PathVariable Long themeId) {
 		return responseService.getListResult(crawlingService.getCategoryImages(themeId));
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "테마에 대한 5가지 색상", description = "테마에 대한 5가지 색상 불러오기.")
+	@GetMapping(value = "/images/{themeId}")
+	public SingleResult<Theme> getColors(@PathVariable Long themeId) {
+		return responseService.getSingleResult(colorService.getColors(themeId));
 	}
 
 	@Parameters({

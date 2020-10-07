@@ -123,6 +123,7 @@ public class MagazineService {
 				.selectedColorId(magazine.getSelectedId())
 				.userNickname(user.getNickname())
 				.contents(contentsModels)
+				.createdDate(LocalDateTime.now())
 				.build();
 
 			magazineModels.add(magazineModel);
@@ -164,6 +165,7 @@ public class MagazineService {
 				.selectedColorId(magazine.getSelectedId())
 				.themeId(magazine.getThemeId())
 				.magazineName(magazine.getMagazineName())
+				.createdDate(LocalDateTime.now())
 				.build();
 
 			magazineModels.add(magazineModel);
