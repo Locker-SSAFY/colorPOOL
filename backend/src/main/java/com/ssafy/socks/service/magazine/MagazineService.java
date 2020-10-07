@@ -180,7 +180,7 @@ public class MagazineService {
 
 		LikesModel likesModel = new LikesModel();
 		if(likesOptional.isPresent()) {
-			likesJpaRepository.deleteByUserIdAndMagazineId(user.getId(), magazineId);
+			likesJpaRepository.removeLikesByUserIdAndMagazineId(user.getId(),magazineId);
 			likesModel.setMagazineId(magazineId);
 			likesModel.setUserId(user.getId());
 			likesModel.setClicked(false);
