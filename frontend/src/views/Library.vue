@@ -246,15 +246,6 @@ export default {
     font-family: 'ReenieBeanie-Regular';
     line-height: 0.7;
   }
-  
-  .vertical-title {
-    position: absolute;
-    font-size: 3rem;
-    font-weight: 600;
-    left: 15%;
-    font-family: 'PermanentMarker-Regular';
-    margin: 0;
-  }  
 
   .title-tape {
     position: absolute;

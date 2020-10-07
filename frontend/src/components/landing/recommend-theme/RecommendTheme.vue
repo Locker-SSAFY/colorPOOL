@@ -375,8 +375,9 @@ export default {
     font-size: 1.9rem;
     text-align: left;
     right: 50%;
-    top: 170%;
-    transform: rotate(-15deg)
+    top: 180%;
+    transform: rotate(-15deg);
+    z-index: 1;
   }
 
   .choose-desc p {
