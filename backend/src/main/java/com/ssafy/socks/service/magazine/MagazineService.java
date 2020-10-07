@@ -48,6 +48,29 @@ public class MagazineService {
 	private final ContentsJpaRepository contentsJpaRepository;
 
 	public void saveMagazine(MagazineModel magazineModel) {
+		LocalDateTime currDate = LocalDateTime.now();
+		User user = userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new);
+
+		Magazine magazine = Magazine.builder()
+			.user(user)
+			.magazineName(magazineModel.getMagazineName())
+			.themeId(magazineModel.getThemeId())
+			.selectedId(magazineModel.getSelectedColorId())
+			.createdDate(currDate)
+			.build();
+
+		logger.info("----------------- magazine -----------------");
+		logger.info("user : " + magazine.getUser().getEmail());
+		logger.info("themeId : " + magazine.getThemeId());
+		logger.info("current Date : " + magazine.getCreatedDate());
+		logger.info("----------------- magazine -----------------");
+
+		ColorHistory colorHistory = new ColorHistory();
+		colorHistory.setSelectedColor(selectedColorJpaRepository.findById(magazineModel.getSelectedColorId()).orElseThrow(CCommunicationException::new));
+		colorHistory.setUser(user);
+		colorHistoryJpaRepository.save(colorHistory);
+
+		magazineJpaRepository.save(magazine);
 
 		List<Contents> contentsList = new ArrayList<>();
 		for (int i = 0; i < magazineModel.getContents().size(); i++) {
@@ -62,31 +85,11 @@ public class MagazineService {
 			contentsList.add(contents);
 		}
 
-		LocalDateTime currDate = LocalDateTime.now();
-		User user = userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new);
-
-		Magazine magazine = Magazine.builder()
-			.user(user)
-			.contents(contentsList)
-			.magazineName(magazineModel.getMagazineName())
-			.themeId(magazineModel.getThemeId())
-			.selectedId(magazineModel.getSelectedColorId())
-			.createdDate(currDate)
-			.build();
-
-		logger.info("----------------- magazine -----------------");
-		logger.info("user : " + magazine.getUser().getEmail());
-		for (Contents contents : contentsList) logger.info(contents.getMainText());
-		logger.info("themeId : " + magazine.getThemeId());
-		logger.info("current Date : " + magazine.getCreatedDate());
-		logger.info("----------------- magazine -----------------");
-
-		ColorHistory colorHistory = new ColorHistory();
-		colorHistory.setSelectedColor(selectedColorJpaRepository.findById(magazineModel.getSelectedColorId()).orElseThrow(CCommunicationException::new));
-		colorHistory.setUser(user);
-		colorHistoryJpaRepository.save(colorHistory);
-
-		magazineJpaRepository.save(magazine);
+		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
+		for (Contents contents : contentsList) {
+			contents.setMagazineId(findMagazine.getId());
+			contentsJpaRepository.save(contents);
+		}
 	}
 
 	public List<MagazineModel> getMagazinesByUser(String userEmail) {
@@ -94,7 +97,7 @@ public class MagazineService {
 		List<MagazineModel> magazineModels = new ArrayList<>();
 
 		for(Magazine magazine : magazineList) {
-			List<Contents> contentsList = magazine.getContents();
+			List<Contents> contentsList = contentsJpaRepository.findByMagazineId(magazine.getId());
 			List<ContentsModel> contentsModels = new ArrayList<>();
 
 			for(Contents contents : contentsList) {
@@ -130,7 +133,7 @@ public class MagazineService {
 		List<MagazineModel> magazineModels = new ArrayList<>();
 
 		for(Magazine magazine : magazineList) {
-			List<Contents> contentsList = magazine.getContents();
+			List<Contents> contentsList = contentsJpaRepository.findByMagazineId(magazine.getId());
 			List<ContentsModel> contentsModels = new ArrayList<>();
 
 			for(Contents contents : contentsList) {
@@ -168,12 +171,12 @@ public class MagazineService {
 	public void setLikes(Long magazineId, String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
 		Magazine magazine = magazineJpaRepository.findById(magazineId).orElseThrow(CCommunicationException::new);
-		boolean isSetLike = likesJpaRepository.existsByUserAndMagazine(user,magazine);
-		if(isSetLike) likesJpaRepository.deleteByUserAndMagazine(user,magazine);
+		boolean isSetLike = likesJpaRepository.existsByUserIdAndMagazineId(user.getId(),magazine.getId());
+		if(isSetLike) likesJpaRepository.deleteByUserIdAndMagazineId(user.getId(),magazine.getId());
 		else likesJpaRepository.save(
 			Likes.builder()
-				.magazine(magazine)
-				.user(user)
+				.magazineId(magazine.getId())
+				.userId(user.getId())
 				.build()
 		);
 	}
@@ -181,21 +184,5 @@ public class MagazineService {
 	public List<Magazine> getBookmarkMagazines(String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
 		return bookmarkRepository.findBookmarkRepository(user);
-	}
-
-	public void saveContents(MagazineModel magazineModel) {
-
-		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
-		logger.info("----------------- magazine2 -----------------");
-		logger.info("user : " + findMagazine.getUser().getEmail());
-		for (Contents contents : findMagazine.getContents()) logger.info(contents.getMainText());
-		logger.info("themeId : " + findMagazine.getThemeId());
-		logger.info("current Date : " + findMagazine.getCreatedDate());
-		logger.info("----------------- magazine2 -----------------");
-
-		for (Contents contents : findMagazine.getContents()) {
-			contents.setMagazine(findMagazine);
-			contentsJpaRepository.save(contents);
-		}
 	}
 }

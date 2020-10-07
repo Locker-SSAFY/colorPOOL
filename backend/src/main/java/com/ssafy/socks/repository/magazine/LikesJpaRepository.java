@@ -12,7 +12,7 @@ import com.ssafy.socks.entity.user.User;
 
 @Repository
 public interface LikesJpaRepository extends JpaRepository<Likes,Long> {
-	Boolean existsByUserAndMagazine(User user, Magazine magazine);
-	List<Likes> findByMagazine(Magazine magazine);
-	void deleteByUserAndMagazine(User user, Magazine magazine);
+	Boolean existsByUserIdAndMagazineId(Long userId, Long magazineId);
+	List<Likes> findByMagazineId(Long magazineId);
+	void deleteByUserIdAndMagazineId(Long userId, Long magazineId);
 }

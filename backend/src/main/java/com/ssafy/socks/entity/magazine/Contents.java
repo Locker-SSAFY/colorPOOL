@@ -26,13 +26,8 @@ public class Contents {
 	@Column(name = "CONTENT_ID")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "MAGAZINE_ID", nullable = false)
-	private Magazine magazine;
-	public void addMagazine(Magazine magazine) {
-		this.magazine = magazine;
-		this.magazine.getContents().add(this);
-	}
+	@Column(name = "MAGAZINE_ID")
+	private Long magazineId;
 
 	@Column(name = "URL", nullable = false)
 	private String url;

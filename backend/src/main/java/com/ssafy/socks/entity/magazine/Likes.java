@@ -27,15 +27,9 @@ public class Likes {
 	@Column(name = "LIKE_ID", nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "MAGAZINE_ID", nullable = false)
-	private Magazine magazine;
-	public void addMagazine(Magazine magazine) {
-		this.magazine = magazine;
-		this.magazine.getLikes().add(this);
-	}
+	@Column(name = "MAGAZINE_ID", nullable = false)
+	private Long magazineId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID", nullable = false)
-	private User user;
+	@Column(name = "USER_ID", nullable = false)
+	private Long userId;
 }
