@@ -6,7 +6,12 @@
       class="magazine-carousel wrap" 
       hide-delimiter-background
       delimiter-icon="mdi-minus"
-      show-arrows-on-hover>
+      show-arrows-on-hover
+      :cycle="cycle"
+      :interval="interval"
+      @input="onSlideChange"
+      v-model="currentIndex"
+      >
       <v-carousel-item
         v-for="(content, index) in magazine.contents" 
         :key="index"
@@ -21,11 +26,10 @@
 </template>
 
 <script>
-import TemplateA from '../components/magazine/MagazineViewerA'
-import TemplateB from '../components/magazine/MagazineViewerB'
-import TemplateC from '../components/magazine/MagazineViewerC'
+import TemplateA from '../components/magazine/MagazinePrintA'
+import TemplateB from '../components/magazine/MagazinePrintB'
+import TemplateC from '../components/magazine/MagazinePrintC'
 import {mapGetters, mapActions} from 'vuex'
-import html2canvas from 'html2canvas'
 // import jsPDF from 'jspdf' 
 const detailStore = 'detailStore'
 const headerStore = 'headerStore'
@@ -61,48 +65,64 @@ export default {
   },
   data() {
     return {
+      currentIndex: 0,
       magazine: null,
       rgb: '',
+      interval: 200,
+      cycle: true
+    }
+  },
+  watch: {
+    currentIndex(val) {
+      if(val == this.magazine.contents.length - 1) {
+        this.cycle = false;
+        setTimeout(()=>{window.print()},1000);
+      }
     }
   },
   methods: {
     ...mapActions(headerStore, ['AC_HEADER']),
-    showCaptureRef() {
-      console.log("this.$refs.detail: " + this.$refs.detail);
-      let vc = this;
-      return vc.$refs.detail;
-    },
-    downloadVisualReport () {
-      let vc = this
-      // alert("Descargando reporte visual")
-      console.log('campaign-view#downloadVisualReport');
-      window.html2canvas = html2canvas;
-      window.html2canvas(vc.showCaptureRef(),  { letterRendering: 1, allowTaint : true}).then(canvas => {
-        console.log(canvas);
-        this.saveAs(canvas.toDataURL(), "capture.png");
-        console.log("!!!!!!!!!!")
-        const img = canvas.toDataURL("image/jpeg", 0.8);
-        console.log(img);
-        console.log('canvas', canvas);
-        // document.body.appendChild(canvas)
-        // doc.addImage(img,'JPEG',20,20);
-        // doc.save("C:\\sample.pdf");
-      }).catch((error) => {
-        console.log("Erorr descargando reporte visual", error)
-      });
-    },
-    saveAs(uri, filename) {
-      var link = document.createElement('a');
-      if (typeof link.download === 'string') {
-        link.href = uri;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } else {
-        window.open(uri);
+    onSlideChange(slideNumber) {
+      if(slideNumber == this.magazine.contents.length) {
+        this.interval = 0;
       }
-    },
+    }
+    // showCaptureRef() {
+    //   console.log("this.$refs.detail: " + this.$refs.detail);
+    //   let vc = this;
+    //   return vc.$refs.detail;
+    // },
+    // downloadVisualReport () {
+    //   let vc = this
+    //   // alert("Descargando reporte visual")
+    //   console.log('campaign-view#downloadVisualReport');
+    //   window.html2canvas = html2canvas;
+    //   window.html2canvas(vc.showCaptureRef(),  { letterRendering: 1, allowTaint : true}).then(canvas => {
+    //     console.log(canvas);
+    //     this.saveAs(canvas.toDataURL(), "capture.png");
+    //     console.log("!!!!!!!!!!")
+    //     const img = canvas.toDataURL("image/jpeg", 0.8);
+    //     console.log(img);
+    //     console.log('canvas', canvas);
+    //     // document.body.appendChild(canvas)
+    //     // doc.addImage(img,'JPEG',20,20);
+    //     // doc.save("C:\\sample.pdf");
+    //   }).catch((error) => {
+    //     console.log("Erorr descargando reporte visual", error)
+    //   });
+    // },
+    // saveAs(uri, filename) {
+    //   var link = document.createElement('a');
+    //   if (typeof link.download === 'string') {
+    //     link.href = uri;
+    //     link.download = filename;
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     document.body.removeChild(link);
+    //   } else {
+    //     window.open(uri);
+    //   }
+    // },
   }
 }
 </script>

@@ -1,3 +1,6 @@
+import SERVER from '../../api/restApi'
+import axios from '../../api/axiosCommon'
+
 const rankStore = {
   namespaced: true,
   state: {
@@ -17,6 +20,36 @@ const rankStore = {
     }
   },
   actions: {
+    AC_MAGAZINE_LIST: ({commit}) => {
+      const token = localStorage.getItem('access_token');
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      console.log(token)
+
+      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine', {headers: header})
+      .then((res) => {
+        console.log(res)
+        console.log(commit)
+      })
+      .catch((err) => {
+        console.err(err);
+      })
+      
+      console.log(SERVER);
+
+      //////////////////////////////////////////////
+      // 정상적인 axios 통신
+      // axios.get(SERVER.ROUTES.getMagazineList, {headers: header})
+      // .then((res) => {
+      //   console.log(res);
+      // })
+      // .catch((err) => {
+      //   console.err(err);
+      // })
+      ///////////////////////////////////////////////
+    },
     AC_TOP_RANK: ({commit}, payload) => {
       const topList = [
         {

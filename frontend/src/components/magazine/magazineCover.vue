@@ -145,9 +145,10 @@ export default {
     background-color: white;
     display: flex;
     align-items: center;
+    transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(30deg);
   }
 
-  .book:after {
+  .book:before {
     content: "";
     position: absolute;
     top: 0;
@@ -159,7 +160,7 @@ export default {
   }
 
   .book:hover {
-    transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(60deg);
+    transform: translateX(0px) translateZ(0px) translateX(0px) rotateY(0deg);
   }
 
   .book-cover { 

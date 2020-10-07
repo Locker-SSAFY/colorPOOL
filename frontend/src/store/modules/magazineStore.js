@@ -5,10 +5,12 @@ const magazineStore = {
   state: {
     magazineImages: [], 
     productNames: [],
+    selectedMagazine: {},
   },
   getters: {
     GE_MAGAZINE_IMAGES: state => state.magazineImages,
-    GE_PRODUCT_NAMES: state => state.productNames
+    GE_PRODUCT_NAMES: state => state.productNames,
+    GE_SELECTED_MAGAZINE: state => state.selectedMagazine
   },
   mutations: {
     MU_MAGAZINE_IMAGES: (state, payload) => {
@@ -20,6 +22,9 @@ const magazineStore = {
     MU_PRODUCT_NAMES: (state, payload) => {
       console.log('MU_PRODUCT_NAMES', payload);
       state.productNames = payload.productNames 
+    },
+    MU_SELECTED_MAGAZINE: (state, payload) => {
+      state.selectedMagazine = payload;
     }
   },
   actions: {
@@ -50,6 +55,34 @@ const magazineStore = {
         console.log(err.response)
       })
     },
+    AC_MAGAZINE_ONE: ({commit}, payload) => {
+      const token = localStorage.getItem('access_token')
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+
+      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine/' + payload.magazineId, {headers: header})
+      .then((res) => {
+        console.log(res)
+        console.log(commit)
+        // commit('MU_SELECTED_MAGAZINE', res.data)
+      })
+      .catch((err) => {
+        console.err(err);
+      })
+      
+      ///////////////////////////////////////////////
+      // 정상적인 axios 통신
+      // axios.get(SERVER.ROUTES.getMagazineOne + payload.magazineId, {headers: header})
+      // .then((res) => {
+      //   console.log(res);
+      // })
+      // .catch((err) => {
+      //   console.log(err)
+      // })
+      ///////////////////////////////////////////////
+    },
     AC_MAGAZINE_POST: ({commit, state}, payload) => {
       console.log('AC_MAGAZINE_POST', payload);
       const token = localStorage.getItem('access_token');
@@ -78,31 +111,85 @@ const magazineStore = {
         })
       })
       console.log(contents);
+      console.log(payload);
       const data = {
         // 'id': userInfo.id + "",
-        'id': null,
         'email': userInfo.email,
-        'userNickname': userInfo.userNickname,
+        'contents': contents,
         // 'createdDate': payload.date,
-        'createdDate': "2020-10-06T08:55:02.396Z",
         'magazineName': payload.magazineName,
-        'colorId': payload.selectedColor,
+        'userNickname': userInfo.userNickname,
+        'themeId': parseFloat(payload.themeId),
+        'selectedColorId': parseFloat(payload.selectedColor),
         // 'contents' : state.magazineImages
-        'content': contents
+        
       }
       console.log(commit);
       console.log(url);
       console.log(header);
       console.log('data', data);
+
+      // 비정상적인 통신
       axios.post(url, data, {headers: header})
       .then((res) => {
         console.log(res);
+        if(res.data.success) {
+          return true;
+        } else {
+          alert("잡지가 추가되지 않았습니다")
+          return false;
+        }
       })
       .catch((err) => {
         console.log(err)
       })
+    
+      //////////// 정상적인 axios 통신 /////////////
+      // axios.post(SERVER.ROUTES.postMagazine, data, {headers: header})
+      // .then((res) => {
+      //   console.log(res);
+      //   if(res.data.success) {
+      //     return true;
+      //   } else {
+      //     alert('서버에 문제가 발생했습니다')
+      //     return false;
+      //   }
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // })
+      //////////////////////////////////////////////
+    },
+    AC_MAGAZINE_LIKE: (payload) => {
+      const magazineId = payload.magazineId;
+      const token = localStorage.getItem('access_token');
+      const header = {
+        'accept': '*',
+        'X-AUTH-TOKEN': token,
+      }
+
+      //////////////// 비정상적인 axios 통신 ///////////////
+      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine/like' + magazineId, {headers: header})
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.err(err);
+      })
+      //////////////////////////////////////////////////////
+
+      /////////////////// 정상적인 axios 통신 /////////////////////
+      // axios.post(SERVER.ROUTES.postMagazineLike + magazineId, {headers: header})
+      // .then((res) => {
+      //   console.log(res);
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // })
+      /////////////////////////////////////////////////////////////
     }
   }
+  
 }
 
 export default magazineStore;
