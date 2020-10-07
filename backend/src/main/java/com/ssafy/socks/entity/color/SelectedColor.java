@@ -2,6 +2,7 @@ package com.ssafy.socks.entity.color;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -31,9 +32,9 @@ public class SelectedColor {
 	@Embedded
 	private Color color;
 
-	@OneToMany(mappedBy = "selectedColor")
+	@OneToMany(mappedBy = "selectedColor", cascade={CascadeType.ALL})
 	private List<ColorHistory> colorHistories;
 
-	@OneToMany(mappedBy = "selectedColor")
+	@OneToMany(mappedBy = "selectedColor", cascade={CascadeType.ALL})
 	private List<Theme> themes;
 }

@@ -2,6 +2,7 @@ package com.ssafy.socks.entity.color;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -67,11 +68,11 @@ public class Theme {
 	@Column(name = "B5", nullable = false)
 	private Integer blue5;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name = "SELECTED_COLOR_ID")
 	private SelectedColor selectedColor;
 
-	@OneToMany(mappedBy = "theme")
+	@OneToMany(mappedBy = "theme", cascade={CascadeType.ALL})
 	private List<ThemeImages> crawledImages;
 
 	/* 연관관계 편의 메서드 */

@@ -3,6 +3,7 @@ package com.ssafy.socks.entity.magazine;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ public class Magazine {
 	@Column(name = "THEME_ID", nullable = false)
 	private Long themeId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
 

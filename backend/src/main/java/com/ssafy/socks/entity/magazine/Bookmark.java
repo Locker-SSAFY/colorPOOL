@@ -1,5 +1,6 @@
 package com.ssafy.socks.entity.magazine;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,11 +32,11 @@ public class Bookmark {
 	@Column(name = "BOOKMARK_ID", nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name = "MAGAZINE_ID", nullable = false)
 	private Magazine magazineBookmark;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
 }

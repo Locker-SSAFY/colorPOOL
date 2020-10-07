@@ -90,11 +90,11 @@ public class MagazineService {
 
 		magazineJpaRepository.save(magazine);
 
-		magazine = magazineJpaRepository.findFirstByUser(user).orElseThrow(CCommunicationException::new);
+/*		magazine = magazineJpaRepository.findFirstByUser(user).orElseThrow(CCommunicationException::new);
 		for (Contents contents : contentsList) {
 			contents.setMagazine(magazine);
 			contentsJpaRepository.save(contents);
-		}
+		}*/
 	}
 
 	public List<Magazine> getMagazinesByUser(String userEmail) {
