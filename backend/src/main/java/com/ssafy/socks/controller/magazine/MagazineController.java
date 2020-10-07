@@ -59,6 +59,7 @@ public class MagazineController {
 	@PostMapping(value = "/magazine")
 	public CommonResult saveMagazine(@RequestBody MagazineModel magazineModel) {
 		magazineService.saveMagazine(magazineModel);
+		magazineService.saveContents(magazineModel);
 		return responseService.getSuccessResult();
 	}
 

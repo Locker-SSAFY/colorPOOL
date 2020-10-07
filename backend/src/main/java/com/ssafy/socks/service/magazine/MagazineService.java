@@ -35,6 +35,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MagazineService {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	private final MagazineJpaRepository magazineJpaRepository;
 	private final UserJpaRepository userJpaRepository;
 	private final MagazineRepository magazineRepository;
@@ -46,7 +48,6 @@ public class MagazineService {
 	private final ContentsJpaRepository contentsJpaRepository;
 
 	public void saveMagazine(MagazineModel magazineModel) {
-		Logger logger = LoggerFactory.getLogger(this.getClass());
 
 		List<Contents> contentsList = new ArrayList<>();
 		for (int i = 0; i < magazineModel.getContents().size(); i++) {
@@ -86,19 +87,6 @@ public class MagazineService {
 		colorHistoryJpaRepository.save(colorHistory);
 
 		magazineJpaRepository.save(magazine);
-
-		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
-		logger.info("----------------- magazine2 -----------------");
-		logger.info("user : " + findMagazine.getUser().getEmail());
-		for (Contents contents : findMagazine.getContents()) logger.info(contents.getMainText());
-		logger.info("themeId : " + findMagazine.getThemeId());
-		logger.info("current Date : " + findMagazine.getCreatedDate());
-		logger.info("----------------- magazine2 -----------------");
-
-		for (Contents contents : contentsList) {
-			contents.setMagazine(findMagazine);
-			contentsJpaRepository.save(contents);
-		}
 	}
 
 	public List<MagazineModel> getMagazinesByUser(String userEmail) {
@@ -193,5 +181,20 @@ public class MagazineService {
 	public List<Magazine> getBookmarkMagazines(String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
 		return bookmarkRepository.findBookmarkRepository(user);
+	}
+
+	public void saveContents(MagazineModel magazineModel) {
+		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
+		logger.info("----------------- magazine2 -----------------");
+		logger.info("user : " + findMagazine.getUser().getEmail());
+		for (Contents contents : findMagazine.getContents()) logger.info(contents.getMainText());
+		logger.info("themeId : " + findMagazine.getThemeId());
+		logger.info("current Date : " + findMagazine.getCreatedDate());
+		logger.info("----------------- magazine2 -----------------");
+
+		for (Contents contents : findMagazine.getContents()) {
+			contents.setMagazine(findMagazine);
+			contentsJpaRepository.save(contents);
+		}
 	}
 }
