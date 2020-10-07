@@ -2,16 +2,11 @@
   <div class="image-list wrap">
     <div class="image-list-view">
       <div class="image-category-text">
-        <strong>"{{category.toUpperCase()}}"</strong><strong> IMAGES</strong>
+        <p>{{ category.toUpperCase() }}</p>
+        <p>Images</p>
       </div>
-      <div class="color-chip-wrap">
-        <!-- <ColorChip class="color-chip-element" v-for="(color, index) in colorList" v-bind:key="index" v-bind:color="color" v-bind:index="index"></ColorChip> -->
-        <ColorChip class="color-chip-element" v-bind:color="colorList[0]" v-bind:index="0"></ColorChip>
-        <ColorChip class="color-chip-element" v-bind:color="colorList[1]" v-bind:index="1"></ColorChip>
-        <ColorChip class="color-chip-element" v-bind:color="colorList[2]" v-bind:index="2"></ColorChip>
-        <ColorChip class="color-chip-element" v-bind:color="colorList[3]" v-bind:index="3"></ColorChip>
-        <ColorChip class="color-chip-element" v-bind:color="colorList[4]" v-bind:index="4"></ColorChip>
-      </div>
+      <div class="hand-drawing"></div>
+      
       <carousel-3d class="carousel wrap" style="width: 100%; height: 50%;" :class="{'isSelected' : isSelected}">
         <slide v-for="(img, index) in imageList" :key="index" :index='index' style="width: 300px; height: 300px; border: none; border-radius: 5px;  visibility: visible;" class="color-chip-back" :style="{'background-image' : 'url(' + img.url + ')'}">
           <img :src="img.url" style="z-index: 4; width: 100%; height: 100%; object-fit: contain;" v-on:dblclick="addUrl(img.color, img.url)">
@@ -23,15 +18,14 @@
         text
         @click="goCategory"
       >
-        <v-icon size="100">mdi-arrow-left</v-icon>
+        <v-icon size="75">mdi-arrow-left</v-icon>
       </v-btn>
     </div>
     <div class="image-select-view">
       <div class="image-select-text">
-        <!-- <strong>YOUR CHOICE</strong> -->
-        <strong v-if="selectImageList.length == 0">이미지를 더블 클릭해서 추가하세요</strong>
-        <strong v-else-if="selectImageList.length <= 10">당신이 선택한 {{selectImageList.length}}개의 이미지</strong>
-        <strong v-else>이미지는 최대 10개까지만 가능해요 : {{selectImageList.length}}개</strong>
+        <p v-if="selectImageList.length == 0">> 이미지를 더블 클릭해서 추가하세요</p>
+        <p v-else-if="selectImageList.length <= 10">> 당신이 선택한 {{selectImageList.length}}개의 이미지</p>
+        <p v-else>> 이미지는 최대 10개까지만 가능해요 : {{selectImageList.length}}개</p>
       </div>
       <div ref="sic" class="selected-image-container" @wheel="zoom">
         <div class="selected-image-wrap" v-for="(img, index) in selectImageList" v-bind:key="index" >
@@ -43,20 +37,24 @@
       </div>
       <div class="edit-magazine-button">
         <v-btn
-        class="category-list-button"
-        icon
-        text
-        @click="goNext"
+          class="category-list-button"
+          style="right: 3%;"
+          icon
+          text
+          @click="goNext"
         >
-          <v-icon size="100">mdi-arrow-right</v-icon>
+          <v-icon size="75">mdi-arrow-right</v-icon>
         </v-btn>
       </div>
+      <div class="next-desc">
+        <p>Decorate your own magazine</p>
+        <p>with selected photos</p>
+      </div>      
     </div>
   </div>
 </template> 
 <script>
 import {Carousel3d, Slide} from 'vue-carousel-3d';
-import ColorChip from '../../common/ColorChip'
 import {mapActions} from 'vuex'
 import ments from '../../../assets/ment/mentList.js'
 import questions from '../../../assets/ment/questionList.js'
@@ -65,7 +63,7 @@ const magazineStore = 'magazineStore'
 export default {
   name: 'ImageList',
   components: {
-    Carousel3d, Slide, ColorChip
+    Carousel3d, Slide,
   }, 
   props: {
     category : {
@@ -277,12 +275,15 @@ export default {
   }
 
   .image-list-view .image-category-text {
-    margin-top: 15px;
-    height: 10%;
+    margin-left: 5%;
+    margin-bottom: 10%;
+    width: 40vw;
   }
 
-  .image-list-view .image-category-text strong {
-    font-size: 45px;
+  .image-list-view .image-category-text p {
+    font-family: 'PermanentMarker-Regular';
+    font-size: 3.5rem;
+    line-height: 0.9;
   }
 
   .color-chip-wrap {
@@ -314,11 +315,10 @@ export default {
   }
 
   .image-select-view .image-select-text {
-    width: 90%;
-    height: 10%;
-    margin-top: 15px;
-    margin-left: 5%;
-    font-size: 30px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-top: 3rem;
+    margin-left: 3.5rem;
   }
 
   .image-select-view .selected-image-container {
@@ -349,4 +349,33 @@ export default {
     position: relative;
     right: 60px;
   }
+
+  .hand-drawing {
+    position: absolute;
+    background: url(https://cdn2.bustle.com/nylon/2020/squiggle-line-febb0bf100.svg) no-repeat;
+    top: 90%;
+    height: 50%;
+    width: 80%;
+  }
+
+  .category-list-button {
+    position: absolute;
+    top: 175%;
+  }
+
+  .next-desc {
+    position: absolute;
+    font-size: 2.3rem;
+    text-align: left;
+    right: 5%;
+    top: 170%;
+    transform: rotate(-15deg);
+    z-index: 1;
+  }
+
+  .next-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
+  }
+
 </style>

@@ -5,6 +5,7 @@
       <p>PRODUCT</p>
       <p>IN YOUR</p>
       <p>COLOR</p>
+      <div class="hand-drawing"></div>
     </div>
     <div class="category-desc">
       <p>Get an image with</p>
@@ -12,7 +13,6 @@
       <p>you choose</p>
     </div>
     
-    <div class="hand-drawing"></div>
     <div class="category-list">
       <table>
         <tr>
@@ -137,6 +137,7 @@ export default {
   .category.wrap .category-title {
     margin-left: 5%;
     margin-top: 3%;
+    width: 40vw;
   }
 
   .category.wrap .category-title p {
@@ -186,11 +187,11 @@ export default {
   }
 
   .hand-drawing {
-    position: absolute;
+    position: relative;
     background: url(https://cdn2.bustle.com/nylon/2020/related-6439ff09ad.svg) no-repeat;
-    top: 35%;
-    left: 6%;
+    margin-top: 2rem;
     height: 13%;
-    width: 50%;
+    width: 100%;
   }
+
 </style>
