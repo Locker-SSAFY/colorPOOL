@@ -129,8 +129,8 @@ const userStore = {
       }
       // axios2.get(SERVER.ROUTES.getUserInfo, { headers: header })
       // axios.get('https://j3a303.p.ssafy.io/api/user?lang=ko', { headers: header })
-      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/user?lang=ko', { headers: header })
-      // axios.get(SERVER.ROUTES.getUserInfo, { headers: header })
+      // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/user?lang=ko', { headers: header })
+      axios.get(SERVER.ROUTES.getUserInfo, { headers: header })
       .then( response =>{
         localStorage.setItem("access_token", token);
         commit('MU_USER_INFO', response.data.data);
