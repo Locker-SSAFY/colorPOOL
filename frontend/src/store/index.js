@@ -13,6 +13,7 @@ import rankStore from '@/store/modules/rankStore.js'
 import myPageStore from '@/store/modules/myPageStore.js'
 import detailStore from '@/store/modules/detailStore.js'
 import headerStore from '@/store/modules/headerStore.js'
+import themeStore from '@/store/modules/themeStore.js'
 
 export default new Vuex.Store({
   modules: {
@@ -24,7 +25,8 @@ export default new Vuex.Store({
     rankStore,
     myPageStore,
     detailStore,
-    headerStore
+    headerStore,
+    themeStore,
   },
   plugins: [
     createdPersistedState({

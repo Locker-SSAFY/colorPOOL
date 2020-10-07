@@ -1,15 +1,18 @@
 import SERVER from '../../api/restApi'
 import axios from '../../api/axiosCommon'
+import materialColors from '../../assets/color/colorList.js'
 
 const rankStore = {
   namespaced: true,
   state: {
     topRank: [],
     restRank: [],
+    magazineList: [],
   },
   getters: {
     GE_TOP_RANK: state => state.topRank,
-    GE_REST_RANK: state => state.restRank
+    GE_REST_RANK: state => state.restRank,
+    GE_MAGAZINE_LIST: state => state.magazineList,
   },
   mutations: {
     MU_TOP_RANK: (state, payload) => {
@@ -17,6 +20,9 @@ const rankStore = {
     },
     MU_REST_RANK: (state, payload) => {
       state.restRank = payload
+    },
+    MU_MAGAZINE_LIST: (state, payload) => {
+      state.magazineList = payload
     }
   },
   actions: {
@@ -28,26 +34,34 @@ const rankStore = {
       }
       console.log(token)
 
-      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine', {headers: header})
-      .then((res) => {
-        console.log(res)
-        console.log(commit)
-      })
-      .catch((err) => {
-        console.err(err);
-      })
-      
-      console.log(SERVER);
-
-      //////////////////////////////////////////////
-      // 정상적인 axios 통신
-      // axios.get(SERVER.ROUTES.getMagazineList, {headers: header})
+      // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazines', {headers: header})
       // .then((res) => {
-      //   console.log(res);
+      //   console.log(res)
+      //   res.data.data.forEach(ele => {
+      //     let id = ele.selectedColorId;
+      //     ele.color = materialColors[parseInt(id / 10)].variations[parseInt(id % 10)].hex
+      //   });
+      //   commit('MU_MAGAZINE_LIST', res.data.data);
       // })
       // .catch((err) => {
       //   console.err(err);
       // })
+      // console.log(SERVER);
+
+      //////////////////////////////////////////////
+      // 정상적인 axios 통신
+      axios.get(SERVER.ROUTES.getMagazineList, {headers: header})
+      .then((res) => {
+        console.log(res)
+        res.data.data.forEach(ele => {
+          let id = ele.selectedColorId;
+          ele.color = materialColors[parseInt(id / 10)].variations[parseInt(id % 10)].hex
+        });
+        commit('MU_MAGAZINE_LIST', res.data.data);
+      })
+      .catch((err) => {
+        console.err(err);
+      })
       ///////////////////////////////////////////////
     },
     AC_TOP_RANK: ({commit}, payload) => {

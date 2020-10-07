@@ -1,4 +1,5 @@
 import axios from 'axios'
+import SERVER from '../../api/restApi'
 
 const magazineStore = {
   namespaced: true,
@@ -93,11 +94,6 @@ const magazineStore = {
         // 'Access-Control-Allow-Origin': '*',
         // 'X-Requested-With' : 'XMLHttpRequest'
       };
-      const userInfo = {
-        'id': 32,
-        'email': 'kang@kang.com',
-        'userNickname': 'kang', 
-      }
       var contents = [];
       state.magazineImages.forEach((image) => {
         contents.push({
@@ -110,15 +106,13 @@ const magazineStore = {
           'template': image.template + ""
         })
       })
-      console.log(contents);
-      console.log(payload);
       const data = {
         // 'id': userInfo.id + "",
-        'email': userInfo.email,
+        'email': payload.userInfo.email,
         'contents': contents,
-        // 'createdDate': payload.date,
+        'createdDate': null,
         'magazineName': payload.magazineName,
-        'userNickname': userInfo.userNickname,
+        'userNickname': payload.userInfo.nickname,
         'themeId': parseFloat(payload.themeId),
         'selectedColorId': parseFloat(payload.selectedColor),
         // 'contents' : state.magazineImages
@@ -130,7 +124,23 @@ const magazineStore = {
       console.log('data', data);
 
       // 비정상적인 통신
-      axios.post(url, data, {headers: header})
+      // axios.post(url, data, {headers: header})
+      // .then((res) => {
+      //   console.log(res);
+      //   if(res.data.success) {
+      //     return true;
+      //   } else {
+      //     alert("잡지가 추가되지 않았습니다")
+      //     return false;
+      //   }
+      // })
+      // .catch((err) => {
+      //   console.log(err)
+      //   return false;
+      // })
+    
+      ////////// 정상적인 axios 통신 /////////////
+      axios.post(SERVER.ROUTES.postMagazine, data, {headers: header})
       .then((res) => {
         console.log(res);
         if(res.data.success) {
@@ -142,23 +152,9 @@ const magazineStore = {
       })
       .catch((err) => {
         console.log(err)
+        return false;
       })
-    
-      //////////// 정상적인 axios 통신 /////////////
-      // axios.post(SERVER.ROUTES.postMagazine, data, {headers: header})
-      // .then((res) => {
-      //   console.log(res);
-      //   if(res.data.success) {
-      //     return true;
-      //   } else {
-      //     alert('서버에 문제가 발생했습니다')
-      //     return false;
-      //   }
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // })
-      //////////////////////////////////////////////
+      ////////////////////////////////////////////
     },
     AC_MAGAZINE_LIKE: (payload) => {
       const magazineId = payload.magazineId;

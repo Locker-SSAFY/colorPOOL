@@ -30,7 +30,7 @@
             <v-icon size="40" v-if="ranker.heart" :color="ranker.color">mdi-heart</v-icon>
             <v-icon size="40" v-else :color="ranker.color">mdi-heart-outline</v-icon>
           </v-btn>
-          <span class="num-heart" :style="{'color' : ranker.color}">{{ranker.likes.length}}</span>
+          <span class="num-heart" :style="{'color' : ranker.color}">{{ranker.themeId}}</span>
           <v-btn  class="icon-bookmark" icon text @click="ranker.bookmark = !ranker.bookmark">
             <v-icon size="40" v-if="ranker.bookmark" :color="ranker.color">mdi-bookmark</v-icon>
             <v-icon size="40" v-else :color="ranker.color">mdi-bookmark-outline</v-icon>
@@ -69,7 +69,8 @@ export default {
   computed: {
     ...mapGetters(rankStore, {
       storeTopRank: 'GE_TOP_RANK',
-      storeRestRank: 'GE_REST_RANK'
+      storeRestRank: 'GE_REST_RANK',
+      storeMagazineList: 'GE_MAGAZINE_LIST'
     })
   },
   watch: {
@@ -88,6 +89,11 @@ export default {
         }
         this.magazineList.push(example);
       }
+    },
+    storeMagazineList() {
+      console.log(this.storeMagazineList);
+      this.topRank = this.storeMagazineList;
+      console.log(this.topRank)
     }
   },
   data() {
@@ -103,12 +109,13 @@ export default {
   created() {
     // 순위별 이미지 가져오기
     this.AC_MAGAZINE_LIST();
-    this.AC_TOP_RANK();
-    this.AC_REST_RANK();
-    this.topRank = this.storeTopRank;
-    this.restRank = this.storeRestRank;
-    console.log('top', this.topRank);
-    console.log('rest', this.restRank)
+    // console.log(this.storeMagazineList);
+    // this.AC_TOP_RANK();
+    // this.AC_REST_RANK();
+    // this.topRank = this.storeTopRank;
+    // this.restRank = this.storeRestRank;
+    // console.log('top', this.topRank);
+    // console.log('rest', this.restRank)
   },
   methods: {
     ...mapActions(rankStore, ['AC_TOP_RANK', 'AC_REST_RANK', 'AC_MAGAZINE_LIST']),
