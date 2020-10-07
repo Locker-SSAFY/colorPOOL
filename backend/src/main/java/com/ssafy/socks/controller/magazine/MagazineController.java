@@ -15,6 +15,7 @@ import com.ssafy.socks.entity.images.ThemeImages;
 import com.ssafy.socks.entity.magazine.Magazine;
 import com.ssafy.socks.model.magazine.ContentsModel;
 import com.ssafy.socks.model.magazine.Images;
+import com.ssafy.socks.model.magazine.LikesModel;
 import com.ssafy.socks.model.magazine.MagazineModel;
 import com.ssafy.socks.model.magazine.ThemesAndCategory;
 import com.ssafy.socks.model.response.CommonResult;
@@ -85,7 +86,7 @@ public class MagazineController {
 	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
-	@Operation(summary = "모든 잡지 정보", description = "모든 잡지 정보를 인기도 순으로 조회한다.")
+	@Operation(summary = "인기순 잡지 정보", description = "모든 잡지 정보를 인기도 순으로 조회한다.")
 	@GetMapping(value = "/magazines")
 	public ListResult<MagazineModel> getAllMagazinesByLikes() {
 		return responseService.getListResult(magazineService.getMagazines());
@@ -107,11 +108,10 @@ public class MagazineController {
 	})
 	@Operation(summary = "좋아요", description = "좋아요를 클릭 한다.")
 	@PostMapping(value = "/magazine/like/{magazineId}")
-	public CommonResult setLike(@PathVariable Long magazineId) {
+	public LikesModel setLike(@PathVariable Long magazineId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
-		magazineService.setLikes(magazineId,userEmail);
-		return responseService.getSuccessResult();
+		return magazineService.setLikes(magazineId,userEmail);
 	}
 
 
