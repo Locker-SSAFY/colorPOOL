@@ -57,10 +57,8 @@ public class MagazineService {
 				.subText(magazineModel.getContents().get(i).getSubText())
 				.template(magazineModel.getContents().get(i).getTemplate())
 				.question(magazineModel.getContents().get(i).getQuestion())
-				.magazine(magazine)
 				.build();
 			contentsList.add(contents);
-			contentsJpaRepository.save(contents);
 		}
 
 		LocalDateTime currDate = LocalDateTime.now();
@@ -91,6 +89,10 @@ public class MagazineService {
 		colorHistoryJpaRepository.save(colorHistory);
 
 		magazineJpaRepository.save(magazine);
+		for (Contents contents : contentsList) {
+			contents.setMagazine(magazine);
+			contentsJpaRepository.save(contents);
+		}
 	}
 
 	public List<Magazine> getMagazinesByUser(String userEmail) {
