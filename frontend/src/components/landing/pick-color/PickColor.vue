@@ -1,16 +1,19 @@
 <template>
   <div class="pick-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
-    <div class="underline"></div>
-    <div class="pick-desc">
-      <table>
-        <tr>
-          <td><span><strong>PICK</strong></span></td>
-        </tr>
-        <tr>
-          <td><p>Pick your color from colorPOOL</p></td>
-        </tr>
-      </table>
+    <div v-if="this.$parent.isLanding && this.$parent.isGet == false && this.$parent.isPick == false">
+      <div class="underline"></div>
+      <div class="pick-desc">
+        <table>
+          <tr>
+            <td><span><strong>PICK</strong></span></td>
+          </tr>
+          <tr>
+            <td><p>Pick your color from colorPOOL</p></td>
+          </tr>
+        </table>
+      </div>
     </div>
+
     <!-- Landing page의 pickColor 화면 -->
     <v-card @click="clickPick()"
       class="mx-auto elevation-10"
@@ -40,8 +43,12 @@
         text
         @click="getTheme"
       >
-        <v-icon size="100">mdi-arrow-right</v-icon>
+        <v-icon size="80">mdi-arrow-right</v-icon>
       </v-btn>
+      <div class="button-desc">
+        <p>Get color recommendations</p>
+        <p>based on the selected color</p>
+      </div>
     </div>
     
     <!-- 배색 추천 화면 -->
@@ -165,7 +172,7 @@ export default {
 
   .pick-color.wrap .pick-desc table tr:nth-child(2) {
     text-align: right;
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .pick-color.wrap .pick-desc p {
@@ -228,6 +235,19 @@ export default {
     position: absolute;
     right: 20%;
     top: 85%;
+  }
+
+  .button-desc {
+    position: absolute;
+    font-size: 1.9rem;
+    text-align: left;
+    right: 20%;
+    bottom: 15%;
+    transform: rotate(-15deg)
+  }
+  .button-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
   }
 
 </style>
