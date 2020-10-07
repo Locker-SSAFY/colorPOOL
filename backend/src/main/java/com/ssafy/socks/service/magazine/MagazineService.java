@@ -75,6 +75,13 @@ public class MagazineService {
 			.createdDate(currDate)
 			.build();
 
+		logger.info("----------------- magazine -----------------");
+		logger.info("user : " + magazine.getUser().getEmail());
+		logger.info("contents : " + magazine.getContents().get(0).toString());
+		logger.info("themeId : " + magazine.getThemeId());
+		logger.info("current Date : " + magazine.getCreatedDate());
+		logger.info("----------------- magazine -----------------");
+
 		ColorHistory colorHistory = new ColorHistory();
 		colorHistory.setSelectedColor(selectedColorJpaRepository.findById(magazineModel.getSelectedColorId()).orElseThrow(CCommunicationException::new));
 		colorHistory.setUser(userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new));
