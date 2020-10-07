@@ -123,7 +123,8 @@ export default {
     font-weight: 600;
     filter: invert(1);
     position: absolute;
-    top: calc(50% - 60px);
+    /* top: calc(50% - 60px); */
+    top: 2.5rem;
   }
 
   .interview.wrap {

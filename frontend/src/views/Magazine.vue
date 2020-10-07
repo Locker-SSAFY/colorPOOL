@@ -17,7 +17,8 @@
         :key="index"
         class="magazine-slide"
       >
-        <v-radio-group label="MAGAZINE" style="background-color: rgba(0,0,0,0.5); position: absolute; top: 0px;" v-model="img.template">
+        <v-radio-group style="background-color: rgba(0,0,0,0.5); position: absolute; top: 7px; padding: 0.5rem;" v-model="img.template">
+          <p style="font-family: 'PermanentMarker-Regular'; font-size: 1.1rem; font-weight: 600;">Type of Template</p>
           <v-radio :key="0" :value="0" label="Template A"></v-radio>
           <v-radio :key="1" :value="1" label="Template B"></v-radio>
           <v-radio :key="2" :value="2" label="Template C"></v-radio>
@@ -35,7 +36,7 @@
         text
         @click="goNext"
         >
-          <v-icon size="100">mdi-arrow-right</v-icon>
+          <v-icon size="75">mdi-arrow-right</v-icon>
         </v-btn>
     </div>
   </div>
