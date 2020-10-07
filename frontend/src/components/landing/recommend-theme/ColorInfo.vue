@@ -171,13 +171,13 @@ export default {
   .color-info.container div table tr td:nth-child(1) {
     text-align: left;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 18px;
   }
 
   .color-info.container div table tr td:nth-child(2) {
     text-align: right;
     font-weight: 600;
-    font-size: 10px;
+    font-size: 15px;
     color: rgba(0,0,0, 0.5);
   }
 

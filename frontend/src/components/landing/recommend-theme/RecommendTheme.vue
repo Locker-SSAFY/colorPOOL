@@ -18,12 +18,6 @@
     </div>
     <!-- 추천 배색 보여주는 곳 -->
     <div class="show-theme">
-      <!-- <v-icon
-        class="ma-2"
-        size="30"
-      >
-        mdi-refresh
-      </v-icon> -->
       <div class="inner-theme">
         <div class="button-text">Color Scheme POOL</div>
         <div class="underline" :style="{'background-color' : selectedColor.hex}"></div>
@@ -44,6 +38,11 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="choose-desc">
+      <p>Choose the color scheme</p>
+      <p>you want</p>
     </div>
     
     <!-- 이전으로 돌아가기 -->
@@ -243,7 +242,7 @@ export default {
   .theme-scroll {
     position: relative;
     overflow: scroll;
-    height: 75%;
+    height: 78%;
   }
 
   .color-group{
@@ -259,7 +258,7 @@ export default {
   .show-color.left{
     position: absolute;
     left: 7%;
-    top: 135%;
+    top: 126%;
     height: 30%;
     width: 13%;
     align-items: center;
@@ -371,4 +370,17 @@ export default {
     line-height: 0.7;
   }
 
+  .choose-desc {
+    position: absolute;
+    font-size: 1.9rem;
+    text-align: left;
+    right: 50%;
+    top: 170%;
+    transform: rotate(-15deg)
+  }
+
+  .choose-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
+  }
 </style>
