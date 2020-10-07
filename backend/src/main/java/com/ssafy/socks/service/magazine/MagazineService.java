@@ -80,30 +80,29 @@ public class MagazineService {
 		logger.info("current Date : " + magazine.getCreatedDate());
 		logger.info("----------------- magazine -----------------");
 
-		Likes likes = new Likes();
-		likes.setMagazine(magazine);
-		likes.setUser(user);
-		likesJpaRepository.save(likes);
-
-		Bookmark bookmark = new Bookmark();
-		bookmark.setMagazineBookmark(magazine);
-		bookmark.setUser(user);
-
 		magazine.setLikes(likesJpaRepository.findAllByMagazine(magazine));
 		magazine.setBookmarks(bookmarkRepository.findBookmarkByMagazine(magazine));
 
 		ColorHistory colorHistory = new ColorHistory();
 		colorHistory.setSelectedColor(selectedColorJpaRepository.findById(magazineModel.getSelectedColorId()).orElseThrow(CCommunicationException::new));
-		colorHistory.setUser(userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new));
+		colorHistory.setUser(user);
 		colorHistoryJpaRepository.save(colorHistory);
 
 		magazineJpaRepository.save(magazine);
 
-/*		magazine = magazineJpaRepository.findFirstByUser(user).orElseThrow(CCommunicationException::new);
+		magazine = magazineJpaRepository.findFirstByUser(user).orElseThrow(CCommunicationException::new);
+
+		logger.info("----------------- magazine2 -----------------");
+		logger.info("user : " + magazine.getUser().getEmail());
+		for (Contents contents : contentsList) logger.info(contents.getMainText());
+		logger.info("themeId : " + magazine.getThemeId());
+		logger.info("current Date : " + magazine.getCreatedDate());
+		logger.info("----------------- magazine2 -----------------");
+		
 		for (Contents contents : contentsList) {
 			contents.setMagazine(magazine);
 			contentsJpaRepository.save(contents);
-		}*/
+		}
 	}
 
 	public List<MagazineModel> getMagazinesByUser(String userEmail) {
