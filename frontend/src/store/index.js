@@ -28,8 +28,8 @@ export default new Vuex.Store({
   },
   plugins: [
     createdPersistedState({
-      paths: ['imageStore', 'colorStore', 'landingStore', 'magazineStore', 'detailStore'],
-    })
+      paths: ['userStore', 'imageStore', 'colorStore', 'landingStore', 'magazineStore', 'detailStore'],
+    })  
   ],
   state: {
   },

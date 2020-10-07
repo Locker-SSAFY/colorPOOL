@@ -9,10 +9,11 @@
           <td>
             <span class="category-name">내잡지에<br>추가하기</span>
             <img class="category-layer" src="../assets/images/layer.png" :style="{'background-color' : this.color}">
-            <v-btn
+            <v-btn  
               class="category-button"
               icon
               text
+              :disabled="isAdded? '' : disabled"
               @click="addMagazine"
             >
               <v-icon size="100">mdi-plus</v-icon>
@@ -69,13 +70,15 @@ export default {
       theme: [],
       userInfo: null,
       date: null,
-      magazineName: 'ColorPOOL'
+      magazineName: 'ColorPOOL',
+      isAdded: false,
     }
   },
   created() {
     this.color = this.storeSelectedColor.hex;
     this.theme = this.storeSelectedTheme;
     // userInfo 가져오는거 왜 안되지? 재원이한테 물어볼 것
+    console.log("storeUserInfo!!!", this.storeUserInfo);
     this.userInfo = this.storeUserInfo;
     console.log(this.userInfo);
     // userInfo 가져오는거 해결해주세염
@@ -101,15 +104,16 @@ export default {
         'selectedColor': this.storeSelectedColor.id,
         'themeId': this.storeSelectedThemeId,
       }
+      console.log(this.userInfo)
       console.log(payload);
-      this.AC_MAGAZINE_POST(payload);
+      this.isAdded = this.AC_MAGAZINE_POST(payload);
     },
     saveAsPDF(){
       const data = [
         {
           "user": {
-            "email": "kang@kang.com",
-            "nickname" : "kang",
+            "email": this.userInfo.email,
+            "nickname" : this.userInfo.nickname,
           },
           "selectedColor": {
             "themes": this.storeThemes,

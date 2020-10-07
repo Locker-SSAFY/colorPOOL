@@ -12,7 +12,7 @@
             <h1>ColorPOOL</h1>
           </v-btn>
       </v-col>
-      <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
+      <v-col cols="5" class="header-signin" v-if="!isLogin">
         <Signin></Signin>
       </v-col>
       <v-col cols="2" style="text-align: center;" class="mt-2" v-if="isLogin">
