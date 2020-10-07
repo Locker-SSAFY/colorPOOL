@@ -198,7 +198,7 @@ export default {
   }
 
   .header.wrap .header-library .v-btn{
-    font-size: 1.1rem;
+    font-size: 1.0rem;
   }
 
   .header.wrap .header-signin {
@@ -206,7 +206,7 @@ export default {
   }
   
   .header.wrap .header-signin .v-btn{
-    font-size: 1.1rem;
+    font-size: 1.0rem;
   }
 
   .header.wrap .header-signup {
@@ -214,7 +214,7 @@ export default {
   }
 
   .header.wrap .header-signup .v-btn{
-    font-size: 1.1rem;
+    font-size: 1.0rem;
   }
 
   .header.wrap .header-mypage {
@@ -222,7 +222,7 @@ export default {
   }
 
   .header.wrap .header-mypage .v-btn{
-    font-size: 1.1rem;
+    font-size: 1.0rem;
   }
 
   .header.wrap .header-logout {
@@ -230,7 +230,7 @@ export default {
   }
 
   .header.wrap .header-logout .v-btn{
-    font-size: 1.1rem;
+    font-size: 1.0rem;
   }
 
 </style>

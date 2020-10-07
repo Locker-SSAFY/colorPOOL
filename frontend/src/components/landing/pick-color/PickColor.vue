@@ -245,6 +245,7 @@ export default {
     bottom: 15%;
     transform: rotate(-15deg)
   }
+  
   .button-desc p {
     font-family: 'ReenieBeanie-Regular';
     line-height: 0.7;
