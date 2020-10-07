@@ -1,37 +1,41 @@
 <template>
-  <div class="header wrap">
+  <div class="header wrap" :class="scrolled? 'scroll' : 'unscroll'">
     <v-row class="mx-16">
-      <v-col class="header-logo" cols="7">
-          <v-btn
-            icon
-            text
-            class="ml-16"
-            color="black"
-            @click="goHome"
-          >
-            <h1>ColorPOOL</h1>
-          </v-btn>
+      <v-col class="header-logo" v-if="!isLanding">
+        <v-btn
+          icon
+          text
+          class="ml-16"
+          color="black"
+          @click="goHome"
+        >
+          <img class="logo_img" src="../../assets/images/logo/logo_img.png">
+          <img class="logo_txt" src="../../assets/images/logo/logo_text.png">
+        </v-btn>
       </v-col>
-      <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
+
+      <v-col class="header-signin" v-if="userInfo == null && !isLogin">
         <Signin></Signin>
       </v-col>
-      <v-col cols="2" style="text-align: center;" class="mt-2" v-if="isLogin">
-      </v-col>
-      <v-col cols="1" class="header-library" v-if="isLogin">
+      <!-- <v-col style="text-align: center;" class="mt-2" v-if="isLogin">
+      </v-col> -->
+
+      <v-col class="header-library" v-if="isLogin">
         <v-btn icon text @click="goLibrary">
           LIBRARY
         </v-btn>
       </v-col>
-      <v-col cols="1" class="header-mypage" v-if="isLogin" @click="goMyPage">
+      <v-col class="header-mypage" v-if="isLogin" @click="goMyPage">
         <v-btn icon text>
           MYPAGE
         </v-btn>
       </v-col>
-      <v-col cols="1" class="header-library" v-if="isLogin">
+      <v-col class="header-library" v-if="isLogin">
         <v-btn icon text @click="logout">
           LOGOUT
         </v-btn>
       </v-col>
+
     </v-row>
   </div>
 </template>
@@ -128,9 +132,18 @@ export default {
     left: 0;
     width: 100%;
     height: 60px;
+    /* padding: 0 1.5%; */
     transition-duration: 300ms;
     z-index: 90;
     background-color: rgb(255, 255, 255, 0.8);
+  }
+
+  .header.wrap.scroll {
+    background-color: rgb(255, 255, 255, 0.8);
+  }
+
+  .header.wrap.unscroll {
+    background-color: rgba(238, 238, 238, 0.3);
   }
 
   .header.wrap table {
@@ -146,8 +159,21 @@ export default {
     font-weight: bolder;
   }
 
+  .header.wrap .header-logo .v-btn {
+    margin-left: 5rem;
+  }
+
+  .header.wrap .header-logo .v-btn .logo_img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .header.wrap .header-logo .v-btn .logo_txt {
+    margin-left: 1rem;
+    height: 2.5rem;
+  }
+
   .header.wrap .header-library {
-    /* color : white; */
     text-align: center;
   }
 
@@ -178,5 +204,15 @@ export default {
   .header.wrap .header-mypage .v-btn{
     font-size: 1.2rem;
   }
+
+  /* .header.wrap .header-menu {
+    text-align: right;
+    margin-top: 0.5rem;
+  }
+
+  .header.wrap .header-menu .v-btn {
+    font-size: 1.3rem;
+    font-weight: bold;
+  } */
 
 </style>
