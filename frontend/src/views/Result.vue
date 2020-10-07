@@ -103,8 +103,8 @@ export default {
         'magazineName': this.magazineName,
         'selectedColor': this.storeSelectedColor.id,
         'themeId': this.storeSelectedThemeId,
+        'userInfo': this.userInfo
       }
-      console.log(this.userInfo)
       console.log(payload);
       this.isAdded = this.AC_MAGAZINE_POST(payload);
     },

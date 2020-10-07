@@ -36,6 +36,25 @@
     <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor.hex}">
       <!-- <img :src="imgUrl"> -->
       <img id="selected_img" :src="require(`@/assets/images/colorimages/${folder}/${pos}.jpg`)">
+      <!-- 모달창 -->
+      <v-dialog width="300" v-model="dialog">
+        <template v-slot:activator="{ on, attrs }"> 
+          <v-btn
+            color="red lighten-2"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            Color Hint
+          </v-btn>
+        </template>
+        <v-card width="300">
+          <v-card-title class="headline grey lighten-2">Recommend Color</v-card-title>
+          <v-banner :color="dummyColor" height="300"></v-banner>
+          <v-btn @click="goRecommend">Choose Recommended Color</v-btn>
+        </v-card>
+        
+      </v-dialog>
       <!-- 배색 추천 받으러 가기 버튼 -->
       <v-btn
         class="next-button"
@@ -75,6 +94,8 @@ export default {
     this.selectedColor = this.storeSelectedColor.hex;
     this.folder = parseInt((this.storeSelectedColor.id) / 10) + 1;
     this.pos = (Number(this.storeSelectedColor.id) % 10);
+
+    this.dummyColor = this.materialColors[this.dummyPos[0]].variations[this.dummyPos[1]].hex
   },
   computed: {
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'})
@@ -86,6 +107,9 @@ export default {
       selectedVariation: [],
       folder: '',
       pos: '',
+      dialog: false,
+      dummyPos: [Math.floor(Math.random() * 20), Math.floor(Math.random() * 10)],
+      dummyColor: ''
     }
   },
   watch: {
@@ -93,6 +117,7 @@ export default {
       this.selectedColor = val;
       this.folder = parseInt((this.selectedColor.id) / 10) + 1;
       this.pos = (Number(this.selectedColor.id) % 10);
+      this.dummyColor = this.materialColors[this.dummyPos[0]].variations[this.dummyPos[1]].hex
     }
   },
   methods : {
@@ -110,6 +135,12 @@ export default {
       document.body.className = "unlock";
       console.log(document.body);
       window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
+    },
+    goRecommend() {
+      this.dialog = false;
+      let color = this.materialColors[this.dummyPos[0]].variations[this.dummyPos[1]];
+      const payload = {selectedColor : color};
+      this.AC_SELECTED_COLOR(payload);
     }
   }
 }

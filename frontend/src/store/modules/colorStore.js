@@ -49,7 +49,22 @@ const colorStore = {
       const color = payload.id;
       
       //  비정상적인 axios 통신
-      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/themes/' + color, {headers: header})
+      // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/themes/' + color, {headers: header})
+      // .then((res) => {
+      //   console.log(res)
+      //   const themes = res.data.data;
+      //   commit('MU_THEMES', themes);
+      // })
+      // .catch((err) => {
+      //   console.err(err);
+      // })
+      // cors-anywhere통해서 하기 때문에 비정상
+
+      // console.log(commit);
+      // console.log(SERVER);
+      
+      // 정상적인 axios 통신
+      axios.get(SERVER.ROUTES.getThemes + color, {withCredentials: true},{headers: header})
       .then((res) => {
         console.log(res)
         const themes = res.data.data;
@@ -59,19 +74,6 @@ const colorStore = {
         console.err(err);
       })
       // cors-anywhere통해서 하기 때문에 비정상
-
-      console.log(commit);
-      console.log(SERVER);
-      
-      // 정상적인 axios 통신
-      /* axios.get(SERVER.ROUTES.getThemes + color, {withCredentials: true},{headers: header})
-      .then((res) => {
-        console.log(res);
-        commit('MU_THEMES', res.data)
-      })
-      .catch((err) => {
-        console.log(err);
-      }) */
       // 정상적인 axios 통신은 추후 확인해 봐야 함
 
     },

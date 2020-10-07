@@ -15,8 +15,11 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import materialColors from '../../assets/color/colorList.js'
+import {mapActions, mapGetters} from 'vuex'
+import axios from 'axios'
 const detailStore = 'detailStore'
+const themeStore = 'themeStore'
 
 export default {
   name: 'MagazineRankCover',
@@ -37,12 +40,28 @@ export default {
       userEmail: '',
       coverImg: '',
       date: '',
-      likes: [],
-      mag_data: {}
+      likes: '',
+      mag_data: {},
+      materialColors: materialColors,
+      themeData: {}
+    }
+  },
+  computed: {
+    ...mapGetters(themeStore, {
+      storeThemeColor: 'GE_THEME_COLOR'
+    })
+  },
+  watch: {
+    storeThemeColor(val) {
+      console.log(val);
+    },
+    themeData(val) {
+      this.mag_data[0].selectedColor.themes = val;
     }
   },
   methods: {
     ...mapActions(detailStore, ['AC_DETAIL']),
+    ...mapActions(themeStore, ['AC_THEME_COLOR']),
     showMag() {
       var res = confirm("잡지를 보시겠습니까?")
       if(res) {
@@ -52,17 +71,53 @@ export default {
         let route = this.$router.resolve({path: '/detail'});
         window.open(route.href, 'window','location=no, directories=no,resizable=no,status=no,toolbar=no,menubar=no, width=1200,height=600,left=0, top=0, scrollbars=yes');
       } 
+    },
+    getThemeColorData(themeId) {
+      const token = localStorage.getItem('access_token')
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      axios.get('https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
+      .then((res) => {
+        this.themeData = res.data.data;
+        const color1 = 'rgb(' + this.themeData.red1 + ',' + this.themeData.green1 + ',' + this.themeData.blue1 + ')';
+        const color2 = 'rgb(' + this.themeData.red2 + ',' + this.themeData.green2 + ',' + this.themeData.blue2 + ')';
+        const color3 = 'rgb(' + this.themeData.red3 + ',' + this.themeData.green3 + ',' + this.themeData.blue3 + ')';
+        const color4 = 'rgb(' + this.themeData.red4 + ',' + this.themeData.green4 + ',' + this.themeData.blue4 + ')';
+        const color5 = 'rgb(' + this.themeData.red5 + ',' + this.themeData.green5 + ',' + this.themeData.blue5 + ')';
+        this.theme = [color1, color2, color3, color4, color5];
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
   },
   created() {
-    this.name = this.aboutRanker.name;
+    this.name = this.aboutRanker.magazineName;
     this.color = this.aboutRanker.color;
-    this.theme = this.aboutRanker.theme;
-    this.userName = this.aboutRanker.userName;
-    this.userEmail = this.aboutRanker.userEmail;
-    this.coverImg = this.aboutRanker.coverImg;
-    this.date = this.aboutRanker.date;
-    this.likes = this.aboutRanker.likes;
+    console.log('mag color', this.color)
+    this.theme = ['#1A44AD','#505C7A','#38C0E0','#E49872','#AD6A5B'];
+    this.userName = this.aboutRanker.userNickname;
+    this.userEmail = this.aboutRanker.email;
+    this.coverImg = this.aboutRanker.contents[0].url;
+    this.date = '2020-09-28 MON';
+    this.likes = 3;
+    this.getThemeColorData(this.aboutRanker.themeId);
+    // const payload = {
+    //   'themeId': this.aboutRanker.themeId
+    // }
+    // this.AC_THEME_COLOR(payload)
+
+    // this.name = this.aboutRanker.name;
+    // this.color = this.aboutRanker.color;
+    // this.theme = this.aboutRanker.theme;
+    // this.userName = this.aboutRanker.userName;
+    // this.userEmail = this.aboutRanker.userEmail;
+    // this.coverImg = this.aboutRanker.coverImg;
+    // this.date = this.aboutRanker.date;
+    // this.likes = this.aboutRanker.likes;
     
     this.mag_data = 
       [
@@ -70,8 +125,8 @@ export default {
           "id": 0,
           "user": {
             "id": 0,
-            "email": "kang@kang.com",
-            "nickname": "kang",
+            "email": this.userEmail,
+            "nickname": this.userNickname,
             "provider": "root",
             "roles": [
               "ROLE_USER"
@@ -107,26 +162,7 @@ export default {
             }
             ]
           },
-          "contents": [
-            {
-              "id": 1,
-              "url": "https://images.unsplash.com/photo-1548549557-dbe9946621da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-              "mainText": "패션은 나이, 성별, 인종을 초월한다",
-              "subText": "shoes",
-              "question": "당신에게 코딩이란?",
-              "answer": "인터뷰에 답변을 적어주세요",
-              "template": "0"
-            },
-            {
-              "id": 2,
-              "url": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=662&q=80",
-              "mainText": "Fashion is about Passion",
-              "subText": "shoes",
-              "question": "당신에게 코딩이란?",
-              "answer": "인터뷰에 답변을 적어주세요",
-              "template": "2"
-            }
-          ],
+          "contents": this.aboutRanker.contents,
           "likes": [
             {
               "id": 0,
