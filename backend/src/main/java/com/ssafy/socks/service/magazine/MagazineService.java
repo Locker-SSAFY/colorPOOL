@@ -67,8 +67,8 @@ public class MagazineService {
 		logger.info("----------------- magazine -----------------");
 
 		ColorHistory colorHistory = new ColorHistory();
-		colorHistory.setSelectedColor(selectedColorJpaRepository.findById(magazineModel.getSelectedColorId()).orElseThrow(CCommunicationException::new));
-		colorHistory.setUser(user);
+		colorHistory.setSelectedColorId(magazineModel.getSelectedColorId());
+		colorHistory.setUserId(user.getId());
 		colorHistoryJpaRepository.save(colorHistory);
 
 		magazineJpaRepository.save(magazine);

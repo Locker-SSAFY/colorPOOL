@@ -33,8 +33,5 @@ public class SelectedColor {
 	private Color color;
 
 	@OneToMany(mappedBy = "selectedColor")
-	private List<ColorHistory> colorHistories;
-
-	@OneToMany(mappedBy = "selectedColor")
 	private List<Theme> themes;
 }

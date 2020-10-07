@@ -10,5 +10,5 @@ import com.ssafy.socks.entity.user.User;
 
 @Repository
 public interface ColorHistoryJpaRepository extends JpaRepository<ColorHistory,Long> {
-	Optional<ColorHistory> findTop1ByUser(User user);
+	Optional<ColorHistory> findTop1ByUserId(Long userId);
 }

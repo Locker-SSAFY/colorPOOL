@@ -53,8 +53,8 @@ public class ColorService {
 
 	public Long getRecommend(String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
-		ColorHistory colorHistory = colorHistoryJpaRepository.findTop1ByUser(user).orElseThrow(CCommunicationException::new);
-		RecommendColor recommendColor = recommendColorJpaRepository.findById(colorHistory.getSelectedColor().getId()).orElseThrow(CCommunicationException::new);
+		ColorHistory colorHistory = colorHistoryJpaRepository.findTop1ByUserId(user.getId()).orElseThrow(CCommunicationException::new);
+		RecommendColor recommendColor = recommendColorJpaRepository.findById(colorHistory.getSelectedColorId()).orElseThrow(CCommunicationException::new);
 
 		return getRecommendColor(recommendColor);
 	}
