@@ -3,7 +3,7 @@
     <head>
       <title>ColorPOOL</title>
     </head>
-    <Header v-if="!isViewer"></Header>
+    <Header v-if="!isViewer" style="z-index: 88;"></Header>
     <router-view/>
   </v-app>
 </template>
@@ -40,3 +40,6 @@ export default {
   }),
 };
 </script>
+<style>
+  *{ font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif'; }
+</style>

@@ -2,6 +2,7 @@ package com.ssafy.socks.entity.color;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ssafy.socks.entity.images.ThemeImages;
+import com.ssafy.socks.entity.magazine.Magazine;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

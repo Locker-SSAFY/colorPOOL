@@ -1,5 +1,6 @@
 package com.ssafy.socks.entity.magazine;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

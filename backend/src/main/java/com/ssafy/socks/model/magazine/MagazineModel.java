@@ -10,11 +10,10 @@ import lombok.Getter;
 
 @Getter @Builder
 public class MagazineModel {
-	private Long id;
-	private Long colorId;
+	private Long themeId;
+	private Long selectedColorId;
 	private String email;
-	private List<Contents> content;
+	private List<ContentsModel> contents;
 	private String magazineName;
 	private String userNickname;
-	private LocalDateTime createdDate;
 }

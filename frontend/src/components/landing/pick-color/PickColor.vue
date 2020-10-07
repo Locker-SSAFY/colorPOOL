@@ -1,18 +1,33 @@
 <template>
   <div class="pick-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
-    
+    <div v-if="this.$parent.isLanding && this.$parent.isGet == false && this.$parent.isPick == false">
+      <div class="underline"></div>
+      <div class="pick-desc">
+        <table>
+          <tr>
+            <td><span><strong>PICK</strong></span></td>
+          </tr>
+          <tr>
+            <td><p>Pick your color from colorPOOL</p></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
     <!-- Landing page의 pickColor 화면 -->
     <v-card @click="clickPick()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isPick == false && this.$parent.isGet == false"
     >
-      <v-card-title>Pick COLOR</v-card-title>
         <div style="overflow-x: hidden; height: 90%;">
           <img id="pick_img" src="../../../assets/images/colorimg.png">
+          <!-- <p style="text-align: center; font-size: 1.1rem;">원하는 색에 대한 배색을 추천받아보세요</p> -->
         </div>
-        <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 600; font-size: 18px;">
-          Pick Your Color From Palette
+        <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 100; font-size: 18px; text-align: center;">
+          원하는 색에 대한 배색을 추천받아보세요
         </v-card-text>
+
+        <!-- text-align: center; font-size: 1.1rem; margin-bottom: 2rem; -->
     </v-card>
     <!-- 컬러 팔레트 -->
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
@@ -28,8 +43,12 @@
         text
         @click="getTheme"
       >
-        <v-icon size="100">mdi-arrow-right</v-icon>
+        <v-icon size="80">mdi-arrow-right</v-icon>
       </v-btn>
+      <div class="button-desc">
+        <p>Get color recommendations</p>
+        <p>based on the selected color</p>
+      </div>
     </div>
     
     <!-- 배색 추천 화면 -->
@@ -97,12 +116,67 @@ export default {
 </script>
 
 <style scoped>
+  @font-face {
+    font-family: 'ReenieBeanie-Regular';
+    src: url('../../../assets/font/ReenieBeanie-Regular.ttf');
+  }
+
+  @font-face {
+    font-family: 'Anton-Regular';
+    src: url('../../../assets/font/Anton-Regular.ttf');
+  }
+
   .pick-color.wrap {
     width: 50%;
     height: 100%;
     /* background-color: skyblue; */
     float: left;
     transition-duration: 300ms;
+    display: flex;
+    align-items: center;
+  }
+
+  .pick-color.wrap .underline{
+    background-color: black;
+    position: absolute;
+    top: 30%;
+    left: 5%;
+    height: 0.7px;
+    width: 40%;
+  }
+
+  .pick-color.wrap .pick-desc {
+    text-align: right;
+    position: absolute;
+    top: 32%;
+    right: 55%;
+    font-size: 2.1rem;
+    line-height: 0.7;
+    width: 40%;
+  }
+
+  .pick-color.wrap .pick-desc span {
+    float: left;
+    font-size: 1.5rem;
+  }
+
+  .pick-color.wrap .pick-desc table {
+    width: 100%;
+  }
+
+  .pick-color.wrap .pick-desc table tr:nth-child(1) {
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+
+  .pick-color.wrap .pick-desc table tr:nth-child(2) {
+    text-align: right;
+    font-size: 2rem;
+  }
+
+  .pick-color.wrap .pick-desc p {
+    font-family: 'ReenieBeanie-Regular';
   }
 
   .pick-color.wrap.active {
@@ -121,11 +195,7 @@ export default {
     left: 5%;
     width: 40%;
     height: 50%;
-    margin-top: 15%;
-  }
-
-  .pick-color.wrap .v-card .v-card-title {
-    height: 10%;
+    margin-top: 17%;
   }
 
   .pick-color.wrap .v-card .v-image {
@@ -165,6 +235,20 @@ export default {
     position: absolute;
     right: 20%;
     top: 85%;
+  }
+
+  .button-desc {
+    position: absolute;
+    font-size: 1.9rem;
+    text-align: left;
+    right: 20%;
+    bottom: 15%;
+    transform: rotate(-15deg)
+  }
+  
+  .button-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
   }
 
 </style>

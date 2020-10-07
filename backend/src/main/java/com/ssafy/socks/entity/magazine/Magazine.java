@@ -3,6 +3,7 @@ package com.ssafy.socks.entity.magazine;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ssafy.socks.entity.color.SelectedColor;
+import com.ssafy.socks.entity.color.Theme;
 import com.ssafy.socks.entity.user.User;
 
 import lombok.AllArgsConstructor;
@@ -31,15 +33,20 @@ public class Magazine {
 	@Column(name = "MAGAZINE_ID", nullable = false)
 	private Long id;
 
+	@Column(name = "THEME_ID", nullable = false)
+	private Long themeId;
+
+	@Column(name = "SELECTED_COLOR_ID", nullable = false)
+	private Long selectedId;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SELECTED_COLOR_ID", nullable = false)
-	private SelectedColor selectedColor;
+	@Column(name = "MAGAZINE_NAME", nullable = false)
+	private String magazineName;
 
-	@OneToMany(mappedBy = "magazine")
+	@OneToMany(mappedBy = "magazine", cascade={CascadeType.ALL})
 	private List<Contents> contents;
 
 	@OneToMany(mappedBy = "magazine")

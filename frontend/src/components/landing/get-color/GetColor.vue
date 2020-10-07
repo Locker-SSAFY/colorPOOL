@@ -1,19 +1,32 @@
 <template>
   <div class="get-color wrap" :class="[{active : this.$parent.isGet}, {deactive : this.$parent.isPick}]">
-    
+    <div v-if="this.$parent.isLanding && this.$parent.isGet == false && this.$parent.isPick == false">
+      <div class="underline"></div>
+      <div class="get-desc">
+        <table>
+          <tr>
+            <td><span><strong>GET</strong></span></td>
+          </tr>
+          <tr>
+            <td><p>Get your color by keyword</p></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
     <!-- Landing page의 getColor 화면 -->
     <v-card @click="clickGet()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isPick == false && this.$parent.isGet == false"
-    >
-      <v-card-title>Get COLOR</v-card-title>
-      
+    > 
       <div id="keyword-img-wrap">
         <img id="keyword-img" src="../../../assets/images/keywordimg.png">
+        <!-- <p style="text-align: center; font-size: 1.1rem; text-weight: thin;">키워드의 색에 대한 배색을 추천받아보세요</p> -->
       </div>
       <v-icon size="40" color="rgb(107, 203, 243)" id="keyword-img-icon">mdi-magnify</v-icon>
-      <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 600; font-size: 18px;">
-        Get Your Color By Keyword
+      
+      <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 100; font-size: 18px; text-align: center;">
+        키워드의 색에 대한 배색을 추천받아보세요
       </v-card-text>
     </v-card>
 
@@ -30,29 +43,31 @@
       </ul>
     </div>
 
+    <div v-if="keyword==='' && this.$parent.isGet" id="require-text">
+      <p>키워드를 입력하고</p>
+      <p>키워드의 색을 받아보세요</p>
+    </div>
+
+
     <Loading v-if="this.$parent.isGet && loading" class="get-color left"></Loading>
 
 
     <!-- 오른쪽 배경 -->
-    <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : selectedColor.hex}">
+    <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : backColor}">
       <!-- <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"> -->
     </div>
 
     <!-- 검색창 -->
-    <v-card class="search" v-if="this.$parent.isGet">
+    <v-card style="margin-top: -20%;" class="search" v-if="this.$parent.isGet">
       <div class="search-wrap">
         <div class="search-panel">
           <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
-          <v-btn @click="getPicularImages()" class="ma-2" tile large :color="selectedColor.hex" icon>
+          <v-btn @click="getPicularImages()" class="ma-2" tile large :color="backColor" icon>
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
         </div>
       </div>
     </v-card>
-
-    <div v-if="keyword==='' && this.$parent.isGet" id="require-text">
-      키워드를 입력해주세요
-    </div>
 
     <!-- 배색 추천 받으러 가기 버튼 + 선택 안한 경우 modal -->
     <div class="next-button" v-if="this.$parent.isGet" @click="getTheme">
@@ -90,7 +105,8 @@ export default {
       absolute: true,
       opacity: 1,
       overlay: false,
-      selectedColor: '',
+      selectedColor: null,
+      backColor: '',
       loading: false,
       materialColors: materialColors
     }
@@ -100,10 +116,12 @@ export default {
   },
   created(){
     this.selectedColor = this.storeSelectedColor;
+    this.backColor = this.storeSelectedColor.hex;
   },
   watch: {
     storeSelectedColor(val){
-      this.selectedColor = val
+      this.selectedColor = val;
+      this.backColor = val.hex;
     }
   },
   methods: {
@@ -170,12 +188,71 @@ export default {
 </script>
 
 <style scoped>
+  @font-face {
+    font-family: 'ReenieBeanie-Regular';
+    src: url('../../../assets/font/ReenieBeanie-Regular.ttf');
+  }
+
+  @font-face {
+    font-family: 'Anton-Regular';
+    src: url('../../../assets/font/Anton-Regular.ttf');
+  }
+
+  @font-face {
+    font-family: 'PermanentMarker-Regular';
+    src: url('../../../assets/font/PermanentMarker-Regular.ttf');
+  }
 
   .get-color.wrap {
     width: 50%;
     height: 100%;
     float: right;
     transition-duration: 300ms;
+    display: flex;
+    align-items: center;
+  }
+  
+  .get-color.wrap .underline{
+    background-color: black;
+    position: absolute;
+    top: 30%;
+    right: 5%;
+    height: 0.7px;
+    width: 40%;
+  }
+
+  .get-color.wrap .get-desc {
+    text-align: right;
+    position: absolute;
+    top: 32%;
+    right: 5%;
+    font-size: 2.1rem;
+    line-height: 0.7;
+    width: 40%;
+  }
+
+  .get-color.wrap .get-desc span {
+    float: left;
+    font-size: 1.5rem;
+  }
+
+  .get-color.wrap .get-desc table {
+    width: 100%;
+  }
+
+  .get-color.wrap .get-desc table tr:nth-child(1) {
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+
+  .get-color.wrap .get-desc table tr:nth-child(2) {
+    text-align: right;
+    font-size: 2rem;
+  }
+
+  .get-color.wrap .get-desc p {
+    font-family: 'ReenieBeanie-Regular';
   }
 
   .get-color.wrap.active {
@@ -194,11 +271,7 @@ export default {
     right: 5%;
     width: 40%;
     height: 50%;
-    margin-top: 15%;
-  }
-
-  .get-color.wrap .v-card .v-card-title {
-    height: 10%;
+    margin-top: 17%;
   }
 
   .get-color.wrap .v-card .v-image {
@@ -213,13 +286,15 @@ export default {
     margin-top: 15%;
   }
   
-  #require-text{
+  #require-text {
     position: absolute;
     right: 5%;
     top: 10%;
     width: 40%;
     height: 7%;
-    margin-top: 15%;
+    margin-top: 19%;
+    font-size: 1.1rem;
+    line-height: 0.7;
   }
 
   .get-color.wrap .v-card .search-wrap {
@@ -239,7 +314,7 @@ export default {
   }
 
   .get-color.wrap .v-card .search-wrap .search-panel input {
-    width: 50%;
+    width: 80%;
     height: 100%;
     padding: 1% 1%;
     outline: none;

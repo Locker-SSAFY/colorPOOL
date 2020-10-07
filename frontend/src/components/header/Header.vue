@@ -1,37 +1,41 @@
 <template>
-  <div class="header wrap">
+  <div class="header wrap" :class="scrolled? 'scroll' : 'unscroll'">
     <v-row class="mx-16">
-      <v-col class="header-logo" cols="7">
-          <v-btn
-            icon
-            text
-            class="ml-16"
-            color="black"
-            @click="goHome"
-          >
-            <h1>ColorPOOL</h1>
-          </v-btn>
+      <v-col cols="3"></v-col>
+      <v-col cols="2" class="header-logo" v-if="isGet || isPick">
+        <v-btn
+          icon
+          text
+          class="ml-16"
+          color="black"
+          @click="goHome"
+        >
+          <!-- <img class="logo_img" src="../../assets/images/logo/logo_img.png"> -->
+          <img class="logo_txt" src="../../assets/images/logo/logo_text.png">
+        </v-btn>
       </v-col>
-      <v-col cols="5" class="header-signin" v-if="!isLogin">
+      <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
         <Signin></Signin>
       </v-col>
-      <v-col cols="2" style="text-align: center;" class="mt-2" v-if="isLogin">
-      </v-col>
-      <v-col cols="1" class="header-library" v-if="isLogin">
+      <!-- <v-col style="text-align: center;" class="mt-2" v-if="isLogin">
+      </v-col> -->
+
+      <v-col cols="2" class="header-library" v-if="isLogin">
         <v-btn icon text @click="goLibrary">
           LIBRARY
         </v-btn>
       </v-col>
-      <v-col cols="1" class="header-mypage" v-if="isLogin" @click="goMyPage">
+      <v-col cols="2" class="header-mypage" v-if="isLogin" @click="goMyPage">
         <v-btn icon text>
           MYPAGE
         </v-btn>
       </v-col>
-      <v-col cols="1" class="header-library" v-if="isLogin">
+      <v-col cols="2" class="header-logout" v-if="isLogin">
         <v-btn icon text @click="logout">
           LOGOUT
         </v-btn>
       </v-col>
+
     </v-row>
   </div>
 </template>
@@ -49,12 +53,14 @@ export default {
   computed: {
     ...mapGetters(userStore, { storeIsLogin: 'GE_IS_LOGIN',
                               storeUserInfo: 'GE_USER_INFO'}),
-    ...mapGetters(landingStore, { storeIsLanding: 'GE_IS_LANDING'})
+    ...mapGetters(landingStore, { storeIsLanding: 'GE_IS_LANDING', storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
   },
   created(){
     this.userInfo = this.storeUserInfo;
     this.isLogin = this.storeIsLogin;
     this.isLanding = this.storeIsLanding;
+    this.isGet = this.storeIsGet;
+    this.isPick = this.storeIsPick;
   },
   data() {
     return {
@@ -62,9 +68,17 @@ export default {
       userInfo: null,
       isLogin: false,
       isLanding: false,
+      isPick: null,
+      isGet: null,
     }
   },
   watch: {
+    storeIsGet(val){
+      this.isGet = val;
+    }, 
+    storeIsPick(val){
+      this.isPick = val;
+    },
     storeUserInfo(val){
       this.userInfo = val;
     },
@@ -80,7 +94,7 @@ export default {
     ...mapActions(userStore, ['AC_LOGOUT']),
     detectWindowScrollY() {
       // 감지 이벤트 메서드
-      this.scrolled = window.scrollY > 0
+      this.scrolled = window.scrollY > 250
     },
     goHome() {
       if(!this.isLanding){
@@ -90,7 +104,10 @@ export default {
       } else {
         this.AC_IS_GET({isGet: false});
         this.AC_IS_PICK({isPick: false});
-        location.reload();
+        console.log("isGet : ", this.isGet);
+        console.log("isPick : ", this.isPick);
+        window.location.reload();
+        window.scrollTo({left: 0, top: 0, transition: 0});
       }
     },
     logout(){
@@ -105,6 +122,7 @@ export default {
             this.AC_IS_GET({isGet: false});
             this.AC_IS_PICK({isPick: false});
             this.$router.push({name: 'Landing'});
+            window.scrollTo(0, 0);
           }
       }
     },
@@ -132,10 +150,19 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    height: 70px;
+    padding: 0 1.5%;
     transition-duration: 300ms;
     z-index: 90;
     background-color: rgb(255, 255, 255, 0.8);
+  }
+
+  .header.wrap.scroll {
+    background-color: rgb(255, 255, 255, 0.8);
+  }
+
+  .header.wrap.unscroll {
+    background-color: rgba(238, 238, 238, 0.3);
   }
 
   .header.wrap table {
@@ -150,13 +177,27 @@ export default {
     font-weight: bolder;
   }
 
+  .header.wrap .header-logo .v-btn {
+    margin-left: 5rem;
+  }
+
+  .header.wrap .header-logo .v-btn .logo_img {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .header.wrap .header-logo .v-btn .logo_txt {
+    /* margin: 0 auto; */
+    margin-top: 1rem;
+    height: 2.7rem;
+  }
+
   .header.wrap .header-library {
-    /* color : white; */
-    text-align: center;
+    text-align: right;
   }
 
   .header.wrap .header-library .v-btn{
-    font-size: 1.2rem;
+    font-size: 1.0rem;
   }
 
   .header.wrap .header-signin {
@@ -164,7 +205,7 @@ export default {
   }
   
   .header.wrap .header-signin .v-btn{
-    font-size: 1.2rem;
+    font-size: 1.0rem;
   }
 
   .header.wrap .header-signup {
@@ -172,7 +213,7 @@ export default {
   }
 
   .header.wrap .header-signup .v-btn{
-    font-size: 1.2rem;
+    font-size: 1.0rem;
   }
 
   .header.wrap .header-mypage {
@@ -180,7 +221,15 @@ export default {
   }
 
   .header.wrap .header-mypage .v-btn{
-    font-size: 1.2rem;
+    font-size: 1.0rem;
+  }
+
+  .header.wrap .header-logout {
+    text-align: left;
+  }
+
+  .header.wrap .header-logout .v-btn{
+    font-size: 1.0rem;
   }
 
 </style>

@@ -30,11 +30,9 @@ const userStore = {
       state.userInfo = payload
     },
     MU_IS_LOGIN: (state, payload) => {
-      // console.log('MU_IS_LOGIN', payload)
       state.isLogin = payload
     },
     MU_IS_LOGIN_ERROR: (state, payload) => {
-      // console.log('MU_IS_LOGIN_ERROR', payload)
       state.isLoginErrors = payload
     },
     MU_DISPLAY: (state, payload) => {
@@ -52,7 +50,6 @@ const userStore = {
 
     //회원 로그인
     AC_SIGNIN: ({commit, dispatch}, payload) => {
-      console.log('AC_SINGIN', payload);
       // axios2.post('/api/signin', payload)
       // axios2.post('http://localhost:8080/api/signin', payload)
       axios.post(SERVER.ROUTES.signin, payload)
@@ -60,14 +57,10 @@ const userStore = {
         console.log(response);
         commit('MU_IS_LOGIN_ERROR', false);
         dispatch('AC_GET_USERINFO', {token: response.data.data});
-
-        //임시로 userInfo 저장
-        // commit('MU_IS_LOGIN', true);
       })
       .catch(function (error) {
         console.log(error.response);
         if(error.response.data.success === false ){
-          // alert(error.response.data.msg);
           commit('MU_ERROR', error.response.data.msg);
         } 
         commit('MU_IS_LOGIN_ERROR', true);
@@ -128,9 +121,7 @@ const userStore = {
 
     //회원 정보 조회
     AC_GET_USERINFO: ({commit}, payload) => {
-      console.log('AC_GET_USERINFO', payload.token)
       const token = payload.token
-      console.log("token", token)
       const header = {
         'accept': '*/*',
         'X-AUTH-TOKEN': token,
@@ -141,7 +132,6 @@ const userStore = {
       axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/user?lang=ko', { headers: header })
       // axios.get(SERVER.ROUTES.getUserInfo, { headers: header })
       .then( response =>{
-        console.log("resssss",response);
         localStorage.setItem("access_token", token);
         commit('MU_USER_INFO', response.data.data);
         commit('MU_DISPLAY', false);

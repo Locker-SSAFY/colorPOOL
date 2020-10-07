@@ -7,8 +7,13 @@
       text
       @click="checkColor"
     >
-      <v-icon size="100">mdi-arrow-right</v-icon>
+      <v-icon size="80">mdi-arrow-right</v-icon>
     </v-btn>
+
+    <div class="button-desc">
+      <p>Get color recommendations</p>
+      <p>based on the selected color</p>
+    </div>
 
     <v-dialog
       v-model="dialog"
@@ -62,6 +67,22 @@
     position: absolute;
     right: 20%;
     top: 85%;
+  }
+
+  .button-desc {
+    position: absolute;
+    font-size: 2.3rem;
+    text-align: left;
+    right: 4rem;
+    bottom: 0.5rem;
+    /* right: 30%;
+    bottom: 20%; */
+    transform: rotate(-15deg)
+  }
+  
+  .button-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
   }
 
   .dialog-text{

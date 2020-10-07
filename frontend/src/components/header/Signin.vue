@@ -10,11 +10,17 @@
         class="mr-16"
       >
         <!-- v-on="on" -->
-      SIGNIN/SIGNUP</v-btn>
+        <div style="line-height: 0.4; margin-top: 2rem; font-weight: 300;">
+          <p>Getting</p>
+          <p>Started</p>
+        </div>
+      </v-btn>
     </template>
     <v-card class="signin-modal wrap" :style="{'background-color': backColor  }">
       <v-row>
-        <v-col cols="11" id="modal-title">COLORPOOL</v-col>
+        <v-col cols="11" id="modal-title">
+          <img class="logo_txt" src="../../assets/images/logo/logo_text.png">
+        </v-col>
         <v-col cols="1" id="modal-title">
           <v-btn icon text large @click="close">
             <v-icon>mdi-window-close</v-icon>
@@ -65,7 +71,7 @@
                   text
                   style="position: absolute; top: 62%; right: 8%; font-size: 1.3rem;"
                 >
-                > SIGININ
+                  <p style="font-family: 'PermanentMarker-Regular'; margin-bottom: 0;">> SIGININ</p>
                 </v-btn>
               </v-row>
               <v-row>
@@ -75,7 +81,7 @@
                   class="mb-2"
                   @click="handleClickSignIn"
                 >
-                <v-icon class="mr-2">mdi-google</v-icon>
+                  <v-icon>mdi-google</v-icon>
                 </v-btn>
                 <v-btn
                   color="black"
@@ -83,7 +89,7 @@
                   class="mb-2"
                   @click="AC_KAKAO_SIGNIN"
                 >
-                <v-icon class="mr-2">mdi-chat</v-icon>
+                  <v-icon>mdi-chat</v-icon>
                 </v-btn>
               </v-row>
             </v-col>
@@ -111,7 +117,7 @@
                   text
                   style="position: absolute; top: 82%; right: 8%; font-size: 1.3rem;"
                 >
-                > SIGINUP
+                  <p style="font-family: 'PermanentMarker-Regular'; margin-bottom: 0;">> SIGINUP</p>
                 </v-btn>
               </v-row>
             </v-col>
@@ -357,4 +363,11 @@ export default {
     margin: 0%;
     padding: 0%;
   }
+
+  .logo_txt {
+    margin-top: 1.2rem;
+    margin-left: 0.3rem;
+    height: 3rem;
+  }
+
 </style>

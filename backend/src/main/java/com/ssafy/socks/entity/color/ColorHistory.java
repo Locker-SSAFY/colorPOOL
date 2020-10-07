@@ -1,7 +1,7 @@
 package com.ssafy.socks.entity.color;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,8 +27,8 @@ public class ColorHistory {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "THEME_ID")
-	private Theme theme;
+	@JoinColumn(name = "SELECTED_COLOR_ID")
+	private SelectedColor selectedColor;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
