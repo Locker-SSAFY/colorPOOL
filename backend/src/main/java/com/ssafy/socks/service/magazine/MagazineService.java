@@ -44,6 +44,11 @@ public class MagazineService {
 	public void saveMagazine(MagazineModel magazineModel) {
 		Logger logger = LoggerFactory.getLogger(this.getClass());
 
+		logger.info("----------------- getModel -----------------");
+		System.out.println("selected id : " + magazineModel.getSelectedColorId());
+		System.out.println("theme id : " + magazineModel.getThemeId());
+		logger.info("----------------- getModel -----------------");
+
 		List<Contents> contentsList = new ArrayList<>();
 		Magazine magazine = new Magazine();
 
@@ -68,6 +73,7 @@ public class MagazineService {
 
 		LocalDateTime currDate = LocalDateTime.now();
 
+
 		magazine = Magazine.builder()
 			.user(userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new))
 			.contents(contentsList)
@@ -77,7 +83,7 @@ public class MagazineService {
 
 		logger.info("----------------- magazine -----------------");
 		logger.info("user : " + magazine.getUser().getEmail());
-		logger.info("contents : " + magazine.getContents().get(0).toString());
+		logger.info("contents : " + magazine.getContents().get(0).getMainText());
 		logger.info("themeId : " + magazine.getThemeId());
 		logger.info("current Date : " + magazine.getCreatedDate());
 		logger.info("----------------- magazine -----------------");
