@@ -17,12 +17,15 @@
     <div class="my-index">
       <span class="my-index-title">View my magazines</span>
       <div class="content-area" v-if="isMyMagazine">
-          <ul v-for="(list, idx) in myMagazine" :key="idx">
-            <li v-for="(magazine, idx) in list" v-bind:key="idx">
-              <MagazineListCover v-if="magazine != null" v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
-              <div v-if="magazine == null" style="width: 200px;"></div>
-            </li>
-          </ul>
+        <span class="horizontal-title">My magazines</span>
+        <div class="underline"></div>
+        <div class="hand-drawing"></div>
+        <ul v-for="(list, idx) in myMagazine" :key="idx">
+          <li v-for="(magazine, idx) in list" v-bind:key="idx">
+            <MagazineListCover v-if="magazine != null" v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
+            <div v-if="magazine == null" style="width: 200px;"></div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -30,6 +33,9 @@
       <div class="scrap-index">
         <span class="scrap-index-title">View my liked magazines</span>
         <div class="content-area" v-if="isScrap">
+          <span class="horizontal-title">Liked magazines</span>
+          <div class="underline"></div>
+          <div class="hand-drawing"></div>
           <ul v-for="(list, idx) in scrapMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
               <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
@@ -43,6 +49,9 @@
     <div class="recent-index">
       <span class="recent-index-title">View my bookmarked magazines</span>
       <div class="content-area" v-if="isRecent">
+        <span class="horizontal-title">Bookmarked magazines</span>
+        <div class="underline"></div>
+        <div class="hand-drawing"></div>
           <ul v-for="(list, idx) in recentMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
               <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
@@ -347,5 +356,28 @@ export default {
     font-size: 2.3rem;
     transform: rotate( 90deg );
     transform-origin: left top;
+  }
+
+  .horizontal-title {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-left: 4%;
+  }
+
+  .underline {
+    background-color: black;
+    height: 0.5px;
+    width: 35%;
+    margin-left: 4%;
+    /* margin-bottom: 2%; */
+  }
+
+  .hand-drawing {
+    position: absolute;
+    background: url(https://cdn2.bustle.com/nylon/2020/scribble-920a660055.svg) no-repeat;
+    top: 4%;
+    left: 7%;
+    height: 13%;
+    width: 25%;
   }
 </style>
