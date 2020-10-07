@@ -2,20 +2,29 @@
   <div class="pick-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
     <div class="underline"></div>
     <div class="pick-desc">
-      <p>Pick your color from colorPOOL</p>
+      <table>
+        <tr>
+          <td><span><strong>PICK</strong></span></td>
+        </tr>
+        <tr>
+          <td><p>Pick your color from colorPOOL</p></td>
+        </tr>
+      </table>
     </div>
     <!-- Landing page의 pickColor 화면 -->
     <v-card @click="clickPick()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isPick == false && this.$parent.isGet == false"
     >
-      <p>PICK color</p>
         <div style="overflow-x: hidden; height: 90%;">
           <img id="pick_img" src="../../../assets/images/colorimg.png">
+          <!-- <p style="text-align: center; font-size: 1.1rem;">원하는 색에 대한 배색을 추천받아보세요</p> -->
         </div>
-        <!-- <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 600; font-size: 18px;">
-          Pick Your Color From Palette
-        </v-card-text> -->
+        <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 100; font-size: 18px; text-align: center;">
+          원하는 색에 대한 배색을 추천받아보세요
+        </v-card-text>
+
+        <!-- text-align: center; font-size: 1.1rem; margin-bottom: 2rem; -->
     </v-card>
     <!-- 컬러 팔레트 -->
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
@@ -105,6 +114,11 @@ export default {
     src: url('../../../assets/font/ReenieBeanie-Regular.ttf');
   }
 
+  @font-face {
+    font-family: 'Anton-Regular';
+    src: url('../../../assets/font/Anton-Regular.ttf');
+  }
+
   .pick-color.wrap {
     width: 50%;
     height: 100%;
@@ -120,7 +134,7 @@ export default {
     position: absolute;
     top: 30%;
     left: 5%;
-    height: 0.5px;
+    height: 0.7px;
     width: 40%;
   }
 
@@ -131,6 +145,27 @@ export default {
     right: 55%;
     font-size: 2.1rem;
     line-height: 0.7;
+    width: 40%;
+  }
+
+  .pick-color.wrap .pick-desc span {
+    float: left;
+    font-size: 1.5rem;
+  }
+
+  .pick-color.wrap .pick-desc table {
+    width: 100%;
+  }
+
+  .pick-color.wrap .pick-desc table tr:nth-child(1) {
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+
+  .pick-color.wrap .pick-desc table tr:nth-child(2) {
+    text-align: right;
+    font-size: 2.5rem;
   }
 
   .pick-color.wrap .pick-desc p {
@@ -153,15 +188,15 @@ export default {
     left: 5%;
     width: 40%;
     height: 50%;
-    margin-top: 15%;
+    margin-top: 17%;
   }
 
-  .pick-color.wrap .v-card p {
-    font-size: 2rem;
+  /* .pick-color.wrap .v-card p {
+    font-size: 3rem;
     font-weight: bold;
-    text-align: center;
     margin-top: 1rem;
-  }
+    margin-left: 5%;
+  } */
 
   .pick-color.wrap .v-card .v-image {
     height: 90%;

@@ -2,23 +2,29 @@
   <div class="get-color wrap" :class="[{active : this.$parent.isGet}, {deactive : this.$parent.isPick}]">
     <div class="underline"></div>
     <div class="get-desc">
-      <p>Get your color by keyword</p>
+      <table>
+        <tr>
+          <td><span><strong>GET</strong></span></td>
+        </tr>
+        <tr>
+          <td><p>Get your color by keyword</p></td>
+        </tr>
+      </table>
     </div>
-    <!-- <p class="get-desc">GET your color by keyword</p> -->
     <!-- Landing page의 getColor 화면 -->
     <v-card @click="clickGet()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isPick == false && this.$parent.isGet == false"
-    >
-      <p>GET color</p>
-      
+    > 
       <div id="keyword-img-wrap">
         <img id="keyword-img" src="../../../assets/images/keywordimg.png">
+        <!-- <p style="text-align: center; font-size: 1.1rem; text-weight: thin;">키워드의 색에 대한 배색을 추천받아보세요</p> -->
       </div>
       <v-icon size="40" color="rgb(107, 203, 243)" id="keyword-img-icon">mdi-magnify</v-icon>
-      <!-- <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 600; font-size: 18px;">
-        Get Your Color By Keyword
-      </v-card-text> -->
+      
+      <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 100; font-size: 18px; text-align: center;">
+        키워드의 색에 대한 배색을 추천받아보세요
+      </v-card-text>
     </v-card>
 
     <!-- 검색 결과 -->
@@ -177,6 +183,16 @@ export default {
     src: url('../../../assets/font/ReenieBeanie-Regular.ttf');
   }
 
+  @font-face {
+    font-family: 'Anton-Regular';
+    src: url('../../../assets/font/Anton-Regular.ttf');
+  }
+
+  @font-face {
+    font-family: 'PermanentMarker-Regular';
+    src: url('../../../assets/font/PermanentMarker-Regular.ttf');
+  }
+
   .get-color.wrap {
     width: 50%;
     height: 100%;
@@ -191,18 +207,38 @@ export default {
     position: absolute;
     top: 30%;
     right: 5%;
-    height: 0.5px;
+    height: 0.7px;
     width: 40%;
   }
 
   .get-color.wrap .get-desc {
-    font-family: 'ReenieBeanie-Regular';
     text-align: right;
     position: absolute;
     top: 32%;
     right: 5%;
     font-size: 2.1rem;
     line-height: 0.7;
+    width: 40%;
+  }
+
+  .get-color.wrap .get-desc span {
+    float: left;
+    font-size: 1.5rem;
+  }
+
+  .get-color.wrap .get-desc table {
+    width: 100%;
+  }
+
+  .get-color.wrap .get-desc table tr:nth-child(1) {
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+
+  .get-color.wrap .get-desc table tr:nth-child(2) {
+    text-align: right;
+    font-size: 2.5rem;
   }
 
   .get-color.wrap .get-desc p {
@@ -225,15 +261,15 @@ export default {
     right: 5%;
     width: 40%;
     height: 50%;
-    margin-top: 15%;
+    margin-top: 17%;
   }
 
-  .get-color.wrap .v-card p {
-    font-size: 2rem;
+  /* .get-color.wrap .v-card p {
+    font-size: 3rem;
     font-weight: bold;
-    text-align: center;
     margin-top: 1rem;
-  }
+    margin-left: 5%;
+  } */
 
   .get-color.wrap .v-card .v-image {
     height: 90%;

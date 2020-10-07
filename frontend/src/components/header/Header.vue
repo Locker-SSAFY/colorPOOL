@@ -85,7 +85,7 @@ export default {
     ...mapActions(userStore, ['AC_LOGOUT']),
     detectWindowScrollY() {
       // 감지 이벤트 메서드
-      this.scrolled = window.scrollY > 0
+      this.scrolled = window.scrollY > 240
     },
     goHome() {
       console.log(this);
