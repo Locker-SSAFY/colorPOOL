@@ -32,11 +32,11 @@ public class Bookmark {
 	@Column(name = "BOOKMARK_ID", nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MAGAZINE_ID", nullable = false)
 	private Magazine magazineBookmark;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
 }

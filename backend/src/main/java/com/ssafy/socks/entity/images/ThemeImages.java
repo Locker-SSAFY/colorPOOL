@@ -31,7 +31,7 @@ public class ThemeImages {
 	@Column(name = "IMG_URL", nullable = false)
 	private String imageUrl;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "THEME_ID")
 	private Theme theme;
 

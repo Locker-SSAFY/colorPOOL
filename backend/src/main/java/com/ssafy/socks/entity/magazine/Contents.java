@@ -26,7 +26,7 @@ public class Contents {
 	@Column(name = "CONTENT_ID")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MAGAZINE_ID", nullable = false)
 	private Magazine magazine;
 	public void addMagazine(Magazine magazine) {

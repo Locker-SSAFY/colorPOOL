@@ -68,11 +68,11 @@ public class Theme {
 	@Column(name = "B5", nullable = false)
 	private Integer blue5;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SELECTED_COLOR_ID")
 	private SelectedColor selectedColor;
 
-	@OneToMany(mappedBy = "theme", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy = "theme")
 	private List<ThemeImages> crawledImages;
 
 	/* 연관관계 편의 메서드 */

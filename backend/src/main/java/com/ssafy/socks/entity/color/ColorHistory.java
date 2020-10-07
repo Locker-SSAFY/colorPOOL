@@ -26,11 +26,11 @@ public class ColorHistory {
 	@Column(name = "COLOR_HISTORY_ID", nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SELECTED_COLOR_ID")
 	private SelectedColor selectedColor;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 }

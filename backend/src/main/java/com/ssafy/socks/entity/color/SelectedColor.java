@@ -32,9 +32,9 @@ public class SelectedColor {
 	@Embedded
 	private Color color;
 
-	@OneToMany(mappedBy = "selectedColor", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy = "selectedColor")
 	private List<ColorHistory> colorHistories;
 
-	@OneToMany(mappedBy = "selectedColor", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy = "selectedColor")
 	private List<Theme> themes;
 }
