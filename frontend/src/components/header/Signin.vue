@@ -10,7 +10,11 @@
         class="mr-16"
       >
         <!-- v-on="on" -->
-      SIGNIN/SIGNUP</v-btn>
+        <div style="line-height: 0.4; margin-top: 2rem; font-weight: 300;">
+          <p>Getting</p>
+          <p>Started</p>
+        </div>
+      </v-btn>
     </template>
     <v-card class="signin-modal wrap" :style="{'background-color': backColor  }">
       <v-row>
