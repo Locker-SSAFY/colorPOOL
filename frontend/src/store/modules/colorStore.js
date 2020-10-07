@@ -64,7 +64,7 @@ const colorStore = {
       // console.log(SERVER);
       
       // 정상적인 axios 통신
-      axios.get(SERVER.ROUTES.getThemes + color, {withCredentials: true},{headers: header})
+      axios.get(SERVER.ROUTES.getThemes + color, {headers: header})
       .then((res) => {
         console.log(res)
         const themes = res.data.data;
