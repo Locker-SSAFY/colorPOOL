@@ -2,7 +2,7 @@
   <div class="landing wrap">
     <div class="top-page">
       <div class="background"></div>
-      <div class="landing-logo" v-if="isLanding">
+      <div class="landing-logo" v-if="isLanding && isGet == false && isPick == false">
         <img class="logo_img" src="../assets/images/logo/logo_img.png">
         <img class="logo_txt" src="../assets/images/logo/logo_text.png">
         <p class="landing-desc">Create the perfect palette with</p>
@@ -16,7 +16,7 @@
         @click="goBack"
         v-if="isPick || isGet"
       >
-        <v-icon size="100">mdi-arrow-left</v-icon>
+        <v-icon size="40">mdi-arrow-left</v-icon>
       </v-btn>
 
       <PickColor></PickColor>
@@ -151,7 +151,7 @@ export default {
 
   .goback-button{
     position: absolute;
-    top: 13%;
+    top: 15.5%;
     left: 4%;
     z-index: 50;
   }

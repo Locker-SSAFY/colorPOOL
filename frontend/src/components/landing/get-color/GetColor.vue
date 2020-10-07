@@ -1,16 +1,19 @@
 <template>
   <div class="get-color wrap" :class="[{active : this.$parent.isGet}, {deactive : this.$parent.isPick}]">
-    <div class="underline"></div>
-    <div class="get-desc">
-      <table>
-        <tr>
-          <td><span><strong>GET</strong></span></td>
-        </tr>
-        <tr>
-          <td><p>Get your color by keyword</p></td>
-        </tr>
-      </table>
+    <div v-if="this.$parent.isLanding && this.$parent.isGet == false && this.$parent.isPick == false">
+      <div class="underline"></div>
+      <div class="get-desc">
+        <table>
+          <tr>
+            <td><span><strong>GET</strong></span></td>
+          </tr>
+          <tr>
+            <td><p>Get your color by keyword</p></td>
+          </tr>
+        </table>
+      </div>
     </div>
+
     <!-- Landing page의 getColor 화면 -->
     <v-card @click="clickGet()"
       class="mx-auto elevation-10"
@@ -40,6 +43,12 @@
       </ul>
     </div>
 
+    <div v-if="keyword==='' && this.$parent.isGet" id="require-text">
+      <p>키워드를 입력하고</p>
+      <p>키워드의 색을 받아보세요</p>
+    </div>
+
+
     <Loading v-if="this.$parent.isGet && loading" class="get-color left"></Loading>
 
 
@@ -49,7 +58,7 @@
     </div>
 
     <!-- 검색창 -->
-    <v-card class="search" v-if="this.$parent.isGet">
+    <v-card style="margin-top: -20%;" class="search" v-if="this.$parent.isGet">
       <div class="search-wrap">
         <div class="search-panel">
           <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
@@ -59,10 +68,6 @@
         </div>
       </div>
     </v-card>
-
-    <div v-if="keyword==='' && this.$parent.isGet" id="require-text">
-      키워드를 입력해주세요
-    </div>
 
     <!-- 배색 추천 받으러 가기 버튼 + 선택 안한 경우 modal -->
     <div class="next-button" v-if="this.$parent.isGet" @click="getTheme">
@@ -243,7 +248,7 @@ export default {
 
   .get-color.wrap .get-desc table tr:nth-child(2) {
     text-align: right;
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .get-color.wrap .get-desc p {
@@ -281,13 +286,15 @@ export default {
     margin-top: 15%;
   }
   
-  #require-text{
+  #require-text {
     position: absolute;
     right: 5%;
     top: 10%;
     width: 40%;
     height: 7%;
-    margin-top: 15%;
+    margin-top: 19%;
+    font-size: 1.1rem;
+    line-height: 0.7;
   }
 
   .get-color.wrap .v-card .search-wrap {
@@ -307,7 +314,7 @@ export default {
   }
 
   .get-color.wrap .v-card .search-wrap .search-panel input {
-    width: 50%;
+    width: 80%;
     height: 100%;
     padding: 1% 1%;
     outline: none;
