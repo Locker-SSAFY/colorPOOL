@@ -195,7 +195,8 @@ export default {
           // 잡지 템플릿 : 초기는 0
           template: 0,
           // 더미 멘트
-          ment: ment,
+          mainText: ment,
+          subText: 'shoes',
           // 더미 질문
           question: question,
           // 더미 대답

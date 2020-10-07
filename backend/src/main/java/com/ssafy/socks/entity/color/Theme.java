@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ssafy.socks.entity.images.ThemeImages;
+import com.ssafy.socks.entity.magazine.Magazine;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,6 +70,9 @@ public class Theme {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SELECTED_COLOR_ID")
 	private SelectedColor selectedColor;
+
+	@OneToMany(mappedBy = "theme")
+	private List<Magazine> magazines;
 
 	@OneToMany(mappedBy = "theme")
 	private List<ThemeImages> crawledImages;

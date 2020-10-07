@@ -7,11 +7,13 @@ const colorStore = {
     selectedColor: null,
     selectedTheme: null,
     themes: [],
+    selectedThemeId: null,
   },
   getters:{
     GE_SELECTED_COLOR: state => state.selectedColor,
     GE_SELECTED_THEME: state => state.selectedTheme,
     GE_THEMES: state => state.themes,
+    GE_SELECTED_THEME_ID: state => state.selectedThemeId,
   },
   mutations: {
     MU_SELECTED_COLOR: (state, payload) => {
@@ -19,10 +21,12 @@ const colorStore = {
     },
     MU_SELECTED_THEME: (state, payload) => {
       state.selectedTheme = payload.selectedTheme
-      console.log('selected theme', state.selectedTheme);
     },
     MU_THEMES : (state, payload) => {
       state.themes = payload
+    },
+    MU_SELECTED_THEME_ID: (state, payload) => {
+      state.selectedThemeId = payload.selectedThemeId
     }
   },
   actions:{
@@ -70,6 +74,9 @@ const colorStore = {
       }) */
       // 정상적인 axios 통신은 추후 확인해 봐야 함
 
+    },
+    AC_SELECTED_THEME_ID: ({commit}, payload) => {
+      commit('MU_SELECTED_THEME_ID', payload);
     }
   }
 }

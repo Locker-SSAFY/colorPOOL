@@ -6,7 +6,7 @@
     <div class=template-a-right>
       <span contenteditable  @blur="changeMent" :style="{'background-color' : 'rgb(' + image.r + ',' + image.g + ',' + image.b + ')'}">{{ment}}</span>
       <br><br>
-      <h3>{{productNames}}</h3>
+      <h3 v-if="productNames.length != 0">{{productNames}}</h3>
       <div class="interview wrap">
         <div>
           <span class="question">{{question}}</span>
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       productNames: null, 
-      ment: this.image.ment,
+      ment: this.image.mainText,
       question: this.image.question,
       answer: this.image.answer,
     }
@@ -63,10 +63,10 @@ export default {
     },
     changeMent(event) {
       if(event.target.innerText.length == 0) {
-        event.target.innerText = this.image.ment;
+        event.target.innerText = this.image.mainText;
       }
       else {
-        this.image.ment = event.target.innerText;
+        this.image.mainText = event.target.innerText;
         this.storeMagazineImageOne();
       }
     },

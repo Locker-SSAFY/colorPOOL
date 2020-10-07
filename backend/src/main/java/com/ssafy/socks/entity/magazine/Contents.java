@@ -39,7 +39,7 @@ public class Contents {
 	@Column(name = "MAIN_TEXT", nullable = false)
 	private String mainText;
 
-	@Column(name = "SUB_TEXT", nullable = false)
+	@Column(name = "SUB_TEXT")
 	private String subText;
 
 	@Column(name = "QUESTION", nullable = false)
