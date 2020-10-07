@@ -13,7 +13,7 @@ public class MagazineModel {
 	private Long ThemeId;
 	private Long SelectedColorId;
 	private String email;
-	private List<Contents> content;
+	private List<ContentsModel> contents;
 	private String magazineName;
 	private String userNickname;
 }

@@ -47,15 +47,15 @@ public class MagazineService {
 		List<Contents> contentsList = new ArrayList<>();
 		Magazine magazine = new Magazine();
 
-		for (int i = 0; i < magazineModel.getContent().size(); i++) {
+		for (int i = 0; i < magazineModel.getContents().size(); i++) {
 			contentsList.add(
 				Contents.builder()
-					.url(magazineModel.getContent().get(i).getUrl())
-					.answer(magazineModel.getContent().get(i).getAnswer())
-					.mainText(magazineModel.getContent().get(i).getMainText())
-					.subText(magazineModel.getContent().get(i).getSubText())
-					.template(magazineModel.getContent().get(i).getTemplate())
-					.question(magazineModel.getContent().get(i).getQuestion())
+					.url(magazineModel.getContents().get(i).getUrl())
+					.answer(magazineModel.getContents().get(i).getAnswer())
+					.mainText(magazineModel.getContents().get(i).getMainText())
+					.subText(magazineModel.getContents().get(i).getSubText())
+					.template(magazineModel.getContents().get(i).getTemplate())
+					.question(magazineModel.getContents().get(i).getQuestion())
 					.magazine(magazine)
 					.build());
 		}
