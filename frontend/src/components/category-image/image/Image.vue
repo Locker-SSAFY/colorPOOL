@@ -2,16 +2,19 @@
   <div class="image-list wrap">
     <div class="image-list-view">
       <div class="image-category-text">
-        <strong>"{{category.toUpperCase()}}"</strong><strong> IMAGES</strong>
+        <p>{{category.toUpperCase()}}</p>
+        <p>Images</p>
       </div>
-      <div class="color-chip-wrap">
-        <!-- <ColorChip class="color-chip-element" v-for="(color, index) in colorList" v-bind:key="index" v-bind:color="color" v-bind:index="index"></ColorChip> -->
+
+      <!-- <ColorChip class="color-chip-element" v-for="(color, index) in colorList" v-bind:key="index" v-bind:color="color" v-bind:index="index"></ColorChip> -->
+      <!-- <div class="color-chip-wrap">
         <ColorChip class="color-chip-element" v-bind:color="colorList[0]" v-bind:index="0"></ColorChip>
         <ColorChip class="color-chip-element" v-bind:color="colorList[1]" v-bind:index="1"></ColorChip>
         <ColorChip class="color-chip-element" v-bind:color="colorList[2]" v-bind:index="2"></ColorChip>
         <ColorChip class="color-chip-element" v-bind:color="colorList[3]" v-bind:index="3"></ColorChip>
         <ColorChip class="color-chip-element" v-bind:color="colorList[4]" v-bind:index="4"></ColorChip>
-      </div>
+      </div> -->
+      
       <carousel-3d class="carousel wrap" style="width: 100%; height: 50%;" :class="{'isSelected' : isSelected}">
         <slide v-for="(img, index) in imageList" :key="index" :index='index' style="width: 300px; height: 300px; border: none; border-radius: 5px;  visibility: visible;" class="color-chip-back" :style="{'background-image' : 'url(' + img.url + ')'}">
           <img :src="img.url" style="z-index: 4; width: 100%; height: 100%; object-fit: contain;" v-on:dblclick="addUrl(img.color, img.url)">
@@ -23,7 +26,7 @@
         text
         @click="goCategory"
       >
-        <v-icon size="100">mdi-arrow-left</v-icon>
+        <v-icon size="75">mdi-arrow-left</v-icon>
       </v-btn>
     </div>
     <div class="image-select-view">
@@ -48,7 +51,7 @@
         text
         @click="goNext"
         >
-          <v-icon size="100">mdi-arrow-right</v-icon>
+          <v-icon size="75">mdi-arrow-right</v-icon>
         </v-btn>
       </div>
     </div>
@@ -56,7 +59,6 @@
 </template> 
 <script>
 import {Carousel3d, Slide} from 'vue-carousel-3d';
-import ColorChip from '../../common/ColorChip'
 import {mapActions} from 'vuex'
 import ments from '../../../assets/ment/mentList.js'
 import questions from '../../../assets/ment/questionList.js'
@@ -65,7 +67,7 @@ const magazineStore = 'magazineStore'
 export default {
   name: 'ImageList',
   components: {
-    Carousel3d, Slide, ColorChip
+    Carousel3d, Slide,
   }, 
   props: {
     category : {
