@@ -80,13 +80,6 @@ public class MagazineService {
 		logger.info("current Date : " + magazine.getCreatedDate());
 		logger.info("----------------- magazine -----------------");
 
-
-		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
-		List<Likes> likesList = likesJpaRepository.findByMagazine(findMagazine);
-		List<Bookmark> bookmarkList = bookmarkRepository.findBookmarkByMagazine(findMagazine);
-		magazine.setLikes(likesList);
-		magazine.setBookmarks(bookmarkList);
-
 		ColorHistory colorHistory = new ColorHistory();
 		colorHistory.setSelectedColor(selectedColorJpaRepository.findById(magazineModel.getSelectedColorId()).orElseThrow(CCommunicationException::new));
 		colorHistory.setUser(user);
@@ -94,6 +87,7 @@ public class MagazineService {
 
 		magazineJpaRepository.save(magazine);
 
+		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
 		logger.info("----------------- magazine2 -----------------");
 		logger.info("user : " + findMagazine.getUser().getEmail());
 		for (Contents contents : findMagazine.getContents()) logger.info(contents.getMainText());
