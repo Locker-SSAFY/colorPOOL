@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ssafy.socks.entity.color.SelectedColor;
+import com.ssafy.socks.entity.color.Theme;
 import com.ssafy.socks.entity.user.User;
 
 import lombok.AllArgsConstructor;
@@ -36,8 +37,8 @@ public class Magazine {
 	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SELECTED_COLOR_ID", nullable = false)
-	private SelectedColor selectedColor;
+	@JoinColumn(name = "THEME_ID", nullable = false)
+	private Theme theme;
 
 	@OneToMany(mappedBy = "magazine")
 	private List<Contents> contents;

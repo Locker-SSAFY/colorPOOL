@@ -1,5 +1,7 @@
 package com.ssafy.socks.controller.color;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.socks.entity.color.Theme;
 import com.ssafy.socks.model.response.ListResult;
+import com.ssafy.socks.model.response.SingleResult;
 import com.ssafy.socks.service.ResponseService;
 import com.ssafy.socks.service.color.ColorService;
 import com.ssafy.socks.service.crawling.CrawlingService;
@@ -45,6 +48,17 @@ public class ColorController {
 	@GetMapping(value = "/images/{themeId}")
 	public ListResult<String> findImages(@PathVariable Long themeId) {
 		return responseService.getListResult(crawlingService.getCategoryImages(themeId));
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "컬러 추천하기", description = "컬러 히스토리에서 불러와서 연관 컬러를 추천한다.")
+	@GetMapping(value = "/recommend/color")
+	public SingleResult<Long> recommendColor() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+		return responseService.getSingleResult(colorService.getRecommend(userEmail));
 	}
 }
 

@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ssafy.socks.entity.images.ThemeImages;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,9 @@ public class SelectedColor {
 
 	@Embedded
 	private Color color;
+
+	@OneToMany(mappedBy = "selectedColor")
+	private List<ColorHistory> colorHistories;
 
 	@OneToMany(mappedBy = "selectedColor")
 	private List<Theme> themes;
