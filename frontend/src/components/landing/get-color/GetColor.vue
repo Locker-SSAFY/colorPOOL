@@ -43,6 +43,12 @@
       </ul>
     </div>
 
+    <div v-if="keyword==='' && this.$parent.isGet" id="require-text">
+      <p>키워드를 입력하고</p>
+      <p>키워드의 색을 받아보세요</p>
+    </div>
+
+
     <Loading v-if="this.$parent.isGet && loading" class="get-color left"></Loading>
 
 
@@ -280,13 +286,15 @@ export default {
     margin-top: 15%;
   }
   
-  #require-text{
+  #require-text {
     position: absolute;
     right: 5%;
     top: 10%;
     width: 40%;
     height: 7%;
-    margin-top: 15%;
+    margin-top: 19%;
+    font-size: 1.1rem;
+    line-height: 0.7;
   }
 
   .get-color.wrap .v-card .search-wrap {

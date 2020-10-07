@@ -244,22 +244,10 @@ export default {
     right: 20%;
     bottom: 15%;
     transform: rotate(-15deg)
-    /* top: 85%; */
   }
   .button-desc p {
-    font-family: ReenieBeanie-Regular;
+    font-family: 'ReenieBeanie-Regular';
     line-height: 0.7;
   }
-
-
-
-  /* .next-button p {
-    position: relative;
-    font-family: 'ReenieBeanie-Regular';
-    font-weight: 600;
-    font-size: 1.1rem;
-    text-align: left;
-    line-height: 0.7;
-  } */
 
 </style>
