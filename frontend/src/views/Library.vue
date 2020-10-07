@@ -1,5 +1,8 @@
 <template>
   <div class="library-container wrap">
+    <div style="position: absolute; top: 23%; left: 25%; z-index: 1;">
+      <v-icon size="50" :color="magazine.color">mdi-chess-queen</v-icon>
+    </div>
     <div class="library-left">
       <v-btn
         id="back-btn"
@@ -7,8 +10,9 @@
         @click="isShow = false"
         icon 
         text>
-        <v-icon size="100" :color="magazine.color">mdi-arrow-left</v-icon>
+        <v-icon size="65" :color="magazine.color">mdi-arrow-left</v-icon>
       </v-btn>
+      <div class="hand-drawing"></div>
       <MagazineDetailCover v-if="isShow" v-bind:magazine="magazine"></MagazineDetailCover>
       <v-hover v-if="!isShow" v-slot:default="{ hover }">
       <v-carousel
@@ -211,5 +215,14 @@ export default {
     display: inline;
   }
 
+  .hand-drawing {
+    position: absolute;
+    background: url(https://cdn2.bustle.com/nylon/2020/squiggle-line-febb0bf100.svg) no-repeat;
+    top: 12%;
+    left: 10%;
+    height: 25%;
+    width: 35%;
+    z-index: 10;
+  }
 
 </style>
