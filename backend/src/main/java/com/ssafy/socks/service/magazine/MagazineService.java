@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.socks.advice.exception.CCommunicationException;
 import com.ssafy.socks.advice.exception.CUserNotFoundException;
 import com.ssafy.socks.entity.color.ColorHistory;
+import com.ssafy.socks.entity.magazine.Bookmark;
 import com.ssafy.socks.entity.magazine.Contents;
 import com.ssafy.socks.entity.magazine.Likes;
 import com.ssafy.socks.entity.magazine.Magazine;
@@ -48,8 +49,6 @@ public class MagazineService {
 		Logger logger = LoggerFactory.getLogger(this.getClass());
 
 		List<Contents> contentsList = new ArrayList<>();
-		Magazine magazine = new Magazine();
-
 		for (int i = 0; i < magazineModel.getContents().size(); i++) {
 			Contents contents = Contents.builder()
 				.url(magazineModel.getContents().get(i).getUrl())
@@ -65,7 +64,7 @@ public class MagazineService {
 		LocalDateTime currDate = LocalDateTime.now();
 		User user = userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new);
 
-		magazine = Magazine.builder()
+		Magazine magazine = Magazine.builder()
 			.user(user)
 			.contents(contentsList)
 			.magazineName(magazineModel.getMagazineName())
@@ -85,6 +84,13 @@ public class MagazineService {
 		likes.setMagazine(magazine);
 		likes.setUser(user);
 		likesJpaRepository.save(likes);
+
+		Bookmark bookmark = new Bookmark();
+		bookmark.setMagazineBookmark(magazine);
+		bookmark.setUser(user);
+
+		magazine.setLikes(likesJpaRepository.findAllByMagazine(magazine));
+		magazine.setBookmarks(bookmarkRepository.findBookmarkByMagazine(magazine));
 
 		ColorHistory colorHistory = new ColorHistory();
 		colorHistory.setSelectedColor(selectedColorJpaRepository.findById(magazineModel.getSelectedColorId()).orElseThrow(CCommunicationException::new));

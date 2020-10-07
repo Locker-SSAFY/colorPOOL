@@ -26,4 +26,10 @@ public class BookmarkRepository {
 			.setParameter("bookmarks", bookmarks)
 			.getResultList();
 	}
+
+	public List<Bookmark> findBookmarkByMagazine(Magazine magazine) {
+		return em.createQuery("select b from Bookmark b where b.magazineBookmark = :magazine", Bookmark.class)
+			.setParameter("magazine",magazine)
+			.getResultList();
+	}
 }
