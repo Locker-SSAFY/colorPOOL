@@ -184,6 +184,7 @@ public class MagazineService {
 	}
 
 	public void saveContents(MagazineModel magazineModel) {
+
 		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
 		logger.info("----------------- magazine2 -----------------");
 		logger.info("user : " + findMagazine.getUser().getEmail());

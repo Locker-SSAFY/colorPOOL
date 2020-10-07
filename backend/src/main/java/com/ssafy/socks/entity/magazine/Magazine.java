@@ -3,6 +3,7 @@ package com.ssafy.socks.entity.magazine;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +46,7 @@ public class Magazine {
 	@Column(name = "MAGAZINE_NAME", nullable = false)
 	private String magazineName;
 
-	@OneToMany(mappedBy = "magazine")
+	@OneToMany(mappedBy = "magazine", cascade={CascadeType.ALL})
 	private List<Contents> contents;
 
 	@OneToMany(mappedBy = "magazine")
