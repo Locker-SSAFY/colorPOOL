@@ -180,17 +180,17 @@ public class MagazineService {
 
 		LikesModel likesModel = new LikesModel();
 		if(likesOptional.isPresent()) {
+			likesJpaRepository.deleteByUserIdAndMagazineId(user.getId(), magazineId);
+			likesModel.setMagazineId(magazineId);
+			likesModel.setUserId(user.getId());
+			likesModel.setClicked(false);
+		} else {
 			likesJpaRepository.save(
 				Likes.builder()
 					.magazineId(magazineId)
 					.userId(user.getId())
 					.build()
 			);
-			likesModel.setMagazineId(magazineId);
-			likesModel.setUserId(user.getId());
-			likesModel.setClicked(false);
-		} else {
-			likesJpaRepository.deleteByUserIdAndMagazineId(user.getId(), magazineId);
 			likesModel.setMagazineId(magazineId);
 			likesModel.setUserId(user.getId());
 			likesModel.setClicked(true);
