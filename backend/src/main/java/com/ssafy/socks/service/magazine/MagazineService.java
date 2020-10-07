@@ -21,6 +21,7 @@ import com.ssafy.socks.model.magazine.MagazineModel;
 import com.ssafy.socks.repository.color.ColorHistoryJpaRepository;
 import com.ssafy.socks.repository.color.SelectedColorJpaRepository;
 import com.ssafy.socks.repository.magazine.BookmarkRepository;
+import com.ssafy.socks.repository.magazine.ContentsJpaRepository;
 import com.ssafy.socks.repository.magazine.LikesJpaRepository;
 import com.ssafy.socks.repository.magazine.MagazineJpaRepository;
 import com.ssafy.socks.repository.magazine.MagazineRepository;
@@ -40,42 +41,33 @@ public class MagazineService {
 	private final ThemeJpaRepository themeJpaRepository;
 	private final ColorHistoryJpaRepository colorHistoryJpaRepository;
 	private final SelectedColorJpaRepository selectedColorJpaRepository;
+	private final ContentsJpaRepository contentsJpaRepository;
 
 	public void saveMagazine(MagazineModel magazineModel) {
 		Logger logger = LoggerFactory.getLogger(this.getClass());
-
-		logger.info("----------------- getModel -----------------");
-		logger.info("selected id : " + magazineModel.getSelectedColorId());
-		logger.info("theme id : " + magazineModel.getThemeId());
-		logger.info("----------------- getModel -----------------");
 
 		List<Contents> contentsList = new ArrayList<>();
 		Magazine magazine = new Magazine();
 
 		for (int i = 0; i < magazineModel.getContents().size(); i++) {
-			contentsList.add(
-				Contents.builder()
-					.url(magazineModel.getContents().get(i).getUrl())
-					.answer(magazineModel.getContents().get(i).getAnswer())
-					.mainText(magazineModel.getContents().get(i).getMainText())
-					.subText(magazineModel.getContents().get(i).getSubText())
-					.template(magazineModel.getContents().get(i).getTemplate())
-					.question(magazineModel.getContents().get(i).getQuestion())
-					.magazine(magazine)
-					.build());
+			Contents contents = Contents.builder()
+				.url(magazineModel.getContents().get(i).getUrl())
+				.answer(magazineModel.getContents().get(i).getAnswer())
+				.mainText(magazineModel.getContents().get(i).getMainText())
+				.subText(magazineModel.getContents().get(i).getSubText())
+				.template(magazineModel.getContents().get(i).getTemplate())
+				.question(magazineModel.getContents().get(i).getQuestion())
+				.magazine(magazine)
+				.build();
+			contentsList.add(contents);
+			contentsJpaRepository.save(contents);
 		}
-
-		logger.info("----------------- contents -----------------");
-		for (Contents contents : contentsList) {
-			logger.info(contents.getMainText());
-		}
-		logger.info("----------------- contents -----------------");
 
 		LocalDateTime currDate = LocalDateTime.now();
-
+		User user = userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new);
 
 		magazine = Magazine.builder()
-			.user(userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new))
+			.user(user)
 			.contents(contentsList)
 			.themeId(magazineModel.getThemeId())
 			.createdDate(currDate)
@@ -83,10 +75,15 @@ public class MagazineService {
 
 		logger.info("----------------- magazine -----------------");
 		logger.info("user : " + magazine.getUser().getEmail());
-		logger.info("contents : " + magazine.getContents().get(0).getMainText());
+		for (Contents contents : contentsList) logger.info(contents.getMainText());
 		logger.info("themeId : " + magazine.getThemeId());
 		logger.info("current Date : " + magazine.getCreatedDate());
 		logger.info("----------------- magazine -----------------");
+
+		Likes likes = new Likes();
+		likes.setMagazine(magazine);
+		likes.setUser(user);
+		likesJpaRepository.save(likes);
 
 		ColorHistory colorHistory = new ColorHistory();
 		colorHistory.setSelectedColor(selectedColorJpaRepository.findById(magazineModel.getSelectedColorId()).orElseThrow(CCommunicationException::new));
