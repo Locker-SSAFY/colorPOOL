@@ -1,5 +1,11 @@
 <template>
   <div class="library-container wrap">
+    <div style="position: absolute; top: 23%; left: 25%; z-index: 1;">
+      <v-icon size="50" :color="magazine.color">mdi-chess-queen</v-icon>
+    </div>
+    <div class="title-tape">
+      <p>Library</p>
+    </div>    
     <div class="library-left">
       <v-btn
         id="back-btn"
@@ -7,8 +13,13 @@
         @click="isShow = false"
         icon 
         text>
-        <v-icon size="100" :color="magazine.color">mdi-arrow-left</v-icon>
+        <v-icon size="65" :color="magazine.color">mdi-arrow-left</v-icon>
       </v-btn>
+      <div class="hand-drawing"></div>
+      <div class="library-desc">
+        <p>Meet the popular magazines</p>
+        <p>in colorPOOL</p>
+      </div>      
       <MagazineDetailCover v-if="isShow" v-bind:magazine="magazine"></MagazineDetailCover>
       <v-hover v-if="!isShow" v-slot:default="{ hover }">
       <v-carousel
@@ -211,5 +222,63 @@ export default {
     display: inline;
   }
 
+  .hand-drawing {
+    position: absolute;
+    background: url(https://cdn2.bustle.com/nylon/2020/squiggle-line-febb0bf100.svg) no-repeat;
+    top: 12%;
+    left: 10%;
+    height: 25%;
+    width: 35%;
+    z-index: 10;
+  }
 
+  .library-desc {
+    position: absolute;
+    font-size: 2.3rem;
+    text-align: left;
+    left: 20%;
+    bottom: 15%;
+    transform: rotate(-15deg);
+    z-index: 1;
+  }
+  
+  .library-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
+  }
+  
+  .vertical-title {
+    position: absolute;
+    font-size: 3rem;
+    font-weight: 600;
+    left: 15%;
+    font-family: 'PermanentMarker-Regular';
+    margin: 0;
+  }  
+
+  .title-tape {
+    position: absolute;
+    font-size: 3rem;
+    font-weight: 600;
+    left: 13%;
+    width: 15%;
+    height: 60px;
+    background-color: #424242;
+    padding: 1% 5% 0% 7%;
+    margin-top: 30px;
+
+    mask-image: url(https://cdn2.bustle.com/nylon/2020/tape_b-80d71c228a.svg);
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    background-image: url(https://imgix.bustle.com/uploads/image/2020/3/10/428e5a38-91a6-4f27-8187-e0c507694930-tape_poster.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: difference;
+  }
+  
+  .title-tape p {
+    font-family: 'PermanentMarker-Regular';
+    font-size: 2.1rem;
+    color: white;
+  }
 </style>
