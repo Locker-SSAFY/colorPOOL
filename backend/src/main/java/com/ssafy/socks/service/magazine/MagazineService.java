@@ -136,8 +136,7 @@ public class MagazineService {
 	 * 인기도 순으로 잡지 조회
 	 * @return
 	 */
-	public List<MagazineModel> getMagazines(String userEmail) {
-		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CCommunicationException::new);
+	public List<MagazineModel> getMagazines() {
 		List<Magazine> magazineList = magazineRepository.findMagazineOrderByLikes();
 		List<MagazineModel> magazineModels = new ArrayList<>();
 
@@ -157,6 +156,8 @@ public class MagazineService {
 
 				contentsModelList.add(contentsModel);
 			}
+
+			User user = userJpaRepository.findById(magazine.getUserId()).orElseThrow(CUserNotFoundException::new);
 
 			MagazineModel magazineModel = MagazineModel.builder()
 				.email(user.getEmail())
@@ -180,10 +181,10 @@ public class MagazineService {
 
 	public LikesModel setLikes(Long magazineId, String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
-		Likes likes = likeRepository.findChecked(magazineId,user.getId());
+		Optional<Likes> likesOptional = likesJpaRepository.findByUserIdAndMagazineId(user.getId(),magazineId);
 
 		LikesModel likesModel = new LikesModel();
-		if(likes != null && likes.isChecked()) {
+		if(likesOptional.isPresent()) {
 			likeRepository.updateUnChecked(magazineId,user.getId());
 			likesModel.setMagazineId(magazineId);
 			likesModel.setUserId(user.getId());

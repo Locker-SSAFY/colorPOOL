@@ -20,9 +20,10 @@ public class MagazineRepository {
 	public List<Magazine> findMagazineOrderByLikes() {
 		return em.createQuery("select m "
 			+ "from Magazine m "
-			+ "join Likes l on m.id = l.magazineId "
+			+ "left outer join Likes l "
+			+ "on m.id = l.magazineId "
 			+ "group by m.id "
-			+ "order by m.id", Magazine.class)
+			+ "order by count(l.magazineId)", Magazine.class)
 			.getResultList();
 	}
 }

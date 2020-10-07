@@ -32,7 +32,4 @@ public class Likes {
 
 	@Column(name = "USER_ID", nullable = false)
 	private Long userId;
-
-	@Column(name = "IS_CHECKED", nullable = false)
-	private boolean isChecked;
 }

@@ -91,7 +91,7 @@ public class MagazineController {
 	public ListResult<MagazineModel> getAllMagazinesByLikes() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
-		return responseService.getListResult(magazineService.getMagazines(userEmail));
+		return responseService.getListResult(magazineService.getMagazines());
 	}
 
 	@Parameters({
