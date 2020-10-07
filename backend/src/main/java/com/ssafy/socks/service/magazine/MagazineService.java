@@ -54,7 +54,7 @@ public class MagazineService {
 		User user = userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new);
 
 		Magazine magazine = Magazine.builder()
-			.user(user)
+			.userId(user.getId())
 			.magazineName(magazineModel.getMagazineName())
 			.themeId(magazineModel.getThemeId())
 			.selectedId(magazineModel.getSelectedColorId())
