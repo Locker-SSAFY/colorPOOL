@@ -80,8 +80,10 @@ public class MagazineService {
 		logger.info("current Date : " + magazine.getCreatedDate());
 		logger.info("----------------- magazine -----------------");
 
-		List<Likes> likesList = likesJpaRepository.findByMagazine(magazine);
-		List<Bookmark> bookmarkList = bookmarkRepository.findBookmarkByMagazine(magazine);
+
+		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
+		List<Likes> likesList = likesJpaRepository.findByMagazine(findMagazine);
+		List<Bookmark> bookmarkList = bookmarkRepository.findBookmarkByMagazine(findMagazine);
 		magazine.setLikes(likesList);
 		magazine.setBookmarks(bookmarkList);
 
@@ -92,17 +94,15 @@ public class MagazineService {
 
 		magazineJpaRepository.save(magazine);
 
-		magazine = magazineJpaRepository.findFirstByUser(user).orElseThrow(CCommunicationException::new);
-
 		logger.info("----------------- magazine2 -----------------");
-		logger.info("user : " + magazine.getUser().getEmail());
-		for (Contents contents : contentsList) logger.info(contents.getMainText());
-		logger.info("themeId : " + magazine.getThemeId());
-		logger.info("current Date : " + magazine.getCreatedDate());
+		logger.info("user : " + findMagazine.getUser().getEmail());
+		for (Contents contents : findMagazine.getContents()) logger.info(contents.getMainText());
+		logger.info("themeId : " + findMagazine.getThemeId());
+		logger.info("current Date : " + findMagazine.getCreatedDate());
 		logger.info("----------------- magazine2 -----------------");
 
 		for (Contents contents : contentsList) {
-			contents.setMagazine(magazine);
+			contents.setMagazine(findMagazine);
 			contentsJpaRepository.save(contents);
 		}
 	}
