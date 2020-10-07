@@ -86,9 +86,8 @@ public class MagazineService {
 			contentsList.add(contents);
 		}
 
-		Magazine findMagazine = magazineJpaRepository.findByMagazineName(magazineModel.getMagazineName()).orElseThrow(CCommunicationException::new);
 		for (Contents contents : contentsList) {
-			contents.setMagazineId(findMagazine.getId());
+			contents.setMagazineId(magazine.getId());
 			contentsJpaRepository.save(contents);
 		}
 	}
