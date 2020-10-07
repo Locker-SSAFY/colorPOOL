@@ -5,8 +5,9 @@
       <div class="landing-logo" v-if="isLanding">
         <img class="logo_img" src="../assets/images/logo/logo_img.png">
         <img class="logo_txt" src="../assets/images/logo/logo_text.png">
+        <p class="landing-desc">Create the perfect palette with</p>
       </div>
-
+      
       <!-- 이전으로 돌아가기 버튼 -->
       <v-btn
         class="goback-button"
@@ -82,6 +83,11 @@ export default {
 </script>
 
 <style scoped>
+  @font-face {
+    font-family: 'PermanentMarker-Regular';
+    src: url('../assets/font/PermanentMarker-Regular.ttf');
+  }
+
   .landing.wrap {
     width: 100%;
     height: 100%;
@@ -95,7 +101,7 @@ export default {
 
   .landing.wrap .top-page .background {
     width: 100%;
-    height: 75%;
+    height: 77%;
     position: absolute;
     background-color: #eee;
     background-image: url("../assets/images/layer.png");
@@ -103,23 +109,36 @@ export default {
   }
 
   .landing.wrap .top-page .landing-logo {
-    display: flex;
+    display: block;
+    text-align: center;
     position: absolute;
     margin: 0 auto;
     top: 7rem;
     width: 100%;
-    justify-content: center;
+    /* line-height: 0.5rem; */
   }
 
   .landing.wrap .top-page .landing-logo .logo_img {
     width: 4.5rem;
     height: 4.5rem;
+    margin-bottom: 1rem;
   }
 
   .landing.wrap .top-page .landing-logo .logo_txt {
     margin-left: 1rem;
     height: 5.5rem;
   }
+
+  .landing.wrap .top-page .landing-logo .landing-desc {
+    font-family: 'PermanentMarker-Regular';
+    font-size: 1.7rem;
+  }
+
+  /* .landing.wrap .top-page .landing-desc {
+    font-family: PermanentMarker-Regular;
+    font-size: 1.7rem;
+    position:relative;
+  } */
 
   .landing.wrap .top-page .back-arrow {
     position: absolute;
