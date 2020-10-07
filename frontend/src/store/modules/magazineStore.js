@@ -80,13 +80,12 @@ const magazineStore = {
       console.log(contents);
       const data = {
         // 'id': userInfo.id + "",
-        'id': null,
         'email': userInfo.email,
         'userNickname': userInfo.userNickname,
         // 'createdDate': payload.date,
-        'createdDate': "2020-10-06T08:55:02.396Z",
         'magazineName': payload.magazineName,
         'colorId': payload.selectedColor,
+        'themeId': payload.themeId,
         // 'contents' : state.magazineImages
         'content': contents
       }
@@ -94,13 +93,13 @@ const magazineStore = {
       console.log(url);
       console.log(header);
       console.log('data', data);
-      axios.post(url, data, {headers: header})
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      // axios.post(url, data, {headers: header})
+      // .then((res) => {
+      //   console.log(res);
+      // })
+      // .catch((err) => {
+      //   console.log(err)
+      // })
     }
   }
 }
