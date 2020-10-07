@@ -1,11 +1,18 @@
 <template>
   <div class="category wrap">
     
-    <div class="category-description">
-      <strong>PRODUCT</strong><br>
-      <strong>IN YOUR</strong><br>
-      <strong>COLOR</strong>
+    <div class="category-title">
+      <p>PRODUCT</p>
+      <p>IN YOUR</p>
+      <p>COLOR</p>
     </div>
+    <div class="category-desc">
+      <p>Get an image with</p>
+      <p>the color scheme</p>
+      <p>you choose</p>
+    </div>
+    
+    <div class="hand-drawing"></div>
     <div class="category-list">
       <table>
         <tr>
@@ -18,7 +25,7 @@
               text
               @click="pickLiving"
             >
-              <v-icon size="100">mdi-arrow-right</v-icon>
+              <v-icon size="75">mdi-arrow-right</v-icon>
             </v-btn>
           </td>
           <td>
@@ -30,7 +37,7 @@
               text
               @click="pickAccesory"
             >
-              <v-icon size="100">mdi-arrow-right</v-icon>
+              <v-icon size="75">mdi-arrow-right</v-icon>
             </v-btn>
           </td>
         </tr>
@@ -44,7 +51,7 @@
               text
               @click="pickFashion"
             >
-              <v-icon size="100">mdi-arrow-right</v-icon>
+              <v-icon size="75">mdi-arrow-right</v-icon>
             </v-btn>
           </td>
           <td>
@@ -56,7 +63,7 @@
               text
               @click="pickMovie"
             >
-              <v-icon size="100">mdi-arrow-right</v-icon>
+              <v-icon size="75">mdi-arrow-right</v-icon>
             </v-btn>
           </td>
         </tr>
@@ -112,18 +119,37 @@ export default {
     padding-left: 20px;
   }
 
-  .category.wrap .category-description {
-    float: left;
-    height: 100%;
-    width: 30%;
-    padding: 10px 100px;
-    font-size: 45px;
+  .category.wrap .category-desc {
+    position: absolute;
+    font-size: 2.3rem;
+    text-align: left;
+    left: 20%;
+    bottom: 15%;
+    transform: rotate(-15deg);
+    z-index: 1;
+  }
+
+  .category.wrap .category-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
+  }
+
+  .category.wrap .category-title {
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+
+  .category.wrap .category-title p {
+    font-family: 'PermanentMarker-Regular';
+    font-size: 3.5rem;
+    line-height: 0.9;
+    /* color: white; */
   }
 
   .category.wrap .category-list {
     float: right;
     position: absolute;
-    padding-top: 50px;
+    padding-top: 110px;
     top: 0;
     right: 0;
     height: 100%;
@@ -157,5 +183,14 @@ export default {
     position: absolute;
     margin-top : 200px;
     margin-left : -60px;
+  }
+
+  .hand-drawing {
+    position: absolute;
+    background: url(https://cdn2.bustle.com/nylon/2020/related-6439ff09ad.svg) no-repeat;
+    top: 35%;
+    left: 6%;
+    height: 13%;
+    width: 50%;
   }
 </style>
