@@ -176,14 +176,13 @@ public class MagazineService {
 
 	public LikesModel setLikes(Long magazineId, String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
-		Magazine magazine = magazineJpaRepository.findById(magazineId).orElseThrow(CCommunicationException::new);
-		Optional<Likes> likesOptional = likesJpaRepository.findByUserIdAAndMagazineId(user.getId(),magazine.getId());
-		
+		Optional<Likes> likesOptional = likesJpaRepository.findByUserIdAAndMagazineId(user.getId(),magazineId);
+
 		LikesModel likesModel = new LikesModel();
 		if(likesOptional.isPresent()) {
 			likesJpaRepository.save(
 				Likes.builder()
-					.magazineId(magazine.getId())
+					.magazineId(magazineId)
 					.userId(user.getId())
 					.build()
 			);
@@ -191,7 +190,7 @@ public class MagazineService {
 			likesModel.setUserId(user.getId());
 			likesModel.setClicked(false);
 		} else {
-			likesJpaRepository.deleteByUserIdAndMagazineId(user.getId(), magazine.getId());
+			likesJpaRepository.deleteByUserIdAndMagazineId(user.getId(), magazineId);
 			likesModel.setMagazineId(magazineId);
 			likesModel.setUserId(user.getId());
 			likesModel.setClicked(true);

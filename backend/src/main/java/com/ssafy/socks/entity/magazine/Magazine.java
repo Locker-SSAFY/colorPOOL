@@ -36,9 +36,8 @@ public class Magazine {
 	@Column(name = "SELECTED_COLOR_ID", nullable = false)
 	private Long selectedId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID", nullable = false)
-	private User user;
+	@Column(name = "USER_ID", nullable = false)
+	private Long userId;
 
 	@Column(name = "MAGAZINE_NAME", nullable = false)
 	private String magazineName;
