@@ -1,7 +1,8 @@
 <template>
   <div class="header wrap" :class="scrolled? 'scroll' : 'unscroll'">
     <v-row class="mx-16">
-      <v-col class="header-logo" v-if="!isLanding">
+      <v-col cols="3"></v-col>
+      <v-col cols="2" class="header-logo" v-if="isGet || isPick">
         <v-btn
           icon
           text
@@ -9,28 +10,28 @@
           color="black"
           @click="goHome"
         >
-          <img class="logo_img" src="../../assets/images/logo/logo_img.png">
+          <!-- <img class="logo_img" src="../../assets/images/logo/logo_img.png"> -->
           <img class="logo_txt" src="../../assets/images/logo/logo_text.png">
         </v-btn>
       </v-col>
 
-      <v-col class="header-signin" v-if="userInfo == null && !isLogin">
+      <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
         <Signin></Signin>
       </v-col>
       <!-- <v-col style="text-align: center;" class="mt-2" v-if="isLogin">
       </v-col> -->
 
-      <v-col class="header-library" v-if="isLogin">
+      <v-col cols="2" class="header-library" v-if="isLogin">
         <v-btn icon text @click="goLibrary">
           LIBRARY
         </v-btn>
       </v-col>
-      <v-col class="header-mypage" v-if="isLogin" @click="goMyPage">
+      <v-col cols="2" class="header-mypage" v-if="isLogin" @click="goMyPage">
         <v-btn icon text>
           MYPAGE
         </v-btn>
       </v-col>
-      <v-col class="header-logout" v-if="isLogin">
+      <v-col cols="2" class="header-logout" v-if="isLogin">
         <v-btn icon text @click="logout">
           LOGOUT
         </v-btn>
@@ -68,13 +69,15 @@ export default {
       userInfo: null,
       isLogin: false,
       isLanding: false,
+      isPick: null,
+      isGet: null,
     }
   },
   watch: {
-    isGet(val){
+    storeIsGet(val){
       this.isGet = val;
     }, 
-    isPick(val){
+    storeIsPick(val){
       this.isPick = val;
     },
     storeUserInfo(val){
@@ -148,8 +151,8 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
-    /* padding: 0 1.5%; */
+    height: 70px;
+    padding: 0 1.5%;
     transition-duration: 300ms;
     z-index: 90;
     background-color: rgb(255, 255, 255, 0.8);
@@ -180,12 +183,13 @@ export default {
   }
 
   .header.wrap .header-logo .v-btn .logo_img {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   .header.wrap .header-logo .v-btn .logo_txt {
-    margin-left: 1rem;
+    /* margin: 0 auto; */
+    margin-top: 1rem;
     height: 2.5rem;
   }
 
@@ -228,15 +232,5 @@ export default {
   .header.wrap .header-logout .v-btn{
     font-size: 1.1rem;
   }
-
-  /* .header.wrap .header-menu {
-    text-align: right;
-    margin-top: 0.5rem;
-  }
-
-  .header.wrap .header-menu .v-btn {
-    font-size: 1.3rem;
-    font-weight: bold;
-  } */
 
 </style>

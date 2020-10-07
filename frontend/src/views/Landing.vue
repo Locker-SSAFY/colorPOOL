@@ -2,7 +2,7 @@
   <div class="landing wrap">
     <div class="top-page">
       <div class="background"></div>
-      <div class="landing-logo" v-if="isLanding">
+      <div class="landing-logo" v-if="isLanding && isGet == false && isPick == false">
         <img class="logo_img" src="../assets/images/logo/logo_img.png">
         <img class="logo_txt" src="../assets/images/logo/logo_text.png">
         <p class="landing-desc">Create the perfect palette with</p>

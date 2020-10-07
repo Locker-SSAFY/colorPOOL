@@ -1,16 +1,19 @@
 <template>
   <div class="get-color wrap" :class="[{active : this.$parent.isGet}, {deactive : this.$parent.isPick}]">
-    <div class="underline"></div>
-    <div class="get-desc">
-      <table>
-        <tr>
-          <td><span><strong>GET</strong></span></td>
-        </tr>
-        <tr>
-          <td><p>Get your color by keyword</p></td>
-        </tr>
-      </table>
+    <div v-if="this.$parent.isLanding && this.$parent.isGet == false && this.$parent.isPick == false">
+      <div class="underline"></div>
+      <div class="get-desc">
+        <table>
+          <tr>
+            <td><span><strong>GET</strong></span></td>
+          </tr>
+          <tr>
+            <td><p>Get your color by keyword</p></td>
+          </tr>
+        </table>
+      </div>
     </div>
+
     <!-- Landing page의 getColor 화면 -->
     <v-card @click="clickGet()"
       class="mx-auto elevation-10"
@@ -243,7 +246,7 @@ export default {
 
   .get-color.wrap .get-desc table tr:nth-child(2) {
     text-align: right;
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .get-color.wrap .get-desc p {

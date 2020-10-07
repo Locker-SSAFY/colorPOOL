@@ -1,16 +1,19 @@
 <template>
   <div class="pick-color wrap" :class="[{active : this.$parent.isPick},{deactive : this.$parent.isGet}]">
-    <div class="underline"></div>
-    <div class="pick-desc">
-      <table>
-        <tr>
-          <td><span><strong>PICK</strong></span></td>
-        </tr>
-        <tr>
-          <td><p>Pick your color from colorPOOL</p></td>
-        </tr>
-      </table>
+    <div v-if="this.$parent.isLanding && this.$parent.isGet == false && this.$parent.isPick == false">
+      <div class="underline"></div>
+      <div class="pick-desc">
+        <table>
+          <tr>
+            <td><span><strong>PICK</strong></span></td>
+          </tr>
+          <tr>
+            <td><p>Pick your color from colorPOOL</p></td>
+          </tr>
+        </table>
+      </div>
     </div>
+
     <!-- Landing page의 pickColor 화면 -->
     <v-card @click="clickPick()"
       class="mx-auto elevation-10"
@@ -165,7 +168,7 @@ export default {
 
   .pick-color.wrap .pick-desc table tr:nth-child(2) {
     text-align: right;
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .pick-color.wrap .pick-desc p {
