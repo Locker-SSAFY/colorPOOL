@@ -14,7 +14,7 @@
           <img class="logo_txt" src="../../assets/images/logo/logo_text.png">
         </v-btn>
       </v-col>
-      <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
+      <v-col cols="5" class="header-signin" v-if="!isLogin">
         <Signin></Signin>
       </v-col>
       <!-- <v-col style="text-align: center;" class="mt-2" v-if="isLogin">
