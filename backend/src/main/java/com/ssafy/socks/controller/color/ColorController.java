@@ -55,7 +55,7 @@ public class ColorController {
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
 	@Operation(summary = "테마에 대한 5가지 색상", description = "테마에 대한 5가지 색상 불러오기.")
-	@GetMapping(value = "/images/{themeId}")
+	@GetMapping(value = "/colors/{themeId}")
 	public SingleResult<Theme> getColors(@PathVariable Long themeId) {
 		return responseService.getSingleResult(colorService.getColors(themeId));
 	}
