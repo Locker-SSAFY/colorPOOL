@@ -15,6 +15,7 @@
   </div>
   <div class="my-magazine" @click="show('my')" @mouseover="hover('my')" @mouseout="out('my')" :style="{'width' : myWidth+'%'}">
     <div class="my-index">
+      <span class="my-index-title">View my magazines</span>
       <div class="content-area" v-if="isMyMagazine">
           <ul v-for="(list, idx) in myMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
@@ -27,6 +28,7 @@
   </div>
   <div class="scrap-magazine" @click="show('scrap')" @mouseover="hover('scrap')" @mouseout="out('scrap')" :style="{'width' : scrapWidth+'%'}">
       <div class="scrap-index">
+        <span class="scrap-index-title">View my liked magazines</span>
         <div class="content-area" v-if="isScrap">
           <ul v-for="(list, idx) in scrapMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
@@ -39,6 +41,7 @@
   </div>
   <div class="recent-magazine" @click="show('recent')" @mouseover="hover('recent')" @mouseout="out('recent')" :style="{'width' : recentWidth+'%'}">
     <div class="recent-index">
+      <span class="recent-index-title">View my bookmarked magazines</span>
       <div class="content-area" v-if="isRecent">
           <ul v-for="(list, idx) in recentMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
@@ -220,8 +223,6 @@ export default {
     text-align: center;
   } */
 
-
-
   #close-btn{
     float: right;
     margin-right: 8px;
@@ -259,45 +260,92 @@ export default {
     margin: auto auto;
     position: relative;
   }
+
   .content-area ul li{
     list-style-type: none;
     display: inline;
   }
+
   .index-title{
     height: 100%;
     width: 100%;
     margin-left: 94%;
     /* background-color: red; */
   }
+
   .index-title h1{
     transform: rotate(90deg);
     transform-origin: left top;
     margin-top: 50px;
   }
+
   .my-index{
+    position: relative;
     background-color: navy;
     transition: 0.5s;
     height: 100%;
     width: 100%;
   }
+
+  .my-index .my-index-title {
+    position: absolute;
+    top: 3%;
+    left: 100%;
+    margin-top: 100px;
+    white-space: nowrap;
+    font-family: 'PermanentMarker-Regular';
+    font-size: 2.3rem;
+    transform: rotate( 90deg );
+    transform-origin: left top;
+  }
+
   .scrap-magazine{
     height: 100%;
     transition: 0.5s;
   }
+
   .scrap-index{
+    position: relative;
     background-color:palegoldenrod;
     transition: 0.5s;
     height: 100%;
     width: 100%;
   }
-  .recent-magazine{
+
+  .scrap-index .scrap-index-title {
+    position: absolute;
+    top: 3%;
+    left: 100%;
+    margin-top: 100px;
+    white-space: nowrap;
+    font-family: 'PermanentMarker-Regular';
+    font-size: 2.3rem;
+    transform: rotate( 90deg );
+    transform-origin: left top;
+  }
+
+  .recent-magazine {
     height: 100%;
     transition: 0.5s;
   }
-  .recent-index{
+  
+  .recent-index {
+    position: relative;
     background-color:rosybrown;
     transition: 0.5s;
     height: 100%;
     width: 100%;
+  }
+
+  .recent-index .recent-index-title {
+    position: absolute;
+    top: 3%;
+    left: 100%;
+    margin-top: 100px;
+    white-space: nowrap;
+    font-family: 'PermanentMarker-Regular';
+    font-size: 2.3rem;
+    transform: rotate( 90deg );
+    transform-origin: left top;
   }
 </style>
