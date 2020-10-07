@@ -72,9 +72,6 @@ public class Theme {
 	private SelectedColor selectedColor;
 
 	@OneToMany(mappedBy = "theme")
-	private List<Magazine> magazines;
-
-	@OneToMany(mappedBy = "theme")
 	private List<ThemeImages> crawledImages;
 
 	/* 연관관계 편의 메서드 */

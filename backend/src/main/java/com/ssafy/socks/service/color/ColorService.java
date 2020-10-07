@@ -34,8 +34,7 @@ public class ColorService {
 	private final UserJpaRepository userJpaRepository;
 
 	public List<Theme> getThemes(Long colorId) {
-		SelectedColor selectedColor = selectedColorJpaRepository.findById(colorId).orElseThrow(CCommunicationException::new);
-		RecommendTheme recommendTheme = recommendRepository.findById(selectedColor.getId()).orElseThrow(CCommunicationException::new);
+		RecommendTheme recommendTheme = recommendRepository.findById(colorId).orElseThrow(CCommunicationException::new);
 
 		List<Theme> themes = new ArrayList<>();
 		themes.add(themeJpaRepository.findById(recommendTheme.getThemeId1()).orElseThrow(CCommunicationException::new));

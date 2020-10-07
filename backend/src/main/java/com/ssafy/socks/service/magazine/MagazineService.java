@@ -71,7 +71,7 @@ public class MagazineService {
 		magazine = Magazine.builder()
 			.user(userJpaRepository.findByEmail(magazineModel.getEmail()).orElseThrow(CUserNotFoundException::new))
 			.contents(contentsList)
-			.theme(themeJpaRepository.findById(magazineModel.getThemeId()).orElseThrow(CCommunicationException::new))
+			.themeId(magazineModel.getThemeId())
 			.createdDate(currDate)
 			.build();
 

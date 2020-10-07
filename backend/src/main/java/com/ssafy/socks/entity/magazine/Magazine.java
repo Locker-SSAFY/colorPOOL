@@ -32,13 +32,12 @@ public class Magazine {
 	@Column(name = "MAGAZINE_ID", nullable = false)
 	private Long id;
 
+	@Column(name = "THEME_ID", nullable = false)
+	private Long themeId;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "THEME_ID", nullable = false)
-	private Theme theme;
 
 	@OneToMany(mappedBy = "magazine")
 	private List<Contents> contents;
