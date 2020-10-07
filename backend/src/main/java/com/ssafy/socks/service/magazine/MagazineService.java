@@ -17,6 +17,7 @@ import com.ssafy.socks.entity.magazine.Contents;
 import com.ssafy.socks.entity.magazine.Likes;
 import com.ssafy.socks.entity.magazine.Magazine;
 import com.ssafy.socks.entity.user.User;
+import com.ssafy.socks.model.magazine.ContentsModel;
 import com.ssafy.socks.model.magazine.MagazineModel;
 import com.ssafy.socks.repository.color.ColorHistoryJpaRepository;
 import com.ssafy.socks.repository.color.SelectedColorJpaRepository;
@@ -67,7 +68,9 @@ public class MagazineService {
 		magazine = Magazine.builder()
 			.user(user)
 			.contents(contentsList)
+			.magazineName(magazineModel.getMagazineName())
 			.themeId(magazineModel.getThemeId())
+			.selectedId(magazineModel.getSelectedColorId())
 			.createdDate(currDate)
 			.build();
 
@@ -97,12 +100,76 @@ public class MagazineService {
 		}*/
 	}
 
-	public List<Magazine> getMagazinesByUser(String userEmail) {
-		return magazineJpaRepository.findByUser(userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new));
+	public List<MagazineModel> getMagazinesByUser(String userEmail) {
+		List<Magazine> magazineList = magazineJpaRepository.findByUser(userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new));
+		List<MagazineModel> magazineModels = new ArrayList<>();
+
+		for(Magazine magazine : magazineList) {
+			List<Contents> contentsList = magazine.getContents();
+			List<ContentsModel> contentsModels = new ArrayList<>();
+
+			for(Contents contents : contentsList) {
+				ContentsModel contentsModel = ContentsModel.builder()
+					.answer(contents.getAnswer())
+					.mainText(contents.getMainText())
+					.question(contents.getQuestion())
+					.subText(contents.getSubText())
+					.template(contents.getTemplate())
+					.url(contents.getUrl())
+					.build();
+
+				contentsModels.add(contentsModel);
+			}
+
+			MagazineModel magazineModel = MagazineModel.builder()
+				.email(magazine.getUser().getEmail())
+				.magazineName(magazine.getMagazineName())
+				.themeId(magazine.getThemeId())
+				.selectedColorId(magazine.getSelectedId())
+				.userNickname(magazine.getUser().getNickname())
+				.contents(contentsModels)
+				.build();
+
+			magazineModels.add(magazineModel);
+		}
+
+		return magazineModels;
 	}
 
-	public List<Magazine> getMagazines() {
-		return magazineRepository.findMagazineOrderByLikes();
+	public List<MagazineModel> getMagazines() {
+		List<Magazine> magazineList = magazineJpaRepository.findAll();
+		List<MagazineModel> magazineModels = new ArrayList<>();
+
+		for(Magazine magazine : magazineList) {
+			List<Contents> contentsList = magazine.getContents();
+			List<ContentsModel> contentsModels = new ArrayList<>();
+
+			for(Contents contents : contentsList) {
+				ContentsModel contentsModel = ContentsModel.builder()
+					.answer(contents.getAnswer())
+					.mainText(contents.getMainText())
+					.question(contents.getQuestion())
+					.subText(contents.getSubText())
+					.template(contents.getTemplate())
+					.url(contents.getUrl())
+					.build();
+
+				contentsModels.add(contentsModel);
+			}
+
+			MagazineModel magazineModel = MagazineModel.builder()
+				.email(magazine.getUser().getEmail())
+				.magazineName(magazine.getMagazineName())
+				.themeId(magazine.getThemeId())
+				.selectedColorId(magazine.getSelectedId())
+				.userNickname(magazine.getUser().getNickname())
+				.contents(contentsModels)
+				.build();
+
+			magazineModels.add(magazineModel);
+		}
+
+		return magazineModels;
 	}
 
 	public Magazine getMagazine(Long magazineId) {

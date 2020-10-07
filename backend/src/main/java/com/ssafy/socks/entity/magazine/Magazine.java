@@ -36,9 +36,15 @@ public class Magazine {
 	@Column(name = "THEME_ID", nullable = false)
 	private Long themeId;
 
+	@Column(name = "SELECTED_COLOR_ID", nullable = false)
+	private Long selectedId;
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
+
+	@Column(name = "MAGAZINE_NAME", nullable = false)
+	private String magazineName;
 
 	@OneToMany(mappedBy = "magazine")
 	private List<Contents> contents;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.socks.entity.images.ThemeImages;
 import com.ssafy.socks.entity.magazine.Magazine;
+import com.ssafy.socks.model.magazine.ContentsModel;
 import com.ssafy.socks.model.magazine.Images;
 import com.ssafy.socks.model.magazine.MagazineModel;
 import com.ssafy.socks.model.magazine.ThemesAndCategory;
@@ -66,7 +67,7 @@ public class MagazineController {
 	})
 	@Operation(summary = "유저 모든 잡지 조회", description = "유저에 대한 모든 잡지 정보를 조회한다.")
 	@GetMapping(value = "/magazine")
-	public ListResult<Magazine> getMagazineByUser() {
+	public ListResult<MagazineModel> getMagazineByUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
 		return responseService.getListResult(magazineService.getMagazinesByUser(userEmail));
@@ -86,7 +87,7 @@ public class MagazineController {
 	})
 	@Operation(summary = "모든 잡지 정보", description = "모든 잡지 정보를 인기도 순으로 조회한다.")
 	@GetMapping(value = "/magazines")
-	public ListResult<Magazine> getAllMagazinesByLikes() {
+	public ListResult<MagazineModel> getAllMagazinesByLikes() {
 		return responseService.getListResult(magazineService.getMagazines());
 	}
 

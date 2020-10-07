@@ -1,9 +1,10 @@
 package com.ssafy.socks.model.magazine;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-@Getter @ToString
+@Getter @ToString @Builder
 public class ContentsModel {
 	private String url;
 	private String mainText;
