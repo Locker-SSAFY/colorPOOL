@@ -62,7 +62,6 @@ public class MagazineService {
 			.build();
 
 		logger.info("----------------- magazine -----------------");
-		logger.info("user : " + magazine.getUser().getEmail());
 		logger.info("themeId : " + magazine.getThemeId());
 		logger.info("current Date : " + magazine.getCreatedDate());
 		logger.info("----------------- magazine -----------------");
@@ -95,7 +94,8 @@ public class MagazineService {
 	}
 
 	public List<MagazineModel> getMagazinesByUser(String userEmail) {
-		List<Magazine> magazineList = magazineJpaRepository.findByUser(userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new));
+		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CCommunicationException::new);
+		List<Magazine> magazineList = magazineJpaRepository.findByUserId(user.getId());
 		List<MagazineModel> magazineModels = new ArrayList<>();
 
 		for(Magazine magazine : magazineList) {
@@ -116,11 +116,11 @@ public class MagazineService {
 			}
 
 			MagazineModel magazineModel = MagazineModel.builder()
-				.email(magazine.getUser().getEmail())
+				.email(user.getEmail())
 				.magazineName(magazine.getMagazineName())
 				.themeId(magazine.getThemeId())
 				.selectedColorId(magazine.getSelectedId())
-				.userNickname(magazine.getUser().getNickname())
+				.userNickname(user.getNickname())
 				.contents(contentsModels)
 				.build();
 
@@ -134,7 +134,8 @@ public class MagazineService {
 	 * 인기도 순으로 잡지 조회
 	 * @return
 	 */
-	public List<MagazineModel> getMagazines() {
+	public List<MagazineModel> getMagazines(String userEmail) {
+		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CCommunicationException::new);
 		List<Magazine> magazineList = magazineRepository.findMagazineOrderByLikes();
 		List<MagazineModel> magazineModels = new ArrayList<>();
 
@@ -156,9 +157,9 @@ public class MagazineService {
 			}
 
 			MagazineModel magazineModel = MagazineModel.builder()
-				.email(magazine.getUser().getEmail())
+				.email(user.getEmail())
 				.contents(contentsModelList)
-				.userNickname(magazine.getUser().getNickname())
+				.userNickname(user.getNickname())
 				.selectedColorId(magazine.getSelectedId())
 				.themeId(magazine.getThemeId())
 				.magazineName(magazine.getMagazineName())
@@ -176,7 +177,7 @@ public class MagazineService {
 
 	public LikesModel setLikes(Long magazineId, String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
-		Optional<Likes> likesOptional = likesJpaRepository.findByUserIdAAndMagazineId(user.getId(),magazineId);
+		Optional<Likes> likesOptional = likesJpaRepository.findByUserIdAndMagazineId(user.getId(),magazineId);
 
 		LikesModel likesModel = new LikesModel();
 		if(likesOptional.isPresent()) {

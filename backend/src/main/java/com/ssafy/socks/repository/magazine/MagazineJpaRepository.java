@@ -11,7 +11,7 @@ import com.ssafy.socks.entity.user.User;
 
 @Repository
 public interface MagazineJpaRepository extends JpaRepository<Magazine,Long> {
-	List<Magazine> findByUser(User user);
+	List<Magazine> findByUserId(Long userId);
 	Optional<Magazine> findByMagazineName(String magazineName);
-	Optional<Magazine> findFirstByUser(User user);
+	Optional<Magazine> findFirstByUserId(Long userId);
 }
