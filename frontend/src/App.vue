@@ -40,3 +40,6 @@ export default {
   }),
 };
 </script>
+<style>
+  *{ font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif'; }
+</style>

@@ -1,6 +1,11 @@
 <template>
   <div class="landing wrap">
     <div class="top-page">
+      <div class="background"></div>
+      <div class="landing-logo" v-if="isLanding">
+        <img class="logo_img" src="../assets/images/logo/logo_img.png">
+        <img class="logo_txt" src="../assets/images/logo/logo_text.png">
+      </div>
 
       <!-- 이전으로 돌아가기 버튼 -->
       <v-btn
@@ -86,6 +91,34 @@ export default {
     width: 100%;
     height: 100%;
     display: flex;
+  }
+
+  .landing.wrap .top-page .background {
+    width: 100%;
+    height: 75%;
+    position: absolute;
+    background-color: #eee;
+    background-image: url("../assets/images/layer.png");
+    background-repeat: repeat;
+  }
+
+  .landing.wrap .top-page .landing-logo {
+    display: flex;
+    position: absolute;
+    margin: 0 auto;
+    top: 7rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .landing.wrap .top-page .landing-logo .logo_img {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .landing.wrap .top-page .landing-logo .logo_txt {
+    margin-left: 1rem;
+    height: 5.5rem;
   }
 
   .landing.wrap .top-page .back-arrow {

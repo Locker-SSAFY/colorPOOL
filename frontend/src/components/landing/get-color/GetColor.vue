@@ -1,20 +1,24 @@
 <template>
   <div class="get-color wrap" :class="[{active : this.$parent.isGet}, {deactive : this.$parent.isPick}]">
-    
+    <div class="underline"></div>
+    <div class="get-desc">
+      <p>Get your color by keyword</p>
+    </div>
+    <!-- <p class="get-desc">GET your color by keyword</p> -->
     <!-- Landing page의 getColor 화면 -->
     <v-card @click="clickGet()"
       class="mx-auto elevation-10"
       v-if="this.$parent.isPick == false && this.$parent.isGet == false"
     >
-      <v-card-title>Get COLOR</v-card-title>
+      <p>GET color</p>
       
       <div id="keyword-img-wrap">
         <img id="keyword-img" src="../../../assets/images/keywordimg.png">
       </div>
       <v-icon size="40" color="rgb(107, 203, 243)" id="keyword-img-icon">mdi-magnify</v-icon>
-      <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 600; font-size: 18px;">
+      <!-- <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 600; font-size: 18px;">
         Get Your Color By Keyword
-      </v-card-text>
+      </v-card-text> -->
     </v-card>
 
     <!-- 검색 결과 -->
@@ -173,12 +177,41 @@ export default {
 </script>
 
 <style scoped>
+  @font-face {
+    font-family: 'ReenieBeanie-Regular';
+    src: url('../../../assets/font/ReenieBeanie-Regular.ttf');
+  }
 
   .get-color.wrap {
     width: 50%;
     height: 100%;
     float: right;
     transition-duration: 300ms;
+    display: flex;
+    align-items: center;
+  }
+  
+  .get-color.wrap .underline{
+    background-color: black;
+    position: absolute;
+    top: 30%;
+    right: 5%;
+    height: 0.5px;
+    width: 40%;
+  }
+
+  .get-color.wrap .get-desc {
+    font-family: 'ReenieBeanie-Regular';
+    text-align: right;
+    position: absolute;
+    top: 32%;
+    right: 5%;
+    font-size: 2.1rem;
+    line-height: 0.7;
+  }
+
+  .get-color.wrap .get-desc p {
+    font-family: 'ReenieBeanie-Regular';
   }
 
   .get-color.wrap.active {
@@ -200,8 +233,11 @@ export default {
     margin-top: 15%;
   }
 
-  .get-color.wrap .v-card .v-card-title {
-    height: 10%;
+  .get-color.wrap .v-card p {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
   }
 
   .get-color.wrap .v-card .v-image {
