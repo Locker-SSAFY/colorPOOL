@@ -1,5 +1,5 @@
 <template>
-  <div class="magazine-template-b wrap">
+  <div ref="detail" class="magazine-template-b wrap">
     <div class="template-b-left">
       <div class="interview wrap">
         <div>
@@ -9,7 +9,7 @@
           <span class="answer">{{content.answer}}</span>
         </div>
       </div>
-      <span :style="{'background-color' : rgb}">{{content.mainText}}</span>
+      <span :style="{'color' : rgb}">{{content.mainText}}</span>
     </div>
     <div class="template-b-right"  :style="{'background-color' : rgb}">
       <img :src="content.url">
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import html2canvas from 'html2canvas'
 export default {
   props: {
     content: {
@@ -25,6 +26,27 @@ export default {
     },
     rgb : {
       default: void 0
+    }
+  },
+  mounted() {
+    this.downloadVisualReport();
+  },
+  methods: {
+    showCaptureRef() {
+      console.log("this.$refs.detail: " + this.$refs.detail);
+      let vc = this;
+      return vc.$refs.detail;
+    },
+    downloadVisualReport () {
+      let vc = this
+      // alert("Descargando reporte visual")
+      console.log('campaign-view#downloadVisualReport');
+      window.html2canvas = html2canvas;
+      window.html2canvas(vc.showCaptureRef(),  { letterRendering: 1, allowTaint : true}).then(canvas => {
+          document.body.appendChild(canvas)
+      }).catch((error) => {
+        console.log("Erorr descargando reporte visual", error)
+      });
     }
   }
 }
@@ -48,12 +70,8 @@ export default {
   }
 
   .template-b-left span {
-    background: inherit;
-    background-clip: text;
-    color: transparent;
     font-size: 30px;
     font-weight: 600;
-    filter: invert(1);
   }
 
   .template-b-right {

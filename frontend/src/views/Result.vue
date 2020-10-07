@@ -9,17 +9,18 @@
           <td>
             <span class="category-name">내잡지에<br>추가하기</span>
             <img class="category-layer" src="../assets/images/layer.png" :style="{'background-color' : this.color}">
-            <v-btn
+            <v-btn  
               class="category-button"
               icon
               text
+              :disabled="isAdded? '' : disabled"
               @click="addMagazine"
             >
               <v-icon size="100">mdi-plus</v-icon>
             </v-btn>
           </td>
           <td>
-            <span class="category-name">PDF 문서<br>저장하기</span>
+            <span class="category-name">현재잡지<br>인쇄하기</span>
             <img class="category-layer" src="../assets/images/layer.png" :style="{'background-color' : this.color}">
             <v-btn
               class="category-button"
@@ -27,7 +28,7 @@
               text
               @click="saveAsPDF"
             >
-              <v-icon size="100">mdi-content-save</v-icon>
+              <v-icon size="80">mdi-printer</v-icon>
             </v-btn>
           </td>
           <td>
@@ -56,6 +57,7 @@ import Cover from '../components/magazine/magazineCover'
 const colorStore = 'colorStore'
 const userStore = 'userStore'
 const magazineStore = 'magazineStore'
+const detailStore = 'detailStore'
 
 export default {
   name: 'Result',
@@ -68,13 +70,15 @@ export default {
       theme: [],
       userInfo: null,
       date: null,
-      magazineName: 'ColorPOOL'
+      magazineName: 'ColorPOOL',
+      isAdded: false,
     }
   },
   created() {
     this.color = this.storeSelectedColor.hex;
     this.theme = this.storeSelectedTheme;
     // userInfo 가져오는거 왜 안되지? 재원이한테 물어볼 것
+    console.log("storeUserInfo!!!", this.storeUserInfo);
     this.userInfo = this.storeUserInfo;
     console.log(this.userInfo);
     // userInfo 가져오는거 해결해주세염
@@ -85,23 +89,41 @@ export default {
     this.date = new Date();
   },
   computed: {
-    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME', storeSelectedThemeId: 'GE_SELECTED_THEME_ID'}),
-    ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO'})
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME', storeSelectedThemeId: 'GE_SELECTED_THEME_ID', storeThemes: 'GE_THEMES'}),
+    ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO'}),
+    ...mapGetters(magazineStore, {storeMagazineImages: 'GE_MAGAZINE_IMAGES'})
   },
   methods: {
     ...mapActions(magazineStore, ['AC_MAGAZINE_POST']),
+    ...mapActions(detailStore, ['AC_DETAIL']),
     addMagazine() {
       alert('구현 예정입니다!')
       const payload = {
         'date': this.date,
         'magazineName': this.magazineName,
-        'selectedColor': this.storeSelectedThemeId
+        'selectedColor': this.storeSelectedColor.id,
+        'themeId': this.storeSelectedThemeId,
       }
+      console.log(this.userInfo)
       console.log(payload);
-      this.AC_MAGAZINE_POST(payload);
+      this.isAdded = this.AC_MAGAZINE_POST(payload);
     },
     saveAsPDF(){
-      alert('구현 예정입니다!') 
+      const data = [
+        {
+          "user": {
+            "email": this.userInfo.email,
+            "nickname" : this.userInfo.nickname,
+          },
+          "selectedColor": {
+            "themes": this.storeThemes,
+          },
+          "contents" : this.storeMagazineImages,
+        }      
+      ];
+      this.AC_DETAIL(data);
+      let route = this.$router.resolve({path: '/print'});
+      window.open(route.href, 'window','location=no, directories=no,resizable=no,status=no,toolbar=no,menubar=no, width=1200,height=600,left=0, top=0, scrollbars=yes');
     },
     goMain() {
       var res = confirm('추가 또는 저장되지 않은 잡지는 사라집니다. 메인으로 돌아가시겠습니까?')

@@ -27,7 +27,7 @@ const userStore = {
   mutations: {
     MU_USER_INFO: (state, payload) => {
       console.log('MU_USER_INFO', payload)
-      state.userInfo = payload.userInfo
+      state.userInfo = payload
     },
     MU_IS_LOGIN: (state, payload) => {
       state.isLogin = payload

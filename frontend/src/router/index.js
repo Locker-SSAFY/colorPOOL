@@ -12,6 +12,7 @@ import MyPage from '../views/MyPage.vue'
 import Library from '../views/Library.vue'
 import Temp from '../views/Temporary.vue'
 import Detail from '../views/Detail.vue'
+import Print from '../views/Print.vue'
 
 Vue.use(VueRouter)
 
@@ -78,6 +79,11 @@ Vue.use(VueRouter)
     path: '/detail',
     name: 'Detail',
     component: Detail
+  },
+  {
+    path: '/print',
+    name: 'Print',
+    component: Print
   }
 ]
 

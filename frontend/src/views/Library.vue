@@ -102,6 +102,7 @@ export default {
   },
   created() {
     // 순위별 이미지 가져오기
+    this.AC_MAGAZINE_LIST();
     this.AC_TOP_RANK();
     this.AC_REST_RANK();
     this.topRank = this.storeTopRank;
@@ -110,7 +111,7 @@ export default {
     console.log('rest', this.restRank)
   },
   methods: {
-    ...mapActions(rankStore, ['AC_TOP_RANK', 'AC_REST_RANK']),
+    ...mapActions(rankStore, ['AC_TOP_RANK', 'AC_REST_RANK', 'AC_MAGAZINE_LIST']),
     showMagazine(magazine) {
       this.isShow = true;
       this.magazine = magazine;
