@@ -180,11 +180,11 @@ public class MagazineService {
 
 	public LikesModel setLikes(Long magazineId, String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
-		Optional<Likes> likesOptional = likesJpaRepository.findByUserIdAndMagazineId(user.getId(),magazineId);
+		Likes likes = likeRepository.findChecked(magazineId,user.getId());
 
 		LikesModel likesModel = new LikesModel();
-		if(likesOptional.isPresent()) {
-			likeRepository.deleteByMidAndUid(magazineId,user.getId());
+		if(likes != null && likes.isChecked()) {
+			likeRepository.updateUnChecked(magazineId,user.getId());
 			likesModel.setMagazineId(magazineId);
 			likesModel.setUserId(user.getId());
 			likesModel.setClicked(false);
