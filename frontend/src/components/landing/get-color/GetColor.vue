@@ -52,7 +52,7 @@
     </div>
 
     <!-- 검색창 -->
-    <v-card class="search" v-if="this.$parent.isGet">
+    <v-card style="margin-top: -20%;" class="search" v-if="this.$parent.isGet">
       <div class="search-wrap">
         <div class="search-panel">
           <input v-model="keyword" placeholder="keyword" v-on:keyup.enter="getPicularImages()">
@@ -62,10 +62,6 @@
         </div>
       </div>
     </v-card>
-
-    <div v-if="keyword==='' && this.$parent.isGet" id="require-text">
-      키워드를 입력해주세요
-    </div>
 
     <!-- 배색 추천 받으러 가기 버튼 + 선택 안한 경우 modal -->
     <div class="next-button" v-if="this.$parent.isGet" @click="getTheme">
@@ -310,7 +306,7 @@ export default {
   }
 
   .get-color.wrap .v-card .search-wrap .search-panel input {
-    width: 50%;
+    width: 80%;
     height: 100%;
     padding: 1% 1%;
     outline: none;

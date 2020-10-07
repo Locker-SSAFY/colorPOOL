@@ -43,8 +43,12 @@
         text
         @click="getTheme"
       >
-        <v-icon size="100">mdi-arrow-right</v-icon>
+        <v-icon size="80">mdi-arrow-right</v-icon>
       </v-btn>
+      <div class="button-desc">
+        <p>Get color recommendations</p>
+        <p>based on the selected color</p>
+      </div>
     </div>
     
     <!-- 배색 추천 화면 -->
@@ -232,5 +236,30 @@ export default {
     right: 20%;
     top: 85%;
   }
+
+  .button-desc {
+    position: absolute;
+    font-size: 1.9rem;
+    text-align: left;
+    right: 20%;
+    bottom: 15%;
+    transform: rotate(-15deg)
+    /* top: 85%; */
+  }
+  .button-desc p {
+    font-family: ReenieBeanie-Regular;
+    line-height: 0.7;
+  }
+
+
+
+  /* .next-button p {
+    position: relative;
+    font-family: 'ReenieBeanie-Regular';
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: left;
+    line-height: 0.7;
+  } */
 
 </style>

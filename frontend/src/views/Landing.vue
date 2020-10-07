@@ -16,7 +16,7 @@
         @click="goBack"
         v-if="isPick || isGet"
       >
-        <v-icon size="100">mdi-arrow-left</v-icon>
+        <v-icon size="40">mdi-arrow-left</v-icon>
       </v-btn>
 
       <PickColor></PickColor>
@@ -151,7 +151,7 @@ export default {
 
   .goback-button{
     position: absolute;
-    top: 13%;
+    top: 15.5%;
     left: 4%;
     z-index: 50;
   }

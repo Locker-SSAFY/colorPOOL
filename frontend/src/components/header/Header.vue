@@ -15,7 +15,7 @@
         </v-btn>
       </v-col>
 
-      <v-col cols="5" class="header-signin" v-if="userInfo == null && !isLogin">
+      <v-col class="header-signin" v-if="userInfo == null && !isLogin">
         <Signin></Signin>
       </v-col>
       <!-- <v-col style="text-align: center;" class="mt-2" v-if="isLogin">
@@ -190,7 +190,7 @@ export default {
   .header.wrap .header-logo .v-btn .logo_txt {
     /* margin: 0 auto; */
     margin-top: 1rem;
-    height: 2.5rem;
+    height: 2.7rem;
   }
 
   .header.wrap .header-library {
