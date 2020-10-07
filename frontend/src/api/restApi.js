@@ -5,7 +5,7 @@ export default {
     socialSignup: '/signup',
     signin: '/signin',
     socialSignin: '/signin/social',
-    getUserInfo: '/api/user?lang=ko',
+    getUserInfo: '/user?lang=ko',
     // 색깔과 배색
     getThemes: '/themes/',
     // 잡지 넣기
