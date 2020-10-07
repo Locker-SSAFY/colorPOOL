@@ -30,7 +30,7 @@
           MYPAGE
         </v-btn>
       </v-col>
-      <v-col class="header-library" v-if="isLogin">
+      <v-col class="header-logout" v-if="isLogin">
         <v-btn icon text @click="logout">
           LOGOUT
         </v-btn>
@@ -85,7 +85,7 @@ export default {
     ...mapActions(userStore, ['AC_LOGOUT']),
     detectWindowScrollY() {
       // 감지 이벤트 메서드
-      this.scrolled = window.scrollY > 240
+      this.scrolled = window.scrollY > 250
     },
     goHome() {
       console.log(this);
@@ -174,11 +174,11 @@ export default {
   }
 
   .header.wrap .header-library {
-    text-align: center;
+    text-align: right;
   }
 
   .header.wrap .header-library .v-btn{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .header.wrap .header-signin {
@@ -186,7 +186,7 @@ export default {
   }
   
   .header.wrap .header-signin .v-btn{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .header.wrap .header-signup {
@@ -194,7 +194,7 @@ export default {
   }
 
   .header.wrap .header-signup .v-btn{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .header.wrap .header-mypage {
@@ -202,7 +202,15 @@ export default {
   }
 
   .header.wrap .header-mypage .v-btn{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .header.wrap .header-logout {
+    text-align: left;
+  }
+
+  .header.wrap .header-logout .v-btn{
+    font-size: 1.1rem;
   }
 
   /* .header.wrap .header-menu {

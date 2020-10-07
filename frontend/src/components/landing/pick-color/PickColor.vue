@@ -191,13 +191,6 @@ export default {
     margin-top: 17%;
   }
 
-  /* .pick-color.wrap .v-card p {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-top: 1rem;
-    margin-left: 5%;
-  } */
-
   .pick-color.wrap .v-card .v-image {
     height: 90%;
   }
