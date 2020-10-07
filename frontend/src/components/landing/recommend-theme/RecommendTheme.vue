@@ -18,25 +18,28 @@
     </div>
     <!-- 추천 배색 보여주는 곳 -->
     <div class="show-theme">
-      <v-icon
+      <!-- <v-icon
         class="ma-2"
         size="30"
       >
-      mdi-refresh</v-icon>
-      <div class="button-text">POOL</div>
-      <div class="underline" :style="{'background-color' : selectedColor.hex}"></div>
-      <div class="theme-scroll wrap">
-        <div class="show-themes mt-8" v-for="(t, index) in theme" :key="index">
-          <div class="color-group" @click="selectTheme(t.color1, t.color2, t.color3, t.color4, t.color5, t.id)">
-            <div class="theme-colors" :style="{'background-color' : t.color1}">
-            </div>
-            <div class="theme-colors" :style="{'background-color' : t.color2}">
-            </div>
-            <div class="theme-colors" :style="{'background-color' : t.color3}">
-            </div>
-            <div class="theme-colors" :style="{'background-color' : t.color4}">
-            </div>
-            <div class="theme-colors" :style="{'background-color' : t.color5}">
+        mdi-refresh
+      </v-icon> -->
+      <div class="inner-theme">
+        <div class="button-text">Color Scheme POOL</div>
+        <div class="underline" :style="{'background-color' : selectedColor.hex}"></div>
+        <div class="theme-scroll wrap">
+          <div class="show-themes mt-8" v-for="(t, index) in theme" :key="index">
+            <div class="color-group" @click="selectTheme(t.color1, t.color2, t.color3, t.color4, t.color5, t.id)">
+              <div class="theme-colors" :style="{'background-color' : t.color1}">
+              </div>
+              <div class="theme-colors" :style="{'background-color' : t.color2}">
+              </div>
+              <div class="theme-colors" :style="{'background-color' : t.color3}">
+              </div>
+              <div class="theme-colors" :style="{'background-color' : t.color4}">
+              </div>
+              <div class="theme-colors" :style="{'background-color' : t.color5}">
+              </div>
             </div>
           </div>
         </div>
@@ -50,7 +53,7 @@
       text
       @click="goBack"
     >
-      <v-icon size="100">mdi-arrow-left</v-icon>
+      <v-icon size="70">mdi-arrow-left</v-icon>
     </v-btn>
     
     <!-- 배색 선택 안했을 경우 -->
@@ -61,15 +64,21 @@
     <!-- 배색 선택한 경우 -->
     <div v-else class="theme-color right">
       <ThemeInfo></ThemeInfo>
-      <div class="next-text">view more</div>
       <v-btn
         class="next-button"
         icon
         text
         @click="goCategory"
       >
-        <v-icon size="100">mdi-arrow-right</v-icon>
+        <v-icon size="80">mdi-arrow-right</v-icon>
       </v-btn>
+
+      <div class="button-desc">
+        <p>Create a magazine by</p>
+        <p>choosing images with the color scheme</p>
+        <p>of your choice</p>
+      </div>
+
     </div>
   </div>
 </div>
@@ -194,6 +203,7 @@ export default {
     float: left;
     transition-duration: 300ms;
   }
+
   .theme-layer{
     position: absolute;
     left: 0%;
@@ -230,7 +240,7 @@ export default {
     width: 250px;
   }
 
-  .theme-scroll{
+  .theme-scroll {
     position: relative;
     overflow: scroll;
     height: 75%;
@@ -277,25 +287,32 @@ export default {
   .show-theme {
     position: absolute;
     left: 25%;
-    top: 125%;
+    top: 100%;
     height: 70%;
     width: 35%;
     z-index: 50;
   }
 
-  .button-text{
+  .inner-theme{
+    margin-top: 35%;
+    height: 100%; 
+  }
+
+  .button-text {
     display: inline;
-    font-size: 1.7rem;
+    font-family: 'PermanentMarker-Regular';
+    font-size: 2.1rem;
     font-weight: bold;
+    margin-left: 4rem;
   }
 
   .underline{
     position: absolute;
     left: 0%;
     top: 7%;
-    /* background-color: #EF5350; */
     width: 100%;
     height: 2px;
+    margin-top: 35%;
   }
 
   .show-color.right {
@@ -338,6 +355,20 @@ export default {
     top: 185%;
     left: 5%;
     z-index: 50;
+  }
+
+  .button-desc {
+    position: absolute;
+    font-size: 1.9rem;
+    text-align: left;
+    right: 15%;
+    bottom: 10%;
+    transform: rotate(-15deg)
+  }
+
+  .button-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
   }
 
 </style>

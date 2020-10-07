@@ -1,10 +1,16 @@
 <template>
 <div class="color-info wrap">
-  <h1>YOUR COLOR</h1>
+  <p class="color-title">YOUR COLOR</p>
   <div class="underline"></div>
-  <div class="color-name wrap">
-    <span class="color-name">{{color.name}}</span>
+
+  <!-- <div class="textfield-tape">
+    <v-text-field dense v-model="nickName" placeholder="nickname" required></v-text-field>
+  </div> -->
+
+  <div class="color-name-tape">
+    <p :style="{'color' : this.$parent.selectedColor.hex}">{{color.name}}</p>
   </div>
+
   <div class="color-info container">
     <div>
       <table>
@@ -102,64 +108,84 @@ export default {
 }
 </script>
 <style scoped>
-.color-info.wrap{
-  padding: 5%;
-  padding-top: 25%;
-  height: 100%;
-  width: 100%;
-}
+  .color-info.wrap {
+    padding: 5%;
+    padding-top: 25%;
+    height: 100%;
+    width: 100%;
+  }
 
-.underline{
-  background-color: black;
-  position: absolute;
-  left: 0%;
-  height: 2px;
-  width: 80%;
-}
+  .color-info.wrap .color-title {
+    display: inline;
+    font-family: 'PermanentMarker-Regular';
+    font-size: 2.1rem;
+    font-weight: bold;
+    margin-left: 1rem;
+  }
 
-.color-name.wrap {
-  width: 100%;
-}
+  .underline{
+    background-color: black;
+    position: absolute;
+    left: 0%;
+    height: 2px;
+    width: 80%;
+  }
 
-.color-name.wrap .color-name {
-  font-size: 35px;
-  font-weight: 600;
-}
+  .color-name-tape {
+    margin: 29px 0;
+    background-color: #424242;
+    padding: 1% 5% 0% 7%;
+    width: 75%;
+    height: 45px;
 
-.color-info.container {
-  overflow-y: scroll;
-  width: 100%;
-  padding: 10px 10px;
-  height: auto;
-}
+    mask-image: url(https://cdn2.bustle.com/nylon/2020/tape_b-80d71c228a.svg);
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    background-image: url(https://imgix.bustle.com/uploads/image/2020/3/10/428e5a38-91a6-4f27-8187-e0c507694930-tape_poster.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: difference;
+  }
+  
+  .color-name-tape p {
+    font-family: 'PermanentMarker-Regular';
+    font-size: 1.7rem;
+  }
 
-.color-info.container div {
-  width: 100%;
-  margin-top: 8px;
-}
+  .color-info.container {
+    overflow-y: scroll;
+    width: 100%;
+    padding: 10px 10px;
+    height: auto;
+  }
 
-.color-info.container div table {
-  width: 100%;
-}
+  .color-info.container div {
+    width: 100%;
+    margin-top: 8px;
+  }
 
-.color-info.container div table tr td:nth-child(1) {
-  text-align: left;
-  font-weight: 600;
-  font-size: 15px;
-}
+  .color-info.container div table {
+    width: 100%;
+  }
 
-.color-info.container div table tr td:nth-child(2) {
-  text-align: right;
-  font-weight: 600;
-  font-size: 10px;
-  color: rgba(0,0,0, 0.5);
-}
+  .color-info.container div table tr td:nth-child(1) {
+    text-align: left;
+    font-weight: 600;
+    font-size: 15px;
+  }
 
-.color-info.container div div {
-  width: 100%;
-  height: 50px;
-  border-radius: 5px;
-  box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
-}
+  .color-info.container div table tr td:nth-child(2) {
+    text-align: right;
+    font-weight: 600;
+    font-size: 10px;
+    color: rgba(0,0,0, 0.5);
+  }
+
+  .color-info.container div div {
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
+  }
 
 </style>
