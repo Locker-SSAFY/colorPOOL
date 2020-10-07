@@ -89,6 +89,8 @@ public class MagazineService {
 		colorHistoryJpaRepository.save(colorHistory);
 
 		magazineJpaRepository.save(magazine);
+
+		magazine = magazineJpaRepository.findFirstByUser(user).orElseThrow(CCommunicationException::new);
 		for (Contents contents : contentsList) {
 			contents.setMagazine(magazine);
 			contentsJpaRepository.save(contents);
