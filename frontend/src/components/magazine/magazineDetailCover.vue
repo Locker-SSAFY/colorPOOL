@@ -93,19 +93,19 @@ export default {
             {
               "id": 1,
               "url": "https://images.unsplash.com/photo-1548549557-dbe9946621da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-              "mainText": "패션은 나이, 성별, 인종을 초월한다",
-              "subText": "shoes",
-              "question": "당신에게 코딩이란?",
-              "answer": "인터뷰에 답변을 적어주세요",
+              "mainText": "당신은 패션을 알고있거나, 그렇지 않다",
+              "subText": "",
+              "question": "요즘 내가 몰입하고 있는 것은 무엇인가요?",
+              "answer": "빌런을 만족시킬 배색을, 컬러의 조합을 찾는 일",
               "template": "0"
             },
             {
               "id": 2,
               "url": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=662&q=80",
-              "mainText": "Fashion is about Passion",
-              "subText": "shoes",
-              "question": "당신에게 코딩이란?",
-              "answer": "인터뷰에 답변을 적어주세요",
+              "mainText": "패션은 드레스에만 존재하는 것이 아니다. 패션은 하늘에도 거리에도 있고, 우리가 사는 방식, 일어나는 일 모두다",
+              "subText": "",
+              "question": "요즘 내가 자꾸 고민하게 되는 것은 무엇인가요?",
+              "answer": "컬러, 컬러, 컬러, 온 세상의 조형이 컬러칩으로 보여요",
               "template": "2"
             }
           ],
