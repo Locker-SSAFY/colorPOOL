@@ -1,19 +1,19 @@
 <template>
   <div v-if="magazineData != null">
     <div class="magazine-list wrap" :style="{'background-color': magazine.color}" @click="showMag">
-      <span class="cover-name">{{magazine.magazineName}}</span>
-      <span class="cover-date">{{magazine.createdDate}}</span>
-      <span class="cover-username">{{magazine.userNickname}}</span>
-      <span class="cover-email">{{magazine.email}}</span>
-      <img class="cover-img" :src="magazine.contents[0].url">
+      <span class="cover-name">{{magazine.name}}</span>
+      <span class="cover-date">{{magazine.date}}</span>
+      <span class="cover-username">{{magazine.userName}}</span>
+      <span class="cover-email">{{magazine.userEmail}}</span>
+      <img class="cover-img" :src="magazine.coverImg">
       
     </div>
     <div class="cover-bar">
-      <v-btn class="icon-heart" icon text @click="clickHeart()">
-        <v-icon size="30" v-if="heart_click" :color="magazine.color">mdi-heart</v-icon>
+      <v-btn class="icon-heart" icon text @click="heartChange(magazine.heart)">
+        <v-icon size="30" v-if="magazine.heart" :color="magazine.color">mdi-heart</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-heart-outline</v-icon>
       </v-btn>
-      <span class="num-heart" :style="{'color': magazine.color}">{{this.magazine.likes.length}}</span>  
+      <span class="num-heart" :style="{'color': magazine.color}">{{this.heart_count}}</span>  
       <v-btn  class="icon-bookmark" icon text @click="magazine.bookmark = !magazine.bookmark">
         <v-icon size="30" v-if="magazine.bookmark" :color="magazine.color">mdi-bookmark</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-bookmark-outline</v-icon>
@@ -40,38 +40,40 @@ export default {
         userEmail: '',
         coverImg: '',
         date: '',
-        heart: false,
+        heart: '',
         bookmark: '',
-        likes: [],
-        heart_click: false,
+        heart_count: 0,
       }
     }
   },
   created() {
     this.magazine = this.magazineData;
-    this.magazine.likes = [1,2,3]; 
-    this.magazine.bookmark = true;
-    console.log(this.magazine);
-
-    this.magazine.heart = false;
-    this.heart_click = false;
+    this.heart_count = this.magazineData.likes.length;
   },
   methods: {
     showMag() {
-      console.log('before send', this.magazine)
       this.$emit('show-magazine', this.magazine)
-    }, 
-    clickHeart() {
-      let heart = this.heart_click;
-      if(heart) {
-        this.magazine.heart = false;
-        this.heart_click = false;
-      } else {
+    },
+    heartChange(heart) {
+      if(!heart) {
         this.magazine.heart = true;
-        this.heart_click = true;
+        this.heart_count ++;
+        }
+      else {
+        this.magazine.heart = false;
+        this.heart_count --;
       }
     }
   },
+  watch: {
+    heart(val) {
+      if(val) {
+        this.heart_count += 1;
+      } else {
+        this.heart_count -= 1;
+      }
+    }
+  }
 }
 </script>
 

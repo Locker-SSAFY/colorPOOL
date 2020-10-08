@@ -9,7 +9,7 @@ export default {
     // 색깔과 배색
     getThemes: '/themes/',
     // 잡지 넣기
-    postMagazine: '/magazine',
+    postMagazine: '/api/magazine',
     // 모든 잡지 가져오기
     getMagazineList: '/magazines',
     getMagazineOne: '/magazine/',

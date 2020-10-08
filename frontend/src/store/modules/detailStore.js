@@ -1,7 +1,7 @@
 const detailStore = {
   namespaced: true,
   state: {
-    detail: {}
+    detail: null
   },
   getters: {
     GE_DETAIL: state => state.detail

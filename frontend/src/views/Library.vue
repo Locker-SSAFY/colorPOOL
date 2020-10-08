@@ -85,7 +85,7 @@ export default {
     })
   },
   watch: {
-    restRank() {      
+    restRank() {
       this.magazineList = [];
       const len = this.restRank.length;
       const div = len/3;
@@ -99,12 +99,15 @@ export default {
           }
         }
         this.magazineList.push(example);
+        console.log(this.magazineList)
       }
     },
-    storeMagazineList() {
-      console.log(this.storeMagazineList);
-      this.topRank = this.storeMagazineList;
+    storeMagazineList(val) {
+      console.log(val);
+      this.topRank = this.storeMagazineList.slice(0, 3);
+      this.restRank = this.storeMagazineList.slice(3, this.storeMagazineList.length);
       console.log(this.topRank)
+      console.log('rest', this.restRank)
     }
   },
   data() {
@@ -121,12 +124,13 @@ export default {
     // 순위별 이미지 가져오기
     this.AC_MAGAZINE_LIST();
     // console.log(this.storeMagazineList);
-    // this.AC_TOP_RANK();
-    // this.AC_REST_RANK();
+    this.AC_TOP_RANK();
+    this.AC_REST_RANK();
     // this.topRank = this.storeTopRank;
     // this.restRank = this.storeRestRank;
     // console.log('top', this.topRank);
     // console.log('rest', this.restRank)
+    
   },
   methods: {
     ...mapActions(rankStore, ['AC_TOP_RANK', 'AC_REST_RANK', 'AC_MAGAZINE_LIST']),
@@ -134,6 +138,11 @@ export default {
       this.isShow = true;
       this.magazine = magazine;
       console.log(magazine)
+    },
+    spliceMagazine() {
+      this.topRank = this.storeMagazineList.slice(0, 3);
+      this.restRank = this.storeMagazineList.slice(3, this.storeMagazineList.length);
+      console.log(this.topRank);
     }
   }
 } 

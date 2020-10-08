@@ -42,6 +42,7 @@ export default {
   },
   created() {
     this.magazine = this.storeDetail[0];
+    console.log(this.magazine);
     this.AC_HEADER(true);
     console.log('magazine', this.magazine)
     var theme = this.magazine.selectedColor.themes[0];
