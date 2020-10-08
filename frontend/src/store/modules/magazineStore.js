@@ -144,7 +144,7 @@ const magazineStore = {
       .then((res) => {
         console.log(res);
         if(res.data.success) {
-          alert("잡지가 마이페이지에 추가되었습니다")
+          alert("잡지가 라이브러리에 추가되었습니다")
           return true;
         } else {
           alert("잡지가 추가되지 않았습니다")
