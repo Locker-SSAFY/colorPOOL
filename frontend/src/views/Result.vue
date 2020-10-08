@@ -97,7 +97,6 @@ export default {
     ...mapActions(magazineStore, ['AC_MAGAZINE_POST']),
     ...mapActions(detailStore, ['AC_DETAIL']),
     addMagazine() {
-      alert('구현 예정입니다!')
       const payload = {
         'date': this.date,
         'magazineName': this.magazineName,

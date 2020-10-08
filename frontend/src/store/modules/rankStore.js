@@ -34,37 +34,37 @@ const rankStore = {
       }
       console.log(token)
 
-      // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazines', {headers: header})
-      // .then((res) => {
-      //   console.log(res)
-      //   res.data.data.forEach(ele => {
-      //     let id = ele.selectedColorId;
-      //     ele.color = materialColors[parseInt(id / 10)].variations[parseInt(id % 10)].hex
-      //   });
-      //   console.log(res.data.data.slice(0, 3))
-      //   // commit('MU_TOP_RANK', res.data.data.slice(0, 3));
-      //   // commit('MU_REST_RANK', res.data.data.slice(3, res.data.data.length))
-      //   commit('MU_MAGAZINE_LIST', res.data.data);
-      // })
-      // .catch((err) => {
-      //   console.err(err);
-      // })
-      // console.log(SERVER);
-
-      //////////////////////////////////////////////
-      // 정상적인 axios 통신
-      axios.get(SERVER.ROUTES.getMagazineList, {headers: header})
+      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazines', {headers: header})
       .then((res) => {
         console.log(res)
         res.data.data.forEach(ele => {
           let id = ele.selectedColorId;
           ele.color = materialColors[parseInt(id / 10)].variations[parseInt(id % 10)].hex
         });
+        console.log(res.data.data.slice(0, 3))
+        // commit('MU_TOP_RANK', res.data.data.slice(0, 3));
+        // commit('MU_REST_RANK', res.data.data.slice(3, res.data.data.length))
         commit('MU_MAGAZINE_LIST', res.data.data);
       })
       .catch((err) => {
         console.err(err);
       })
+      console.log(SERVER);
+
+      //////////////////////////////////////////////
+      // 정상적인 axios 통신
+      // axios.get(SERVER.ROUTES.getMagazineList, {headers: header})
+      // .then((res) => {
+      //   console.log(res)
+      //   res.data.data.forEach(ele => {
+      //     let id = ele.selectedColorId;
+      //     ele.color = materialColors[parseInt(id / 10)].variations[parseInt(id % 10)].hex
+      //   });
+      //   commit('MU_MAGAZINE_LIST', res.data.data);
+      // })
+      // .catch((err) => {
+      //   console.err(err);
+      // })
       ///////////////////////////////////////////////
     },
     AC_TOP_RANK: ({commit}, payload) => {

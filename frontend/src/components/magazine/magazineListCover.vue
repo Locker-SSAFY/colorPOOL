@@ -9,8 +9,8 @@
       
     </div>
     <div class="cover-bar">
-      <v-btn class="icon-heart" icon text @click="magazine.heart = !magazine.heart">
-        <v-icon size="30" v-if="magazine.heart" :color="magazine.color">mdi-heart</v-icon>
+      <v-btn class="icon-heart" icon text @click="clickHeart()">
+        <v-icon size="30" v-if="heart_click" :color="magazine.color">mdi-heart</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-heart-outline</v-icon>
       </v-btn>
       <span class="num-heart" :style="{'color': magazine.color}">{{this.magazine.likes.length}}</span>  
@@ -42,7 +42,8 @@ export default {
         date: '',
         heart: false,
         bookmark: '',
-        likes: []
+        likes: [],
+        heart_click: false,
       }
     }
   },
@@ -51,13 +52,26 @@ export default {
     this.magazine.likes = [1,2,3]; 
     this.magazine.bookmark = true;
     console.log(this.magazine);
+
+    this.magazine.heart = false;
+    this.heart_click = false;
   },
   methods: {
     showMag() {
       console.log('before send', this.magazine)
       this.$emit('show-magazine', this.magazine)
+    }, 
+    clickHeart() {
+      let heart = this.heart_click;
+      if(heart) {
+        this.magazine.heart = false;
+        this.heart_click = false;
+      } else {
+        this.magazine.heart = true;
+        this.heart_click = true;
+      }
     }
-  }
+  },
 }
 </script>
 

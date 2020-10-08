@@ -54,8 +54,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 // import MagazineRankCover from '../components/magazine/magazineRankCover'
-import MagazineListCover from '../components/magazine/magazineListCover'
-import MagazineDetailCover from '../components/magazine/magazineDetailCover'
+import MagazineListCover from '../components/magazine/MagazineListCoverMy'
+import MagazineDetailCover from '../components/magazine/magazineDetailCoverMy'
 const myPageStore = 'myPageStore'
 
 export default {
