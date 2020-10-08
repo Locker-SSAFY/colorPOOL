@@ -1,11 +1,11 @@
 <template>
   <div v-if="magazineData != null">
     <div class="magazine-list wrap" :style="{'background-color': magazine.color}" @click="showMag">
-      <span class="cover-name">{{magazine.name}}</span>
-      <span class="cover-date">{{magazine.date}}</span>
-      <span class="cover-username">{{magazine.userName}}</span>
-      <span class="cover-email">{{magazine.userEmail}}</span>
-      <img class="cover-img" :src="magazine.coverImg">
+      <span class="cover-name">{{magazine.magazineName}}</span>
+      <span class="cover-date">{{magazine.createdDate}}</span>
+      <span class="cover-username">{{magazine.userNickname}}</span>
+      <span class="cover-email">{{magazine.email}}</span>
+      <img class="cover-img" :src="magazine.contents[0].url">
       
     </div>
     <div class="cover-bar">
@@ -13,7 +13,7 @@
         <v-icon size="30" v-if="magazine.heart" :color="magazine.color">mdi-heart</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-heart-outline</v-icon>
       </v-btn>
-      <span class="num-heart" :style="{'color': magazine.color}">{{this.magazineData.likes.length}}</span>  
+      <span class="num-heart" :style="{'color': magazine.color}">{{this.magazine.likes.length}}</span>  
       <v-btn  class="icon-bookmark" icon text @click="magazine.bookmark = !magazine.bookmark">
         <v-icon size="30" v-if="magazine.bookmark" :color="magazine.color">mdi-bookmark</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-bookmark-outline</v-icon>
@@ -40,16 +40,21 @@ export default {
         userEmail: '',
         coverImg: '',
         date: '',
-        heart: '',
+        heart: false,
         bookmark: '',
+        likes: []
       }
     }
   },
   created() {
     this.magazine = this.magazineData;
+    this.magazine.likes = [1,2,3]; 
+    this.magazine.bookmark = true;
+    console.log(this.magazine);
   },
   methods: {
     showMag() {
+      console.log('before send', this.magazine)
       this.$emit('show-magazine', this.magazine)
     }
   }

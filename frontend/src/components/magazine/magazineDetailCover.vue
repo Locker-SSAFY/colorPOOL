@@ -2,14 +2,14 @@
   <div class="book-container" @click="showDetail">
     <div class="book">
       <div class="book-cover" :style="{'background-color': magazine.color}">
-        <img class="image" :src="magazine.coverImg" />
-        <span class="time">{{magazine.date}}</span>
-        <span class="logo">{{magazine.name}}</span>
-        <span class="user">{{magazine.userName}}</span>
-        <span class="email">{{magazine.userEmail}}</span>
+        <img class="image" :src="magazine.contents[0].url" />
+        <span class="time">{{magazine.createdDate}}</span>
+        <span class="logo">{{magazine.magazineName}}</span>
+        <span class="user">{{magazine.userNickname}}</span>
+        <span class="email">{{magazine.email}}</span>
       </div>
       <div class="book-spine"
-      :style="{'background': 'linear-gradient(to bottom, ' + magazine.theme[0] + ' 20%, ' + magazine.theme[1] + ' 20% 40%, ' + magazine.theme[2] + ' 40% 60%, ' + magazine.theme[3] + ' 60% 80%, ' + magazine.theme[4] + ' 80%)'}">
+      :style="{'background': 'linear-gradient(to bottom, ' + this.theme[0] + ' 20%, ' + this.theme[1] + ' 20% 40%, ' + this.theme[2] + ' 40% 60%, ' + this.theme[3] + ' 60% 80%, ' + this.theme[4] + ' 80%)'}">
         <span class="spine-logo">ColorPOOL</span>
       </div>
     </div>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+// import materialColors from '../../assets/color/colorList.js'
+import axios from 'axios'
 import {mapActions} from 'vuex'
 const detailStore = 'detailStore'
 
@@ -29,7 +31,9 @@ export default {
   },
   data() {
     return {
-      mag_data: {}
+      mag_data: {},
+      theme: [],
+      themeData: {}
     }
   },
   methods: {
@@ -39,21 +43,51 @@ export default {
       if(res) {
         // console.log(res)
         const payload = this.mag_data;
+        console.log('잡지', payload);
         this.AC_DETAIL(payload);
         let route = this.$router.resolve({path: '/detail'});
         window.open(route.href, 'window','location=no, directories=no,resizable=no,status=no,toolbar=no,menubar=no, width=1200,height=600,left=0, top=0, scrollbars=yes');
       } 
+    },
+    getThemeColorData(themeId) {
+      const token = localStorage.getItem('access_token')
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      axios.get('https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
+      .then((res) => {
+        this.themeData = res.data.data;
+        console.log('detail cover themeData', this.themeData)
+        const color1 = 'rgb(' + this.themeData.red1 + ',' + this.themeData.green1 + ',' + this.themeData.blue1 + ')';
+        const color2 = 'rgb(' + this.themeData.red2 + ',' + this.themeData.green2 + ',' + this.themeData.blue2 + ')';
+        const color3 = 'rgb(' + this.themeData.red3 + ',' + this.themeData.green3 + ',' + this.themeData.blue3 + ')';
+        const color4 = 'rgb(' + this.themeData.red4 + ',' + this.themeData.green4 + ',' + this.themeData.blue4 + ')';
+        const color5 = 'rgb(' + this.themeData.red5 + ',' + this.themeData.green5 + ',' + this.themeData.blue5 + ')';
+        this.theme = [color1, color2, color3, color4, color5];
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  },
+  watch: {
+    themeData(val) {
+      this.mag_data[0].selectedColor.themes = val;
     }
   },
   created() {
+    console.log('detailcover', this.magazine);
+    this.getThemeColorData(this.magazine.themeId);
     this.mag_data = 
       [
         {
           "id": 0,
           "user": {
             "id": 0,
-            "email": "kang@kang.com",
-            "nickname": "kang",
+            "email": this.magazine.email,
+            "nickname": this.magazine.userNickname,
             "provider": "root",
             "roles": [
               "ROLE_USER"
@@ -89,26 +123,7 @@ export default {
             }
             ]
           },
-          "contents": [
-            {
-              "id": 1,
-              "url": "https://images.unsplash.com/photo-1548549557-dbe9946621da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-              "mainText": "패션은 나이, 성별, 인종을 초월한다",
-              "subText": "shoes",
-              "question": "당신에게 코딩이란?",
-              "answer": "인터뷰에 답변을 적어주세요",
-              "template": "0"
-            },
-            {
-              "id": 2,
-              "url": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=662&q=80",
-              "mainText": "Fashion is about Passion",
-              "subText": "shoes",
-              "question": "당신에게 코딩이란?",
-              "answer": "인터뷰에 답변을 적어주세요",
-              "template": "2"
-            }
-          ],
+          "contents": this.magazine.contents,
           "likes": [
             {
               "id": 0,

@@ -37,7 +37,7 @@
       <!-- <img :src="imgUrl"> -->
       <img id="selected_img" :src="require(`@/assets/images/colorimages/${folder}/${pos}.jpg`)">
       <!-- 모달창 -->
-      <v-dialog width="300" v-model="dialog">
+      <v-dialog v-if="recommend" width="300" v-model="dialog">
         <template v-slot:activator="{ on, attrs }"> 
           <v-btn
             color="red lighten-2"
@@ -50,7 +50,7 @@
         </template>
         <v-card width="300">
           <v-card-title class="headline grey lighten-2">Recommend Color</v-card-title>
-          <v-banner :color="dummyColor" height="300"></v-banner>
+          <v-banner :color="dummyColor.hex" height="300"></v-banner>
           <v-btn @click="goRecommend">Choose Recommended Color</v-btn>
         </v-card>
         
@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 import ColorPalette from './ColorPalette'
 import RecommendTheme from '../recommend-theme/RecommendTheme'
@@ -95,7 +96,7 @@ export default {
     this.folder = parseInt((this.storeSelectedColor.id) / 10) + 1;
     this.pos = (Number(this.storeSelectedColor.id) % 10);
 
-    this.dummyColor = this.materialColors[this.dummyPos[0]].variations[this.dummyPos[1]].hex
+    
   },
   computed: {
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'})
@@ -109,7 +110,8 @@ export default {
       pos: '',
       dialog: false,
       dummyPos: [Math.floor(Math.random() * 20), Math.floor(Math.random() * 10)],
-      dummyColor: ''
+      dummyColor: '',
+      recommend: false,
     }
   },
   watch: {
@@ -117,7 +119,26 @@ export default {
       this.selectedColor = val;
       this.folder = parseInt((this.selectedColor.id) / 10) + 1;
       this.pos = (Number(this.selectedColor.id) % 10);
-      this.dummyColor = this.materialColors[this.dummyPos[0]].variations[this.dummyPos[1]].hex
+      const token = localStorage.getItem('access_token')
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      axios.get('https://j3a303.p.ssafy.io/api/recommend/color', {headers: header})
+      .then((res) => {
+        console.log(res)
+        if(res.data.success == true) {
+          this.recommend = true;
+          this.dummyColor = this.materialColors[parseInt(res.data.data / 10)].variations[parseInt(res.data.data % 10)]
+          console.log(this.recommend);
+        } else {
+          this.recommend = false;
+          console.log(this.recommend);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
   },
   methods : {
@@ -138,7 +159,7 @@ export default {
     },
     goRecommend() {
       this.dialog = false;
-      let color = this.materialColors[this.dummyPos[0]].variations[this.dummyPos[1]];
+      let color = this.dummyColor;
       const payload = {selectedColor : color};
       this.AC_SELECTED_COLOR(payload);
     }

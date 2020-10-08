@@ -87,7 +87,7 @@ const magazineStore = {
     AC_MAGAZINE_POST: ({commit, state}, payload) => {
       console.log('AC_MAGAZINE_POST', payload);
       const token = localStorage.getItem('access_token');
-      const url = 'https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine';
+      const url = 'https://j3a303.p.ssafy.io/api/magazine';
       const header = {
         'accept': '*',
         'X-AUTH-TOKEN': token,

@@ -41,6 +41,9 @@ const rankStore = {
       //     let id = ele.selectedColorId;
       //     ele.color = materialColors[parseInt(id / 10)].variations[parseInt(id % 10)].hex
       //   });
+      //   console.log(res.data.data.slice(0, 3))
+      //   // commit('MU_TOP_RANK', res.data.data.slice(0, 3));
+      //   // commit('MU_REST_RANK', res.data.data.slice(3, res.data.data.length))
       //   commit('MU_MAGAZINE_LIST', res.data.data);
       // })
       // .catch((err) => {
