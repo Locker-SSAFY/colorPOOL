@@ -28,6 +28,7 @@
         icon
         text
         @click="getTheme"
+        v-if="isPick || isGet"
       >
         <v-icon size="80">mdi-arrow-right</v-icon>
       </v-btn>
