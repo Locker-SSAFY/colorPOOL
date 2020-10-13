@@ -1,9 +1,7 @@
 package com.ssafy.socks.service.magazine;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.socks.advice.exception.CCommunicationException;
+import com.ssafy.socks.advice.exception.CMagazineNotFoundException;
 import com.ssafy.socks.advice.exception.CUserNotFoundException;
 import com.ssafy.socks.entity.color.ColorHistory;
-import com.ssafy.socks.entity.magazine.Bookmark;
 import com.ssafy.socks.entity.magazine.Contents;
 import com.ssafy.socks.entity.magazine.Likes;
 import com.ssafy.socks.entity.magazine.Magazine;
@@ -26,7 +24,6 @@ import com.ssafy.socks.repository.color.ColorHistoryJpaRepository;
 import com.ssafy.socks.repository.color.SelectedColorJpaRepository;
 import com.ssafy.socks.repository.magazine.BookmarkRepository;
 import com.ssafy.socks.repository.magazine.ContentsJpaRepository;
-import com.ssafy.socks.repository.magazine.LikeRepository;
 import com.ssafy.socks.repository.magazine.LikesJpaRepository;
 import com.ssafy.socks.repository.magazine.MagazineJpaRepository;
 import com.ssafy.socks.repository.magazine.MagazineRepository;
@@ -49,7 +46,6 @@ public class MagazineService {
 	private final ColorHistoryJpaRepository colorHistoryJpaRepository;
 	private final SelectedColorJpaRepository selectedColorJpaRepository;
 	private final ContentsJpaRepository contentsJpaRepository;
-	private final LikeRepository likeRepository;
 
 	public void saveMagazine(MagazineModel magazineModel) {
 		LocalDateTime currDate = LocalDateTime.now();
@@ -181,25 +177,35 @@ public class MagazineService {
 
 	public LikesModel setLikes(Long magazineId, String userEmail) {
 		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
+		magazineJpaRepository.findById(magazineId).orElseThrow(CMagazineNotFoundException::new);
 		Optional<Likes> likesOptional = likesJpaRepository.findByUserIdAndMagazineId(user.getId(),magazineId);
+
+
+		logger.info("-------- likes info --------");
 
 		LikesModel likesModel = new LikesModel();
 		if(likesOptional.isPresent()) {
-			likeRepository.updateUnChecked(magazineId,user.getId());
-			likesModel.setMagazineId(magazineId);
-			likesModel.setUserId(user.getId());
+			logger.info("라이크 존재");
+			likesJpaRepository.deleteById(likesOptional.get().getId());
 			likesModel.setClicked(false);
 		} else {
+			logger.info("라이크 존재하지 않음");
 			likesJpaRepository.save(
 				Likes.builder()
 					.magazineId(magazineId)
 					.userId(user.getId())
 					.build()
 			);
-			likesModel.setMagazineId(magazineId);
-			likesModel.setUserId(user.getId());
 			likesModel.setClicked(true);
 		}
+
+		likesModel.setMagazineId(magazineId);
+		likesModel.setUserId(user.getId());
+
+		logger.info("magazine Id : " + likesModel.getMagazineId());
+		logger.info("user Id : " + likesModel.getUserId());
+
+		logger.info("-------- likes info --------");
 		return likesModel;
 	}
 
