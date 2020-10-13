@@ -163,7 +163,12 @@ export default {
     name: void 0
   },
   created(){
-    this.backColor = this.storeSelectedColor.hex;
+    const bc = this.storeSelectedColor;
+    if(bc === null){
+      this.backColor = '#FFFFFF';
+    } else {
+      this.backColor = this.storeSelectedColor.hex;
+    }
     this.dialog = this.storeDisplay;
     this.isLoginError = this.storeIsLoginError;
     this.userInfo = this.storeUserInfo;
@@ -213,7 +218,9 @@ export default {
   },
   watch: {
     storeSelectedColor(val){
-      this.backColor = val.hex;
+      if(val != null){
+        this.backColor = val.hex;
+      }
     },
     storeIsLoginError(val){
       this.isLoginError = val

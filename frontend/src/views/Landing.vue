@@ -31,6 +31,7 @@ import GetColor from '../components/landing/get-color/GetColor'
 import PickColor from '../components/landing/pick-color/PickColor'
 const colorStore = 'colorStore';
 const landingStore = 'landingStore';
+const userStore = 'userStore';
 
 export default {
   components: {
@@ -41,20 +42,25 @@ export default {
       isPick: null,
       isGet: null,
       isLanding: null,
-      selectedColor: ''
+      selectedColor: '',
+      isLogin: false,
     }
   },
   created() {
-    this.isPick = this.storeIsPick;
-    this.isGet = this.storeIsGet;
+    // this.isPick = this.storeIsPick;
+    // this.isGet = this.storeIsGet;
+    this.isPick = false;
+    this.isGet = false;
     this.isLanding = this.storeIsLanding
     this.AC_IS_LANDING({isLanding: true});
     window.scrollTo({left: 0,top: 0});
     this.AC_SELECTED_COLOR({selectedColor: null});
     this.AC_SELECTED_THEME({selectedTheme: null});
+    this.isLogin = this.storeIsLogin;
   },
   computed: {
-    ...mapGetters(landingStore, {storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK', storeIsLanding: 'GE_IS_LANDING'})
+    ...mapGetters(landingStore, {storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK', storeIsLanding: 'GE_IS_LANDING'}),
+    ...mapGetters(userStore, {storeIsLogin: 'GE_IS_LOGIN'})
   },
   methods : {
     ...mapActions(colorStore, ['AC_SELECTED_COLOR','AC_SELECTED_THEME']),
@@ -77,6 +83,9 @@ export default {
     },
     isLanding(val){
       this.isLanding = val;
+    },
+    isLogin(val){
+      this.isLogin = val;
     }
   }
 }
