@@ -78,7 +78,7 @@ export default {
   },
   data(){
     return{
-      myWidth: 89.5,
+      myWidth: 90,
       scrapWidth: 5,
       recentWidth: 5,
       coverWidth: 0,
@@ -95,7 +95,9 @@ export default {
       scrapMagazine: [],
       recentMagazine: [],
       selected: null,
-      showCover: false
+      showCover: false,
+
+      nowSelected: 'my'
     }
   },
   computed: {
@@ -159,44 +161,65 @@ export default {
     ...mapActions(myPageStore, ['AC_MY_LIST', 'AC_SCRAP_LIST', 'AC_RECENT_LIST']),
     hover(name){
       if(name==='my'){
-        this.myWidth = this.myWidth+0.5;
+        if(this.nowSelected !== name){
+          this.myWidth = this.myWidth+0.4;
+          this.scrapWidth = this.scrapWidth-0.5;
+        }
       } else if(name==='scrap'){
-        this.scrapWidth = this.scrapWidth+0.5;
+        if(this.nowSelected !== name){
+          this.scrapWidth = this.scrapWidth+0.4;
+          this.recentWidth = this.recentWidth-0.5;
+        }
       } else if(name==='recent'){
-        this.recentWidth = this.recentWidth+0.5;
+        if(this.nowSelected !== name){
+          this.recentWidth = this.recentWidth+0.4;
+          this.scrapWidth = this.scrapWidth-0.5;
+        }
       }
     },
     out(name){
       if(name==='my'){
-        this.myWidth = this.myWidth-0.5;
+        if(this.nowSelected !== name){
+          this.myWidth = this.myWidth-0.4;
+          this.scrapWidth = this.scrapWidth+0.5;
+        }
       } else if(name==='scrap'){
-        this.scrapWidth = this.scrapWidth-0.5;
+        if(this.nowSelected !== name){
+          this.scrapWidth = this.scrapWidth-0.4;
+          this.recentWidth = this.recentWidth+0.5; 
+        }
       } else if(name==='recent'){
-        this.recentWidth = this.recentWidth-0.5;
+        if(this.nowSelected !== name){
+          this.recentWidth = this.recentWidth-0.4;
+          this.scrapWidth = this.scrapWidth+0.5;
+        }
       }
     },
     show(name){
       if(name === 'my'){
+        this.nowSelected = name;
         this.isMyMagazine = true;
         this.isScrap = false;
         this.isRecent = false;
-        this.myWidth = 89.5;
+        this.myWidth = 90;
         this.scrapWidth = 5;
         this.recentWidth = 5;
       } else if(name === 'scrap'){
+        this.nowSelected = name;
         this.isMyMagazine = false;
         this.isScrap = true;
         this.isRecent = false;
         this.myWidth = 5;
-        this.scrapWidth = 89.5;
+        this.scrapWidth = 90;
         this.recentWidth = 5;
       } else if(name === 'recent'){
+        this.nowSelected = name;
         this.isMyMagazine = false;
         this.isScrap = false;
         this.isRecent = true;
         this.myWidth = 5;
         this.scrapWidth = 5;
-        this.recentWidth = 89.5;
+        this.recentWidth = 90;
       }
     },
     showMagazine(magazine){
@@ -228,9 +251,6 @@ export default {
     transition: 0.5s;
     border-radius: 15px;
   }
-  /* .content-cover .info {
-    text-align: center;
-  } */
 
   #close-btn{
     float: right;
@@ -279,7 +299,6 @@ export default {
     height: 100%;
     width: 100%;
     margin-left: 94%;
-    /* background-color: red; */
   }
 
   .index-title h1{
@@ -290,7 +309,7 @@ export default {
 
   .my-index{
     position: relative;
-    background-color: navy;
+    background-color: #7678ed;
     transition: 0.5s;
     height: 100%;
     width: 100%;
@@ -315,7 +334,7 @@ export default {
 
   .scrap-index{
     position: relative;
-    background-color:palegoldenrod;
+    background-color: #f7b801;
     transition: 0.5s;
     height: 100%;
     width: 100%;
@@ -340,7 +359,7 @@ export default {
   
   .recent-index {
     position: relative;
-    background-color:rosybrown;
+    background-color: #f35b04;
     transition: 0.5s;
     height: 100%;
     width: 100%;
