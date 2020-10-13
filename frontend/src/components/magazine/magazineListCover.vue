@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import axios from '../../api/axiosCommon'
+import axios from 'axios'
 
 export default {
   name: 'MagazineListCover',
@@ -74,7 +74,7 @@ export default {
         'accept' : '*',
         'X-AUTH-TOKEN': token,
       }
-      axios.post('/magazine/like/' + magazine.magazineId, {headers: header})
+      axios.post('https://j3a303.p.ssafy.io/api/magazine/like/' + magazine.magazineId, {headers: header})
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
     }
