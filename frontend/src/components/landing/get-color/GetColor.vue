@@ -69,11 +69,6 @@
       </div>
     </v-card>
 
-    <!-- 배색 추천 받으러 가기 버튼 + 선택 안한 경우 modal -->
-    <div class="next-button" v-if="this.$parent.isGet" @click="getTheme">
-      <NonPickDialog></NonPickDialog>
-    </div>
-
     <!-- 배색 추천 화면 -->
     <div class="bottom-page" ref="messageDisplay">
       <RecommendTheme></RecommendTheme>
@@ -83,7 +78,7 @@
 
 <script>
 import RecommendTheme from '../recommend-theme/RecommendTheme';
-import NonPickDialog from '../recommend-theme/NonPickDialog';
+// import NonPickDialog from '../recommend-theme/NonPickDialog';
 import Loading from '../../loading/GetColorLoading';
 import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
@@ -94,7 +89,7 @@ export default {
   name: 'GetColor',
   components: {
     RecommendTheme,
-    NonPickDialog,
+    // NonPickDialog,
     Loading
   },
   data () {
@@ -150,17 +145,6 @@ export default {
         this.loading = false;
         console.log(err);
       })
-    },
-    getTheme(){
-      if(this.isLogin == false){
-        alert("배색 추천을 받고 싶다면, 로그인을 먼저 해주세요!");
-        this.AC_DISPLAY(true);
-      } else {
-        const payload = this.selectedColor;
-        this.AC_THEMES(payload)
-        window.scrollTo({left: 0, top: 1000, behavior: 'smooth'});
-      }
-      
     },
     getColor(color){
       var rgb = this.getRGB(color);
@@ -375,12 +359,6 @@ export default {
 
   .get-color.left ul li .image-layer:hover {
     opacity: 0.1;
-  }
-
-  .next-button {
-    position: absolute;
-    right: 5%;
-    top: 85%;
   }
 
   .bottom-page {
