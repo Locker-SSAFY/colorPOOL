@@ -17,4 +17,7 @@ public class MagazineModel {
 	private String magazineName;
 	private String userNickname;
 	private LocalDateTime createdDate;
+
+	private int likeCount;
+	private boolean clicked;
 }
