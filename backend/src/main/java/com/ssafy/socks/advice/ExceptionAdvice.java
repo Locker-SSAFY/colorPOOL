@@ -14,6 +14,7 @@ import com.ssafy.socks.advice.exception.CAccessDeniedException;
 import com.ssafy.socks.advice.exception.CAuthenticationEntryPointException;
 import com.ssafy.socks.advice.exception.CCommunicationException;
 import com.ssafy.socks.advice.exception.CEmailSigninFailedException;
+import com.ssafy.socks.advice.exception.CMagazineNotFoundException;
 import com.ssafy.socks.advice.exception.CUserDuplicatedException;
 import com.ssafy.socks.advice.exception.CUserNotFoundException;
 import com.ssafy.socks.model.response.CommonResult;
@@ -81,6 +82,13 @@ public class ExceptionAdvice {
 	protected CommonResult userEmailConstraintException(HttpServletRequest request, DataIntegrityViolationException e) {
 		return responseService.getFailResult(Integer.parseInt(getMessage("userEmailConstraint.code")),
 			getMessage("userEmailConstraint.msg"));
+	}
+
+	@ExceptionHandler(CMagazineNotFoundException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	protected CommonResult magazineNotFoundException(HttpServletRequest request, CMagazineNotFoundException e) {
+		return responseService.getFailResult(Integer.parseInt(getMessage("magazineNotFoundException.code")),
+			getMessage("magazineNotFoundException.msg"));
 	}
 
 	// code정보에 해당하는 메시지를 조회합니다.
