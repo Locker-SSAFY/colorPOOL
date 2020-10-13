@@ -115,8 +115,13 @@ export default {
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'})
   },
   created(){
-    this.selectedColor = this.storeSelectedColor;
-    this.backColor = this.storeSelectedColor.hex;
+    const bc = this.storeSelectedColor;
+    if(bc === null){
+      this.backColor = ''
+    } else {
+      this.selectedColor = this.storeSelectedColor;
+      this.backColor = bc.hex;
+    }
   },
   watch: {
     storeSelectedColor(val){
@@ -147,10 +152,15 @@ export default {
       })
     },
     getTheme(){
-      const payload = this.selectedColor;
-      this.AC_THEMES(payload)
-      document.body.className = "unlock";
-      window.scrollTo({left: 0, top: 1000, behavior: 'smooth'});
+      if(this.isLogin == false){
+        alert("배색 추천을 받고 싶다면, 로그인을 먼저 해주세요!");
+        this.AC_DISPLAY(true);
+      } else {
+        const payload = this.selectedColor;
+        this.AC_THEMES(payload)
+        window.scrollTo({left: 0, top: 1000, behavior: 'smooth'});
+      }
+      
     },
     getColor(color){
       var rgb = this.getRGB(color);

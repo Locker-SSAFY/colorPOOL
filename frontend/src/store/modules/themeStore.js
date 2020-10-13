@@ -21,7 +21,7 @@ const themeStore = {
         'X-AUTH-TOKEN': token,
       }
       const themeId = payload.themeId;
-      axios.get('https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
+      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
       .then((res) => {
         console.log(res);
         commit('MU_THEME_COLOR', res.data.data)

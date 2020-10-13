@@ -33,7 +33,7 @@
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
 
     <!-- 오른쪽 배경 -->
-    <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : selectedColor.hex}">
+    <div v-if="this.$parent.isPick" class="pick-color right" v-bind:style="{'background-color' : backColor}">
       <!-- <img :src="imgUrl"> -->
       <img id="selected_img" :src="require(`@/assets/images/colorimages/${folder}/${pos}.jpg`)">
       <!-- 모달창 -->
@@ -84,6 +84,7 @@ import ColorPalette from './ColorPalette'
 import RecommendTheme from '../recommend-theme/RecommendTheme'
 import materialColors from '../../../assets/color/colorList.js'
 const colorStore = 'colorStore'
+const userStore = 'userStore'
 
 export default {
   name: 'PickColor',
@@ -92,14 +93,18 @@ export default {
     RecommendTheme
   },
   created(){
-    this.selectedColor = this.storeSelectedColor.hex;
-    this.folder = parseInt((this.storeSelectedColor.id) / 10) + 1;
-    this.pos = (Number(this.storeSelectedColor.id) % 10);
-
-    
+    const bc = this.storeSelectedColor;
+    if(bc === null){
+      this.backColor = '';
+    } else {
+      console.log("bc", bc);
+      this.backColor = bc.hex;
+      this.folder = parseInt((this.storeSelectedColor.id) / 10) + 1;
+      this.pos = (Number(this.storeSelectedColor.id) % 10);
+    }
   },
   computed: {
-    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'})
+    ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR'}),
   },
   data () {
     return {
@@ -117,6 +122,7 @@ export default {
   watch: {
     storeSelectedColor(val){
       this.selectedColor = val;
+      this.backColor = val.hex;
       this.folder = parseInt((this.selectedColor.id) / 10) + 1;
       this.pos = (Number(this.selectedColor.id) % 10);
       const token = localStorage.getItem('access_token')
@@ -139,10 +145,14 @@ export default {
       .catch((err) => {
         console.log(err);
       })
+    },
+    storeIsLogin(val){
+      this.isLogin = val;
     }
   },
   methods : {
     ...mapActions(colorStore, ['AC_SELECTED_COLOR', 'AC_THEMES']),
+    ...mapActions(userStore, ['AC_DISPLAY']),
     clickPick() {
       this.$parent.isPick = true;
       this.$parent.isGet = false;
@@ -151,11 +161,14 @@ export default {
     },
     getTheme(){
       const payload = this.selectedColor;
-      console.log('pick color payload', payload);
-      this.AC_THEMES(payload)
-      document.body.className = "unlock";
-      console.log(document.body);
-      window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
+      if(this.$parent.isLogin != null){
+        console.log('pick color payload', payload);
+        this.AC_THEMES(payload);
+        window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
+      } else {
+        alert('배색을 추천받으려면 로그인을 먼저해주세요!');
+        this.AC_DISPLAY(true);
+      }
     },
     goRecommend() {
       this.dialog = false;

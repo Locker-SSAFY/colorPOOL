@@ -163,7 +163,12 @@ export default {
     name: void 0
   },
   created(){
-    this.backColor = this.storeSelectedColor.hex;
+    const bc = this.storeSelectedColor;
+    if(bc === null){
+      this.backColor = '#FFFFFF';
+    } else {
+      this.backColor = this.storeSelectedColor.hex;
+    }
     this.dialog = this.storeDisplay;
     this.isLoginError = this.storeIsLoginError;
     this.userInfo = this.storeUserInfo;
@@ -188,32 +193,34 @@ export default {
       showSigninVal: true,
       backColor: '',
       email: "",
+      nickName: "",
+      password: "",
+      passwordConfirm: "",
       emailRules: [
         v => !!v || "이메일을 입력해주세요",
         v =>
           /^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+\.[A-Za-z0-9]+/.test(v) ||
           "이메일 형식에 맞게 입력해주세요"
       ],
-      nickName: "",
       nickNameRules: [
         v => !!v || "닉네임을 입력해주세요",
         v =>
           (v && v.length >= 1 && v.length <= 30) ||
           "닉네임은 최소 1자 최대 30자 입니다"
       ],
-      password: "",
       passwordRules: [
         v => !!v || "비밀번호를 입력해주세요",
         v =>
           (v && v.length >= 4 && v.length <= 50) ||
           "비밀번호는 최소 4자 최대 50자 입니다"
       ],
-      passwordConfirm: ""
     }
   },
   watch: {
     storeSelectedColor(val){
-      this.backColor = val.hex;
+      if(val != null){
+        this.backColor = val.hex;
+      }
     },
     storeIsLoginError(val){
       this.isLoginError = val
@@ -253,23 +260,39 @@ export default {
       this.AC_SIGNIN(payload);
     },
     signup(){
-      const payload = {
-        nickname: this.nickName,
-        userInfo: {
-          email: this.email, 
-          password: this.password,
-          provider: 'root'
-        }
-      }
-      
       var v = this;
-
-      axios.post(SERVER.ROUTES.signup, payload)
-      .then(function (response) {
-        console.log(response);
-        alert('회원가입 성공!');
-        v.showSignin;
-      })
+      if(this.nickName.length > 0 && this.email.lenght > 0, this.password.length > 0, this.password.length > 0){
+        if (!( /^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+\.[A-Za-z0-9]+/.test(this.email))){
+          alert('이메일 형식을 맞춰주세요!');
+        } else if( this.nickName.length < 1 || this.nickName.length > 30){
+          alert('닉네임은 최소 1자 최대 30자 입니다');
+        } else if( this.password.length < 4 || this.password.length > 50){
+          alert('비밀번호는 최소 4자 최대 50자 입니다');
+        } else if(this.password !== this.passwordConfirm){
+          alert('비밀번호가 일치하지 않습니다');
+        }
+        else {
+          const payload = {
+            nickname: this.nickName,
+            userInfo: {
+              email: this.email, 
+              password: this.password,
+              provider: 'root'
+            }
+          }
+          axios.post(SERVER.ROUTES.signup, payload)
+          .then(response => {
+            console.log(response);
+            alert('회원가입 성공!');
+            v.showSignin();
+          })
+          .catch(err =>{
+            alert(err.response.data.msg);
+          })
+        }
+      } else {
+        alert('모든 내용을 다 적어주세요!');
+      }
     },
     close(){
       this.AC_ERROR(null);
