@@ -23,3 +23,6 @@ accessDenied:
 communicationError:
   code: "-1006"
   msg: "통신 중 오류가 발생하였습니다."
+magazineNotFoundException:
+  code: "-1007"
+  msg: "존재하지 않는 잡지 입니다."
