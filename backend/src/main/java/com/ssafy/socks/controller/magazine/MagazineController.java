@@ -89,8 +89,6 @@ public class MagazineController {
 	@Operation(summary = "인기순 잡지 정보", description = "모든 잡지 정보를 인기도 순으로 조회한다.")
 	@GetMapping(value = "/magazines")
 	public ListResult<MagazineModel> getAllMagazinesByLikes() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String userEmail = authentication.getName();
 		return responseService.getListResult(magazineService.getMagazines());
 	}
 
