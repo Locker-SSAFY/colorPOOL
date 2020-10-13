@@ -18,12 +18,19 @@ public class MagazineRepository {
 	private final EntityManager em;
 
 	public List<Magazine> findMagazineOrderByLikes() {
-		return em.createQuery("select m "
-			+ "from Magazine m "
-			+ "left outer join Likes l "
-			+ "on m.id = l.magazineId "
-			+ "group by m.id "
-			+ "order by count(l.magazineId)", Magazine.class)
+		return em.createQuery(
+			"select "
+				+ "m "
+			+ "from "
+				+ "Magazine m "
+			+ "left outer join "
+				+ "Likes l "
+			+ "on "
+				+ "m.id = l.magazineId "
+			+ "group by "
+				+ "m.id "
+			+ "order by "
+				+ "m.likeCount desc",Magazine.class)
 			.getResultList();
 	}
 }

@@ -10,6 +10,7 @@ import lombok.Getter;
 
 @Getter @Builder
 public class MagazineModel {
+	private Long magazineId;
 	private Long themeId;
 	private Long selectedColorId;
 	private String email;

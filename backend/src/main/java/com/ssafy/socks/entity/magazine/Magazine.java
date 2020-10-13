@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ssafy.socks.entity.user.User;
 
@@ -44,4 +45,7 @@ public class Magazine {
 
 	@Column(name = "CREATED_DATE", nullable = false)
 	private LocalDateTime createdDate;
+
+	@Column(name = "LIKE_COUNT", nullable = false)
+	private int likeCount;
 }
