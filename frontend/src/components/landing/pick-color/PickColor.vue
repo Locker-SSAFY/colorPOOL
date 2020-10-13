@@ -23,11 +23,10 @@
           <img id="pick_img" src="../../../assets/images/colorimg.png">
           <!-- <p style="text-align: center; font-size: 1.1rem;">원하는 색에 대한 배색을 추천받아보세요</p> -->
         </div>
-        <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 100; font-size: 18px; text-align: center;">
+        <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 100; font-size: 18px; text-align: center; user-select: none;">
           원하는 색에 대한 배색을 추천받아보세요
         </v-card-text>
 
-        <!-- text-align: center; font-size: 1.1rem; margin-bottom: 2rem; -->
     </v-card>
     <!-- 컬러 팔레트 -->
     <ColorPalette v-if="this.$parent.isPick"></ColorPalette>
@@ -207,6 +206,7 @@ export default {
 
   .pick-color.wrap .pick-desc table {
     width: 100%;
+    user-select: none;
   }
 
   .pick-color.wrap .pick-desc table tr:nth-child(1) {
@@ -282,7 +282,8 @@ export default {
     text-align: left;
     right: 20%;
     bottom: 15%;
-    transform: rotate(-15deg)
+    transform: rotate(-15deg);
+    user-select: none;
   }
   
   .button-desc p {

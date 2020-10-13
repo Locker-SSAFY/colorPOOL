@@ -160,6 +160,7 @@ export default {
   .landing.wrap .top-page .landing-logo .landing-desc {
     font-family: 'PermanentMarker-Regular';
     font-size: 1.7rem;
+    user-select: none;
   }
 
   /* .landing.wrap .top-page .landing-desc {
