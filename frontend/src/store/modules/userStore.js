@@ -56,6 +56,7 @@ const userStore = {
       .then(function (response) {
         // console.log(response);
         commit('MU_IS_LOGIN_ERROR', false);
+        commit('MU_ERROR', null);
         dispatch('AC_GET_USERINFO', {token: response.data.data});
       })
       .catch(function (error) {
