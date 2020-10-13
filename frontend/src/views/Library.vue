@@ -72,7 +72,9 @@ import MagazineRankCover from '../components/magazine/magazineRankCover'
 import MagazineListCover from '../components/magazine/magazineListCover'
 import MagazineDetailCover from '../components/magazine/magazineDetailCover'
 import {mapGetters, mapActions} from 'vuex'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../api/axiosCommon'
+import SERVER from '../api/restApi'
 const rankStore = 'rankStore'
 
 export default {
@@ -167,7 +169,7 @@ export default {
         'accept' : '*',
         'X-AUTH-TOKEN': token,
       }
-      axios.post('https://j3a303.p.ssafy.io/api/magazine/like/' + cover.magazineId, {headers: header})
+      axios.post(SERVER.ROUTES.postMagazineLike + cover.magazineId, {headers: header})
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
     }
