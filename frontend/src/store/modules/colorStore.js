@@ -1,4 +1,4 @@
-// import SERVER from '../../api/restApi'
+import SERVER from '../../api/restApi'
 import axios from '../../api/axiosCommon'
 
 const colorStore = {
