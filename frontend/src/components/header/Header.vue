@@ -123,6 +123,11 @@ export default {
             this.AC_IS_PICK({isPick: false});
             this.$router.push({name: 'Landing'});
             window.scrollTo(0, 0);
+          } else {
+            this.AC_IS_GET({isGet: false});
+            this.AC_IS_PICK({isPick: false});
+            window.scrollTo(0, 0);
+            window.location.reload();
           }
       }
     },

@@ -21,6 +21,16 @@
 
       <PickColor></PickColor>
       <GetColor></GetColor>
+
+      <!-- 배색 추천 받으러 가기 버튼 -->
+      <v-btn
+        class="next-button"
+        icon
+        text
+        @click="getTheme"
+      >
+        <v-icon size="80">mdi-arrow-right</v-icon>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -47,8 +57,6 @@ export default {
     }
   },
   created() {
-    // this.isPick = this.storeIsPick;
-    // this.isGet = this.storeIsGet;
     this.isPick = false;
     this.isGet = false;
     this.isLanding = this.storeIsLanding
@@ -63,13 +71,24 @@ export default {
     ...mapGetters(userStore, {storeIsLogin: 'GE_IS_LOGIN'})
   },
   methods : {
-    ...mapActions(colorStore, ['AC_SELECTED_COLOR','AC_SELECTED_THEME']),
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR','AC_SELECTED_THEME', 'AC_THEMES']),
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_IS_LANDING']),
+    ...mapActions(userStore, ['AC_IS_LOGIN', 'AC_DISPLAY']),
     goBack() {
       this.isPick= false;
       this.isGet = false;
       const payload = {selectedColor: null};
       this.AC_SELECTED_COLOR(payload);
+    },
+    getTheme(){
+      const payload = this.selectedColor;
+      if(this.isLogin){
+        this.AC_THEMES(payload);
+        window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
+      } else {
+        alert('배색을 추천받으려면 로그인을 먼저해주세요!');
+        this.AC_DISPLAY(true);
+      }
     }
   },
   watch: {
@@ -81,10 +100,10 @@ export default {
       this.isGet = val
       this.AC_IS_GET({isGet: val})
     },
-    isLanding(val){
+    storeIsLanding(val){
       this.isLanding = val;
     },
-    isLogin(val){
+    storeIsLogin(val){
       this.isLogin = val;
     }
   }
@@ -163,5 +182,12 @@ export default {
     top: 15.5%;
     left: 4%;
     z-index: 50;
+  }
+  
+
+  .next-button {
+    position: absolute;
+    right: 5%;
+    top: 85%;
   }
 </style>

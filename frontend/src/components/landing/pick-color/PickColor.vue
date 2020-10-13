@@ -55,15 +55,6 @@
         </v-card>
         
       </v-dialog>
-      <!-- 배색 추천 받으러 가기 버튼 -->
-      <v-btn
-        class="next-button"
-        icon
-        text
-        @click="getTheme"
-      >
-        <v-icon size="80">mdi-arrow-right</v-icon>
-      </v-btn>
       <div class="button-desc">
         <p>Get color recommendations</p>
         <p>based on the selected color</p>
@@ -122,6 +113,7 @@ export default {
   watch: {
     storeSelectedColor(val){
       this.selectedColor = val;
+      this.$parent.selectedColor = val;
       this.backColor = val.hex;
       this.folder = parseInt((this.selectedColor.id) / 10) + 1;
       this.pos = (Number(this.selectedColor.id) % 10);
@@ -130,13 +122,13 @@ export default {
         'accept' : '*',
         'X-AUTH-TOKEN': token,
       }
-      axios.get('https://j3a303.p.ssafy.io/api/recommend/color', {headers: header})
+      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/recommend/color', {headers: header})
       .then((res) => {
         console.log(res)
         if(res.data.success == true) {
           this.recommend = true;
           this.dummyColor = this.materialColors[parseInt(res.data.data / 10)].variations[parseInt(res.data.data % 10)]
-          console.log(this.recommend);
+          console.log('get Color Recommendation',this.recommend);
         } else {
           this.recommend = false;
           console.log(this.recommend);
@@ -158,17 +150,6 @@ export default {
       this.$parent.isGet = false;
       const payload = { selectedColor: this.materialColors[0].variations[4]};
       this.AC_SELECTED_COLOR(payload);
-    },
-    getTheme(){
-      const payload = this.selectedColor;
-      if(this.$parent.isLogin != null){
-        console.log('pick color payload', payload);
-        this.AC_THEMES(payload);
-        window.scrollTo({left: 0,top: 1000, behavior: 'smooth'});
-      } else {
-        alert('배색을 추천받으려면 로그인을 먼저해주세요!');
-        this.AC_DISPLAY(true);
-      }
     },
     goRecommend() {
       this.dialog = false;
@@ -194,7 +175,6 @@ export default {
   .pick-color.wrap {
     width: 50%;
     height: 100%;
-    /* background-color: skyblue; */
     float: left;
     transition-duration: 300ms;
     display: flex;
@@ -294,12 +274,6 @@ export default {
   
   .pick-color.wrap .v-card:hover #pick_img {
     transform: translateX(calc(-100% + 550px));
-  }
-
-  .next-button {
-    position: absolute;
-    right: 20%;
-    top: 85%;
   }
 
   .button-desc {
