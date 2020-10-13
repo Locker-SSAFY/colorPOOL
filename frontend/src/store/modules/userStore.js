@@ -26,7 +26,7 @@ const userStore = {
   },
   mutations: {
     MU_USER_INFO: (state, payload) => {
-      console.log('MU_USER_INFO', payload)
+      // console.log('MU_USER_INFO', payload)
       state.userInfo = payload
     },
     MU_IS_LOGIN: (state, payload) => {
@@ -54,12 +54,12 @@ const userStore = {
       // axios2.post('http://localhost:8080/api/signin', payload)
       axios.post(SERVER.ROUTES.signin, payload)
       .then(function (response) {
-        console.log(response);
+        // console.log(response);
         commit('MU_IS_LOGIN_ERROR', false);
         dispatch('AC_GET_USERINFO', {token: response.data.data});
       })
       .catch(function (error) {
-        console.log(error.response);
+        // console.log(error.response);
         if(error.response.data.success === false ){
           commit('MU_ERROR', error.response.data.msg);
         } 
@@ -82,7 +82,7 @@ const userStore = {
             axios.post(SERVER.ROUTES.socialSignin, payload)
           // axios.post('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/signin/social', payload)
             .then((response) => {
-              console.log("response", response.data);
+              // console.log("response", response.data);
               const token = response.data.data;
               localStorage.setItem('access_token', token);
               commit('MU_IS_LOGIN_ERROR', false);
