@@ -1,7 +1,7 @@
 <template>
   <div class="library-container wrap">
-    <div style="position: absolute; top: 23%; left: 25%; z-index: 1;">
-      <v-icon size="50" :color="magazine.color">mdi-chess-queen</v-icon>
+    <div style="position: absolute; top: 8%; left: 25%; z-index: 1;">
+      <v-icon v-if="!isShow" size="50" :color="crownColor">mdi-chess-queen</v-icon>
     </div>
     <div class="title-tape">
       <p>Library</p>
@@ -30,18 +30,23 @@
         :continuous="true"
         :interval="2500"
         :show-arrows="false"
+        @change="onSlideChange"
         style="display: flex; align-items: center; justify-content: center; width : 100%; height: 100%;"
+        
       >
         <v-carousel-item v-for="(ranker,index) in topRank" v-bind:key="index">
           <MagazineRankCover
             v-bind:rank="index + 1"
             v-bind:aboutRanker="ranker"
           ></MagazineRankCover>
-          <v-btn class="icon-heart" icon text @click="ranker.heart = !ranker.heart">
-            <v-icon size="40" v-if="ranker.heart" :color="ranker.color">mdi-heart</v-icon>
+          <!-- <div style="position: absolute; top: 0%; right: -2%; z-index: 1;">
+            <v-icon size="50" :color="crownColor">mdi-chess-queen</v-icon>
+          </div> -->
+          <v-btn class="icon-heart" icon text @click="clickHeart(ranker)">
+            <v-icon size="40" v-if="ranker.clicked" :color="ranker.color">mdi-heart</v-icon>
             <v-icon size="40" v-else :color="ranker.color">mdi-heart-outline</v-icon>
           </v-btn>
-          <span class="num-heart" :style="{'color' : ranker.color}">{{ranker.themeId}}</span>
+          <span class="num-heart" :style="{'color' : ranker.color}">{{ranker.likeCount}}</span>
           <v-btn  class="icon-bookmark" icon text @click="ranker.bookmark = !ranker.bookmark">
             <v-icon size="40" v-if="ranker.bookmark" :color="ranker.color">mdi-bookmark</v-icon>
             <v-icon size="40" v-else :color="ranker.color">mdi-bookmark-outline</v-icon>
@@ -67,6 +72,7 @@ import MagazineRankCover from '../components/magazine/magazineRankCover'
 import MagazineListCover from '../components/magazine/magazineListCover'
 import MagazineDetailCover from '../components/magazine/magazineDetailCover'
 import {mapGetters, mapActions} from 'vuex'
+import axios from '../api/axiosCommon'
 const rankStore = 'rankStore'
 
 export default {
@@ -117,7 +123,8 @@ export default {
       isHover: false,
       magazineList: [],
       isShow: false,
-      magazine: ''
+      magazine: '',
+      crownColor: ''
     }
   },
   created() {
@@ -143,6 +150,26 @@ export default {
       this.topRank = this.storeMagazineList.slice(0, 3);
       this.restRank = this.storeMagazineList.slice(3, this.storeMagazineList.length);
       console.log(this.topRank);
+    },
+    onSlideChange(slideNumber) {
+      // console.log(this.topRank[slideNumber].color)
+      this.crownColor = this.topRank[slideNumber].color;
+    },
+    clickHeart(cover) {
+      cover.clicked = !cover.clicked;
+      if(cover.clicked) {
+        cover.likeCount += 1;
+      } else {
+        cover.likeCount -= 1;
+      }
+      const token = localStorage.getItem('access_token');
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      axios.post('/magazine/like/' + cover.magazineId, {headers: header})
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
     }
   }
 } 

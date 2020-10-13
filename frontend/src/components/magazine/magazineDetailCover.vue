@@ -56,6 +56,7 @@ export default {
         'X-AUTH-TOKEN': token,
       }
       axios.get('https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
+      // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
       .then((res) => {
         this.themeData = res.data.data;
         console.log('detail cover themeData', this.themeData)
@@ -75,6 +76,84 @@ export default {
   watch: {
     themeData(val) {
       this.mag_data[0].selectedColor.themes = val;
+    },
+    magazine() {
+      this.getThemeColorData(this.magazine.themeId);
+    this.mag_data = 
+      [
+        {
+          "id": 0,
+          "user": {
+            "id": 0,
+            "email": this.magazine.email,
+            "nickname": this.magazine.userNickname,
+            "provider": "root",
+            "roles": [
+              "ROLE_USER"
+            ]
+          },
+          "selectedColor": {
+            "id": 0,
+            "color": {
+              "red": 0,
+              "green": 0,
+              "blue": 0
+            },
+            "themes": [
+            {
+              "id": 1204,
+              "red1": 152,
+              "green1": 232,
+              "blue1": 66,
+              "red2": 199,
+              "green2": 250,
+              "blue2": 140,
+              "red3": 255,
+              "green3": 241,
+              "blue3": 118,
+              "red4": 150,
+              "green4": 244,
+              "blue4": 255,
+              "red5": 77,
+              "green5": 208,
+              "blue5": 225,
+              "selectedColor": null,
+              "crawledImages": []
+            }
+            ]
+          },
+          "contents": this.magazine.contents,
+          "likes": [
+            {
+              "id": 0,
+              "user": {
+                "id": 0,
+                "email": "string",
+                "nickname": "string",
+                "provider": "string",
+                "roles": [
+                  "string"
+                ]
+              }
+            }
+          ],
+          "bookmarks": [
+            {
+              "id": 0,
+              "user": {
+                "id": 0,
+                "email": "string",
+                "nickname": "string",
+                "provider": "string",
+                "roles": [
+                  "string"
+                ]
+              }
+            }
+          ],
+          "createdDate": "2020-10-06T15:08:56.655Z"
+        }
+      ]
     }
   },
   created() {
@@ -295,6 +374,5 @@ export default {
   font-size: 30px;
   font-weight: 600;
 }
-
 
 </style>

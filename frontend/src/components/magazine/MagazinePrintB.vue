@@ -40,10 +40,16 @@ export default {
     downloadVisualReport () {
       let vc = this
       // alert("Descargando reporte visual")
+      var div = document.createElement("div");
+      div.style.width = "100px";
+      div.style.height = "200px";
+      div.style.background = "white";
+
       console.log('campaign-view#downloadVisualReport');
       window.html2canvas = html2canvas;
       window.html2canvas(vc.showCaptureRef(),  { letterRendering: 1, allowTaint : true}).then(canvas => {
           document.body.appendChild(canvas)
+          document.body.appendChild(div);
       }).catch((error) => {
         console.log("Erorr descargando reporte visual", error)
       });
