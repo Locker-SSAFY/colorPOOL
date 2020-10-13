@@ -55,7 +55,6 @@ const rankStore = {
       // 정상적인 axios 통신
       axios.get(SERVER.ROUTES.getMagazineList, {headers: header})
       .then((res) => {
-        console.log(res)
         res.data.data.forEach(ele => {
           let id = ele.selectedColorId;
           ele.color = materialColors[parseInt(id / 10)].variations[parseInt(id % 10)].hex
@@ -63,7 +62,7 @@ const rankStore = {
         commit('MU_MAGAZINE_LIST', res.data.data);
       })
       .catch((err) => {
-        console.err(err);
+        console.log(err);
       })
       ///////////////////////////////////////////////
     },

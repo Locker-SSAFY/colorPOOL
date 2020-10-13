@@ -9,11 +9,11 @@
       
     </div>
     <div class="cover-bar">
-      <v-btn class="icon-heart" icon text @click="clickHeart()">
-        <v-icon size="30" v-if="heart_click" :color="magazine.color">mdi-heart</v-icon>
+      <v-btn class="icon-heart" icon text @click="magazine.clicked = !magazine.clicked">
+        <v-icon size="30" v-if="magazine.clicked" :color="magazine.color">mdi-heart</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-heart-outline</v-icon>
       </v-btn>
-      <span class="num-heart" :style="{'color': magazine.color}">{{this.magazine.likes.length}}</span>  
+      <span class="num-heart" :style="{'color': magazine.color}">{{this.magazine.likeCount}}</span>  
       <v-btn  class="icon-bookmark" icon text @click="magazine.bookmark = !magazine.bookmark">
         <v-icon size="30" v-if="magazine.bookmark" :color="magazine.color">mdi-bookmark</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-bookmark-outline</v-icon>
