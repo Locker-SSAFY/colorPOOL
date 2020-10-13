@@ -107,7 +107,7 @@ public class MagazineController {
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
 	@Operation(summary = "좋아요", description = "좋아요를 클릭 한다.")
-	@PostMapping(value = "/magazine/like/{magazineId}")
+	@PostMapping(value = "/magazine/{magazineId}")
 	public SingleResult<LikesModel> setLike(@PathVariable Long magazineId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
