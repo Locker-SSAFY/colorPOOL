@@ -9,7 +9,7 @@
       
     </div>
     <div class="cover-bar">
-      <v-btn class="icon-heart" icon text @click="magazine.clicked = !magazine.clicked">
+      <v-btn class="icon-heart" icon text @click="clickHeart(magazine)">
         <v-icon size="30" v-if="magazine.clicked" :color="magazine.color">mdi-heart</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-heart-outline</v-icon>
       </v-btn>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import axios from '../../api/axiosCommon'
+
 export default {
   name: 'MagazineListCover',
   props: {
@@ -48,9 +50,8 @@ export default {
     }
   },
   created() {
+    console.log(this.magazineData);
     this.magazine = this.magazineData;
-    this.magazine.likes = [1,2,3]; 
-    this.magazine.bookmark = true;
     console.log(this.magazine);
 
     this.magazine.heart = false;
@@ -61,15 +62,21 @@ export default {
       console.log('before send', this.magazine)
       this.$emit('show-magazine', this.magazine)
     }, 
-    clickHeart() {
-      let heart = this.heart_click;
-      if(heart) {
-        this.magazine.heart = false;
-        this.heart_click = false;
+    clickHeart(magazine) {
+      magazine.clicked = !magazine.clicked;
+      if(magazine.clicked) {
+        magazine.likeCount += 1;
       } else {
-        this.magazine.heart = true;
-        this.heart_click = true;
+        magazine.likeCount -= 1;
       }
+      const token = localStorage.getItem('access_token');
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      axios.post('/magazine/like/' + magazine.magazineId, {headers: header})
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
     }
   },
 }

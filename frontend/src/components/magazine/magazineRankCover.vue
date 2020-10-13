@@ -40,7 +40,6 @@ export default {
       userEmail: '',
       coverImg: '',
       date: '',
-      likes: '',
       mag_data: {},
       materialColors: materialColors,
       themeData: {}
@@ -77,8 +76,10 @@ export default {
       const header = {
         'accept' : '*',
         'X-AUTH-TOKEN': token,
+      
       }
       axios.get('https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
+      // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
       .then((res) => {
         this.themeData = res.data.data;
         const color1 = 'rgb(' + this.themeData.red1 + ',' + this.themeData.green1 + ',' + this.themeData.blue1 + ')';
@@ -97,13 +98,11 @@ export default {
   created() {
     this.name = this.aboutRanker.magazineName;
     this.color = this.aboutRanker.color;
-    console.log('mag color', this.color)
     this.theme = ['#1A44AD','#505C7A','#38C0E0','#E49872','#AD6A5B'];
     this.userName = this.aboutRanker.userNickname;
     this.userEmail = this.aboutRanker.email;
     this.coverImg = this.aboutRanker.contents[0].url;
-    this.date = '2020-09-28 MON';
-    this.likes = 3;
+    this.date = this.aboutRanker.createdDate;
     this.getThemeColorData(this.aboutRanker.themeId);
     // const payload = {
     //   'themeId': this.aboutRanker.themeId

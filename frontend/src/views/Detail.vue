@@ -45,7 +45,7 @@ export default {
     console.log(this.magazine);
     this.AC_HEADER(true);
     console.log('magazine', this.magazine)
-    var theme = this.magazine.selectedColor.themes[0];
+    var theme = this.magazine.selectedColor.themes;
     console.log(theme);
     const r = parseInt((theme.red1 + theme.red2 + theme.red3 + theme.red4 + theme.red5) / 5);
     const g = parseInt((theme.green1 + theme.green2 + theme.green3 + theme.green4 + theme.green5) / 5);

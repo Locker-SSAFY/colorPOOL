@@ -42,7 +42,7 @@
           <!-- <div style="position: absolute; top: 0%; right: -2%; z-index: 1;">
             <v-icon size="50" :color="crownColor">mdi-chess-queen</v-icon>
           </div> -->
-          <v-btn class="icon-heart" icon text @click="ranker.clicked = !ranker.clicked">
+          <v-btn class="icon-heart" icon text @click="clickHeart(ranker)">
             <v-icon size="40" v-if="ranker.clicked" :color="ranker.color">mdi-heart</v-icon>
             <v-icon size="40" v-else :color="ranker.color">mdi-heart-outline</v-icon>
           </v-btn>
@@ -72,6 +72,7 @@ import MagazineRankCover from '../components/magazine/magazineRankCover'
 import MagazineListCover from '../components/magazine/magazineListCover'
 import MagazineDetailCover from '../components/magazine/magazineDetailCover'
 import {mapGetters, mapActions} from 'vuex'
+import axios from '../api/axiosCommon'
 const rankStore = 'rankStore'
 
 export default {
@@ -153,6 +154,22 @@ export default {
     onSlideChange(slideNumber) {
       // console.log(this.topRank[slideNumber].color)
       this.crownColor = this.topRank[slideNumber].color;
+    },
+    clickHeart(cover) {
+      cover.clicked = !cover.clicked;
+      if(cover.clicked) {
+        cover.likeCount += 1;
+      } else {
+        cover.likeCount -= 1;
+      }
+      const token = localStorage.getItem('access_token');
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      axios.post('/magazine/like/' + cover.magazineId, {headers: header})
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
     }
   }
 } 

@@ -32,7 +32,6 @@ const rankStore = {
         'accept' : '*',
         'X-AUTH-TOKEN': token,
       }
-      console.log(token)
 
       // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazines', {headers: header})
       // .then((res) => {

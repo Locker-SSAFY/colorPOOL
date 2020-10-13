@@ -63,25 +63,26 @@ const magazineStore = {
         'X-AUTH-TOKEN': token,
       }
 
-      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine/' + payload.magazineId, {headers: header})
-      .then((res) => {
-        console.log(res)
-        console.log(commit)
-        // commit('MU_SELECTED_MAGAZINE', res.data)
-      })
-      .catch((err) => {
-        console.err(err);
-      })
+      // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine/' + payload.magazineId, {headers: header})
+      // .then((res) => {
+      //   console.log(res)
+      //   console.log(commit)
+      //   // commit('MU_SELECTED_MAGAZINE', res.data)
+      // })
+      // .catch((err) => {
+      //   console.err(err);
+      // })
       
       ///////////////////////////////////////////////
       // 정상적인 axios 통신
-      // axios.get(SERVER.ROUTES.getMagazineOne + payload.magazineId, {headers: header})
-      // .then((res) => {
-      //   console.log(res);
-      // })
-      // .catch((err) => {
-      //   console.log(err)
-      // })
+      axios.get(SERVER.ROUTES.getMagazineOne + payload.magazineId, {headers: header})
+      .then((res) => {
+        console.log(res);
+        commit('MU_SELECTED_MAGAZINE', res.data);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
       ///////////////////////////////////////////////
     },
     AC_MAGAZINE_POST: ({commit, state}, payload) => {
@@ -166,23 +167,23 @@ const magazineStore = {
       }
 
       //////////////// 비정상적인 axios 통신 ///////////////
-      axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine/like' + magazineId, {headers: header})
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((err) => {
-        console.err(err);
-      })
+      // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/magazine/like' + magazineId, {headers: header})
+      // .then((res) => {
+      //   console.log(res)
+      // })
+      // .catch((err) => {
+      //   console.err(err);
+      // })
       //////////////////////////////////////////////////////
 
       /////////////////// 정상적인 axios 통신 /////////////////////
-      // axios.post(SERVER.ROUTES.postMagazineLike + magazineId, {headers: header})
-      // .then((res) => {
-      //   console.log(res);
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // })
+      axios.post(SERVER.ROUTES.postMagazineLike + magazineId, {headers: header})
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
       /////////////////////////////////////////////////////////////
     }
   }
