@@ -188,15 +188,10 @@ export default {
       this.AC_SELECTED_THEME_ID({selectedThemeId: null});
     },
     goCategory() {
-      // if(this.isLogin == false){
-        // alert("더 많은 서비스를 이용하고 싶다면, 로그인을 먼저 해주세요!");
-        // this.AC_DISPLAY(true);
-      // } else {
-        this.AC_IS_GET({isGet: false});
-        this.AC_IS_PICK({isPick: false});
-        this.AC_IS_LANDING({isLanding: false});
-        this.$router.push({ name: 'CategoryImage' });
-      // }
+      this.AC_IS_GET({isGet: false});
+      this.AC_IS_PICK({isPick: false});
+      this.AC_IS_LANDING({isLanding: false});
+      this.$router.push({ name: 'CategoryImage' });
     }
   }
 }
