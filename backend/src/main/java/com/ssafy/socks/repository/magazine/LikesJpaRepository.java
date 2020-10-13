@@ -11,4 +11,5 @@ import com.ssafy.socks.entity.magazine.Likes;
 @Repository
 public interface LikesJpaRepository extends JpaRepository<Likes,Long> {
 	Optional<Likes> findByUserIdAndMagazineId(Long userId, Long magazineId);
+	List<Likes> findByMagazineId(Long magazineId);
 }
