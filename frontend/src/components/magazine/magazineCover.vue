@@ -5,8 +5,8 @@
         <img class="image" :src="coverImage" />
         <span class="time">{{this.issueTime}}</span>
         <span contenteditable @blur="changeName" class="logo">{{magazineName}}</span>
-        <span class="user">BeaverBae</span>
-        <span class="email">beaverBae@naver.com</span>
+        <span class="user">{{userInfo.nickname}}</span>
+        <span class="email">{{userInfo.email}}</span>
       </div>
       <div class="book-spine"
       :style="{'background': 'linear-gradient(to bottom, ' + this.theme[0] + ' 20%, ' + this.theme[1] + ' 20% 40%, ' + this.theme[2] + ' 40% 60%, ' + this.theme[3] + ' 60% 80%, ' + this.theme[4] + ' 80%)'}">
@@ -20,6 +20,7 @@
 import { mapGetters } from 'vuex';
 const colorStore = 'colorStore'
 const magazineStore = 'magazineStore'
+const userStore = 'userStore'
 
 export default {
   name: 'Cover',
@@ -43,6 +44,7 @@ export default {
       color: '',
       theme: ["#e63946", "#f1faee", "#a8dadc", "#457b9d", "#1d3557"],
       coverImage: '',
+      userInfo: '',
     }
   },
   created() {
@@ -52,16 +54,21 @@ export default {
     this.getColorAndTheme();
     // 잡지 첫 이미지 가져오기
     this.getFirstImage();
+    // 사용자 정보
+    this.userInfo = this.storeUserInfo;
+    console.log('userinfo in cover', this.userInfo)
   },
   computed: {
     ...mapGetters(colorStore, {storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'}),
-    ...mapGetters(magazineStore, {storeMagazineImages: 'GE_MAGAZINE_IMAGES'})
+    ...mapGetters(magazineStore, {storeMagazineImages: 'GE_MAGAZINE_IMAGES'}),
+    ...mapGetters(userStore, {storeUserInfo: 'GE_USER_INFO'})
   },
   methods: {
     getDateOfToday() {
       // 오늘의 날짜 확인
-      const time = new Date(this.nowDate);
-      this.month = time.getMonth()
+      const time = new Date();
+      console.log(time);
+      this.month = time.getMonth() + 1
       this.date = time.getDate()
       this.year = time.getFullYear()
       this.day = time.getDay()
