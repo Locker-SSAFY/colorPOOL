@@ -17,6 +17,6 @@ export default {
     getMagazineMine: '/magazine',
     getMagazineBookmark: '/magazines/bookmark',
     // 잡지에 좋아요 누르기(또는 좋아요 취소하기)
-    postMagazineLike: '/magazine/',
+    postMagazineLike: '/magazine/like',
   }
 }
