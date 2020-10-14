@@ -2,7 +2,7 @@
   <div class="header wrap" :class="scrolled? 'scroll' : 'unscroll'">
     <v-row class="mx-16">
       <v-col cols="3"></v-col>
-      <v-col cols="2" class="header-logo" v-if="isGet || isPick">
+      <v-col cols="2" class="header-logo" v-if="isGet || isPick || !isLanding">
         <v-btn
           icon
           text
