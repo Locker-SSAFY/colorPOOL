@@ -1,6 +1,6 @@
 <template>
 <v-row>
-  <div class="layer" v-if="showCover"  @click="closeCover" style="z-index: 89;"></div>
+  <div class="layer" v-if="showCover"  @click="closeCover" style="z-index: 89; opacity: 60%;"></div>
   <div class="content-cover" :style="{'width': coverWidth+'%'}">
     <div class="info" v-if="showCover">
       <div class="name-info">
@@ -378,6 +378,7 @@ export default {
 
   .heart-number span {
     margin-left: 5px;
+    box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.75);
   }
 
   .name-info {
