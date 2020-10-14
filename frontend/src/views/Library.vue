@@ -169,10 +169,7 @@ export default {
         'accept' : '*',
         'X-AUTH-TOKEN': token,
       }
-      const params = {
-        'magazineId' : cover.magazineId
-      }
-      axios.post(SERVER.ROUTES.postMagazineLike, {params: params} ,{headers: header})
+      axios.post(SERVER.ROUTES.postMagazineLike + '?magazineId=' + cover.magazineId,{headers: header})
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
     }
