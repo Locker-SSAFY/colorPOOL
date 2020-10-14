@@ -49,6 +49,9 @@ export default {
         heart_click: false,
         likeClicked: '',
         likeCount: 0,
+
+        isLikeClicked: false,
+        isBookmarkClicked: false,
       }
     }
   },
@@ -64,6 +67,10 @@ export default {
       this.$emit('show-magazine', this.magazine)
     }, 
     clickHeart() {
+      if(this.isLikeClicked) return;
+      setTimeout(() => {
+        this.isLikeClicked = false;
+      }, 500);
       this.magazine.likeClicked = !this.magazine.likeClicked;
       if(this.magazine.likeClicked) {
         this.magazine.likeCount += 1;
@@ -81,10 +88,17 @@ export default {
         json: true
       };
       axios(authOptions)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res)
+        this.isLikeClicked = true;
+      })
       .catch((err) => console.log(err))
     },
     clickBookmark () {
+      if(this.isBookmarkClicked) return;
+      setTimeout(() => {
+        this.isBookmarkClicked = false;
+      }, 500);
       this.magazine.bookmarkClicked = !this.magazine.bookmarkClicked;
       const token = localStorage.getItem('access_token');
       var authOptions = {
@@ -97,7 +111,10 @@ export default {
         json: true
       };
       axios(authOptions)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        this.isBookmarkClicked = true;
+      })
       .catch((err) => console.log(err))
     }
   },
