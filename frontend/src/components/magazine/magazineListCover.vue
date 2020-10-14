@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../../api/axiosCommon'
+import SERVER from '../../api/restApi'
 
 export default {
   name: 'MagazineListCover',
@@ -70,11 +71,16 @@ export default {
         magazine.likeCount -= 1;
       }
       const token = localStorage.getItem('access_token');
-      const header = {
-        'accept' : '*',
-        'X-AUTH-TOKEN': token,
-      }
-      axios.post('https://j3a303.p.ssafy.io/api/magazine/like/' + magazine.magazineId, {headers: header})
+      var authOptions = {
+        method: 'POST',
+        url: SERVER.ROUTES.postMagazineLike + '?magazineId=' + magazine.magazineId,
+        headers: {
+            'accept': '*',
+            'X-AUTH-TOKEN': token
+        },
+        json: true
+      };
+      axios(authOptions)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
     }

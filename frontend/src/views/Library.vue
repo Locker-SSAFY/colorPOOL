@@ -165,11 +165,16 @@ export default {
         cover.likeCount -= 1;
       }
       const token = localStorage.getItem('access_token');
-      const header = {
-        'accept' : '*',
-        'X-AUTH-TOKEN': token,
-      }
-      axios.post(SERVER.ROUTES.postMagazineLike + cover.magazineId, {headers: header})
+      var authOptions = {
+        method: 'POST',
+        url: SERVER.ROUTES.postMagazineLike + '?magazineId=' + cover.magazineId,
+        headers: {
+            'accept': '*',
+            'X-AUTH-TOKEN': token
+        },
+        json: true
+      };
+      axios(authOptions)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
     }
