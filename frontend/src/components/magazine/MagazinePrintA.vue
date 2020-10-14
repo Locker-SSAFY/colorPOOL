@@ -4,7 +4,7 @@
       <img :src="content.url">
     </div>
     <div class=template-a-right>
-      <span :style="{'color': 'black'}">{{content.mainText}}</span>
+      <span :style="{'color': 'rgb(255,20,147)'}">{{content.mainText}}</span>
       <br><br>
       <h3>{{content.subText}}</h3>
       <div class="interview wrap">
