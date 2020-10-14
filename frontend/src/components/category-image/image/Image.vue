@@ -23,7 +23,7 @@
     </div>
     <div class="image-select-view">
       <div class="image-select-text">
-        <p v-if="selectImageList.length == 0">> 이미지를 더블 클릭해서 추가하세요</p>
+        <p v-if="selectImageList.length == 0"> 이미지를 더블 클릭해서 추가하세요</p>
         <p v-else-if="selectImageList.length <= 10">> 당신이 선택한 {{selectImageList.length}}개의 이미지</p>
         <p v-else>> 이미지는 최대 10개까지만 가능해요 : {{selectImageList.length}}개</p>
       </div>
@@ -371,6 +371,7 @@ export default {
     top: 170%;
     transform: rotate(-15deg);
     z-index: 1;
+    user-select: none;
   }
 
   .next-desc p {

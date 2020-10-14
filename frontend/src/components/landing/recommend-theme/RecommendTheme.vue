@@ -364,7 +364,8 @@ export default {
     text-align: left;
     right: 15%;
     bottom: 10%;
-    transform: rotate(-15deg)
+    transform: rotate(-15deg);
+    user-select: none;
   }
 
   .button-desc p {
@@ -380,6 +381,7 @@ export default {
     top: 180%;
     transform: rotate(-15deg);
     z-index: 1;
+    user-select: none;
   }
 
   .choose-desc p {

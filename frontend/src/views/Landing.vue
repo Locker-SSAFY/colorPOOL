@@ -28,6 +28,7 @@
         icon
         text
         @click="getTheme"
+        v-if="isPick || isGet"
       >
         <v-icon size="80">mdi-arrow-right</v-icon>
       </v-btn>
@@ -160,6 +161,7 @@ export default {
   .landing.wrap .top-page .landing-logo .landing-desc {
     font-family: 'PermanentMarker-Regular';
     font-size: 1.7rem;
+    user-select: none;
   }
 
   /* .landing.wrap .top-page .landing-desc {

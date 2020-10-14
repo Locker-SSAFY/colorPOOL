@@ -327,6 +327,7 @@ export default {
     font-size: 2.3rem;
     transform: rotate( 90deg );
     transform-origin: left top;
+    user-select: none;
   }
 
   .scrap-magazine{
@@ -352,6 +353,7 @@ export default {
     font-size: 2.3rem;
     transform: rotate( 90deg );
     transform-origin: left top;
+    user-select: none;
   }
 
   .recent-magazine {
@@ -377,12 +379,14 @@ export default {
     font-size: 2.3rem;
     transform: rotate( 90deg );
     transform-origin: left top;
+    user-select: none;
   }
 
   .horizontal-title {
     font-size: 3rem;
     font-weight: 600;
     margin-left: 4%;
+    user-select: none;
   }
 
   .underline {

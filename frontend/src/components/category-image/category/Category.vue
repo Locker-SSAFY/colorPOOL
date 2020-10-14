@@ -127,6 +127,7 @@ export default {
     bottom: 15%;
     transform: rotate(-15deg);
     z-index: 1;
+    user-select: none;
   }
 
   .category.wrap .category-desc p {
@@ -138,6 +139,7 @@ export default {
     margin-left: 5%;
     margin-top: 3%;
     width: 40vw;
+    user-select: none;
   }
 
   .category.wrap .category-title p {

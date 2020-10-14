@@ -25,7 +25,7 @@
       </div>
       <v-icon size="40" color="rgb(107, 203, 243)" id="keyword-img-icon">mdi-magnify</v-icon>
       
-      <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 100; font-size: 18px; text-align: center;">
+      <v-card-text style="position: absolute; bottom: 0; color: black; font-weight: 100; font-size: 18px; text-align: center; user-select: none;">
         키워드의 색에 대한 배색을 추천받아보세요
       </v-card-text>
     </v-card>
@@ -55,6 +55,10 @@
     <!-- 오른쪽 배경 -->
     <div v-if="this.$parent.isGet" class="pick-color right" v-bind:style="{'background-color' : backColor}">
       <!-- <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"> -->
+      <div class="button-desc">
+        <p>Get color recommendations</p>
+        <p>based on the selected color</p>
+      </div>
     </div>
 
     <!-- 검색창 -->
@@ -68,6 +72,7 @@
         </div>
       </div>
     </v-card>
+
 
     <!-- 배색 추천 화면 -->
     <div class="bottom-page" ref="messageDisplay">
@@ -232,6 +237,7 @@ export default {
 
   .get-color.wrap .get-desc table {
     width: 100%;
+    user-select: none;
   }
 
   .get-color.wrap .get-desc table tr:nth-child(1) {
@@ -360,6 +366,23 @@ export default {
   .get-color.left ul li .image-layer:hover {
     opacity: 0.1;
   }
+
+  .button-desc {
+    position: absolute;
+    font-size: 2.3rem;
+    text-align: left;
+    width: 15rem;
+    right: 6rem;
+    bottom: 7.7rem;
+    transform: rotate(-15deg);
+    user-select: none;
+  }
+  
+  .button-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.9;
+  }
+
 
   .bottom-page {
     width: 100%;

@@ -7,7 +7,6 @@ import CategoryImage from '../views/CategoryImage.vue'
 import TestHome from '../views/TestHome.vue'
 import Magazine from '../views/Magazine.vue'
 import Result from '../views/Result.vue'
-import TestVision from '../components/TestVision.vue'
 import MyPage from '../views/MyPage.vue'
 import Library from '../views/Library.vue'
 import Temp from '../views/Temporary.vue'
@@ -55,11 +54,6 @@ Vue.use(VueRouter)
     name: 'Result',
     component: Result
   },
-  {
-    path: '/testVision',
-    name: 'testVision',
-    component: TestVision
-  }, 
   {
     path: '/myPage',
     name: 'MyPage',
