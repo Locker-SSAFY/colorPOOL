@@ -194,7 +194,7 @@ export default {
           template: 0,
           // 더미 멘트
           mainText: ment,
-          subText: 'shoes',
+          subText: '',
           // 더미 질문
           question: question,
           // 더미 대답

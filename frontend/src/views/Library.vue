@@ -43,12 +43,12 @@
             <v-icon size="50" :color="crownColor">mdi-chess-queen</v-icon>
           </div> -->
           <v-btn class="icon-heart" icon text @click="clickHeart(ranker)">
-            <v-icon size="40" v-if="ranker.clicked" :color="ranker.color">mdi-heart</v-icon>
+            <v-icon size="40" v-if="ranker.likeClicked" :color="ranker.color">mdi-heart</v-icon>
             <v-icon size="40" v-else :color="ranker.color">mdi-heart-outline</v-icon>
           </v-btn>
           <span class="num-heart" :style="{'color' : ranker.color}">{{ranker.likeCount}}</span>
-          <v-btn  class="icon-bookmark" icon text @click="ranker.bookmark = !ranker.bookmark">
-            <v-icon size="40" v-if="ranker.bookmark" :color="ranker.color">mdi-bookmark</v-icon>
+          <v-btn  class="icon-bookmark" icon text @click="clickBookmark(ranker)">
+            <v-icon size="40" v-if="ranker.bookmarkClicked" :color="ranker.color">mdi-bookmark</v-icon>
             <v-icon size="40" v-else :color="ranker.color">mdi-bookmark-outline</v-icon>
           </v-btn>
         </v-carousel-item>
@@ -158,8 +158,8 @@ export default {
       this.crownColor = this.topRank[slideNumber].color;
     },
     clickHeart(cover) {
-      cover.clicked = !cover.clicked;
-      if(cover.clicked) {
+      cover.likeClicked = !cover.likeClicked;
+      if(cover.likeClicked) {
         cover.likeCount += 1;
       } else {
         cover.likeCount -= 1;
@@ -168,6 +168,22 @@ export default {
       var authOptions = {
         method: 'POST',
         url: SERVER.ROUTES.postMagazineLike + '?magazineId=' + cover.magazineId,
+        headers: {
+            'accept': '*',
+            'X-AUTH-TOKEN': token
+        },
+        json: true
+      };
+      axios(authOptions)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+    },
+    clickBookmark(cover) {
+      cover.bookmarkClicked = !cover.bookmarkClicked;
+      const token = localStorage.getItem('access_token');
+      var authOptions = {
+        method: 'POST',
+        url: SERVER.ROUTES.postMagazineBookmark + '?magazineId=' + cover.magazineId,
         headers: {
             'accept': '*',
             'X-AUTH-TOKEN': token

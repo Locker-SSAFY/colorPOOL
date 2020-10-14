@@ -1,8 +1,18 @@
 <template>
 <v-row>
-  <div class="layer" v-if="showCover"  @click="closeCover"></div>
+  <div class="layer" v-if="showCover"  @click="closeCover" style="z-index: 89;"></div>
   <div class="content-cover" :style="{'width': coverWidth+'%'}">
     <div class="info" v-if="showCover">
+      <div class="name-info">
+        <span :style="[{'color': selected.color}, {'font-size': '25px'}, {'font-weight': '600'}]">{{selected.magazineName}}</span>
+      </div>
+      <div class="user-info">
+        <span :style="[{'color': selected.color}, {'font-size': '20px'}]">{{selected.userNickname}}</span>
+      </div>
+      <div class="heart-number">
+        <v-icon size="30" :color="selected.color">mdi-heart</v-icon>
+        <span :style="[{'color': selected.color}, {'font-size': '22px'}]">{{selected.likeCount}}</span>
+      </div>
       <v-btn id="close-btn" @click="closeCover" flat dark text icon>
         <v-icon size="45">
           mdi-chevron-double-left
@@ -10,6 +20,14 @@
       </v-btn>
       <div class="cover-image">
         <MagazineDetailCover v-bind:magazine="selected"></MagazineDetailCover>
+      </div>
+      <div class="cover-info">
+        <div class="time-bar">
+          <div class="themebar"
+            :style="{'background': 'linear-gradient(to right, ' + this.theme[0] + ' 20%, ' + this.theme[1] + ' 20% 40%, ' + this.theme[2] + ' 40% 60%, ' + this.theme[3] + ' 60% 80%, ' + this.theme[4] + ' 80%)'}"
+          ></div>
+          <span :style="[{'color': selected.color}, {'font-size': '15px'}]">{{time}}</span>
+        </div>       
       </div>
     </div>
   </div>
@@ -36,9 +54,9 @@
           <span class="horizontal-title">Liked magazines</span>
           <div class="underline"></div>
           <div class="hand-drawing"></div>
-          <ul v-for="(list, idx) in scrapMagazine" :key="idx">
+          <ul v-for="(list, idx) in recentMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
-              <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
+              <MagazineListCover v-if="magazine != null" v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
               <div v-if="magazine == null" style="width: 200px;"></div>
             </li>
           </ul>
@@ -52,7 +70,7 @@
         <span class="horizontal-title">Bookmarked magazines</span>
         <div class="underline"></div>
         <div class="hand-drawing"></div>
-          <ul v-for="(list, idx) in recentMagazine" :key="idx">
+          <ul v-for="(list, idx) in scrapMagazine" :key="idx">
             <li v-for="(magazine, idx) in list" v-bind:key="idx">
               <MagazineListCover v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
               <div v-if="magazine == null" style="width: 200px;"></div>
@@ -64,10 +82,12 @@
 </v-row>
 </template>
 <script>
+import axios from '../api/axiosCommon'
+import SERVER from '../api/restApi'
 import { mapGetters, mapActions } from 'vuex'
 // import MagazineRankCover from '../components/magazine/magazineRankCover'
 import MagazineListCover from '../components/magazine/magazineListCover'
-import MagazineDetailCover from '../components/magazine/magazineDetailCoverMy'
+import MagazineDetailCover from '../components/magazine/magazineDetailCover'
 const myPageStore = 'myPageStore'
 
 export default {
@@ -97,7 +117,12 @@ export default {
       selected: null,
       showCover: false,
 
-      nowSelected: 'my'
+      nowSelected: 'my',
+      
+      theme: [],
+      themeData: null,
+
+      time: ''
     }
   },
   computed: {
@@ -105,7 +130,7 @@ export default {
       storeMyList: 'GE_MY_LIST',
       storeScrapList: 'GE_SCRAP_LIST',
       storeRecentList: 'GE_RECENT_LIST'
-    })
+    }),
   },
   created(){
     this.AC_MY_LIST();
@@ -114,10 +139,10 @@ export default {
     this.myList = this.storeMyList;
     this.scrapList = this.storeScrapList;
     this.recentList = this.storeRecentList;
+    this.detail = this.storeDetail;
   },
   watch: {
     storeMyList(val) {
-      console.log('MyList', val);
       this.myList = val;
       this.myMagazine = [];
       const len = this.myList.length;
@@ -134,7 +159,8 @@ export default {
         this.myMagazine.push(example);
       }
     },
-    scrapList() {
+    storeScrapList(val) {
+      this.scrapList = val;
       this.scrapMagazine = [];
       const len = this.scrapList.length;
       const div = len/4;
@@ -146,7 +172,8 @@ export default {
         this.scrapMagazine.push(example);
       }
     },
-    recentList() {
+    storeRecentList(val) {
+      this.recentList = val;
       this.recentMagazine = [];
       const len = this.recentList.length;
       const div = len/4;
@@ -157,10 +184,56 @@ export default {
         }
         this.recentMagazine.push(example);
       }
+    },
+    selected() {
+      if(this.selected == null) return;
+      this.time = this.timeForToday(this.selected.createdDate)
+      console.log('time 입니다', this.time);
+      const token = localStorage.getItem('access_token')
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      axios.get(SERVER.ROUTES.getThemeColors + this.selected.themeId, {headers: header})
+      .then((res) => {
+        this.themeData = res.data.data;
+        console.log('detail cover themeData', this.themeData)
+        const color1 = 'rgb(' + this.themeData.red1 + ',' + this.themeData.green1 + ',' + this.themeData.blue1 + ')';
+        const color2 = 'rgb(' + this.themeData.red2 + ',' + this.themeData.green2 + ',' + this.themeData.blue2 + ')';
+        const color3 = 'rgb(' + this.themeData.red3 + ',' + this.themeData.green3 + ',' + this.themeData.blue3 + ')';
+        const color4 = 'rgb(' + this.themeData.red4 + ',' + this.themeData.green4 + ',' + this.themeData.blue4 + ')';
+        const color5 = 'rgb(' + this.themeData.red5 + ',' + this.themeData.green5 + ',' + this.themeData.blue5 + ')';
+        this.theme = [color1, color2, color3, color4, color5];
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
   },
   methods: {
     ...mapActions(myPageStore, ['AC_MY_LIST', 'AC_SCRAP_LIST', 'AC_RECENT_LIST']),
+    timeForToday(time) {
+      const today = new Date();
+      var timeValue = new Date(time);
+      timeValue.setHours(timeValue.getHours());
+      const betweenTime = Math.floor(
+        (today.getTime() - timeValue.getTime()) / 1000 / 60
+      );
+      if (betweenTime < 1) return "방금전";
+      if (betweenTime < 60) {
+        return `${betweenTime}분전`;
+      }
+      const betweenTimeHour = Math.floor(betweenTime / 60);
+      if (betweenTimeHour < 24) {
+        return `${betweenTimeHour}시간전`;
+      }
+      const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+      if (betweenTimeDay < 365) {
+        return `${betweenTimeDay}일전`;
+      }
+      return `${Math.floor(betweenTimeDay / 365)}년전`;
+    },
     hover(name){
       if(name==='my'){
         if(this.nowSelected !== name){
@@ -227,7 +300,7 @@ export default {
     showMagazine(magazine){
       // alert(magazine.name);
       this.selected = magazine;
-      this.coverWidth = 60;
+      this.coverWidth = 40;
       this.showCover = true;
       console.log(this.selected);
     },
@@ -245,13 +318,15 @@ export default {
     transition: 0.5s;
   }
   .content-cover{
-    position: absolute;
+    position: fixed;
     top: 60px;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 90;
     transition: 0.5s;
     border-radius: 15px;
+    /* display: flex;
+    justify-content: center; */
   }
 
   #close-btn{
@@ -270,9 +345,52 @@ export default {
   }
   .cover-image{
     position: absolute;
-    top: 80px;
-    left: 30%;
+    top: calc(50% - 250px);
+    left: calc(50% - 150px);
   }
+
+  .cover-info {
+    position: absolute;
+    top: calc(50% + 250px);
+    left: calc(50% - 150px);
+  }
+
+  .cover-info .time-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cover-info .themebar {
+    width: 220px;
+    height: 40px;
+    margin-right: 20px;
+    background-color: pink;
+  }
+
+  .heart-number {
+    position: absolute;
+    top: 90px;
+    right: calc(50% - 150px);
+    display: flex;
+    align-items: center;
+  }
+
+  .heart-number span {
+    margin-left: 5px;
+  }
+
+  .name-info {
+    position: absolute;
+    top: 50px;
+    left: calc(50% - 150px);
+  }
+  .user-info {
+    position: absolute;
+    top: 90px;
+    left: calc(50% - 150px);
+  }
+
   .content-area{
     height: 100%;
     width: 94%;
@@ -312,7 +430,7 @@ export default {
   .my-index{
     position: relative;
     background-color: #7678ed;
-    transition: 0.5s;
+    transition: 0.3s;
     height: 100%;
     width: 100%;
   }

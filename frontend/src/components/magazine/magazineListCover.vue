@@ -9,13 +9,13 @@
       
     </div>
     <div class="cover-bar">
-      <v-btn class="icon-heart" icon text @click="clickHeart(magazine)">
-        <v-icon size="30" v-if="magazine.clicked" :color="magazine.color">mdi-heart</v-icon>
+      <v-btn class="icon-heart" icon text @click="clickHeart">
+        <v-icon size="30" v-if="magazine.likeClicked" :color="magazine.color">mdi-heart</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-heart-outline</v-icon>
       </v-btn>
       <span class="num-heart" :style="{'color': magazine.color}">{{this.magazine.likeCount}}</span>  
-      <v-btn  class="icon-bookmark" icon text @click="magazine.bookmark = !magazine.bookmark">
-        <v-icon size="30" v-if="magazine.bookmark" :color="magazine.color">mdi-bookmark</v-icon>
+      <v-btn  class="icon-bookmark" icon text @click="clickBookmark">
+        <v-icon size="30" v-if="magazine.bookmarkClicked" :color="magazine.color">mdi-bookmark</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-bookmark-outline</v-icon>
       </v-btn>
     </div>
@@ -47,15 +47,15 @@ export default {
         bookmark: '',
         likes: [],
         heart_click: false,
+        likeClicked: '',
+        likeCount: 0,
       }
     }
   },
   created() {
-    console.log(this.magazineData);
     this.magazine = this.magazineData;
-    console.log(this.magazine);
-
-    this.magazine.heart = false;
+    console.log(this.magazine.likeClicked + ":" + this.magazine.likeCount);
+    // this.magazine.heart = false;
     this.heart_click = false;
   },
   methods: {
@@ -63,20 +63,36 @@ export default {
       console.log('before send', this.magazine)
       this.$emit('show-magazine', this.magazine)
     }, 
-    clickHeart(magazine) {
-      magazine.clicked = !magazine.clicked;
-      if(magazine.clicked) {
-        magazine.likeCount += 1;
+    clickHeart() {
+      this.magazine.likeClicked = !this.magazine.likeClicked;
+      if(this.magazine.likeClicked) {
+        this.magazine.likeCount += 1;
       } else {
-        magazine.likeCount -= 1;
+        this.magazine.likeCount -= 1;
       }
       const token = localStorage.getItem('access_token');
       var authOptions = {
         method: 'POST',
-        url: SERVER.ROUTES.postMagazineLike + '?magazineId=' + magazine.magazineId,
+        url: SERVER.ROUTES.postMagazineLike + '?magazineId=' + this.magazine.magazineId,
         headers: {
-            'accept': '*',
-            'X-AUTH-TOKEN': token
+          'accept': '*',
+          'X-AUTH-TOKEN': token
+        },
+        json: true
+      };
+      axios(authOptions)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+    },
+    clickBookmark () {
+      this.magazine.bookmarkClicked = !this.magazine.bookmarkClicked;
+      const token = localStorage.getItem('access_token');
+      var authOptions = {
+        method: 'POST',
+        url: SERVER.ROUTES.postMagazineBookmark + '?magazineId=' + this.magazine.magazineId,
+        headers: {
+          'accept': '*',
+          'X-AUTH-TOKEN': token
         },
         json: true
       };

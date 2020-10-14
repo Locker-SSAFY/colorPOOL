@@ -16,7 +16,11 @@ export default {
     // 나랑 관련된 잡지 가져오기
     getMagazineMine: '/magazine',
     getMagazineBookmark: '/magazines/bookmark',
+    getMagazineLike : '/magazines/like',
     // 잡지에 좋아요 누르기(또는 좋아요 취소하기)
     postMagazineLike: '/magazine/like',
+    postMagazineBookmark: '/magazine/bookmark',
+    // 색깔
+    getThemeColors: '/colors/',
   }
 }

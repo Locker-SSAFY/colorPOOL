@@ -18,7 +18,9 @@
 
 <script>
 // import materialColors from '../../assets/color/colorList.js'
-import axios from 'axios'
+import axios from '../../api/axiosCommon'
+import SERVER from '../../api/restApi'
+// import axios from 'axios'
 import {mapActions} from 'vuex'
 const detailStore = 'detailStore'
 
@@ -55,7 +57,7 @@ export default {
         'accept' : '*',
         'X-AUTH-TOKEN': token,
       }
-      axios.get('https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
+      axios.get(SERVER.ROUTES.getThemeColors + themeId, {headers: header})
       // axios.get('https://cors-anywhere.herokuapp.com/https://j3a303.p.ssafy.io/api/colors/' + themeId, {headers: header})
       .then((res) => {
         this.themeData = res.data.data;
@@ -300,7 +302,7 @@ export default {
   width : 100%;
   font-size: 18px;
   font-weight: 600;
-  margin-right: 250px;
+  margin-right: 260px;
   transform: rotate(-90deg);
 }
 
@@ -312,7 +314,7 @@ export default {
 }
 
 .book-cover .user {
-  right: -20px;
+  right: -10px;
   font-size: 20px;
   transform: rotate(90deg);
 }
