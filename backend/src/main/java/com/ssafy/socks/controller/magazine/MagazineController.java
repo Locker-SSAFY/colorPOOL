@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.socks.entity.images.ThemeImages;
@@ -107,12 +108,12 @@ public class MagazineController {
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
 	@Operation(summary = "좋아요", description = "좋아요를 클릭 한다.")
-	@PostMapping(value = "/magazine/{magazineId}")
-	public SingleResult<LikesModel> setLike(@PathVariable Long magazineId) {
+	@PostMapping(value = "/magazine/like")
+	public SingleResult<LikesModel> setLike(@RequestParam Long magazineId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
 		return responseService.getSingleResult(magazineService.setLikes(magazineId,userEmail));
 	}
-
+	
 
 }
