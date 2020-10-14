@@ -31,11 +31,11 @@
       <v-row>
         <v-col cols="2">
           <v-row v-if="showSigninVal">
-            <v-btn dark @click="showSignin" style="width: 14%;" block>
+            <v-btn dark style="width: 14%;" block>
               SIGNIN
             </v-btn>
           </v-row>
-          <v-row v-else >
+          <v-row v-else>
             <v-btn text @click="showSignin" style="width: 14%;" block>
               SIGNIN
             </v-btn>
@@ -46,7 +46,7 @@
             </v-btn>
           </v-row>
           <v-row v-else>
-            <v-btn dark @click="showSignup" style="width: 14%;" block>
+            <v-btn dark style="width: 14%;" block>
               SIGNUP
             </v-btn>
           </v-row>
@@ -97,10 +97,16 @@
             <!-- sign up-->
             <v-col v-else>
               <v-row>
-                <div class="textfield-tape">
-                  <v-text-field dense v-model="nickName" placeholder="nickname" required></v-text-field>
+                <div class="provider-desc" v-if="isSocialSignup">
+                  <p>Signup with {{provider}}</p>
                 </div>
                 <div class="textfield-tape">
+                  <v-text-field dense v-model="nickname" :rules="nicknameRules" placeholder="nickname" required></v-text-field>
+                </div>
+                <div class="textfield-tape" v-if="isSocialSignup">
+                  <v-text-field dense v-model="email" placeholder="email" disabled></v-text-field>
+                </div>
+                <div class="textfield-tape" v-if="!isSocialSignup">
                   <v-text-field dense v-model="email" :rules="emailRules" placeholder="email" required></v-text-field>
                 </div>
                 <div class="textfield-tape">
@@ -115,7 +121,7 @@
                   class="mb-2"
                   @click="signup"
                   text
-                  style="position: absolute; top: 82%; right: 8%; font-size: 1.3rem;"
+                  style="position: absolute; top: 87%; right: 7%; font-size: 1.3rem;"
                 >
                   <p style="font-family: 'PermanentMarker-Regular'; margin-bottom: 0;">> SIGINUP</p>
                 </v-btn>
@@ -130,8 +136,6 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import SERVER from '../../api/restApi'
-import axios from '../../api/axiosCommon'
 const colorStore = 'colorStore'
 const userStore = 'userStore'
 
@@ -141,7 +145,9 @@ export default {
                               storeUserInfo: 'GE_USER_INFO',
                               storeIsLoginError: 'GE_IS_LOGIN_ERROR',
                               storeDisplay: 'GE_DISPLAY',
-                              storeErrorMsg: 'GE_ERROR'}),
+                              storeErrorMsg: 'GE_ERROR',
+                              storeShowSingin: 'GE_SHOW_SINGIN',
+                              storeSignupInfo: 'GE_SIGNUP_INFO'}),
     ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR' }),
     //비밀 번호 확인 체크
     passwordConfirmRules() {
@@ -180,6 +186,14 @@ export default {
     } else {
       this.AC_IS_LOGIN(false);
     }
+    this.AC_SHOW_SIGNIN(true);
+    this.showSigninVal = this.storeShowSingin;
+    
+    this.email = '';
+    this.nickname = '';
+    this.provider = '';
+    this.password = '';
+    this.passwordConfirm = '';
   },
   data(){
     return{
@@ -191,18 +205,20 @@ export default {
       userEmail: '',
       userPassword: '',
       showSigninVal: true,
+      isSocialSignup: false,
       backColor: '',
       email: "",
-      nickName: "",
+      nickname: "",
       password: "",
       passwordConfirm: "",
+      provider: "",
       emailRules: [
         v => !!v || "이메일을 입력해주세요",
         v =>
           /^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+\.[A-Za-z0-9]+/.test(v) ||
           "이메일 형식에 맞게 입력해주세요"
       ],
-      nickNameRules: [
+      nicknameRules: [
         v => !!v || "닉네임을 입력해주세요",
         v =>
           (v && v.length >= 1 && v.length <= 30) ||
@@ -233,19 +249,38 @@ export default {
     },
     storeErrorMsg(val){
       this.errorMsg = val;
+    },
+    storeShowSingin(val){
+      this.showSigninVal = val;
+    },
+    storeSignupInfo(val){
+      this.email = val.email;
+      this.nickname = val.nickname;
+      this.password = val.password;
+      this.passwordConfirm = val.passwordConfirm;
+      this.provider = val.provider;
+      if(val.provider !== "kakao" && val.provider !== "google"){
+        this.isSocialSignup = false;
+      } else {
+        this.isSocialSignup = true;
+      }
     }
   },
   methods: {
-    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN','AC_ERROR', 'AC_IS_LOGIN']),
+    ...mapActions(userStore, ['AC_SIGNIN', 'AC_SIGNUP', 'AC_DISPLAY','AC_KAKAO_SIGNIN','AC_ERROR',
+                              'AC_IS_LOGIN', 'AC_SHOW_SIGNIN', 'AC_SIGNUP_INFO', 'AC_SOCIAL_LOGIN']),
     showSignin(){
-      this.showSigninVal = true;
-      this.email = '';
-      this.nickName = '';
-      this.password = '';
-      this.passwordConfirm = '';
+      this.AC_SHOW_SIGNIN(true);
+      var info = {
+        email : '', 
+        nickname: '',
+        password: '',
+        provider: '',
+      }
+      this.AC_SIGNUP_INFO(info);
     },
     showSignup(){
-      this.showSigninVal = false;
+      this.AC_SHOW_SIGNIN(false);
       this.userEmail = '';
       this.userPassword = '';
     },
@@ -260,11 +295,10 @@ export default {
       this.AC_SIGNIN(payload);
     },
     signup(){
-      var v = this;
-      if(this.nickName.length > 0 && this.email.lenght > 0, this.password.length > 0, this.password.length > 0){
+      if(this.nickname.length > 0 && this.email.lenght > 0, this.password.length > 0, this.password.length > 0){
         if (!( /^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+\.[A-Za-z0-9]+/.test(this.email))){
           alert('이메일 형식을 맞춰주세요!');
-        } else if( this.nickName.length < 1 || this.nickName.length > 30){
+        } else if( this.nickname.length < 1 || this.nickname.length > 30){
           alert('닉네임은 최소 1자 최대 30자 입니다');
         } else if( this.password.length < 4 || this.password.length > 50){
           alert('비밀번호는 최소 4자 최대 50자 입니다');
@@ -272,23 +306,25 @@ export default {
           alert('비밀번호가 일치하지 않습니다');
         }
         else {
+          var prov = '';
+          if(!this.isSocialSignup){
+            prov = 'root'
+          } else {
+            if(this.provider == 'kakao'){
+              prov = 'kakao'
+            } else {
+              prov = 'google'
+            }
+          }
           const payload = {
-            nickname: this.nickName,
+            nickname: this.nickname,
             userInfo: {
               email: this.email, 
               password: this.password,
-              provider: 'root'
+              provider: prov
             }
           }
-          axios.post(SERVER.ROUTES.signup, payload)
-          .then(response => {
-            console.log(response);
-            alert('회원가입 성공!');
-            v.showSignin();
-          })
-          .catch(err =>{
-            alert(err.response.data.msg);
-          })
+          this.AC_SIGNUP(payload);
         }
       } else {
         alert('모든 내용을 다 적어주세요!');
@@ -307,13 +343,16 @@ export default {
         let token = googleUser.getAuthResponse().access_token;
         console.log("google_token : ", token);
         localStorage.setItem("google_token",token);
-        localStorage.setItem("access_token",token);
-        this.AC_DISPLAY(false);
-        this.AC_IS_LOGIN(true);
         this.isSignIn = this.$gAuth.isAuthorized;
+
+        const payload = {
+          accessToken: token,
+          provider: 'google'
+        }
+        this.AC_SOCIAL_LOGIN(payload);
       } catch (error) {
         console.error(error);
-        // alert("구글 로그인 도중 문제가 발생했습니다!", error);
+        alert("구글 로그인 도중 문제가 발생했습니다!", error);
       }
     },
   }
@@ -321,9 +360,20 @@ export default {
 </script>
 <style scoped>
   .v-dialog .signin-modal.wrap .signin-back{
-    height: 250px;
+    height: 280px;
     margin-bottom: 30px;
-    /* background-color: white */
+  }
+
+  .provider-desc{
+    padding: 0% 0% 0% 5%;
+    width: 100%;
+    font-size: 1.8rem;
+    font-weight: bolder;
+    height: 40px;
+  }
+
+  .provider-desc p{
+    font-family: 'PermanentMarker-Regular';
   }
 
   .textfield-tape {
