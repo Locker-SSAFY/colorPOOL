@@ -20,5 +20,6 @@ public class MagazineModel {
 	private LocalDateTime createdDate;
 
 	private int likeCount;
-	private boolean clicked;
+	private boolean isLikeClicked;
+	private boolean isBookmarkClicked;
 }
