@@ -21,7 +21,7 @@
         <div class="underline"></div>
         <div class="hand-drawing"></div>
         <ul v-for="(list, idx) in myMagazine" :key="idx">
-          <li v-for="(magazine, idx) in list" v-bind:key="idx">
+          <li v-for="(magazine, indx) in list" v-bind:key="indx">
             <MagazineListCover v-if="magazine != null" v-bind:magazineData="magazine" @show-magazine="showMagazine(magazine)"></MagazineListCover>
             <div v-if="magazine == null" style="width: 200px;"></div>
           </li>
@@ -66,7 +66,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 // import MagazineRankCover from '../components/magazine/magazineRankCover'
-import MagazineListCover from '../components/magazine/MagazineListCoverMy'
+import MagazineListCover from '../components/magazine/magazineListCover'
 import MagazineDetailCover from '../components/magazine/magazineDetailCoverMy'
 const myPageStore = 'myPageStore'
 
@@ -116,7 +116,9 @@ export default {
     this.recentList = this.storeRecentList;
   },
   watch: {
-    myList() {
+    storeMyList(val) {
+      console.log('MyList', val);
+      this.myList = val;
       this.myMagazine = [];
       const len = this.myList.length;
       const div = len/4;

@@ -81,7 +81,7 @@ public class SocialService {
 	 * 	통합 회원이
 	 * 		있을 경우 -> 로그인
 	 *		없을 경우 -> 회원 가입 틀 반환
-	 * @param accessToken
+	 * @param socialSignInModel
 	 * @return
 	 */
 	public SocialResultModel getSocialResultModel(SocialSignInModel socialSignInModel) {
@@ -93,7 +93,7 @@ public class SocialService {
 		switch (socialSignInModel.getProvider()) {
 			case KAKAO:
 				KakaoProfile kakaoProfile = this.getKakaoProfile(socialSignInModel.getAccessToken());
-				email = kakaoProfile.getEmail();
+				email = kakaoProfile.getKakao_account().getEmail();
 				nickname = kakaoProfile.getProperties().getNickname();
 				provider = KAKAO;
 				break;

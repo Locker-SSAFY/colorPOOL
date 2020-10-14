@@ -54,6 +54,11 @@ export default {
     const g = parseInt((theme.green1 + theme.green2 + theme.green3 + theme.green4 + theme.green5) / 5);
     const b = parseInt((theme.blue1 + theme.blue2 + theme.blue3 + theme.blue4 + theme.blue5) / 5);
     this.rgb = 'rgb(' + r + ',' + g + ',' + b + ')';
+    var div = document.createElement("div");
+    div.style.width = "100px";
+    div.style.height = "150px";
+    div.style.background = "white";
+    document.body.appendChild(div);
   },
   async mounted() {
     // let el = this.$refs.detail.$el;

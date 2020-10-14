@@ -6,18 +6,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.socks.entity.images.ThemeImages;
 import com.ssafy.socks.entity.magazine.Magazine;
-import com.ssafy.socks.model.magazine.ContentsModel;
-import com.ssafy.socks.model.magazine.Images;
-import com.ssafy.socks.model.magazine.LikesModel;
+import com.ssafy.socks.model.magazine.SelectModel;
 import com.ssafy.socks.model.magazine.MagazineModel;
-import com.ssafy.socks.model.magazine.ThemesAndCategory;
 import com.ssafy.socks.model.response.CommonResult;
 import com.ssafy.socks.model.response.ListResult;
 import com.ssafy.socks.model.response.SingleResult;
@@ -95,9 +91,9 @@ public class MagazineController {
 	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
-	@Operation(summary = "잡지 북마크 정보", description = "즐겨 찾기 한 잡지를 조회한다.")
+	@Operation(summary = "즐겨찾기 잡지 조회", description = "즐겨 찾기 한 잡지를 조회한다.")
 	@GetMapping(value = "/magazines/bookmark")
-	public ListResult<Magazine> getMagazinesByBookmark() {
+	public ListResult<MagazineModel> getMagazinesByBookmark() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
 		return responseService.getListResult(magazineService.getBookmarkMagazines(userEmail));
@@ -107,12 +103,22 @@ public class MagazineController {
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
 	})
 	@Operation(summary = "좋아요", description = "좋아요를 클릭 한다.")
-	@PostMapping(value = "/magazine/like/{magazineId}")
-	public SingleResult<LikesModel> setLike(@PathVariable Long magazineId) {
+	@PostMapping(value = "/magazine/like")
+	public SingleResult<SelectModel> setLike(@RequestParam Long magazineId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
 		return responseService.getSingleResult(magazineService.setLikes(magazineId,userEmail));
 	}
 
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "북마크", description = "북마크를 클릭 한다.")
+	@PostMapping(value = "/magazine/bookmark")
+	public SingleResult<SelectModel> setBookmark(@RequestParam Long magazineId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+		return responseService.getSingleResult(magazineService.setBookmark(magazineId,userEmail));
+	}
 
 }

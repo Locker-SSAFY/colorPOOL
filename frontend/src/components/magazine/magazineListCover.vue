@@ -9,11 +9,11 @@
       
     </div>
     <div class="cover-bar">
-      <v-btn class="icon-heart" icon text @click="clickHeart()">
-        <v-icon size="30" v-if="heart_click" :color="magazine.color">mdi-heart</v-icon>
+      <v-btn class="icon-heart" icon text @click="clickHeart(magazine)">
+        <v-icon size="30" v-if="magazine.clicked" :color="magazine.color">mdi-heart</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-heart-outline</v-icon>
       </v-btn>
-      <span class="num-heart" :style="{'color': magazine.color}">{{this.magazine.likes.length}}</span>  
+      <span class="num-heart" :style="{'color': magazine.color}">{{this.magazine.likeCount}}</span>  
       <v-btn  class="icon-bookmark" icon text @click="magazine.bookmark = !magazine.bookmark">
         <v-icon size="30" v-if="magazine.bookmark" :color="magazine.color">mdi-bookmark</v-icon>
         <v-icon size="30" v-else :color="magazine.color">mdi-bookmark-outline</v-icon>
@@ -23,6 +23,9 @@
 </template>
 
 <script>
+import axios from '../../api/axiosCommon'
+import SERVER from '../../api/restApi'
+
 export default {
   name: 'MagazineListCover',
   props: {
@@ -48,9 +51,8 @@ export default {
     }
   },
   created() {
+    console.log(this.magazineData);
     this.magazine = this.magazineData;
-    this.magazine.likes = [1,2,3]; 
-    this.magazine.bookmark = true;
     console.log(this.magazine);
 
     this.magazine.heart = false;
@@ -61,15 +63,26 @@ export default {
       console.log('before send', this.magazine)
       this.$emit('show-magazine', this.magazine)
     }, 
-    clickHeart() {
-      let heart = this.heart_click;
-      if(heart) {
-        this.magazine.heart = false;
-        this.heart_click = false;
+    clickHeart(magazine) {
+      magazine.clicked = !magazine.clicked;
+      if(magazine.clicked) {
+        magazine.likeCount += 1;
       } else {
-        this.magazine.heart = true;
-        this.heart_click = true;
+        magazine.likeCount -= 1;
       }
+      const token = localStorage.getItem('access_token');
+      var authOptions = {
+        method: 'POST',
+        url: SERVER.ROUTES.postMagazineLike + '?magazineId=' + magazine.magazineId,
+        headers: {
+            'accept': '*',
+            'X-AUTH-TOKEN': token
+        },
+        json: true
+      };
+      axios(authOptions)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
     }
   },
 }

@@ -1,3 +1,7 @@
+import SERVER from '../../api/restApi'
+import axios from '../../api/axiosCommon'
+import materialColors from '../../assets/color/colorList.js'
+
 const myPageStore = {
   namespaced: true,
   state: {
@@ -22,89 +26,23 @@ const myPageStore = {
     }
   },
   actions: {
-    AC_MY_LIST: ({commit}, payload) => {
-      const myList = [
-        {
-          id: 1,
-          name: 'MOVIEMAG',
-          color: '#7E38E0',
-          theme: ['#4B1694', '#E0A14F', '#7E38E0','#22E050','#1E943A'],
-          userName: 'BEAVER',
-          userEmail: 'beaver95@naver.com',
-          coverImg: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/oyyUcGwLX7LTFS1pQbLrQpyzIyt.jpg',
-          date: '2020-09-28 MON',
-          likes: [1,2,3,4,5,6,7,8,9,10],
-          heart: true,
-          bookmark: true,
-        },
-        {
-          id: 2,
-          name: 'ACCMAG',
-          color: '#38C0E0',
-          theme: ['#1A44AD','#505C7A','#38C0E0','#E49872','#AD6A5B'],
-          userName: 'YOON',
-          userEmail: 'gaechunjae@naver.com',
-          coverImg: 'https://images.unsplash.com/photo-1558368204-cc52a4a4e519?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1052&q=80',
-          date: '2020-09-26 SAT',
-          likes: [1,2,3,4,5,6,7,8,9],
-          heart: true,
-          bookmark: true,
-        },
-        {
-          id: 3,
-          name: 'FASHIONMAG',
-          color: '#1AADA4',
-          theme: ['#1AADA4','#507A78','#38E076','#E4729A','#AD0B94'],
-          userName: 'JUNHO',
-          userEmail: 'runro94@naver.com',
-          coverImg: 'https://images.unsplash.com/photo-1554141220-83411835a60b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=678&q=80',
-          date: '2020-09-25 FRI',
-          likes: [1,2,3,4,5,6,7,8],
-          heart: false,
-          bookmark: false
-        },
-        {
-          id: 4,
-          name: 'DIGIMON',
-          color: '#66AB5E',
-          theme: ['#66AB5E','#27781E','#CEDE91','#8D5AE2','#584FAB'],
-          userName: 'YUNJIN',
-          userEmail: 'yunjin95@naver.com',
-          coverImg: 'https://images.unsplash.com/photo-1575201647632-45fae95c9ce4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2666&q=80',
-          date: '2020-09-25 FRI',
-          likes: [1,2,3,4,5,6,7],
-          heart: false,
-          bookmark: true
-        },
-        {
-          id: 5,
-          name: 'POKEMON',
-          color: '#89ACAC',
-          theme: ['#89ACAC','#1E7878','#90DEB2','#E25A7A','#AB4F92'],
-          userName: 'KANGSE',
-          userEmail: 'seeung@naver.com',
-          coverImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80',
-          date: '2020-09-25 FRI',
-          likes: [1,2,3,4,5,6],
-          heart: true,
-          bookmark: false
-        },
-        {
-          id: 6,
-          name: 'BONJOUR',
-          color: '#AD945A',
-          theme: ['#AD945A','#7A725E','#E09354','#00E6C9','#1FAD73'],
-          userName: 'EUNGA',
-          userEmail: 'eunga94@naver.com',
-          coverImg: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/8UUZ2oV1OjYd55BMZWaQrcRPTGN.jpg',
-          date: '2020-09-25 FRI',
-          likes: [1,2,3,4,5],
-          heart: false,
-          bookmark: false,
-        },
-      ];
-      payload = myList;
-      commit('MU_MY_LIST', payload)
+    AC_MY_LIST: ({commit}) => {
+      const token = localStorage.getItem('access_token');
+      const header = {
+        'accept' : '*',
+        'X-AUTH-TOKEN': token,
+      }
+      axios.get(SERVER.ROUTES.getMagazineMine, {headers: header})
+      .then((res) => {
+        res.data.data.forEach(ele => {
+          let id = ele.selectedColorId;
+          ele.color = materialColors[parseInt(id / 10)].variations[parseInt(id % 10)].hex;
+        })
+        commit('MU_MY_LIST', res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     },
     AC_SCRAP_LIST: ({commit}, payload) => {
       const scrapList = [
