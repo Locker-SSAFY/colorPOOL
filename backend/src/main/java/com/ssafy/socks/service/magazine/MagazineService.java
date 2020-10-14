@@ -263,7 +263,7 @@ public class MagazineService {
 				contentsModels.add(contentsModel);
 			}
 
-			User user = userJpaRepository.findById(magazine.getId()).orElseThrow(CUserNotFoundException::new);
+			User user = userJpaRepository.findById(magazine.getUserId()).orElseThrow(CUserNotFoundException::new);
 			Optional<Likes> optionalLikes = likesJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
 				magazine.getId());
 			Optional<Bookmark> optionalBookmark = bookmarkJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
@@ -322,5 +322,59 @@ public class MagazineService {
 
 		logger.info("-------- bookmark info --------");
 		return selectModel;
+	}
+
+	public List<MagazineModel> getLikesMagazines(String userEmail) {
+		User originUser = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
+		List<Likes> likesList = likesJpaRepository.findByUserId(originUser.getId());
+		List<Magazine> magazineList = new ArrayList<>();
+		List<MagazineModel> magazineModelsList = new ArrayList<>();
+
+		for (Likes likes : likesList) {
+			magazineList.add(magazineJpaRepository.findById(likes.getMagazineId()).orElseThrow(CMagazineNotFoundException::new));
+		}
+
+		for(Magazine magazine : magazineList) {
+			List<Contents> contentsList = contentsJpaRepository.findByMagazineId(magazine.getId());
+			List<ContentsModel> contentsModels = new ArrayList<>();
+
+			for(Contents contents : contentsList) {
+				ContentsModel contentsModel = ContentsModel.builder()
+					.answer(contents.getAnswer())
+					.mainText(contents.getMainText())
+					.question(contents.getQuestion())
+					.subText(contents.getSubText())
+					.template(contents.getTemplate())
+					.url(contents.getUrl())
+					.build();
+
+				contentsModels.add(contentsModel);
+			}
+
+			User user = userJpaRepository.findById(magazine.getUserId()).orElseThrow(CUserNotFoundException::new);
+			Optional<Likes> optionalLikes = likesJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
+				magazine.getId());
+			Optional<Bookmark> optionalBookmark = bookmarkJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
+				magazine.getId());
+
+			MagazineModel magazineModel = MagazineModel.builder()
+				.magazineId(magazine.getId())
+				.email(user.getEmail())
+				.magazineName(magazine.getMagazineName())
+				.themeId(magazine.getThemeId())
+				.selectedColorId(magazine.getSelectedId())
+				.userNickname(user.getNickname())
+				.contents(contentsModels)
+				.createdDate(LocalDateTime.now())
+				.likeCount(magazine.getLikeCount())
+				.isLikeClicked(optionalLikes.isPresent())
+				.isBookmarkClicked(optionalBookmark.isPresent())
+				.build();
+
+			magazineModelsList.add(magazineModel);
+		}
+
+
+		return magazineModelsList;
 	}
 }

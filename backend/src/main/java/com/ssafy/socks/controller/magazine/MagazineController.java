@@ -40,14 +40,14 @@ public class MagazineController {
 	private final MagazineService magazineService;
 
 
-/*	@Parameters({
-		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
-	})
-	@Operation(summary = "테마 & 카테고리 별 이미지 크롤링 저장하기", description = "테마 & 카테고리 별 이미지를 크롤링해서 저장한다.")
-	@PostMapping(value = "/images")
-	public ListResult<Images> saveImages(@RequestBody ThemesAndCategory themesAndCategory) {
-		return responseService.getListResult(crawlingService.saveCategoryImages(themesAndCategory));
-	}*/
+	// @Parameters({
+	// 	@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	// })
+	// @Operation(summary = "테마 & 카테고리 별 이미지 크롤링 저장하기", description = "테마 & 카테고리 별 이미지를 크롤링해서 저장한다.")
+	// @PostMapping(value = "/images")
+	// public ListResult<Images> saveImages(@RequestBody ThemesAndCategory themesAndCategory) {
+	// 	return responseService.getListResult(crawlingService.saveCategoryImages(themesAndCategory));
+	// }
 
 	@Parameters({
 		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
@@ -99,6 +99,17 @@ public class MagazineController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
 		return responseService.getListResult(magazineService.getBookmarkMagazines(userEmail));
+	}
+
+	@Parameters({
+		@Parameter(name = "X-AUTH-TOKEN", description = "JWT", required = true, in = ParameterIn.HEADER)
+	})
+	@Operation(summary = "즐겨찾기 잡지 조회", description = "즐겨 찾기 한 잡지를 조회한다.")
+	@GetMapping(value = "/magazines/like")
+	public ListResult<MagazineModel> getMagazinesByLikes() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+		return responseService.getListResult(magazineService.getLikesMagazines(userEmail));
 	}
 
 	@Parameters({
