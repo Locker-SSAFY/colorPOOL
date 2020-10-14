@@ -58,10 +58,10 @@
               <v-row id="show-error">{{errorMsg}}</v-row>
               <v-row>
                 <div class="textfield-tape">
-                  <v-text-field dense v-model="userEmail" placeholder="email" required></v-text-field>
+                  <v-text-field dense v-model="userEmail" placeholder="email" v-on:keyup.enter="signin" required></v-text-field>
                 </div>
                 <div class="textfield-tape">
-                  <v-text-field dense v-model="userPassword" placeholder="password" type="password" required></v-text-field>
+                  <v-text-field dense v-model="userPassword" placeholder="password" type="password" v-on:keyup.enter="signin" required></v-text-field>
                 </div>
                 <v-btn
                   color="black"
