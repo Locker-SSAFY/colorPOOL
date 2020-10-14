@@ -93,8 +93,8 @@ public class MagazineService {
 	}
 
 	public List<MagazineModel> getMagazinesByUser(String userEmail) {
-		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CCommunicationException::new);
-		List<Magazine> magazineList = magazineJpaRepository.findByUserId(user.getId());
+		User originUser = userJpaRepository.findByEmail(userEmail).orElseThrow(CCommunicationException::new);
+		List<Magazine> magazineList = magazineJpaRepository.findByUserId(originUser.getId());
 		List<MagazineModel> magazineModels = new ArrayList<>();
 
 		for(Magazine magazine : magazineList) {
@@ -114,18 +114,18 @@ public class MagazineService {
 				contentsModels.add(contentsModel);
 			}
 
-			Optional<Likes> optionalLikes = likesJpaRepository.findByUserIdAndMagazineId(user.getId(),
+			Optional<Likes> optionalLikes = likesJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
 				magazine.getId());
-			Optional<Bookmark> optionalBookmark = bookmarkJpaRepository.findByUserIdAndMagazineId(user.getId(),
+			Optional<Bookmark> optionalBookmark = bookmarkJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
 				magazine.getId());
 
 			MagazineModel magazineModel = MagazineModel.builder()
 				.magazineId(magazine.getId())
-				.email(user.getEmail())
+				.email(originUser.getEmail())
 				.magazineName(magazine.getMagazineName())
 				.themeId(magazine.getThemeId())
 				.selectedColorId(magazine.getSelectedId())
-				.userNickname(user.getNickname())
+				.userNickname(originUser.getNickname())
 				.contents(contentsModels)
 				.createdDate(LocalDateTime.now())
 				.likeCount(magazine.getLikeCount())
@@ -143,7 +143,8 @@ public class MagazineService {
 	 * 인기도 순으로 잡지 조회
 	 * @return
 	 */
-	public List<MagazineModel> getMagazines() {
+	public List<MagazineModel> getMagazines(String userEmail) {
+		User originUser = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
 		List<Magazine> magazineList = magazineRepository.findMagazineOrderByLikes();
 		List<MagazineModel> magazineModels = new ArrayList<>();
 
@@ -165,9 +166,9 @@ public class MagazineService {
 			}
 
 			User user = userJpaRepository.findById(magazine.getUserId()).orElseThrow(CUserNotFoundException::new);
-			Optional<Likes> optionalLikes = likesJpaRepository.findByUserIdAndMagazineId(user.getId(),
+			Optional<Likes> optionalLikes = likesJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
 				magazine.getId());
-			Optional<Bookmark> optionalBookmark = bookmarkJpaRepository.findByUserIdAndMagazineId(user.getId(),
+			Optional<Bookmark> optionalBookmark = bookmarkJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
 				magazine.getId());
 
 			MagazineModel magazineModel = MagazineModel.builder()
@@ -236,8 +237,8 @@ public class MagazineService {
 	}
 
 	public List<MagazineModel> getBookmarkMagazines(String userEmail) {
-		User user = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
-		List<Bookmark> bookmarkList = bookmarkJpaRepository.findByUserId(user.getId());
+		User originUser = userJpaRepository.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
+		List<Bookmark> bookmarkList = bookmarkJpaRepository.findByUserId(originUser.getId());
 		List<Magazine> magazineList = new ArrayList<>();
 		List<MagazineModel> magazineModelsList = new ArrayList<>();
 
@@ -262,9 +263,10 @@ public class MagazineService {
 				contentsModels.add(contentsModel);
 			}
 
-			Optional<Likes> optionalLikes = likesJpaRepository.findByUserIdAndMagazineId(user.getId(),
+			User user = userJpaRepository.findById(magazine.getId()).orElseThrow(CUserNotFoundException::new);
+			Optional<Likes> optionalLikes = likesJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
 				magazine.getId());
-			Optional<Bookmark> optionalBookmark = bookmarkJpaRepository.findByUserIdAndMagazineId(user.getId(),
+			Optional<Bookmark> optionalBookmark = bookmarkJpaRepository.findByUserIdAndMagazineId(originUser.getId(),
 				magazine.getId());
 
 			MagazineModel magazineModel = MagazineModel.builder()
