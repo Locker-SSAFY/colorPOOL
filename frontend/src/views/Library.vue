@@ -290,6 +290,7 @@ export default {
     bottom: 15%;
     transform: rotate(-15deg);
     z-index: 1;
+    user-select: none;
   }
   
   .library-desc p {
