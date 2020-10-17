@@ -1,21 +1,71 @@
 <p align="center">
-  <h2 align="center">color POOL 🐳</h2>
-  <p align="center">Get recommendations color combination and related contents on <a href="http://j3a303.p.ssafy.io/"> color POOL!</a></p>
+  <h2 align="center">colorPOOL 🐳</h2>
+  <p align="center">Tell your stories with your palette using the knowledge of millions of designers</p>
 </p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/chat-on%20mattermost-yellowgreen" alt="chat on notion"/> 
   <img src="https://img.shields.io/badge/chat-on%20notion-red" alt="chat on notion"/>
 </p>
+<br>
 
-## Features
+<br>
+
+## Index
+
+### Introduction
+
+- [What is colorPOOL](#what-is-colorPOOL)
+- [Why colorPOOL](#why-colorPOOL)
+
+### Features
+
 - [Get recommendation](#get-recommendation)
 - [Create your own magazine](#create-your-own-magazine)
 - [Subscribe to the newsletter](#subscribe-to-the-newsletter)
+
+### Infra
+
+- [Web Infra Structure](#web-infra-structure)
+- [Big Data](#big-data)
+
+### Documents
+
 - [Docs](#docs)
 - [Issues](#issues)
-- [Version](#version)
-- [See also](#see-also)
+
+<br>
+
+<br>
+
+## What Is ColorPOOL?
+
+>  **[colorPOOL](https://j3a303.p.ssafy.io/)**의 빅데이터 풀에서 나의 own 컬러와 배색을 찾고, 나만의 컨텐츠를 만들어보세요
+
+1. 컬러풀은 캐주얼한 컨텐츠로 소비될 수 있는 서비스를 지향합니다
+
+2. 멋진 배색을 찾고, 컬러 플레이를 즐기고, 나만의 컨텐츠를 만들고 싶은 사용자를 대상으로 합니다
+
+3. 온라인에서 다시 오프라인으로 이어지는 유저 경험을 제공합니다
+
+   - 메인컬러를 선택하여 배색을 추천받고, 배색을 포함하는 이미지로 매거진을 제작할 수 있습니다
+   - 편집한 매거진은 인쇄를 통해 실물로 만나볼 수 있습니다
+
+<br>
+
+## Why ColorPOOL?
+
+> **colorPOOL**은 배색 추천 정보를 제공하는 유사 서비스들과 두 가지 차별점을 지닙니다
+
+1. 전문 디자이너가 아닌 일반 대중을 대상으로 합니다
+
+2. 추천한 컬러와 배색에 대한 단순 정보 제공이 아닌, 컨텐츠로서 정보를 제공합니다
+   - 컨텐츠는 유저가 직접 커스텀할 수 있습니다
+
+<br>
+
+<br>
 
 ## Get Recommendation
 사용자 중심 컬러 추천 받기
@@ -31,6 +81,57 @@
 정기적으로 뉴스레터 서비스 제공받기
 
 <br><br><br><br><br><br><br><br><br><br><br><br>
+
+## Web Infra Structure
+
+<img src="./assets/webInfraStructure.png" width="100%"/>
+
+<br><br>
+
+## Big Data
+
+> **colorPOOL**은 Adobe Color에서 제공하는 백 만 명의 디자이너가 평점을 매긴 배색 데이터를 수집했습니다
+>
+> 수집한 데이터 중 데이터의 평균 평점과 표준 편차가 적당한 수준(평균 평점 : 4.35, 표준편차 : 0.26)이라고 판단한
+>
+> 상위 3000개의 데이터를 추출하여 분석에 활용했습니다
+
+<br>
+
+### Set Reference Colors
+
+> **`표본 색채를 선정`**하기 위해 데이터를 **Quantization** 하고 **Clustering** 했습니다
+
+<img src="./assets/setReferenceColors.png" width="100%"/>
+
+- 비슷한 색들을 근사하고, 인간이 인식하는 색차와 균등하게 보정하여 군집화했습니다
+- 결과로 표본 색채 200개를 선정했습니다
+- 화면에서는 200개의 컬러를 20개의 군으로 카테고리화 하여 컬러 피커의 형태로 보여줍니다
+
+<br>
+
+### Recommend Palette
+
+> **`배색을 추천`**하기 위해 데이터를 **Clustering** 했습니다
+
+<img src="./assets/recommendPalette.png" width="100%"/>
+
+- 배색을 이루는 5개의 컬러 중 표본 색채와의 색차 거리를 계산하여, 표본 색채를 기준으로 군집화했습니다
+- 이 중 평점이 상위 10위 안에 드는 배색 조합을 서비스에서 추천하고 있습니다
+
+<br>
+
+### Recommend Color
+
+> **`컬러 추천`**에 **User-Based Collaborative Filtering** 방식을 활용했습니다
+
+<img src="./assets/recommendColor.png" width="100%"/>
+
+- 300명의 유저 데이터를 통해 유저 기반의 협업 필터링을 진행했습니다
+- 유사도 측정에는 피어슨 상관계수를 이용하여, 코사인 유사도의 경우 벡터의 크기가 커질 때 신뢰도가 떨어지는 문제를 보완했습니다
+- 화면에서는 Color Hint 버튼을 클릭하여 colorPOOL이 추천하는 메인 컬러를 확인하고 선택 여부를 결정할 수 있습니다
+
+<br><br>
 
 ## Docs
 
@@ -69,10 +170,7 @@
 
 <br><br><br><br><br>
 
-## Version
-- [Release 1.0.1]()
 
-<br><br><br><br><br>
 
 ## See Also
 
