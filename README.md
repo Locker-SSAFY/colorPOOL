@@ -1,8 +1,10 @@
 <p align="center">
-  <h2 align="center">colorPOOL 🐳</h2>
-  <p align="center">Tell your stories with your palette using the knowledge of millions of designers</p>
+  <div align="center"><img src="./assets/logo_img.png" width="10%"/></div>
+  <br>  
+  <div align="center"><img src="./assets/logo_txt.png" width="25%"/></div>
 </p>
 
+<p align="center">Tell your stories with your palette using the knowledge of millions of designers</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/chat-on%20mattermost-yellowgreen" alt="chat on notion"/> 
@@ -16,8 +18,8 @@
 
 ### Introduction
 
-- [What is colorPOOL](#what-is-colorPOOL)
-- [Why colorPOOL](#why-colorPOOL)
+- [What is colorPOOL?](#what-is-colorPOOL?)
+- [Why colorPOOL?](#why-colorPOOL?)
 
 ### Features
 
@@ -41,9 +43,9 @@
 
 ## What Is ColorPOOL?
 
->  **[colorPOOL](https://j3a303.p.ssafy.io/)**의 빅데이터 풀에서 나의 own 컬러와 배색을 찾고, 나만의 컨텐츠를 만들어보세요
+>  [colorPOOL](https://j3a303.p.ssafy.io/)의 빅데이터 풀에서 나의 own 컬러와 배색을 찾고, 나만의 컨텐츠를 만들어보세요
 
-1. 컬러풀은 캐주얼한 컨텐츠로 소비될 수 있는 서비스를 지향합니다
+1. colorPOOL은 캐주얼한 컨텐츠로 소비될 수 있는 서비스를 지향합니다
 
 2. 멋진 배색을 찾고, 컬러 플레이를 즐기고, 나만의 컨텐츠를 만들고 싶은 사용자를 대상으로 합니다
 
@@ -58,7 +60,7 @@
 
 > **colorPOOL**은 배색 추천 정보를 제공하는 유사 서비스들과 두 가지 차별점을 지닙니다
 
-1. 전문 디자이너가 아닌 일반 대중을 대상으로 합니다
+1. 전문 디자이너가 아닌, 일반 대중을 대상으로 합니다
 
 2. 추천한 컬러와 배색에 대한 단순 정보 제공이 아닌, 컨텐츠로서 정보를 제공합니다
    - 컨텐츠는 유저가 직접 커스텀할 수 있습니다
@@ -90,11 +92,11 @@
 
 ## Big Data
 
-> **colorPOOL**은 Adobe Color에서 제공하는 백 만 명의 디자이너가 평점을 매긴 배색 데이터를 수집했습니다
->
-> 수집한 데이터 중 데이터의 평균 평점과 표준 편차가 적당한 수준(평균 평점 : 4.35, 표준편차 : 0.26)이라고 판단한
->
-> 상위 3000개의 데이터를 추출하여 분석에 활용했습니다
+### Data Collection
+
+- **colorPOOL**은 Adobe Color에서 제공하는 백 만 명의 디자이너가 평점을 매긴 배색 데이터를 수집했습니다
+- 45000개의 데이터 중 상위 3000개의 데이터를 추출하여 분석에 활용했습니다
+  - 추출한 3000개의 데이터는 평균 평점이 4.35, 표준편차가 0.26인 신뢰할 수 있는 데이터입니다
 
 <br>
 
@@ -106,7 +108,7 @@
 
 - 비슷한 색들을 근사하고, 인간이 인식하는 색차와 균등하게 보정하여 군집화했습니다
 - 결과로 표본 색채 200개를 선정했습니다
-- 화면에서는 200개의 컬러를 20개의 군으로 카테고리화 하여 컬러 피커의 형태로 보여줍니다
+- 화면에서는 200개의 컬러를 20개의 군으로 카테고리화 하여 `컬러 피커`의 형태로 보여줍니다
 
 <br>
 
@@ -127,9 +129,9 @@
 
 <img src="./assets/recommendColor.png" width="100%"/>
 
-- 300명의 유저 데이터를 통해 유저 기반의 협업 필터링을 진행했습니다
+- 300명의 유저 데이터를 이용해 유저 기반의 협업 필터링을 진행했습니다
 - 유사도 측정에는 피어슨 상관계수를 이용하여, 코사인 유사도의 경우 벡터의 크기가 커질 때 신뢰도가 떨어지는 문제를 보완했습니다
-- 화면에서는 Color Hint 버튼을 클릭하여 colorPOOL이 추천하는 메인 컬러를 확인하고 선택 여부를 결정할 수 있습니다
+- 화면에서는 `Color Hint 버튼`을 클릭하여 colorPOOL이 추천하는 메인 컬러를 확인하고 선택 여부를 결정할 수 있습니다
 
 <br><br>
 
