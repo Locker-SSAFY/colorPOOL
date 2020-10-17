@@ -5,6 +5,13 @@ import VueRouter from 'vue-router'
 import Landing from '../views/Landing.vue'
 import CategoryImage from '../views/CategoryImage.vue'
 import TestHome from '../views/TestHome.vue'
+import Magazine from '../views/Magazine.vue'
+import Result from '../views/Result.vue'
+import MyPage from '../views/MyPage.vue'
+import Library from '../views/Library.vue'
+import Temp from '../views/Temporary.vue'
+import Detail from '../views/Detail.vue'
+import Print from '../views/Print.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +43,41 @@ Vue.use(VueRouter)
     path: '/testHome',
     name : 'TestHome',
     component: TestHome
+  },
+  {
+    path: '/magazine',
+    name: 'Magazine',
+    component: Magazine
+  },
+  {
+    path: '/result',
+    name: 'Result',
+    component: Result
+  },
+  {
+    path: '/myPage',
+    name: 'MyPage',
+    component: MyPage
+  },
+  {
+    path: '/library',
+    name: 'Library',
+    component: Library
+  },
+  {
+    path: '/temp',
+    name: 'Temporary',
+    component: Temp
+  },
+  {
+    path: '/detail',
+    name: 'Detail',
+    component: Detail
+  },
+  {
+    path: '/print',
+    name: 'Print',
+    component: Print
   }
 ]
 

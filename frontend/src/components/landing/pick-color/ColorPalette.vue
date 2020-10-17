@@ -10,7 +10,7 @@
     <div class="material-color-right">
       <ul class="color-variation">
         <li v-for="variation in this.selectedColorVariation" v-bind:key="variation.hex">
-          <div class="color-variation-preview" v-bind:style="{'background-color' : variation.hex}" @click="changeColor(variation.hex)"></div>
+          <div class="color-variation-preview" v-bind:style="{'background-color' : variation.hex}" @click="changeColor(variation)"></div>
         </li>
       </ul>
     </div>
@@ -18,6 +18,7 @@
 </template>
 <script>
 import materialColors from '../../../assets/color/colorList.js'
+import colorNames from '../../../assets/color/static_colorNames.js'
 import { mapActions } from 'vuex'
 const colorStore = 'colorStore'
 
@@ -27,11 +28,12 @@ export default {
       materialColors : materialColors,
       selectedColorCategory : '#EF5350',
       selectedColorVariation : this.$parent.selectedVariation,
+      colorNames: colorNames
     }
   },
-  created() {
+  created() { 
     // if(this.$parent.selectedVariation.length == 0)
-      this.selectedColorVariation = this.materialColors[0].variations;
+    this.selectedColorVariation = this.materialColors[0].variations;
   },
   methods: {
     ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
@@ -40,9 +42,9 @@ export default {
       this.$parent.selectedVariation = variation;
       this.selectedColorCategory = color;
     },
-    changeColor(hex) {
-      const payload = { selectedColor: hex };
-      this.AC_SELECTED_COLOR(payload);
+    changeColor(variation) {
+      const payload = { selectedColor: variation };
+      this.AC_SELECTED_COLOR(payload);  
     }
   }
 }
@@ -108,7 +110,7 @@ export default {
   }
 
   .color-palette .material-color-right .color-variation li {
-    height: 8%;
+    height: 10%;
     display:flex;
     justify-content: center;
     align-items: center;

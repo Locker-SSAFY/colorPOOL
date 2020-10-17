@@ -75,7 +75,7 @@ public class AccountController {
 		@ApiResponse(responseCode = "409", description = "중복 회원 (unique constraint)", content = @Content),
 		@ApiResponse(responseCode = "500", description = "중복 회원",
 			content = @Content)})
-	@PostMapping(value = "/signup/{provider}")
+	@PostMapping(value = "/signup/social")
 	public CommonResult signUpProvider(@RequestBody SignUpModel signUpModel) {
 		userService.join(signUpModel);
 		return responseService.getSuccessResult();

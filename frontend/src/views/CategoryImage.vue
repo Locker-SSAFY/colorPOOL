@@ -49,7 +49,7 @@ export default {
       } else if (val == 'movie') {
         this.images = this.movieImages;
       }
-    }
+    },
   },
   created() {
     // 이미지들 가져오기
@@ -70,8 +70,6 @@ export default {
     // this.colorList.push(this.theme.color4);
     // this.colorList.push(this.theme.color5);
     // 배색 5개를 리스트에 넣기
-    console.log(this.storeColor);
-    console.log(this.storeTheme);
     this.colorList = this.storeTheme;
     this.selectedColor = this.storeColor;
   },
@@ -83,13 +81,7 @@ export default {
       fashionImages: [],
       livingImages: [],
       movieImages: [],
-      theme: {
-        color1: "#e63946",
-        color2: "#f1faee",
-        color3: "#a8dadc",
-        color4: "#457b9d",
-        color5: "#1d3557",
-      },
+      theme: [],
       colorList : [],
       selectedColor: '',
     }

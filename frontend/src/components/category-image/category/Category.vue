@@ -1,62 +1,69 @@
 <template>
   <div class="category wrap">
     
-    <div class="category-description">
-      <strong>PRODUCT</strong><br>
-      <strong>IN YOUR</strong><br>
-      <strong>COLOR</strong>
+    <div class="category-title">
+      <p>PRODUCT</p>
+      <p>IN YOUR</p>
+      <p>COLOR</p>
+      <div class="hand-drawing"></div>
     </div>
+    <div class="category-desc">
+      <p>Get an image with</p>
+      <p>the color scheme</p>
+      <p>you choose</p>
+    </div>
+    
     <div class="category-list">
       <table>
         <tr>
           <td>
             <span class="category-name">리빙</span>
-            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor.hex}">
             <v-btn
               class="category-button"
               icon
               text
               @click="pickLiving"
             >
-              <v-icon size="100">mdi-arrow-right</v-icon>
+              <v-icon size="75">mdi-arrow-right</v-icon>
             </v-btn>
           </td>
           <td>
             <span class="category-name">악세사리</span>
-            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor.hex}">
             <v-btn
               class="category-button"
               icon
               text
               @click="pickAccesory"
             >
-              <v-icon size="100">mdi-arrow-right</v-icon>
+              <v-icon size="75">mdi-arrow-right</v-icon>
             </v-btn>
           </td>
         </tr>
         <tr>
           <td>
             <span class="category-name">패션</span>
-            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor.hex}">
             <v-btn
               class="category-button"
               icon
               text
               @click="pickFashion"
             >
-              <v-icon size="100">mdi-arrow-right</v-icon>
+              <v-icon size="75">mdi-arrow-right</v-icon>
             </v-btn>
           </td>
           <td>
             <span class="category-name">영화</span>
-            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor}">
+            <img class="category-layer" src="../../../assets/images/layer.png" :style="{'background-color' : this.$parent.selectedColor.hex}">
             <v-btn
               class="category-button"
               icon
               text
               @click="pickMovie"
             >
-              <v-icon size="100">mdi-arrow-right</v-icon>
+              <v-icon size="75">mdi-arrow-right</v-icon>
             </v-btn>
           </td>
         </tr>
@@ -75,14 +82,11 @@ export default {
   },
   data() {
     return {
-      theme: {
-        color1: "#e63946",
-        color2: "#f1faee",
-        color3: "#a8dadc",
-        color4: "#457b9d",
-        color5: "#1d3557",
-      }
+      theme: this.$parent.theme  
     }
+  },
+  created(){
+    
   },
   methods : {
     pickLiving() {
@@ -115,31 +119,50 @@ export default {
     padding-left: 20px;
   }
 
-  .category.wrap .category-description {
-    float: left;
-    height: 100%;
-    width: 30%;
-    /* background-color: yellow; */
-    padding: 10px 100px;
-    font-size: 45px;
+  .category.wrap .category-desc {
+    position: absolute;
+    font-size: 2.3rem;
+    text-align: left;
+    left: 20%;
+    bottom: 15%;
+    transform: rotate(-15deg);
+    z-index: 1;
+    user-select: none;
+  }
+
+  .category.wrap .category-desc p {
+    font-family: 'ReenieBeanie-Regular';
+    line-height: 0.7;
+  }
+
+  .category.wrap .category-title {
+    margin-left: 5%;
+    margin-top: 3%;
+    width: 40vw;
+    user-select: none;
+  }
+
+  .category.wrap .category-title p {
+    font-family: 'PermanentMarker-Regular';
+    font-size: 3.5rem;
+    line-height: 0.9;
+    /* color: white; */
   }
 
   .category.wrap .category-list {
     float: right;
     position: absolute;
-    padding-top: 50px;
+    padding-top: 110px;
     top: 0;
     right: 0;
     height: 100%;
     width: 50%;
-    /* background-color: skyblue; */
   }
 
   .category.wrap .category-list table {
     margin-top: 10%;
     height: 60%;
     width: 80%;
-    /* background-color: lightcyan; */
   }
 
   .category.wrap .category-list table tr td {
@@ -157,7 +180,6 @@ export default {
 
   .category.wrap .category-list table .category-layer {
     height: 45%;
-    /* background-color: lightcoral; */
   }
 
   .category.wrap .category-list table .category-button {
@@ -165,4 +187,13 @@ export default {
     margin-top : 200px;
     margin-left : -60px;
   }
+
+  .hand-drawing {
+    position: relative;
+    background: url(https://cdn2.bustle.com/nylon/2020/related-6439ff09ad.svg) no-repeat;
+    margin-top: 2rem;
+    height: 13%;
+    width: 100%;
+  }
+
 </style>

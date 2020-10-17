@@ -1,5 +1,6 @@
 package com.ssafy.socks.entity.magazine;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,14 +13,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ssafy.socks.entity.user.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @Setter @Getter @NoArgsConstructor
+@Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 @Table(name = "MAGAZINE")
 public class Magazine {
 	@Id
@@ -27,13 +31,21 @@ public class Magazine {
 	@Column(name = "MAGAZINE_ID", nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID", nullable = false)
-	private User user;
+	@Column(name = "THEME_ID", nullable = false)
+	private Long themeId;
 
-	@OneToMany(mappedBy = "magazine")
-	private List<Contents> contents;
+	@Column(name = "SELECTED_COLOR_ID", nullable = false)
+	private Long selectedId;
 
-	@OneToMany(mappedBy = "magazine")
-	private List<Likes> likes;
+	@Column(name = "USER_ID", nullable = false)
+	private Long userId;
+
+	@Column(name = "MAGAZINE_NAME", nullable = false)
+	private String magazineName;
+
+	@Column(name = "CREATED_DATE", nullable = false)
+	private LocalDateTime createdDate;
+
+	@Column(name = "LIKE_COUNT", nullable = false)
+	private int likeCount;
 }
