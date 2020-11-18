@@ -25,7 +25,6 @@
 
 - [Get recommendation](#get-recommendation)
 - [Create your own magazine](#create-your-own-magazine)
-- [Subscribe to the newsletter](#subscribe-to-the-newsletter)
 
 ### Infra
 
@@ -62,27 +61,99 @@
 
 1. 전문 디자이너가 아닌, 일반 대중을 대상으로 합니다
 
-2. 추천한 컬러와 배색에 대한 단순 정보 제공이 아닌, 컨텐츠로서 정보를 제공합니다
-   - 컨텐츠는 유저가 직접 커스텀할 수 있습니다
+2. 추천한 컬러와 배색에 대한 단순 정보 제공이 아닌, 매거진이라는 컨텐츠로 만나볼 수 있습니다
 
 <br>
 
 <br>
 
 ## Get Recommendation
-사용자 중심 컬러 추천 받기
+> 컬러를 선택하고, 해당 컬러에 대한 배색을 추천받으세요
+>
+> **Pick Color**와 **Get Color**, 두 가지 방법으로 컬러를 선택할 수 있습니다
 
-<br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+<img src="https://i.ibb.co/7XTXQM8/landing.gif" alt="https://i.ibb.co/7XTXQM8/landing.gif" style="zoom:67%;" />
+
+<br>
+
+### Pick Color
+
+> colorPOOL의 200가지 컬러를 직접 선택해보세요
+
+- 20개의 대표 컬러군 중 하나를 선택하면, 해당 컬러군에 속하는 10개 컬러를 밝기 별로 살펴볼 수 있습니다
+
+- 컬러의 선택할 때마다 나타나는 대표 이미지를 통해 컬러의 느낌을 확인하세요
+
+- 컬러 선택 기록이 있는 유저는 `Color Hint` 버튼을 통해 컬러를 추천받을 수 있습니다
+- 컬러 선택을 완료하여, 배색 10가지를 추천받으세요 
+
+
+
+<img src="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" alt="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" style="zoom: 67%;" />
+
+<br>
+
+### Get Color
+
+> 키워드를 입력하여, 키워드를 대표하는 컬러를 선택해보세요
+
+- 구글 이미지 검색 결과에 대해 대표색을 보여주는 방식입니다
+- 검색의 결과는 colorPOOL의 대표 컬러와 가장 가까운 컬러로 보여집니다
+
+
+
+<img src="https://i.ibb.co/fMYSBnP/get-Color-final.gif" alt="https://i.ibb.co/fMYSBnP/get-Color-final.gif" style="zoom:67%;" />
+
+<br><br>
 
 ## Create Your Own Magazine
-나만의 잡지 만들기
+> 내가 만들 잡지 컨텐츠의 카테고리를 선택하고,
+>
+> 내가 선택한 배색에 대한 이미지를 선택하여, 나만의 잡지를 만들어보세요
 
-<br><br><br><br><br><br><br><br><br><br><br><br>
+<br>
 
-## Subscribe To The Newsletter
-정기적으로 뉴스레터 서비스 제공받기
+### Select Images
 
-<br><br><br><br><br><br><br><br><br><br><br><br>
+> 선택한 배색을 포함한 이미지를 확인하세요
+>
+> colorPOOL이 제공한 이미지 중 마음에 드는 것을 선택하여, 잡지의 재료로 활용해보세요
+
+
+
+<img src="https://i.ibb.co/tCVLKTB/image.gif" alt="https://i.ibb.co/tCVLKTB/image.gif" style="zoom:67%;" />
+
+<br>
+
+### Publish Magazine
+
+> 잡지의 레이아웃을 선택하고 제공된 인터뷰 질문에 대한 답변을 적어, 나만의 잡지를 만들어보세요
+
+
+
+<img src="https://i.ibb.co/nM6sNYF/magazine2.gif" alt="https://i.ibb.co/nM6sNYF/magazine2.gif" style="zoom:67%;" />
+
+<br>
+
+- 웹 뷰어를 통해 내가 만든 잡지의 내용을 확인하세요
+- 또한 인쇄하기 기능을 통해 실물로 간직해보세요
+
+<br>
+
+<img src="https://i.ibb.co/yRyr9j3/print.gif" alt="https://i.ibb.co/yRyr9j3/print.gif" style="zoom:67%;" />
+
+<br>
+
+- 라이브러리에서 colorPOOL의 인기 매거진을 만나보세요
+- 마이페이지에서 내가 만든, 좋아요한, 북마크한 잡지를 확인하세요
+
+<br>
+
+<img src="https://i.ibb.co/QfN39KR/kakaotalk-1602833651511-1.gif" alt="myPage" style="zoom:67%;" />
+
+<br><br>
 
 ## Web Infra Structure
 
@@ -92,11 +163,11 @@
 
 ## Big Data
 
-### Data Collection
+### Collect Data
 
 - **colorPOOL**은 Adobe Color에서 제공하는 백 만 명의 디자이너가 평점을 매긴 배색 데이터를 수집했습니다
 - 45000개의 데이터 중 상위 3000개의 데이터를 추출하여 분석에 활용했습니다
-  - 추출한 3000개의 데이터는 평균 평점이 4.35, 표준편차가 0.26인 신뢰할 수 있는 데이터입니다
+  - 추출한 3000개의 데이터는 평균 평점이 최고 5점 중 4.35, 표준편차가 0.26인 신뢰할 수 있는 데이터입니다
 
 <br>
 
@@ -147,7 +218,7 @@
   - [Feedback](./docs/%EA%B8%B0%ED%9A%8D/4-Feedback.md)
 - [와이어프레임](./docs/와이어프레임/wireFrame&flow_ver.1.jpeg)
 
-<br><br><br><br><br>
+<br><br>
 
 
 ## Issues
@@ -170,9 +241,7 @@
 - [코사인 유사도 측정 시 부동소수점 예외처리 이슈](./docs/이슈/코사인_유사도_측정_시_부동소수점_예외처리_이슈.md)
 - [코사인 유사도 개수 예측 오류 이슈](./docs/이슈/코사인_유사도_개수_예측_오류_이슈.md)
 
-<br><br><br><br><br>
-
-
+<br><br>
 
 ## See Also
 
@@ -187,10 +256,19 @@
 | [배현석](https://github.com/beaverbae2) [풀스택 팀장] | 데이터 | 관련기술 및 논문 학습, 데이터 전처리(matlab), 코사인 유사도 계산 |
 | [윤재원](https://github.com/jane399) [개발천재]       | FE | 회원가입/로그인, 소셜로그인, 배색 추천 화면, 컬러 및 배색 데이터 관리 로직 구현 |
 
+<br>
 
 <br>
 
-### 기술 스택
+### Awards
+
+- 🥈삼성청년SW아카데미 특화 프로젝트(도메인: 빅데이터) 2등상 수상
+
+<br>
+
+<br>
+
+### Technologies used
 <p>
 <img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/java/java.png"/>
 <img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png"/>
@@ -212,4 +290,4 @@
 <img height="40" src="./assets/nginx.png">
 </p>
 <br>
-<br><br><br>
+<br>
