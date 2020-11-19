@@ -25,7 +25,7 @@ public class OpenApiConfiguration {
 				new License().name("Apache License Version 2.0").url("http://www.apache.org/licenses/LICENSE-2.0"));
 
 		return new OpenAPI()
-			.addServersItem(new Server().url("https://j3a303.p.ssafy.io/"))
+			.addServersItem(new Server().url("https://j3a303.p.ssafy.io"))
 			.components(new Components().addSecuritySchemes("basicScheme",
 				new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic")))
 			.info(info);

@@ -37,6 +37,14 @@ dependencies {
     compile 'org.springdoc:springdoc-openapi-ui:1.2.32'
     /* spring doc*/
 
+    /* jsoup */
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+    /* jsoup */
+
+    /* selenium */
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.41.0'
+    /* selenium */
+
     /* messageSource */
     implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
     /* messageSource */
