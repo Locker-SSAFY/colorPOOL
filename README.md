@@ -253,7 +253,7 @@
 | [강세응](https://github.com/seeungKang) [이등병]      | FE | 메인 화면/이미지 제공 화면 구현, api 이용한 색상 정보 불러오기, 반응형 기본 틀 구현 |
 | [김윤진](https://github.com/YNNJN) [Front Carry]     | FE, 데이터, 기획 | 와이어프레임 제작, 기술리서치(FE & 데이터), 데이터 전처리(python) |
 | [김준호](https://github.com/junhok82) [프로 일꾼]     | BE, 인프라 | 회원관련(BE), Exception 고도화, Jwt & SpringSecurity, 인프라 구축 |
-| [배현석](https://github.com/beaverbae2) [풀스택 팀장] | 데이터 | 관련기술 및 논문 학습, 데이터 전처리(matlab), 코사인 유사도 계산 |
+| [배현석](https://github.com/beaverbae2) [풀스택 팀장] | 데이터 | 관련기술 및 논문 학습, 배색 추천(군집화) 및 컬러 추천(사용자 기반 협업 필터링) 시스템 구축 |
 | [윤재원](https://github.com/jane399) [개발천재]       | FE | 회원가입/로그인, 소셜로그인, 배색 추천 화면, 컬러 및 배색 데이터 관리 로직 구현 |
 
 <br>
