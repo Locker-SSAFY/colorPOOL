@@ -75,6 +75,7 @@
 
 
 <img src="https://i.ibb.co/7XTXQM8/landing.gif" alt="https://i.ibb.co/7XTXQM8/landing.gif" style="zoom:67%;" />
+<img src="docs/images/landing.gif" alt="https://i.ibb.co/7XTXQM8/landing.gif" style="zoom:67%;"/>
 
 <br>
 
