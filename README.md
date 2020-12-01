@@ -73,8 +73,6 @@
 > **Pick Color**와 **Get Color**, 두 가지 방법으로 컬러를 선택할 수 있습니다
 
 
-
-<img src="https://i.ibb.co/7XTXQM8/landing.gif" alt="https://i.ibb.co/7XTXQM8/landing.gif" style="zoom:67%;" />
 <img src="docs/images/landing.gif" alt="https://i.ibb.co/7XTXQM8/landing.gif" style="zoom:67%;"/>
 
 <br>
@@ -92,7 +90,8 @@
 
 
 
-<img src="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" alt="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" style="zoom: 67%;" />
+<!-- <img src="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" alt="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" style="zoom: 67%;" /> -->
+<img src="docs/images/pick_color.gif" alt="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" style="zoom:67%;"/>
 
 <br>
 
@@ -124,7 +123,8 @@
 
 
 
-<img src="https://i.ibb.co/tCVLKTB/image.gif" alt="https://i.ibb.co/tCVLKTB/image.gif" style="zoom:67%;" />
+<!-- <img src="https://i.ibb.co/tCVLKTB/image.gif" alt="https://i.ibb.co/tCVLKTB/image.gif" style="zoom:67%;" /> -->
+<img src="docs/images/image.gif" alt="https://i.ibb.co/tCVLKTB/image.gif" style="zoom:67%;"/>
 
 <br>
 
@@ -134,7 +134,8 @@
 
 
 
-<img src="https://i.ibb.co/nM6sNYF/magazine2.gif" alt="https://i.ibb.co/nM6sNYF/magazine2.gif" style="zoom:67%;" />
+<!-- <img src="https://i.ibb.co/nM6sNYF/magazine2.gif" alt="https://i.ibb.co/nM6sNYF/magazine2.gif" style="zoom:67%;" /> -->
+<img src="docs/images/magazine2.gif" alt="https://i.ibb.co/nM6sNYF/magazine2.gif" style="zoom:67%;"/>
 
 <br>
 
