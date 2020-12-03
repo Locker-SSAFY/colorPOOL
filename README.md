@@ -226,6 +226,8 @@
 ### Frontend
 
 - [Vuex 모듈화](./docs/이슈/Vuex_모듈화_.md)
+- [동적 이미지에 대한 export와 pdf](./docs/이슈/동적 이미지에 대한 export와 PDF.md)
+- [axios에서 보낸 post 요청이 백엔드에서 차단하는 이슈]('./docs/이슈/axios에서 보낸 post 요청이 백엔드에서 차단하는 이슈.md')
 
 ### Backend
 
