@@ -55,6 +55,10 @@
 
 <br>
 
+<img src="assets/userFlow.png" alt="userFlow"/>
+
+<br>
+
 ## Why ColorPOOL?
 
 > **colorPOOL**은 배색 추천 정보를 제공하는 유사 서비스들과 두 가지 차별점을 지닙니다
@@ -72,7 +76,6 @@
 >
 > **Pick Color**와 **Get Color**, 두 가지 방법으로 컬러를 선택할 수 있습니다
 
-
 <img src="docs/images/landing.gif" alt="https://i.ibb.co/7XTXQM8/landing.gif" style="zoom:67%;"/>
 
 <br>
@@ -89,8 +92,6 @@
 - 컬러 선택을 완료하여, 배색 10가지를 추천받으세요 
 
 
-
-<!-- <img src="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" alt="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" style="zoom: 67%;" /> -->
 <img src="docs/images/pick_color.gif" alt="https://i.ibb.co/r4m3L9C/pick-Color-And-Recommend.gif" style="zoom:67%;"/>
 
 <br>
@@ -122,8 +123,6 @@
 > colorPOOL이 제공한 이미지 중 마음에 드는 것을 선택하여, 잡지의 재료로 활용해보세요
 
 
-
-<!-- <img src="https://i.ibb.co/tCVLKTB/image.gif" alt="https://i.ibb.co/tCVLKTB/image.gif" style="zoom:67%;" /> -->
 <img src="docs/images/image.gif" alt="https://i.ibb.co/tCVLKTB/image.gif" style="zoom:67%;"/>
 
 <br>
@@ -133,8 +132,6 @@
 > 잡지의 레이아웃을 선택하고 제공된 인터뷰 질문에 대한 답변을 적어, 나만의 잡지를 만들어보세요
 
 
-
-<!-- <img src="https://i.ibb.co/nM6sNYF/magazine2.gif" alt="https://i.ibb.co/nM6sNYF/magazine2.gif" style="zoom:67%;" /> -->
 <img src="docs/images/magazine2.gif" alt="https://i.ibb.co/nM6sNYF/magazine2.gif" style="zoom:67%;"/>
 
 <br>
@@ -175,7 +172,7 @@
 
 ### Set Reference Colors
 
-> **`표본 색채를 선정`**하기 위해 데이터를 **Quantization** 하고 **Clustering** 했습니다
+> `표본 색채를 선정`하기 위해 데이터를 **Quantization** 하고 **Clustering** 했습니다
 
 <img src="./assets/setReferenceColors.png" width="100%"/>
 
@@ -187,7 +184,7 @@
 
 ### Recommend Palette
 
-> **`배색을 추천`**하기 위해 데이터를 **Clustering** 했습니다
+> `배색을 추천`하기 위해 데이터를 **Clustering** 했습니다
 
 <img src="./assets/recommendPalette.png" width="100%"/>
 
@@ -247,26 +244,28 @@
 
 ## See Also
 
+### Timeline
+
+> 개발 기간: 9/8/2020 ~ 10/14/2020
+
+<br>
+
 ### Contributor
 
 
 | 이름                                                  | 역할             | 내용                                                         |
 | ----------------------------------------------------- | ---------------- | ------------------------------------------------------------ |
-| [강세응](https://github.com/seeungKang) [이등병]      | FE | 메인 화면/이미지 제공 화면 구현, api 이용한 색상 정보 불러오기, 반응형 기본 틀 구현 |
-| [김윤진](https://github.com/YNNJN) [Front Carry]     | FE, 데이터, 기획 | 와이어프레임 제작, 기술리서치(FE & 데이터), 데이터 전처리(python) |
-| [김준호](https://github.com/junhok82) [프로 일꾼]     | BE, 인프라 | 회원관련(BE), Exception 고도화, Jwt & SpringSecurity, 인프라 구축 |
-| [배현석](https://github.com/beaverbae2) [풀스택 팀장] | 데이터 | 관련기술 및 논문 학습, 배색 추천(군집화) 및 컬러 추천(사용자 기반 협업 필터링) 시스템 구축 |
-| [윤재원](https://github.com/jane399) [개발천재]       | FE | 회원가입/로그인, 소셜로그인, 배색 추천 화면, 컬러 및 배색 데이터 관리 로직 구현 |
-
-<br>
+| [강세응](https://github.com/seeungKang) [이등병]      | FE | 컬러 선택, 잡지 제작, 잡지 추출 화면 및 기능 구현 |
+| [김윤진](https://github.com/YNNJN) [Front Carry]     | FE, 데이터, 기획 | 표본색채 선정(양자화), 배색 추천 기능 구현(군집화), 화면 UI 개선 |
+| [김준호](https://github.com/junhok82) [프로 일꾼]     | BE, 인프라 | Exception 고도화, Jwt & SpringSecurity, 인프라 구축 |
+| [배현석](https://github.com/beaverbae2) [풀스택 팀장] | 데이터 | 표본색채 선정(군집화), 컬러 추천 기능 구현(협업필터링) |
+| [윤재원](https://github.com/jane399) [개발천재]       | FE | 회원 관리, 배색 추천, 잡지 목록 화면 및 기능 구현 |
 
 <br>
 
 ### Awards
 
 - 🥈삼성청년SW아카데미 특화 프로젝트(도메인: 빅데이터) 2등상 수상
-
-<br>
 
 <br>
 
